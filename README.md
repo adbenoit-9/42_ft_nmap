@@ -1,2 +1,2 @@
-# 42_ft_nmap
-42 - Recoding the nmap command.
+# FT_NMAP (@42Paris)
+*Recoding the nmap command.*
