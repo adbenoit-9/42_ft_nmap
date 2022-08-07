@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:20:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:39:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 
 typedef struct s_param
 {
-    int16_t  ports[2];
-    int8_t  scan;
-    int8_t  speedup;
-    char    **ip;
+	int16_t	ports[2];
+	int8_t	scan;
+	int8_t	speedup;
+	uint8_t	**ip;
 }               t_param;
 
-t_param parser(int ac, char **av);
+t_param	parser(int ac, char **av);
 void    set_ip_from_file(t_param *param, char *file);
 void    exit_help(t_param *param, char *value);
 void    set_ip_from_arg(t_param *param, char *ip);

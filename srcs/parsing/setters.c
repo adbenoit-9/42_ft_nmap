@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:21:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:24:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:40:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void    set_ip_from_file(t_param *param, char *file)
 		i = 0;
 		do
 		{
-			param->ip = (char **)ft_realloc((void *)param->ip, (i + 2) * sizeof(char *));
+			param->ip = (uint8_t **)ft_realloc((void *)param->ip, (i + 2) * sizeof(uint8_t *));
 			if (!param->ip)
 				break ;
 			ret = get_next_line(fd, &ip);
-			param->ip[i] = ip;
+			param->ip[i] = (uint8_t *)ip;
 			++i;
 		} while (ret > 0);
 		if (param->ip)
@@ -44,10 +44,10 @@ void    set_ip_from_file(t_param *param, char *file)
 
 void    set_ip_from_arg(t_param *param, char *ip)
 {
-	param->ip = (char **)malloc(sizeof(char *) * 2);
+	param->ip = (uint8_t **)malloc(sizeof(uint8_t *) * 2);
 	if (param->ip)
 	{
-		param->ip[0] = ft_strdup(ip);
+		param->ip[0] = (uint8_t *)ft_strdup(ip);
 		param->ip[1] = NULL;
 	}
 }
@@ -79,7 +79,7 @@ void    set_ports(t_param *param, char *value)
 void    set_scan(t_param *param, char *value)
 {
 	char	*scan_list[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP"};
-	int8_t	value_list[] = {S_SYN, S_NULL, S_ACK, S_FIN, S_XMAS, S_UDP};
+	char	value_list[] = {S_SYN, S_NULL, S_ACK, S_FIN, S_XMAS, S_UDP};
 
 	for (int32_t i = 0; i < 6; i++)
 	{
