@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:00:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/09/03 16:40:57 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/10/09 19:53:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "../libft/inc/libft.h"
+size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	j;
 
-# define FT_NMAP_OK		0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	j = 0;
+	while (src[j] != 0)
+		++j;
+	i = 0;
+	if (dstsize == 0)
+		return (j);
+	while (i < dstsize - 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	if (dstsize > 0)
+		dest[i] = '\0';
+	return (j);
+}

@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:00:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/11/05 18:48:24 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/10/09 19:50:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "../libft/inc/libft.h"
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*mem;
 
-# define FT_NMAP_OK		0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	mem = (char *)malloc(count * size);
+	if (!mem)
+		return (0);
+	ft_bzero(mem, count * size);
+	return ((void *)mem);
+}

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:00:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/11/07 19:28:15 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/01/08 15:43:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "../libft/inc/libft.h"
+void	ft_putendl_fd(char *s, int fd)
+{
+	size_t	len;
 
-# define FT_NMAP_OK		0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	if (s)
+	{
+		len = ft_strlen(s);
+		write(fd, s, len);
+		write(fd, "\n", 1);
+	}
+	return ;
+}

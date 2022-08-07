@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 18:07:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:23:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void    exit_help(t_param *param, char *value)
 t_param parser(int ac, char **av)
 {
     t_param param;
-    void    (*setters[NFLAG])(t_param *param, char *value) = {set_ip_from_file, exit_help, set_ip_from_arg, set_ports, set_scan, set_speedup};
-    int8_t  *flag_lst[] = {"--file", "--help", "--ip", "--ports", "--scan", "--speedup"};
+    void    (*setters[NFLAG])(t_param *param, char *value) = {set_ip_from_file,
+            exit_help, set_ip_from_arg, set_ports, set_scan, set_speedup};
+    char  *flag_lst[] = {"--file", "--help", "--ip", "--ports", "--scan", "--speedup"};
     
     if (ac == 1)
         print_usage();
@@ -60,9 +61,10 @@ t_param parser(int ac, char **av)
     {
         for (int32_t j = 0; j < NFLAG; j++)
         {
-            if (strcmp(av[i], flag_lst[j]) == 0)
-                setters[j](&param, av[i] + 1);
+            if (ft_strcmp(av[i], flag_lst[j]) == 0)
+                setters[j](&param, av[i + 1]);
         }
                 
     }
+    return (param);
 }

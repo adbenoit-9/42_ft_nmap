@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:00:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/09/03 20:55:52 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/10/09 20:01:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "../libft/inc/libft.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned int	i;
 
-# define FT_NMAP_OK		0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (s1[i] && s2[i] && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		++i;
+	}
+	if (i != n)
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
+}

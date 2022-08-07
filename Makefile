@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/07 17:28:31 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/07 19:06:36 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,10 @@ UNAME	:= $(shell uname)
 ifeq ($(UNAME), Darwin)
 	CFLAGS += -DOS
 endif
+
+# LIBFT
+LIB_DIR			:= libft
+LIB_NAME		:= $(LIB_DIR)/libft.a
 
 # DIRECTORIES
 BUILD 			:= .build
@@ -54,20 +58,27 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME): $(OBJ)
+$(NAME):  $(LIB_NAME) $(OBJ)
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAME) -o $@
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
+$(LIB_NAME):
+	@echo -n "$(B_GREY)libft ..."
+	@make -C $(LIB_DIR) > /dev/null
+	@echo "\r$(CL_LINE)$(B_GREY)libft $(B_GREEN)✔$(NONE)"
+	
 all: $(NAME)
 
 clean:
+	@make -C $(LIB_DIR) clean > /dev/null
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 fclean: clean
 	@rm -Rf $(NAME)
+	@rm -Rf $(LIB_NAME)
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 norm:

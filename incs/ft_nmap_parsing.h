@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 18:00:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:20:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdint.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <errno.h>
+
 # define NFLAG 6
 
 # define S_SYN 0b10000000
@@ -26,16 +29,16 @@
 
 typedef struct s_param
 {
-    int8_t  ports[2];
+    int16_t  ports[2];
     int8_t  scan;
     int8_t  speedup;
     char    **ip;
 }               t_param;
 
 t_param parser(int ac, char **av);
-void    set_ip_from_file(t_param *param, char *value);
+void    set_ip_from_file(t_param *param, char *file);
 void    exit_help(t_param *param, char *value);
-void    set_ip_from_arg(t_param *param, char *value);
+void    set_ip_from_arg(t_param *param, char *ip);
 void    set_ports(t_param *param, char *value);
 void    set_scan(t_param *param, char *value);
 void    set_speedup(t_param *param, char *value);

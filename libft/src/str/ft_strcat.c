@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:00:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2021/01/06 01:25:45 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/01/06 02:06:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "../libft/inc/libft.h"
+char	*ft_strcat(char *dest, const char *src)
+{
+	size_t	i;
+	size_t	j;
 
-# define FT_NMAP_OK		0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	if (!src || !dest)
+		return (dest);
+	i = 0;
+	while (dest[i])
+		++i;
+	j = 0;
+	while (src[j])
+	{
+		dest[i] = src[j];
+		++i;
+		++j;
+	}
+	dest[i] = 0;
+	return (dest);
+}
