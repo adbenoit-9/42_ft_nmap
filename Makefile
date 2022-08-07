@@ -24,13 +24,15 @@ endif
 BUILD 			:= .build
 SRC_DIR 		:= srcs
 OBJ_DIR 		:= $(BUILD)/obj
+INC_DIR 		:= incs
 SUB_DIR			:= 
 DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 
 
 # FILES
 NAME			:= ft_nmap
-SRC				:=	main.c
+SRC				:=	main.c \
+						build.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 
@@ -67,6 +69,9 @@ fclean: clean
 	@rm -Rf $(NAME)
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
+norm:
+	cppcheck --addon=misra/misra.json $(SRC_DIR)/$(SRC) $(INC_DIR)/*.h
+
 re: fclean all
 
 debug: CFLAGS += -DDEBUG
@@ -80,3 +85,4 @@ $(BUILD):
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c ./incs/ft_nmap.h | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs object : $(B_CYAN)$< $(NONE)...\r"
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
+

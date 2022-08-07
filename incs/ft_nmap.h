@@ -13,4 +13,10 @@
 #ifndef FT_NMAP_H
 # define FT_NMAP_H
 
+# include <string.h>
+
+# define FT_NMAP_OK		0
+# define FT_NMAP_ERROR		-1
+
+
 #endif

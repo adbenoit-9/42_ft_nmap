@@ -11,8 +11,47 @@
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
+#include "ft_nmap_build.h"
+#include "ft_nmap_ip.h"
+#include "ft_nmap_tcp.h"
+
+#include <stdio.h>
+
+static void	print_ipv4(uint8_t *buffer)
+{
+	int i = 0;
+	printf("IPHDR :\n");
+	while (i < 20) {
+		printf("%02x ", buffer[i++]);
+	}
+	printf("\n");
+}
+
+static void	print_tcp(uint8_t *buffer)
+{
+	int i = 0;
+	printf("TCPHDR :\n");
+	while (i < 20) {
+		printf("%02x ", buffer[i++]);
+	}
+	printf("\n");
+}
+
 
 int main(int ac, char **av)
 {
-    return (0);
+	uint8_t *buffer = NULL;
+	int32_t ret;
+
+	(void)ac;
+	(void)av;
+	ret = build_tcp_ip_raw(&buffer);
+	print_ipv4(buffer);
+	SET_IP4_VERSION(buffer, 0x4);
+	SET_IP4_TTL(buffer, 0xFF);
+	SET_TCP_SPORT(&buffer[sizeof(struct iphdr)], 0xDEAD);
+	print_ipv4(buffer);
+	print_tcp(&buffer[sizeof(struct iphdr)]);
+
+	return (ret);
 }
