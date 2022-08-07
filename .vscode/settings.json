@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "string.h": "c",
-        "stdint.h": "c",
-        "stdbool.h": "c",
-        "stdio.h": "c",
-        "ft_nmap_parsing.h": "c"
-    }
-}
