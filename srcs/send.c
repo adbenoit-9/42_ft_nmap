@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:14:59 by leon              #+#    #+#             */
-/*   Updated: 2022/08/07 22:43:10 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/07 23:46:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int32_t					scan_start(t_list *ips, t_opt *opt)
 	else
 	{
 		head = ips;
-		// start_thread(opt.nb_of_thread);
+		// create n threads launch routine => scan;
+		// loop in routine
 		while (head && (ret == FT_NMAP_OK))
 		{
 			if (!((t_ip*)head->content)->done) // If ip not done go into it
@@ -132,7 +133,7 @@ int32_t					scan_start(t_list *ips, t_opt *opt)
 			}
 			head = head->next;
 		}
-		// close_thread ?
+		// wait for all threads to end
 	}
 	return (ret);
 }
