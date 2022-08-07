@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/07 22:19:52 by leon             ###   ########.fr        #
+#    Updated: 2022/08/07 22:30:33 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,16 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DOS
 endif
 
+# LIBFT
+LIB_DIR			:= libft
+LIB_NAME		:= $(LIB_DIR)/libft.a
+
 # DIRECTORIES
 BUILD 			:= .build
 SRC_DIR 		:= srcs
 OBJ_DIR 		:= $(BUILD)/obj
 INC_DIR 		:= incs
-SUB_DIR			:= 
+SUB_DIR			:= parsing
 DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 
 
@@ -36,6 +40,9 @@ SRC				:=	main.c \
 						send.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
+SUB_SRC			:= parser.c \
+					setters.c
+SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
@@ -54,24 +61,31 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME): $(OBJ)
+$(NAME):  $(LIB_NAME) $(OBJ)
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAME) -o $@
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
+$(LIB_NAME):
+	@printf "$(B_GREY)libft ..."
+	@make -C $(LIB_DIR) > /dev/null
+	@echo "\r$(CL_LINE)$(B_GREY)libft $(B_GREEN)✔$(NONE)"
+	
 all: $(NAME)
 
 clean:
+	@make -C $(LIB_DIR) clean > /dev/null
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 fclean: clean
 	@rm -Rf $(NAME)
+	@rm -Rf $(LIB_NAME)
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 norm:
-	cppcheck --addon=misra/misra.json $(SRC_DIR)/$(SRC) $(INC_DIR)/*.h
+	cppcheck --addon=misra/misra.json $(addprefix $(SRC_DIR)/, $(SRC)) $(INC_DIR)/*.h
 
 re: fclean all
 

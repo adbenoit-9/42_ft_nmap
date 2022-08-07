@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:41:55 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/09/04 11:20:36 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/01/06 01:53:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "ft_nmap_ip.h"
-# include "ft_nmap_tcp.h"
-# include "../libft/inc/libft.h"
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	j;
+	size_t	k;
+	size_t	l;
 
-# define FT_NMAP_OK			0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	i = ft_strlen(dst);
+	k = i;
+	l = ft_strlen(src);
+	j = 0;
+	while (src[j] && i < dstsize - 1 && dstsize)
+		dst[i++] = src[j++];
+	if (dstsize > k)
+	{
+		dst[i] = 0;
+		return (l + k);
+	}
+	else
+		return (l + dstsize);
+}

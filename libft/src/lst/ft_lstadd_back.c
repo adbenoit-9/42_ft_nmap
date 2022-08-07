@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adbenoit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:41:55 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/11/11 17:08:21 by adbenoit          #+#    #+#             */
+/*   Updated: 2019/11/14 16:14:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "ft_nmap_ip.h"
-# include "ft_nmap_tcp.h"
-# include "../libft/inc/libft.h"
-
-# define FT_NMAP_OK			0
-# define FT_NMAP_ERROR		-1
-
-#endif
+void	ft_lstadd_back(t_list **alst, t_list *new)
+{
+	if (alst)
+	{
+		if (*alst == NULL)
+			*alst = new;
+		else
+			ft_lstlast(*alst)->next = new;
+	}
+}

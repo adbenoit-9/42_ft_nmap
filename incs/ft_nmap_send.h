@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:31 by leon              #+#    #+#             */
-/*   Updated: 2022/08/07 22:26:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/07 22:37:34 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@
  * 			recv
  *
 */
-struct s_list;
-
-typedef struct		s_list
-{
-	int					content_size;
-	void				*content;
-	struct s_list		*next;
-}					t_list;
 
 typedef struct		s_ip {
 	struct sockaddr_storage		sock;
@@ -85,5 +77,8 @@ typedef struct			s_port {
 typedef struct		s_opt {
 	uint8_t				scans;
 }					t_opt;
+
+/* Exported functions */
+int32_t					scan_start(t_list *ips, t_opt *opt);
 
 #endif /* FT_NMAP_SEND_H */

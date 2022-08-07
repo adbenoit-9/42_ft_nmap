@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:41:55 by adbenoit         ###   ########.fr       */
+/*   Created: 2021/01/06 01:26:19 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/10/09 20:05:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "ft_nmap_ip.h"
-# include "ft_nmap_tcp.h"
-# include "../libft/inc/libft.h"
+char	**ft_tabdup(char *tab[])
+{
+	char	**copy;
+	size_t	size;
+	size_t	i;
 
-# define FT_NMAP_OK			0
-# define FT_NMAP_ERROR		-1
-
-#endif
+	copy = NULL;
+	size = 0;
+	i = 0;
+	size = ft_tabsize(tab);
+	copy = malloc(sizeof(char *) * (size + 1));
+	if (!copy)
+		return (NULL);
+	while (i < size)
+	{
+		copy[i] = ft_strdup(tab[i]);
+		if (!copy[i])
+		{
+			ft_freetab(copy);
+			return (NULL);
+		}
+		++i;
+	}
+	copy[i] = NULL;
+	return (copy);
+}

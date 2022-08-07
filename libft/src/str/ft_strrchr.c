@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap.h                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:41:55 by adbenoit         ###   ########.fr       */
+/*   Created: 2019/11/04 15:15:41 by adbenoit          #+#    #+#             */
+/*   Updated: 2021/01/06 02:02:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_H
-# define FT_NMAP_H
+#include "libft.h"
 
-# include <string.h>
-# include "ft_nmap_parsing.h"
-# include "ft_nmap_ip.h"
-# include "ft_nmap_tcp.h"
-# include "../libft/inc/libft.h"
+#include <stdio.h>
 
-# define FT_NMAP_OK			0
-# define FT_NMAP_ERROR		-1
+char	*ft_strrchr(const char *s, int c)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (s[i])
+		++i;
+	if ((char)c == '\0')
+		return ((char *)s + i);
+	while (i > 0 && ((char *)s)[i] != (char)c)
+		--i;
+	if (((char *)s)[i] != (char)c)
+		return (NULL);
+	return ((char *)s + i);
+}
