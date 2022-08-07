@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 12:12:32 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/07/28 12:13:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 17:09:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int main(int ac, char **av)
 	uint8_t *buffer = NULL;
 	int32_t ret;
 
-	(void)ac;
-	(void)av;
+	parser(ac, av);
 	ret = build_tcp_ip_raw(&buffer);
 	print_ipv4(buffer);
 	SET_IP4_VERSION(buffer, 0x4);

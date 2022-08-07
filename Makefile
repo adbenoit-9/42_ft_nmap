@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/28 12:13:24 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/07 17:28:31 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ BUILD 			:= .build
 SRC_DIR 		:= srcs
 OBJ_DIR 		:= $(BUILD)/obj
 INC_DIR 		:= incs
-SUB_DIR			:= 
+SUB_DIR			:= parsing
 DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 
 
@@ -33,8 +33,9 @@ DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 NAME			:= ft_nmap
 SRC				:=	main.c \
 						build.c
-SUB_SRC			:= 
-# SRC				+= $(addprefix {name}, $(SUB_SRC))
+SUB_SRC			:= parser.c \
+					setters.c
+SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
