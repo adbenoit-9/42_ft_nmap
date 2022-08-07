@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/07/28 12:13:24 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/07 22:19:52 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 # FILES
 NAME			:= ft_nmap
 SRC				:=	main.c \
-						build.c
+						build.c \
+						send.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 

@@ -15,7 +15,7 @@
 
 # include <string.h>
 
-# define FT_NMAP_OK		0
+# define FT_NMAP_OK			0
 # define FT_NMAP_ERROR		-1
 
 
