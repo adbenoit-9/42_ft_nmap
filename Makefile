@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/07 19:06:36 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/07 20:30:03 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ $(NAME):  $(LIB_NAME) $(OBJ)
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
 $(LIB_NAME):
-	@echo -n "$(B_GREY)libft ..."
+	@printf "$(B_GREY)libft ..."
 	@make -C $(LIB_DIR) > /dev/null
 	@echo "\r$(CL_LINE)$(B_GREY)libft $(B_GREEN)✔$(NONE)"
 	
@@ -82,7 +82,7 @@ fclean: clean
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 norm:
-	cppcheck --addon=misra/misra.json $(SRC_DIR)/$(SRC) $(INC_DIR)/*.h
+	cppcheck --addon=misra/misra.json $(addprefix $(SRC_DIR)/, $(SRC)) $(INC_DIR)/*.h
 
 re: fclean all
 

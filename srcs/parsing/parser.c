@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 19:40:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 20:47:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
 
-void    init_param(t_param *param)
+static void    init_param(t_param *param)
 {
     param->ip = NULL;
     param->ports[0] = 1;    
@@ -21,25 +21,23 @@ void    init_param(t_param *param)
     param->speedup = 0;  
 }
 
-void    print_usage(void)
+static void    print_usage(void)
 {
     printf("ft_nmap [--help] [--ports [NOMBRE/PLAGE]] --ip ADRESSE IP [--speedup [NOMBRE]] [--scan [TYPE]]\n");
     printf("ft_nmap [--help] [--ports [NOMBRE/PLAGE]] --file FICHIER [--speedup [NOMBRE]] [--scan [TYPE]]\n");
 }
 
-void    clean(t_param *param)
+static void    clean(t_param *param)
 {
-    if (param->ip)
-    {
-        for (int32_t i = 0; param->ip[i]; i++)
-        {
+    if (param->ip != NULL) {
+        for (int32_t i = 0; param->ip[i]; i++) {
             free(param->ip[i]);
         }
         free(param->ip);
     }    
 }
 
-void    exit_help(t_param *param, char *value)
+static void    exit_help(t_param *param, char *value)
 {
     (void)value;
     print_usage();
@@ -50,19 +48,19 @@ void    exit_help(t_param *param, char *value)
 t_param parser(int ac, char **av)
 {
     t_param param;
-    void    (*setters[NFLAG])(t_param *param, char *value) = {set_ip_from_file,
+    void    (*setters[NFLAG])(t_param *, char *) = {set_ip_from_file,
             exit_help, set_ip_from_arg, set_ports, set_scan, set_speedup};
     char  *flag_lst[] = {"--file", "--help", "--ip", "--ports", "--scan", "--speedup"};
     
-    if (ac == 1)
+    if (ac == 1) {
         print_usage();
+    }
     init_param(&param);
-    for (int32_t i = 1; av[i]; i++)
-    {
-        for (int32_t j = 0; j < NFLAG; j++)
-        {
-            if (ft_strcmp(av[i], flag_lst[j]) == 0)
+    for (int32_t i = 1; av[i]; i++)  {
+        for (int32_t j = 0; j < NFLAG; j++) {
+            if (ft_strcmp(av[i], flag_lst[j]) == 0) {
                 setters[j](&param, av[i + 1]);
+            }
         }
                 
     }

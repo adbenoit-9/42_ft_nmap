@@ -1,7 +1,5 @@
 
 # include "ft_nmap.h"
-# include <netinet/ip.h>
-# include <netinet/tcp.h>
 # include <stdlib.h>
 
 int32_t			build_tcp_ip_raw(uint8_t **buffer)
