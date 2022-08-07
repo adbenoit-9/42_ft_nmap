@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:47:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:33:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,16 @@ static void    init_param(t_param *param)
 
 static void    print_usage(void)
 {
-    printf("ft_nmap [--help] [--ports [NOMBRE/PLAGE]] --ip ADRESSE IP [--speedup [NOMBRE]] [--scan [TYPE]]\n");
-    printf("ft_nmap [--help] [--ports [NOMBRE/PLAGE]] --file FICHIER [--speedup [NOMBRE]] [--scan [TYPE]]\n");
+    printf("Usage:\n");
+    printf("  ft_nmap --ip <host> [Options]\n or\n");
+    printf("  ft_nmap --file <path> [Options]\n");
+    printf("\nOptions:\n");
+    printf("--ip <host>                 host to scan\n");
+    printf("--file <path>               read an IP list to scan from a file\n");
+    printf("--ports <number/range>      ports to be scanned (default 1 to 1024)\n");
+    printf("--scan <type>               type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
+    printf("--speedup <number>          number of threads (default 0), to make the scan faster\n");
+    
 }
 
 static void    clean(t_param *param)
@@ -57,12 +65,20 @@ t_param parser(int ac, char **av)
     }
     init_param(&param);
     for (int32_t i = 1; av[i]; i++)  {
-        for (int32_t j = 0; j < NFLAG; j++) {
+        int32_t j;
+        for (j = 0; j < NFLAG; j++) {
             if (ft_strcmp(av[i], flag_lst[j]) == 0) {
                 setters[j](&param, av[i + 1]);
+                i++;
+                break ;
             }
         }
-                
+        if (j == NFLAG) {
+            exit(EXIT_FAILURE);
+        }    
+    }
+    if (param.ip == NULL) {
+        exit(EXIT_FAILURE);
     }
     return (param);
 }

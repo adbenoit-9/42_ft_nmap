@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/07 20:47:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:30:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 typedef struct s_param
 {
-	int16_t	ports[2];
+	int32_t	ports[2];
 	uint8_t	scan;
 	int8_t	speedup;
 	uint8_t	**ip;
