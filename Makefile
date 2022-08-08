@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/08 11:21:04 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/08 15:31:50 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,11 @@ SRC				:=	main.c \
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 SUB_SRC			:= parser.c \
-					setters.c
+					parse_ip.c \
+					parse_scan.c \
+					parse_ports.c \
+					parse_speedup.c \
+					ft_isnumber.c
 SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
@@ -90,7 +94,7 @@ norm:
 
 re: fclean all
 
-debug: CFLAGS += -DDEBUG
+debug: CFLAGS += -DDEBUG -fsanitize=address -g3
 debug: re
 
 .PHONY: all clean fclean re debug
