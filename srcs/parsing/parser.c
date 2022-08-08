@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:51:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:15:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,34 @@ static void    exit_help(t_opt *opt, char *value)
     print_usage();
     ft_lstclear(&opt->ip_lst, free);
     exit(EXIT_SUCCESS);
+}
+
+static void init_port_by_ip(t_opt *opt)
+{
+    t_list  *newport, *it;
+    void    *content;
+
+    it = opt->ip_lst;
+    while (it) {
+        for (uint16_t i = 0; i < PORTS_SCAN_LIMIT && opt->ports[i] != 0; i++) {
+            content = calloc(1, sizeof(t_port));
+            if (content == NULL) {
+                fatal_error(-1, STR_ENOMEM, opt);
+            }
+            ft_memcpy(content,&opt->ports[i], sizeof(uint16_t));
+            newport = ft_lstnew(content);
+            if (newport == NULL) {
+                fatal_error(-1, STR_ENOMEM, opt);
+            }
+            if (((t_ip *)it->content)->ports == NULL) {
+                ((t_ip *)it->content)->ports = newport;
+            }
+            else {
+                ft_lstadd_back(&((t_ip *)it->content)->ports, newport);
+            }
+        }
+        it = it->next;
+    }
 }
 
 t_opt parser(int ac, char **av)
@@ -79,5 +107,9 @@ t_opt parser(int ac, char **av)
     if (opt.scans == NONE) {
         opt.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;
     }
+    if (opt.ports[0] == NONE) {
+        copy_new_range(opt.ports, 0, 1, PORTS_SCAN_LIMIT);
+    }
+    init_port_by_ip(&opt);
     return (opt);
 }

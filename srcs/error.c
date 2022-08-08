@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 16:32:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:06:42 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ static void print_option(t_opt opt)
 
 #endif
 
+void	clear_ip(void *ip)
+{
+	ft_lstclear(&((t_ip *)ip)->ports, free);	
+}
+
 void    fatal_error(int16_t error, char *arg, t_opt *opt)
 {
 #ifdef DEBUG
@@ -99,6 +104,6 @@ void    fatal_error(int16_t error, char *arg, t_opt *opt)
 		dprintf(STDERR_FILENO, "%s\n", arg);
 		break;
 	}
-	ft_lstclear(&opt->ip_lst, free);
+	ft_lstclear(&opt->ip_lst, clear_ip);
 	exit(EXIT_FAILURE);
 }
