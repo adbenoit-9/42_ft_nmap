@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 16:14:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:39:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	set_ip(char *host, t_opt *opt) {
 	hints.ai_flags = 0;
 	ret = getaddrinfo(host, NULL, &hints, &res);
 	if (ret != 0)
-		fatal_error(E_BADHOST, host, 0);
+		fatal_error(E_BADHOST, host, opt);
 	ft_memcpy(&content->sock, res->ai_addr, sizeof(struct sockaddr_storage));
 	freeaddrinfo(res);
 
@@ -48,7 +48,6 @@ void    set_ip_from_file(t_opt *opt, char *file)
 	FILE		*stream;
 	int32_t		fd;
 	char		*host;
-	uint32_t	i;
 	int32_t		ret;
 	
 	if (file == NULL) {
@@ -57,19 +56,17 @@ void    set_ip_from_file(t_opt *opt, char *file)
 	stream = fopen(file, "r");
 	if (stream != NULL) {
 		fd = fileno(stream);
-		i = 0;
 		do {
-			if (opt->ip_lst == NULL) {
-				break ;
-			}
 			ret = get_next_line(fd, &host);
-			if (ret != -1) {
+			if (ret > 0) {
 				set_ip(host, opt);
 			}
-			++i;
 		} while (ret > 0);
 		close(fd);
 		fclose(stream);
+	}
+	else {
+		fatal_error(E_BADFILE, file, opt);
 	}
 }
 
