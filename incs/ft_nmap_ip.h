@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nmap_ip.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:27 by leon              #+#    #+#             */
-/*   Updated: 2022/08/07 16:56:11 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/08 02:04:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct iphdr {
 	uint16_t	check;
 	uint32_t	saddr;
 	uint32_t	daddr;
-	/*The options start here. */
+	/*The opts start here. */
 };
 
 # endif

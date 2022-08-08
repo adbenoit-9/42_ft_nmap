@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nmap_send.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:31 by leon              #+#    #+#             */
-/*   Updated: 2022/08/07 22:37:34 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/08 02:06:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_NMAP_SEND_H
 # define FT_NMAP_SEND_H
 
-#include <netinet/in.h>
+# include <netinet/in.h>
+# include "../libft/inc/libft.h"
+# include "ft_nmap_parsing.h"
 
 /*
  * t_list ips containing t_ip containing t_list ports containing t_port
@@ -73,10 +75,6 @@ typedef struct			s_port {
 	uint8_t		lock;
 	uint32_t	result;
 }						t_port;
-
-typedef struct		s_opt {
-	uint8_t				scans;
-}					t_opt;
 
 /* Exported functions */
 int32_t					scan_start(t_list *ips, t_opt *opt);
