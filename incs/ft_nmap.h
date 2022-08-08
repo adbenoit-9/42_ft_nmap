@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 11:07:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:00:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 
 # define FT_NMAP_OK			0
 # define FT_NMAP_ERROR		-1
+
+void	clear_ip(void *ip);
 
 #endif

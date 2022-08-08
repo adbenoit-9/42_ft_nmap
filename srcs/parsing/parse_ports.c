@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:39:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:12:21 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int32_t	copy_ports_sup(uint16_t *dest, uint16_t *src, uint16_t min, int32
 	return (n);
 }
 
-static int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
+int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
 {
 	for (; begin <= end; i++, begin++) {
 		if (i >= PORTS_SCAN_LIMIT) {

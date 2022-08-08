@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 16:39:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:53:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static void	set_ip(char *host, t_opt *opt) {
 	int				ret;
 
 	content = ft_calloc(1, sizeof(t_ip));
-	if (content == NULL)
+	if (content == NULL) {
 		fatal_error(-1, STR_ENOMEM, opt);
+	}
 		
 	ft_memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
@@ -33,8 +34,9 @@ static void	set_ip(char *host, t_opt *opt) {
 	freeaddrinfo(res);
 
 	ip = ft_lstnew(content);
-	if (ip == NULL)
+	if (ip == NULL) {
 		fatal_error(-1, STR_ENOMEM, opt);
+	}
 	if (opt->ip_lst == NULL) {
 		opt->ip_lst = ip;
 	}

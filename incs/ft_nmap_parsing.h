@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 16:30:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:12:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void    set_ports(t_opt *opt, char *value);
 void    set_scan(t_opt *opt, char *value);
 void    set_speedup(t_opt *opt, char *value);
 bool	ft_isnumber(char *str);
+int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
 
 #endif
