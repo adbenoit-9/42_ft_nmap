@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/08 19:17:37 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/08 19:29:27 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ norm:
 
 re: fclean all
 
-debug: CFLAGS += -DDEBUG -fsanitize=address -g3
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
 debug: re
 
 .PHONY: all clean fclean re debug

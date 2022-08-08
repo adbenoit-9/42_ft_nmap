@@ -6,7 +6,6 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 12:12:32 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 21:27:07 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +44,8 @@ int main(int ac, char **av)
 	t_opt	opt;
 
 	opt = parser(ac, av);
-	// scan_start(&opt);
+	scan_start(&opt);
+
 	ret = build_tcp_ip_raw(&tcp_buf);
 	print_ipv4(tcp_buf);
 	SET_IP4_VERSION(tcp_buf, 0x04);
@@ -64,6 +64,7 @@ int main(int ac, char **av)
 	SET_TCP_OFF(&tcp_buf[sizeof(struct iphdr)], 0x05);
 	print_ipv4(tcp_buf);
 	print_tcp(&tcp_buf[sizeof(struct iphdr)]);
+
 	ft_lstclear(&opt.ip_lst, clear_ip);
 	return (ret);
 }
