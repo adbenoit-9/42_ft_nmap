@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:35:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:39:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ bool isrange, t_opt *opt)
 	else if (end - begin < 0 || end - begin > PORTS_SCAN_LIMIT) {
 		fatal_error(E_LIMIT_EXCEED, NULL, opt);
 	}
-	else if (begin < 0 || begin > 65536) {
+	else if (begin < 0 || begin > PORT_MAX) {
 		fatal_error(E_BADPORT, value, opt);
 	}
-	else if (end < 0 || end > 65536) {
+	else if (end < 0 || end > PORT_MAX) {
 		fatal_error(E_BADPORT, value + i + 1, opt);
 	}
 }

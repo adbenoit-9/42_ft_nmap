@@ -6,21 +6,32 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 14:05:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:14:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
 
 static void	set_ip(char *host, t_opt *opt) {
-	t_ip	*content;
-	t_list	*ip;
+	t_ip			*content;
+	t_list			*ip;
+	struct addrinfo	hints;
+	struct addrinfo	*res;
+	int				ret;
 
-	(void)host;
-	content = malloc(sizeof(t_ip));
+	content = ft_calloc(1, sizeof(t_ip));
 	if (content == NULL)
 		fatal_error(-1, STR_ENOMEM, opt);
-	// getaddrinfo(host) => sockaddr_storage
+		
+	ft_memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_flags = 0;
+	ret = getaddrinfo(host, NULL, &hints, &res);
+	if (ret != 0)
+		fatal_error(E_BADHOST, host, 0);
+	ft_memcpy(&content->sock, res->ai_addr, sizeof(struct sockaddr_storage));
+	freeaddrinfo(res);
+
 	ip = ft_lstnew(content);
 	if (ip == NULL)
 		fatal_error(-1, STR_ENOMEM, opt);

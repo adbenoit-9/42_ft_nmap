@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:18:50 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:51:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_opt parser(int ac, char **av)
         }
     }
     if (opt.ip_lst == NULL) {
-        fatal_error(E_NOIP, NULL, &opt);
+        fatal_error(E_NOHOST, NULL, &opt);
     }
     if (opt.scans == NONE) {
         opt.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;

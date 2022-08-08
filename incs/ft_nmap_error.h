@@ -6,15 +6,15 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 14:02:50 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:51:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_NMAP_ERROR_H
 # define FT_NMAP_ERROR_H
 
-# define E_NOIP 1
-# define E_BADIP 2
+# define E_NOHOST 1
+# define E_BADHOST 2
 # define E_BADFILE 3
 # define E_BADPORT 4
 # define E_BADRANGE 5
@@ -25,9 +25,9 @@
 # define E_BADOPT 10
 # define E_LIMIT_EXCEED 11
 
-# define PRINT_ENOIP do {dprintf(STDERR_FILENO,\
+# define PRINT_ENOHOST do {dprintf(STDERR_FILENO,\
             "usage error: IP address required\n");}  while(0)
-# define PRINT_EBADIP(str) do {dprintf(STDERR_FILENO,\
+# define PRINT_EBADHOST(str) do {dprintf(STDERR_FILENO,\
             "%s: Name or service not known\n", str);} while(0)
 # define PRINT_EBADFILE(str) do {dprintf(STDERR_FILENO,\
             "%s: No such file or directory\n", str);} while(0)
