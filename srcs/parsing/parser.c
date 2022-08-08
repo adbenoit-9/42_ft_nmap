@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 02:04:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:54:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ t_opt parser(int ac, char **av)
             exit_help, set_ip_from_arg, set_ports, set_scan, set_speedup};
     char  *flag_lst[] = {"--file", "--help", "--ip", "--ports",
             "--scan", "--speedup", NULL};
-    
+    int64_t i, j;
+
     if (ac == 1) {
         print_usage();
         exit(EXIT_FAILURE);
     }
     init_opt(&opt);
-    for (int32_t i = 1; av[i]; i++)  {
-        int32_t j;
+    for (i = 1; av[i]; i++)  {
         for (j = 0; flag_lst[j]; j++) {
             if (ft_strcmp(av[i], flag_lst[j]) == 0) {
                 setters[j](&opt, av[i + 1]);
@@ -65,11 +65,16 @@ t_opt parser(int ac, char **av)
             }
         }
         if (j == NFLAG) {
-            exit(EXIT_FAILURE);
-        }    
+            if (av[i][0] == '-') {
+                fatal_error(E_BADOPT, av[i], &opt);
+            }
+            else {
+                fatal_error(E_BADARG, av[i], &opt);
+            }
+        }
     }
     if (opt.ip_lst == NULL) {
-        exit(EXIT_FAILURE);
+        fatal_error(E_NOIP, NULL, &opt);
     }
     return (opt);
 }

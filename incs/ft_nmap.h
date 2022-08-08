@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 12:10:52 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 01:08:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:07:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "ft_nmap_ip.h"
 # include "ft_nmap_tcp.h"
 # include "ft_nmap_send.h"
+# include "ft_nmap_error.h"
 # include "../libft/inc/libft.h"
 
 # define FT_NMAP_OK			0
