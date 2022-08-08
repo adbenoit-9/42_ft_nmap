@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:25:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:30:29 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <errno.h>
+# include <netdb.h>
+# include <arpa/inet.h>
 # include "../libft/inc/libft.h"
 
 # define NFLAG 6
 # define PORTS_SCAN_LIMIT 1024
+# define PORT_MAX 65536
 
 # define NONE 0
 # define S_SYN 0b10000000

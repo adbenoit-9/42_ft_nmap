@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 15:29:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:32:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,31 @@
 
 static void print_option(t_opt opt)
 {
+	char	ip[INET6_ADDRSTRLEN];
 	char	*scan_str[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP"};
 	char	scan_value[] = {S_SYN, S_NULL, S_ACK, S_FIN, S_XMAS, S_UDP};
+	t_list	*tmp;
 	
 	printf("-- options --\n");
-	printf("ip:\n");
-	printf("ports:");
+	printf("ips:");
+	tmp = opt.ip_lst;
+	while (tmp != NULL) {
+		if (((t_ip *)(tmp->content))->sock.ss_len == INET_ADDRSTRLEN) {
+			inet_ntop(AF_INET, &((struct sockaddr_in *)&(
+						(t_ip *)(tmp->content)
+					)->sock
+				)->sin_addr, ip, INET_ADDRSTRLEN);
+		}
+		else {
+			inet_ntop(AF_INET6, &((struct sockaddr_in6 *)&(
+						(t_ip *)(tmp->content)
+					)->sock
+				)->sin6_addr, ip, INET6_ADDRSTRLEN);
+		}
+		printf(" %s", ip);
+		tmp = tmp->next;
+	}
+	printf("\nports:");
 	for (uint32_t i = 0; opt.ports[i] != 0 && i < PORTS_SCAN_LIMIT; i++)
 		printf(" %d", opt.ports[i]);
 	printf("\nscans:");
@@ -43,11 +62,11 @@ void    fatal_error(int16_t error, char *arg, t_opt *opt)
 	dprintf(STDERR_FILENO, "ft_nmap: ");
 	switch (error)
 	{
-	case E_NOIP:
-		PRINT_ENOIP;
+	case E_NOHOST:
+		PRINT_ENOHOST;
 		break;
-	case E_BADIP:
-		PRINT_EBADIP(arg);
+	case E_BADHOST:
+		PRINT_EBADHOST(arg);
 		break;
 	case E_BADFILE:
 		PRINT_EBADFILE(arg);
