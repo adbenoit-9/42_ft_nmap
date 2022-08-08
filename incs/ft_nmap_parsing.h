@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 02:13:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 15:25:15 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include "../libft/inc/libft.h"
 
 # define NFLAG 6
+# define PORTS_SCAN_LIMIT 1024
 
+# define NONE 0
 # define S_SYN 0b10000000
 # define S_NULL 0b01000000
 # define S_ACK 0b00100000
@@ -30,10 +32,10 @@
 
 typedef struct s_opt
 {
-	uint8_t	ports[1024];
-	uint8_t	scans;
-	int8_t	speedup;
-	t_list	*ip_lst;
+	uint16_t	ports[PORTS_SCAN_LIMIT];
+	uint8_t		scans;
+	int8_t		speedup;
+	t_list		*ip_lst;
 }               t_opt;
 
 t_opt	parser(int ac, char **av);
@@ -42,5 +44,6 @@ void    set_ip_from_arg(t_opt *opt, char *ip);
 void    set_ports(t_opt *opt, char *value);
 void    set_scan(t_opt *opt, char *value);
 void    set_speedup(t_opt *opt, char *value);
+bool	ft_isnumber(char *str);
 
 #endif
