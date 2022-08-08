@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:21:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 02:04:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 02:13:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void    set_ports(t_opt *opt, char *value)
 		exit(EXIT_FAILURE);
 	}
 	for (int32_t i = start; i <= end; i++) {
-		opt->ports[i - start] = i | 1 << 8;
+		opt->ports[i - start] = i;
 	}
 
 }

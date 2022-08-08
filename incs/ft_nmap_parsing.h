@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 02:06:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 02:13:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 
 typedef struct s_opt
 {
-	uint16_t	ports[1024];
-	uint8_t		scans;
-	int8_t		speedup;
-	t_list		*ip_lst;
+	uint8_t	ports[1024];
+	uint8_t	scans;
+	int8_t	speedup;
+	t_list	*ip_lst;
 }               t_opt;
 
 t_opt	parser(int ac, char **av);
