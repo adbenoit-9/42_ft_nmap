@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 12:12:32 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 19:24:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:27:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int main(int ac, char **av)
 	t_opt	opt;
 
 	opt = parser(ac, av);
-	// scan_start(&opt);
+	scan_start(&opt);
 	ret = build_tcp_ip_raw(&buffer);
 	print_ipv4(buffer);
 	SET_IP4_VERSION(buffer, 0x4);
