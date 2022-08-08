@@ -18,7 +18,7 @@ A project should not contain unused macro declarations
 Rule 2.6
 A function should not contain unused label declarations 
 Rule 2.7
-There should be no unused opteters in functions 
+There should be no unused parameters in functions 
 Rule 3.1
 The character sequences /* and // shall not be used within a comment 
 Rule 3.2
@@ -60,7 +60,7 @@ A string literal shall not be assigned to an object unless the object's type is 
 Rule 8.1
 Types shall be explicitly specified 
 Rule 8.2
-Function types shall be in prototype form with named opteters 
+Function types shall be in prototype form with named parameters 
 Rule 8.3
 All declarations of an object or function shall use the same names and type qualifiers 
 Rule 8.4
@@ -194,13 +194,13 @@ A function shall not be declared implicitly
 Rule 17.4
 All exit paths from a function with non-void return type shall have an explicit return statement with an expression 
 Rule 17.5
-The function argument corresponding to a opteter declared to have an array type shall have an appropriate number of elements 
+The function argument corresponding to a parameter declared to have an array type shall have an appropriate number of elements 
 Rule 17.6
-The declaration of an array opteter shall not contain the static keyword between the [ ] 
+The declaration of an array parameter shall not contain the static keyword between the [ ] 
 Rule 17.7
 The value returned by a function having non-void return type shall be used 
 Rule 17.8
-A function opteter should not be modified 
+A function parameter should not be modified 
 Rule 18.1
 A pointer resulting from arithmetic on a pointer operand shall address an element of the same array as that pointer operand 
 Rule 18.2
@@ -234,7 +234,7 @@ Rule 20.5
 Rule 20.6
 Tokens that look like a preprocessing directive shall not occur within amacro argument 
 Rule 20.7
-Expressions resulting from the expansion of macro opteters shall be enclosed in parentheses 
+Expressions resulting from the expansion of macro parameters shall be enclosed in parentheses 
 Rule 20.8
 The controlling expression of a #if or #elif preprocessing directive shall evaluate to 0 or 1 
 Rule 20.9
@@ -242,9 +242,9 @@ All identifiers used in the controlling expression of #if or #elif preprocessing
 Rule 20.10
 The # and ## preprocessor operators should not be used 
 Rule 20.11
-A macro opteter immediately following a # operator shall not immediately be followed by a ## operator 
+A macro parameter immediately following a # operator shall not immediately be followed by a ## operator 
 Rule 20.12
-A macro opteter used as an operand to the # or ## operators which is itself subject to further macro replacement shall only be used as an operand to these operators 
+A macro parameter used as an operand to the # or ## operators which is itself subject to further macro replacement shall only be used as an operand to these operators 
 Rule 20.13
 A line whose first token is # shall be a valid preprocessing directive 
 Rule 20.14
