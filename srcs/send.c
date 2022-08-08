@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:14:59 by leon              #+#    #+#             */
-/*   Updated: 2022/08/07 23:46:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:23:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,29 +111,41 @@ static int32_t					scan_ip(t_ip *ip, t_opt *opt)
 	return (ret);
 }
 
-int32_t					scan_start(t_list *ips, t_opt *opt)
+void					routine(t_opt *opt)
 {
 	int32_t		ret = FT_NMAP_OK;
-	t_list		*head;
+	t_list		*head = opt->ip_lst;
+	
+	while (head && (ret == FT_NMAP_OK))
+	{
+		if (!((t_ip*)head->content)->done) // If ip not done go into it
+		{
+			ret = scan_ip((t_ip*)head->content, opt);
+		}
+		head = head->next;
+	}
+	// return (NULL);
+}
 
-	if (!ips || !opt)
+int32_t					scan_start(t_opt *opt)
+{
+	int32_t		ret = FT_NMAP_OK;
+	pthread_t	threads[opt->speedup];
+
+	if (!opt)
 	{
 		ret = FT_NMAP_ERROR;
 	}
 	else
 	{
-		head = ips;
-		// create n threads launch routine => scan;
-		// loop in routine
-		while (head && (ret == FT_NMAP_OK))
-		{
-			if (!((t_ip*)head->content)->done) // If ip not done go into it
-			{
-				ret = scan_ip((t_ip*)head->content, opt);
-			}
-			head = head->next;
+		for (uint8_t i = 0; i < opt->speedup; i++) {
+			if (pthread_create(&threads[i], NULL, (void *)routine, opt) != 0)
+				fatal_error(-1, "thread_create: failed", opt);
 		}
-		// wait for all threads to end
+		routine(opt);
+		for (uint8_t i = 0; i < opt->speedup; i++) {
+			pthread_join(threads[i], NULL);
+		}
 	}
 	return (ret);
 }

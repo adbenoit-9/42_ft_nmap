@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:31 by leon              #+#    #+#             */
-/*   Updated: 2022/08/08 02:06:24 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:14:29 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_NMAP_SEND_H
 
 # include <netinet/in.h>
+# include <pthread.h>
 # include "../libft/inc/libft.h"
 # include "ft_nmap_parsing.h"
 
@@ -77,6 +78,6 @@ typedef struct			s_port {
 }						t_port;
 
 /* Exported functions */
-int32_t					scan_start(t_list *ips, t_opt *opt);
+int32_t					scan_start(t_opt *opt);
 
 #endif /* FT_NMAP_SEND_H */
