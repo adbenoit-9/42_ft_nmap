@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 17:06:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/08 20:01:37 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void print_option(t_opt opt)
 	printf("ips:");
 	tmp = opt.ip_lst;
 	while (tmp != NULL) {
-		if (((t_ip *)(tmp->content))->sock.ss_len == INET_ADDRSTRLEN) {
+		if (((t_ip *)(tmp->content))->sock.ss_family == AF_INET) {
 			inet_ntop(AF_INET, &((struct sockaddr_in *)&(
 						(t_ip *)(tmp->content)
 					)->sock
