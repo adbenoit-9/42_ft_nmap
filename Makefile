@@ -6,13 +6,13 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/08 19:29:27 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/12 19:40:38 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
 CC		= gcc
-CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
 IFLAGS 	= -I./incs
 
 UNAME	:= $(shell uname)
@@ -38,7 +38,8 @@ NAME			:= ft_nmap
 SRC				:=	main.c \
 						build.c \
 						send.c \
-						error.c
+						error.c \
+						utils.c
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 SUB_SRC			:= parser.c \

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:14:59 by leon              #+#    #+#             */
-/*   Updated: 2022/08/08 21:28:19 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/12 20:28:12 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,101 @@
 #include "ft_nmap_tcp.h"
 #include "ft_nmap_udp.h"
 #include "ft_nmap_ip.h"
+#include "ft_nmap_utils.h"
 
-// ips as described in ft_nmap_send.h
+// ips as described in ft_nmap_send.h// 
+
+static int32_t					set_flag(uint8_t *tcp_hdr, uint8_t flag)
+{
+	int			r = FT_NMAP_OK;
+
+	if (!tcp_hdr)
+	{
+		r = FT_NMAP_ERROR;
+	}
+	else
+	{
+		if (flag == S_SYN)
+		{
+			SET_TCP_FLAGS(tcp_hdr, FLAG_S_SYN);
+		}
+		else if (flag == S_NULL)
+		{
+			SET_TCP_FLAGS(tcp_hdr, FLAG_S_NULL);
+		}
+		else if (flag == S_ACK)
+		{
+			SET_TCP_FLAGS(tcp_hdr, FLAG_S_ACK);
+		}
+		else if (flag == S_FIN)
+		{
+			SET_TCP_FLAGS(tcp_hdr, FLAG_S_FIN);
+		}
+		else if (flag == S_XMAS)
+		{
+			SET_TCP_FLAGS(tcp_hdr, FLAG_S_XMAS);
+		}
+		else
+		{
+			r = FT_NMAP_ERROR;
+		}
+	}
+	return (r);
+}
+
+static int32_t					tcp_scan(t_ip *ip, t_port *port, uint8_t *tcp_buf, uint8_t flag)
+{
+	int			r				= FT_NMAP_OK;
+	int32_t		length			= 0;
+	uint16_t	tcpId			= 0;
+	uint32_t	tcpSeq			= 0;
+	uint8_t		ttl				= 0;
+
+	if (!ip || !port || !tcp_buf)
+	{
+		r = FT_NMAP_OK;
+	}
+	else
+	{
+		if (ip->sock.ss_family == AF_INET)
+		{
+			get_urandom((uint8_t*)&tcpId, 2);
+			get_urandom((uint8_t*)&tcpSeq, 4);
+			while (ttl < 30)
+				get_urandom(&ttl, 1);
+			SET_IP4_ID(tcp_buf, tcpId);
+			SET_IP4_TTL(tcp_buf, ttl);
+			SET_TCP_SEQ(&tcp_buf[sizeof(struct iphdr)], tcpSeq);
+			length = sizeof(struct iphdr) + sizeof(struct tcphdr);
+			if (flag == S_SYN) /* Add MSS for S_SYN */
+			{
+				length += 4;
+				SET_TCP_DATA(&tcp_buf[sizeof(struct iphdr)], syn_mss, 4);
+				SET_TCP_OFF(&tcp_buf[sizeof(struct iphdr)], 6);
+			}
+			else
+			{
+				SET_TCP_OFF(&tcp_buf[sizeof(struct iphdr)], 5);
+			}
+			SET_IP4_TOT_LEN(tcp_buf, htons(length));
+			r = set_flag(&tcp_buf[sizeof(struct iphdr)], flag);
+			SET_IP4_CHECK(tcp_buf, ipv4_checksum((uint16_t*)tcp_buf, sizeof(struct iphdr)));
+		}
+		else
+		{
+		}
+		printf("PACKET TYPE: %x ; Length = %d\n", flag, length);
+		printf("PACKET : ");
+		int j = 0;
+		while (j < length - 1)
+		{
+			printf("%02x%02x ", tcp_buf[j], tcp_buf[j+1]);
+			j += 2;
+		}
+		printf("\n");
+	}
+	return (r);
+}
 
 static int32_t					scan_port(t_ip *ip, t_port *port, t_opt *opt,
 								uint8_t *tcp_buf, uint8_t *udp_buf)
@@ -75,11 +168,13 @@ static int32_t					scan_port(t_ip *ip, t_port *port, t_opt *opt,
 				sizeof(struct ip6_hdr));
 	if ((scans_flag & S_ANYTCP) != 0)
 	{
-		SET_TCP_DPORT(&tcp_buf[offset], port->port);
+		SET_TCP_DPORT(&tcp_buf[offset], htons(port->port));
+		SET_TCP_WIN(&tcp_buf[offset], 0x0004);
+		SET_TCP_URP(&tcp_buf[offset], 0x0000);
 	}
 	if ((scans_flag & S_UDP) != 0)
 	{
-		SET_UDP_DPORT(&udp_buf[offset], port->port);
+		SET_UDP_DPORT(&udp_buf[offset], htons(port->port));
 	}
 	// TODO LMA : let the kernel set the SPORT ?
 	// TODO LMA 1 fonction par scan ?
@@ -87,20 +182,23 @@ static int32_t					scan_port(t_ip *ip, t_port *port, t_opt *opt,
 	{
 		if ((scans_flag & S_SYN) != 0) {
 			scans_flag &= ~S_SYN;
-			// ret = syn_scan(ip, port, tcp_buf);
-			(void)ip;
+			ret = tcp_scan(ip, port, tcp_buf, S_SYN);
 		}
 		else if ((scans_flag & S_NULL) != 0x00) {
 			scans_flag &= ~S_NULL;
+			ret = tcp_scan(ip, port, tcp_buf, S_NULL);
 		}
 		else if ((scans_flag & S_ACK) != 0x00) {
 			scans_flag &= ~S_ACK;
+			ret = tcp_scan(ip, port, tcp_buf, S_ACK);
 		}
 		else if ((scans_flag & S_FIN) != 0x00) {
 			scans_flag &= ~S_FIN;
+			ret = tcp_scan(ip, port, tcp_buf, S_FIN);
 		}
 		else if ((scans_flag & S_XMAS) != 0x00) {
 			scans_flag &= ~S_XMAS;
+			ret = tcp_scan(ip, port, tcp_buf, S_XMAS);
 		}
 		else if ((scans_flag & S_UDP) != 0x00) {
 			scans_flag &= ~S_UDP;
@@ -141,8 +239,6 @@ static int32_t					scan_ip(t_ip *ip, t_opt *opt)
 					SET_IP4_TOS(tcp_buf, 0x00);
 					SET_IP4_PROTOCOL(tcp_buf, 0x06);
 					SET_IP4_FRAG_OFF(tcp_buf, 0x0000);
-					SET_TCP_WIN(tcp_buf, 0x0004);
-					SET_TCP_URP(tcp_buf, 0x0000);
 				}
 				if ((ret == FT_NMAP_OK) && ((opt->scans & NMAP_SCANS_FLAG_UDP) != 0))
 				{
@@ -152,7 +248,7 @@ static int32_t					scan_ip(t_ip *ip, t_opt *opt)
 				// let the kernel add src_addr and dst_addr to buffer ?
 				if (ret == FT_NMAP_OK)
 				{
-					ret = scan_port(ip, (t_port*)head->content, opt, udp_buf, tcp_buf);
+					ret = scan_port(ip, (t_port*)head->content, opt, tcp_buf, udp_buf);
 				}
 			}
 			head = head->next;

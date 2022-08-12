@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 20:11:38 by leon              #+#    #+#             */
-/*   Updated: 2022/08/08 20:11:41 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/12 20:04:27 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,16 @@
        					(uint16_t)value;} while (0)
 #define SET_TCP_URP(tcp, value) do {((struct tcphdr*)tcp)->th_urp =\
        					(uint16_t)value;} while (0)
+#define SET_TCP_DATA(tcp, value, length) do {if (value != 0)\
+						{memcpy(&((uint8_t*)tcp)[sizeof(struct tcphdr)],\
+						value, length);}} while (0)
+
+static const uint8_t syn_mss[4] = {0x02, 0x04, 0x05, 0xb4};
+
+#define FLAG_S_SYN				TH_SYN
+#define FLAG_S_NULL				0x00
+#define FLAG_S_ACK				TH_ACK
+#define FLAG_S_FIN				TH_RST | TH_ACK
+#define FLAG_S_XMAS				TH_FIN | TH_SYN | TH_RST | TH_ACK
 
 #endif /* FT_NMAP_TCP */
