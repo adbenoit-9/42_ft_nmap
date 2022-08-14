@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 17:15:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/14 16:45:46 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,37 @@ static void    exit_help(t_opt *opt, char *value)
     exit(EXIT_SUCCESS);
 }
 
+// TODO LMA take input from user
+static void init_scan_by_port(t_opt *opt, t_ip *ip)
+{
+    t_list  *newscan, *it;
+    void    *content;
+
+    it = ip->cross.hl;
+    while (it) {
+        for (uint16_t i = 0; i < MAX_SCAN_TYPE; i++) {
+            content = calloc(1, sizeof(t_scan));
+            if (content == NULL) {
+                fatal_error(-1, STR_ENOMEM, opt);
+            }
+			((t_scan*)content)->cross.scan_id = i;
+			((t_scan*)content)->cross.lock = 0;
+            //ft_memcpy(((t_scan*)content)->, &opt->ports[i], sizeof(uint16_t));
+            newscan = ft_lstnew(content);
+            if (newscan == NULL) {
+                fatal_error(-1, STR_ENOMEM, opt);
+            }
+            if (((t_port *)it->content)->cross.scans == NULL) {
+                ((t_port *)it->content)->cross.scans = newscan;
+            }
+            else {
+                ft_lstadd_back(&((t_port *)it->content)->cross.scans, newscan);
+            }
+        }
+        it = it->next;
+    }
+}
+
 static void init_port_by_ip(t_opt *opt)
 {
     t_list  *newport, *it;
@@ -54,18 +85,19 @@ static void init_port_by_ip(t_opt *opt)
             if (content == NULL) {
                 fatal_error(-1, STR_ENOMEM, opt);
             }
-            ft_memcpy(content,&opt->ports[i], sizeof(uint16_t));
+            ft_memcpy(&((t_port*)content)->port,&opt->ports[i], sizeof(uint16_t));
             newport = ft_lstnew(content);
             if (newport == NULL) {
                 fatal_error(-1, STR_ENOMEM, opt);
             }
-            if (((t_ip *)it->content)->ports == NULL) {
-                ((t_ip *)it->content)->ports = newport;
+            if (((t_ip *)it->content)->cross.hl == NULL) {
+                ((t_ip *)it->content)->cross.hl = newport;
             }
             else {
-                ft_lstadd_back(&((t_ip *)it->content)->ports, newport);
+                ft_lstadd_back(&((t_ip *)it->content)->cross.hl, newport);
             }
         }
+		init_scan_by_port(opt, (t_ip *)it->content);
         it = it->next;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:39:38 by leon              #+#    #+#             */
-/*   Updated: 2022/08/12 20:20:08 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/14 16:40:52 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 
 int					get_urandom(uint8_t *buf, int length);
 uint16_t			ipv4_checksum(uint16_t *addr, int len);
+uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen);
 
 #endif

@@ -41,10 +41,13 @@ int main(int ac, char **av)
 {
 	uint8_t *tcp_buf = NULL;
 	int32_t ret;
+	uint8_t	*buf;
 	t_opt	opt;
 
+	buf = malloc(NMAP_BUFFER_SIZE);
 	opt = parser(ac, av);
-	scan_start(&opt);
+	//scan_start(&opt);
+	sendy(buf, opt.ip_lst);
 
 	ret = build_tcp_ip_raw(&tcp_buf);
 	print_ipv4(tcp_buf);

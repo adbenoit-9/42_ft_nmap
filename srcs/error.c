@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 20:01:37 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/14 15:15:09 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void print_option(t_opt opt)
 
 void	clear_ip(void *ip)
 {
-	ft_lstclear(&((t_ip *)ip)->ports, free);	
+	ft_lstclear(&((t_ip *)ip)->cross.hl, free);	
 }
 
 void    fatal_error(int16_t error, char *arg, t_opt *opt)

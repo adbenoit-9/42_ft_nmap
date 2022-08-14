@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/08/12 20:19:31 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/14 16:42:18 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <string.h>
 
+// TODO bufferriser avec une static
+// 4096 bytes should do it
 int				get_urandom(uint8_t *buf, int length)
 {
 	int			randomfd;
@@ -87,4 +89,26 @@ uint16_t			ipv4_checksum(uint16_t *addr, int len)
 	sum += (sum >> 16);
 	answer = ~sum;
 	return (answer);
+}
+
+#include <netinet/ip.h>
+
+uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
+{
+	uint8_t						tcp[64] = {0};
+	int							offset = 0;
+
+	memcpy(&tcp[offset], &ip[12], 4);
+	offset += 4;
+	memcpy(&tcp[offset], &ip[16], 4);
+	offset += 4;
+	offset += 1;
+	memcpy(&tcp[offset], &ip[9], 1);
+	offset += 1;
+	memcpy(&tcp[offset], &tcplen, 2);
+	offset += 2;
+	memcpy(&tcp[offset], &ip[sizeof(struct iphdr)], tcplen);
+	offset += tcplen;
+	
+	return (ipv4_checksum((uint16_t*)tcp, offset));
 }

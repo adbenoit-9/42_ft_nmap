@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:31 by leon              #+#    #+#             */
-/*   Updated: 2022/08/08 19:14:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/14 14:22:36 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,22 @@
  *
 */
 
+typedef struct	s_nmap_proto {
+	uint32_t 	index;
+	t_list		*hl;
+	t_list		*scans;
+}				t_nmap_proto;
+
+typedef struct	s_ft_scan {
+ uint32_t	scan_id;
+ uint32_t	flag; // uint32 pour alignement
+}				t_ft_scan;
+
 typedef struct		s_ip {
+	t_nmap_proto				cross;
 	struct sockaddr_storage		sock;
-	t_list						*ports;
-	uint8_t						done;
+//	t_list						*ports;
+//	uint8_t						done;
 }					t_ip;
 
 /* 6 scan a gérer : 
@@ -72,10 +84,17 @@ typedef struct		s_ip {
 #define NMAP_SCANS_FLAG_ANY_TCP		0x1F
 
 typedef struct			s_port {
-	uint16_t 	port;
-	uint8_t		lock;
-	uint32_t	result;
+	t_nmap_proto	cross;
+	uint16_t 		port;
+//	uint8_t			lock; don't lock here
+// 	uint32_t		result; result in scan
 }						t_port;
+
+typedef struct			s_scan {
+	t_ft_scan	cross;
+	uint32_t	result;
+	uint32_t	lock;
+}						t_scan;
 
 /* Exported functions */
 int32_t					scan_start(t_opt *opt);
