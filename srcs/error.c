@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/14 15:15:09 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/14 17:35:18 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,16 @@ static void print_option(t_opt opt)
 
 void	clear_ip(void *ip)
 {
-	ft_lstclear(&((t_ip *)ip)->cross.hl, free);	
+	t_list		*head1;
+
+	head1 = ((t_ip*)ip)->cross.hl;
+	while (head1)
+	{
+		ft_lstclear(&((t_port *)head1->content)->cross.scans, free);	
+		head1 = head1->next;
+	}
+	ft_lstclear(&((t_ip*)ip)->cross.hl, free);	
+	free(ip);
 }
 
 void    fatal_error(int16_t error, char *arg, t_opt *opt)

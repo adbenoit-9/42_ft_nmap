@@ -6,12 +6,15 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:42:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/14 16:48:33 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/14 18:03:45 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
 #include "ft_nmap_utils.h"
+#include <sys/types.h>          /* See NOTES */
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 // Must write all the header here
 // All proto with tcp can have shared function with ipv4, ipv6, tcp
@@ -24,6 +27,7 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 	uint16_t	tcpId			= 0;
 	uint32_t	tcpSeq			= 0;
 	uint8_t		ttl				= 0;
+	uint16_t	sport			= 0;
 
 	if (!tcp_buf)
 	{
@@ -42,6 +46,10 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 			{
 				r = get_urandom(&ttl, 1);
 			}
+			while ((r == FT_NMAP_OK) && sport < 1024)
+			{
+				r = get_urandom((uint8_t*)&sport, 2);
+			}
 			if (r == FT_NMAP_OK)
 			{
 				SET_IP4_VERSION(tcp_buf, 0x04);
@@ -49,17 +57,18 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 				SET_IP4_TOS(tcp_buf, 0x00);
 				SET_IP4_PROTOCOL(tcp_buf, 0x06);
 
-			uint32_t	dip; // DEBUG
-			inet_pton(AF_INET, "127.0.0.1", &dip); // DEBUG
-			SET_IP4_DADDR(tcp_buf, dip); // DEBUG
-			SET_IP4_SADDR(tcp_buf, dip); // DEBUG
+				uint32_t	dip; // DEBUG
+				inet_pton(AF_INET, "127.0.0.1", &dip); // DEBUG
+				SET_IP4_DADDR(tcp_buf, dip); // DEBUG
+				SET_IP4_SADDR(tcp_buf, dip); // DEBUG
 
 				SET_IP4_FRAG_OFF(tcp_buf, 0x0000);
 				SET_IP4_ID(tcp_buf, tcpId);
-				SET_IP4_TTL(tcp_buf, ttl);
+				SET_IP4_TTL(tcp_buf, 0x01); //ttl);
 
 
 				SET_TCP_SEQ(&tcp_buf[sizeof(struct iphdr)], tcpSeq);
+				SET_TCP_SPORT(&tcp_buf[sizeof(struct iphdr)], sport);
 				SET_TCP_WIN(&tcp_buf[sizeof(struct iphdr)], 0x0004);
 				SET_TCP_URP(&tcp_buf[sizeof(struct iphdr)], 0x0000);
 				length = sizeof(struct iphdr) + sizeof(struct tcphdr);
@@ -71,6 +80,7 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 		}
 		else
 		{
+			// TODO ipv6
 		}
 	}
 	return (r);
@@ -107,6 +117,7 @@ int 				scan_tcp_syn(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan
 	}
 	else
 	{
+		/* First build header */
 		memset(buf, 0, MAX_PACKET_SIZE);
 		/* Set common tcp scan */
 		r = set_scan_tcp(buf, ip->sock.ss_family);
@@ -122,7 +133,27 @@ int 				scan_tcp_syn(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan
 			SET_IP4_TOT_LEN(buf, htons(length));
 			SET_TCP_FLAGS(&buf[sizeof(struct iphdr)], FLAG_S_SYN);
 			SET_TCP_DPORT(&buf[sizeof(struct iphdr)], htons(port->port));
+
 			SET_TCP_SUM(&buf[sizeof(struct iphdr)], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
+		}
+		int sock;
+		if (r == FT_NMAP_OK)
+		{
+
+			/* Request a socket */
+			sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+			if (sock< 0)
+			{
+				fprintf(stderr, "%s:%d socket call failed, are you root ?\n", __func__, __LINE__);
+				r = FT_NMAP_ERROR;
+			}
+		}
+		if (r == FT_NMAP_OK)
+		{
+			/* Send this scan */
+			r = sendto(sock, buf, length, 0, (const struct sockaddr*)&((t_ip*)conf_ll)->sock, sizeof(struct sockaddr_in));
+			if (r < 0)
+				perror("sendto");
 		}
 	}
 	print_packet(buf, length);
