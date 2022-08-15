@@ -9,3 +9,6 @@ Avec les fonctions les seuls moyerns que je vois sont de look toute les interfac
 Mais si la table de routage du system et complexe et qu'il a plusieurs interfaces ca ne fonctionnera pas. La solution du bind UDP avec
 getsockname serait meilleur mais on a pas le droit.
 
+
+-> do a resolvy module
+-> do a routing module (routy) (ip src dynamic en fonction de l'ip dst)

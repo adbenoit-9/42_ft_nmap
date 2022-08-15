@@ -6,11 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/14 17:35:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/15 22:40:10 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
+#include "ft_nmap_structs.h"
 
 #ifdef DEBUG
 
@@ -57,14 +58,18 @@ static void print_option(t_opt opt)
 void	clear_ip(void *ip)
 {
 	t_list		*head1;
+	t_list		*tmp;
 
-	head1 = ((t_ip*)ip)->cross.hl;
+	head1 = ((t_link*)ip)->cross.nd;
 	while (head1)
 	{
-		ft_lstclear(&((t_port *)head1->content)->cross.scans, free);	
+		ft_lstclear(&((t_app*)head1->content)->cross.rd, free);	
+		free(head1->content);
+		tmp = head1;
 		head1 = head1->next;
+		free(tmp);
 	}
-	ft_lstclear(&((t_ip*)ip)->cross.hl, free);	
+	ft_lstclear(&((t_link*)ip)->cross.st, free);	
 	free(ip);
 }
 

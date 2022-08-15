@@ -6,13 +6,16 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/14 15:00:22 by leon             ###   ########.fr        #
+#    Updated: 2022/08/16 01:26:32 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMPILATION
+
 CC		= gcc
 CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
+# -DMAPPY_DEBUG
+
 IFLAGS 	= -I./incs
 
 UNAME	:= $(shell uname)
@@ -36,11 +39,15 @@ DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 # FILES
 NAME			:= ft_nmap
 SRC				:=	main.c \
-						build.c \
 						sendy.c \
-						scany.c \
+						buildy.c \
+						buildy_utils.c \
+						mappy.c \
+						recvy.c \
+						setupy.c \
+						cleany.c \
 						error.c \
-						utils.c
+
 SUB_SRC			:= 
 # SRC				+= $(addprefix {name}, $(SUB_SRC))
 SUB_SRC			:= parser.c \

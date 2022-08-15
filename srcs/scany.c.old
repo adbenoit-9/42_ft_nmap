@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:42:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/14 18:03:45 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/15 20:51:53 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-// Must write all the header here
-// All proto with tcp can have shared function with ipv4, ipv6, tcp
 // int 				proto_scan(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan)
 
 static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
@@ -64,7 +62,7 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 
 				SET_IP4_FRAG_OFF(tcp_buf, 0x0000);
 				SET_IP4_ID(tcp_buf, tcpId);
-				SET_IP4_TTL(tcp_buf, 0x01); //ttl);
+				SET_IP4_TTL(tcp_buf, ttl); //ttl);
 
 
 				SET_TCP_SEQ(&tcp_buf[sizeof(struct iphdr)], tcpSeq);
@@ -86,6 +84,43 @@ static int			set_scan_tcp(uint8_t *tcp_buf, uint16_t ipproto)
 	return (r);
 }
 
+int					scan_tcp_common_recv(uint8_t *buf, t_ip *ip, t_scan *scan, int sock, int length)
+{
+	// Do i need to bind the socket ? Response is not bufferised so i recv nothing
+	int			r = FT_NMAP_OK;
+	uint32_t sockaddrlen = sizeof(struct sockaddr_in);
+	uint32_t seq = 0;
+	uint32_t seqverif = 0;
+	uint16_t	flag;
+
+	GET_TCP_SEQ(&buf[sizeof(struct iphdr)], seq);
+	seq = htonl(seq);
+	seq += 1;
+	while (r != -1 && seq != htonl(seqverif) && seq - 1 != htonl(seqverif))
+	{
+		r = recvfrom(sock, buf, length - 4, 0, (struct sockaddr*)&(ip)->sock, &sockaddrlen);
+		GET_TCP_ACK(&buf[sizeof(struct iphdr)], seqverif);
+		fprintf(stderr, "seq = %08x ack = %08x\n", seq, htonl(seqverif));
+	}
+	if (r != -1)
+	{
+		//print_packet(buf, length);
+		GET_TCP_FLAGS(&buf[sizeof(struct iphdr)], flag);
+		scan->result = flag;
+		r = FT_NMAP_OK;
+		fprintf(stderr, "flag received = %04x", flag);
+	}
+	
+	// target send back SYN/ACK -> Port is open, don't need to send RST (forget connection) because our kernel will do it
+	// target send back RST -> Port is closed
+	// target don't respond -> Port is filtered, have to wait a fixed time and re-try one time
+	// target send ICMP unreachable error (type 3, code 1, 2, 3, 9, 10, or 13) -> Port is filtered
+	
+	// If the target don't respond through socket then it's filtered, but we still want to have the ICMP error from
+	// BPF.
+	return (r);
+}
+
 static void			print_packet(uint8_t *buf, uint32_t length)
 {
 	uint32_t j = 0;
@@ -100,13 +135,33 @@ static void			print_packet(uint8_t *buf, uint32_t length)
 (void)length;
 }
 
+
+int 				scan_tcp_all(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan)
+{
+	int				r		= FT_NMAP_OK;
+
+	if (!buf || !conf_ll || !conf_hl || !conf_scan)
+	{
+		r = FT_NMAP_ERROR;
+	}
+	else
+	{
+		memset(buf, 0, MAX_PACKET_SIZE);
+		
+		r = (ip->sock.ss_family == AF_INET ? build_ipv4_tcp_scan
+											: build_ipv6_tcp_scan)
+						(buf, conf_ll, conf_hl, conf_scan);
+	}
+}
+
 int 				scan_tcp_syn(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan)
 {
-	int		r		= FT_NMAP_OK;
-	t_ip	*ip;
-	t_port	*port;
-	t_scan	*scan;
-	int32_t		length			= 0;
+	int				r		= FT_NMAP_OK;
+	t_ip			*ip;
+	t_port			*port;
+	t_scan			*scan;
+	int				sock;
+	int32_t			length			= 0;
 
 	ip = (t_ip*)conf_ll;
 	port = (t_port*)conf_hl;
@@ -123,7 +178,7 @@ int 				scan_tcp_syn(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan
 		r = set_scan_tcp(buf, ip->sock.ss_family);
 		if (r == FT_NMAP_OK)
 		{
-			/* SYN : add MSS + add flag*/
+			/* SYN : add MSS + update length + add flag + compute checksum */
 			length = sizeof(struct iphdr) + sizeof(struct tcphdr);
 	   		length += 4;
 	   		SET_TCP_DATA(&buf[sizeof(struct iphdr)], syn_mss, 4);
@@ -136,27 +191,35 @@ int 				scan_tcp_syn(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan
 
 			SET_TCP_SUM(&buf[sizeof(struct iphdr)], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 		}
-		int sock;
 		if (r == FT_NMAP_OK)
 		{
 
 			/* Request a socket */
-			sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+			sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 			if (sock< 0)
 			{
 				fprintf(stderr, "%s:%d socket call failed, are you root ?\n", __func__, __LINE__);
 				r = FT_NMAP_ERROR;
 			}
+			int optval=1;
+			if (setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &optval, sizeof(int)) < 0)
+				perror("setsockopt");
 		}
 		if (r == FT_NMAP_OK)
 		{
 			/* Send this scan */
 			r = sendto(sock, buf, length, 0, (const struct sockaddr*)&((t_ip*)conf_ll)->sock, sizeof(struct sockaddr_in));
-			if (r < 0)
+			if (r < 0) // DEBUG
 				perror("sendto");
+			else
+				r = FT_NMAP_OK;
+		}
+		if (r == FT_NMAP_OK)
+		{
+			/* Recv TODO LMA : do we need a recv or can we do all in pcap ? */
+			r = scan_tcp_common_recv(buf, ip, scan, sock, length);
 		}
 	}
-	print_packet(buf, length);
 	return (r);
 }
 int 				scan_tcp_null(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_scan)
@@ -166,6 +229,7 @@ int 				scan_tcp_null(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_sca
 	t_port	*port;
 	t_scan	*scan;
 	int32_t		length			= 0;
+			int sock;
 
 	ip = (t_ip*)conf_ll;
 	port = (t_port*)conf_hl;
@@ -181,13 +245,40 @@ int 				scan_tcp_null(uint8_t *buf, void *conf_ll, void *conf_hl, void *conf_sca
 		r = set_scan_tcp(buf, ip->sock.ss_family);
 		if (r == FT_NMAP_OK)
 		{
-			/* SYN : add MSS + add flag*/
 			length = sizeof(struct iphdr) + sizeof(struct tcphdr);
 			SET_TCP_FLAGS(&buf[sizeof(struct iphdr)], FLAG_S_NULL);
 			SET_TCP_DPORT(&buf[sizeof(struct iphdr)], htons(port->port));
 			SET_TCP_SUM(&buf[sizeof(struct iphdr)], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 		}
-	print_packet(buf, length);
+		if (r == FT_NMAP_OK)
+		{
+
+			/* Request a socket */
+			sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+			if (sock< 0)
+			{
+				fprintf(stderr, "%s:%d socket call failed, are you root ?\n", __func__, __LINE__);
+				r = FT_NMAP_ERROR;
+			}
+			int optval=1;
+			if (setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &optval, sizeof(int)) < 0)
+				perror("setsockopt");
+		}
+		if (r == FT_NMAP_OK)
+		{
+			print_packet(buf, length);
+			/* Send this scan */
+			r = sendto(sock, buf, length, 0, (const struct sockaddr*)&((t_ip*)conf_ll)->sock, sizeof(struct sockaddr_in));
+			if (r < 0) // DEBUG
+				perror("sendto");
+			else
+				r = FT_NMAP_OK;
+		}
+		if (r == FT_NMAP_OK)
+		{
+			/* Recv TODO LMA : do we need a recv or can we do all in pcap ? */
+			r = scan_tcp_common_recv(buf, ip, scan, sock, length);
+		}
 	}
 	return (r);
 }

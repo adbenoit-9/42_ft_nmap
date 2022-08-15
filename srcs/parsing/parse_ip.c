@@ -6,20 +6,21 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 16:53:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/15 22:44:01 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
+#include "ft_nmap_structs.h"
 
 static void	set_ip(char *host, t_opt *opt) {
-	t_ip			*content;
+	t_link			*content;
 	t_list			*ip;
 	struct addrinfo	hints;
 	struct addrinfo	*res;
 	int				ret;
 
-	content = ft_calloc(1, sizeof(t_ip));
+	content = ft_calloc(1, sizeof(t_link));
 	if (content == NULL) {
 		fatal_error(-1, STR_ENOMEM, opt);
 	}

@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/08/14 16:42:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/15 15:10:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ uint16_t			ipv4_checksum(uint16_t *addr, int len)
 }
 
 #include <netinet/ip.h>
+#include <stdio.h>
 
 uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 {
 	uint8_t						tcp[64] = {0};
 	int							offset = 0;
+	uint16_t					tmp;
 
 	memcpy(&tcp[offset], &ip[12], 4);
 	offset += 4;
@@ -105,10 +107,18 @@ uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 	offset += 1;
 	memcpy(&tcp[offset], &ip[9], 1);
 	offset += 1;
-	memcpy(&tcp[offset], &tcplen, 2);
+	tmp = htons(tcplen);
+	memcpy(&tcp[offset], &tmp, 2);
 	offset += 2;
 	memcpy(&tcp[offset], &ip[sizeof(struct iphdr)], tcplen);
 	offset += tcplen;
+	//fprintf(stderr, "tcplen=%d Pseudo-tcp hdr for sum : {", tcplen);
+	//int j = 0;
+	//while (j < offset)
+	//{
+	//	fprintf(stderr, "%02x ", tcp[j++]);
+	//}
+	//fprintf(stderr, "}\n");
 	
 	return (ipv4_checksum((uint16_t*)tcp, offset));
 }

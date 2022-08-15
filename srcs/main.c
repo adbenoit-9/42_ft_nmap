@@ -11,10 +11,11 @@
 
 #include "ft_nmap.h"
 #include "ft_nmap_build.h"
-#include "ft_nmap_ip.h"
-#include "ft_nmap_tcp.h"
 
 #include <stdio.h>
+
+#include "mappy.h"
+#include "sendy.h"
 
 int main(int ac, char **av)
 {
@@ -22,7 +23,7 @@ int main(int ac, char **av)
 	uint8_t	*buf;
 	t_opt	opt;
 
-	buf = malloc(NMAP_BUFFER_SIZE);
+	buf = malloc(MAPPY_SIZE);
 	if (buf == NULL)
 	{
 		r = FT_NMAP_ERROR;
@@ -30,8 +31,9 @@ int main(int ac, char **av)
 	if (r == FT_NMAP_OK)
 	{
 		opt = parser(ac, av);
+		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 		//scan_start(&opt);
-		r = sendy(buf, opt.ip_lst);
+		r = mappy(buf, opt.ip_lst);
 	}
 	if (r == FT_NMAP_OK)
 	{

@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/14 17:07:33 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/15 20:59:13 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_NMAP_SENDY_H
@@ -29,6 +29,7 @@
 # define NMAP_BUFFER_SIZE				(MAX_LL * MAX_HL * MAX_SCAN_TYPE * MAX_PACKET_SIZE)
 # define NMAP_LL_SIZE					(MAX_HL * MAX_SCAN_TYPE * MAX_PACKET_SIZE)
 # define NMAP_HL_SIZE					(MAX_SCAN_TYPE * MAX_PACKET_SIZE)
+
 # define NMAP_SCAN_NB					6 // can we have this with sizeof ?
 
 /*
@@ -80,6 +81,9 @@ typedef struct			s_port {
 typedef struct		s_scan {
 	t_ft_scan					cross;
 	uint32_t					result;
+	uint16_t					flag; // TCP flag
+	int							socket;
+	uint32_t					packet_length;
 }					t_scan;
 
 /* Exported functions */
