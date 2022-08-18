@@ -6,11 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:56:16 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 13:56:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:15:05 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap.h"
+#include "libft.h"
+#include <stdbool.h>
 
 bool	ft_isnumber(char *str)
 {

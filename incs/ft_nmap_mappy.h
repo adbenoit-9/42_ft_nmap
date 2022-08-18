@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 20:20:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/16 00:00:54 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/17 00:33:55 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,22 @@
 #include "setupy.h"
 #include "cleany.h"
 
+#define HOOK_INDEX_ND_MAX
+#define HOOK_INDEX_ST_MAX
+#define HOOK_TARGET(index_st, index nd) ((index_st * HOOK_INDEX_ND_MAX) + index_nd)
+
 typedef int (*t_func_mappy)(uint8_t *, void *, void *, void *);
 
-// TODO LMA there is a bug here, 
-// I may use a struct array filled with ptr
-//int	(*_exec[MAX_EXECUTION_CMD][MAX_EXECUTION_HOOK])(uint8_t *, void *, void *, void *) = {
+#define BUILDY_HOOK_INDEX0 0
+
+#ifdef NMAP_CMD_INDEX
+# define BUILDY_CMD_INDEX NMAP_CMD_INDEX
+#endif
+
+// TODO
+// cmocka test
+// the buffer[MAX_BUFFER_SIZE] is checked entirely before and after
+// can return a dump of the buffer somewhere (to dumpy ?)
 t_func_mappy _exec[MAX_EXECUTION_CMD][MAX_EXECUTION_HOOK] = {
 	{
 			/* build */
@@ -38,7 +49,7 @@ t_func_mappy _exec[MAX_EXECUTION_CMD][MAX_EXECUTION_HOOK] = {
 	},
 	{
 			/* setup */
-			setup_net,
+			setup_ipv4_tcp,
 			NULL,
 			NULL,
 			NULL,

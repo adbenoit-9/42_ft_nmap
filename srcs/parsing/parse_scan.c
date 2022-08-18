@@ -6,11 +6,15 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 13:57:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:21:26 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap.h"
+#include "libft.h"
+#include "ft_nmap_structs.h"
+#include "ft_nmap_parsing.h"
+#include "ft_nmap_error.h"
+#include <errno.h>
 
 void    set_scan(t_opt *opt, char *value)
 {

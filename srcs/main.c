@@ -10,18 +10,19 @@
 /* ************************************************************************** */
 
 #include "ft_nmap.h"
-#include "ft_nmap_build.h"
 
 #include <stdio.h>
 
 #include "mappy.h"
 #include "sendy.h"
+#include <pthread.h>
 
 int main(int ac, char **av)
 {
 	int32_t 		r = FT_NMAP_OK;
 	uint8_t	*buf;
-	t_opt	opt;
+	t_namp_setting		opt = {0};
+//	pthread_t	threads[opt->speedup];
 
 	buf = malloc(MAPPY_SIZE);
 	if (buf == NULL)
@@ -33,7 +34,14 @@ int main(int ac, char **av)
 		opt = parser(ac, av);
 		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 		//scan_start(&opt);
+//		for (uint8_t i = 0; i < 250; i++) {
+//			if (pthread_create(&threads[i], NULL, (void *)routine, opt) != 0)
+//				fatal_error(-1, "thread_create: failed", opt);
+//		}
 		r = mappy(buf, opt.ip_lst);
+//		for (uint8_t i = 0; i < 250; i++) {
+//			pthread_join(threads[i], NULL);
+//		}
 	}
 	if (r == FT_NMAP_OK)
 	{

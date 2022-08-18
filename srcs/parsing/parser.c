@@ -6,12 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/16 01:04:38 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/18 21:01:21 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap.h"
+//#include "ft_nmap.h"
 #include "ft_nmap_structs.h"
+#include "ft_nmap_error.h"
 
 static void    init_opt(t_opt *opt)
 {
@@ -44,41 +45,79 @@ static void    exit_help(t_opt *opt, char *value)
 }
 
 // TODO LMA take input
-static void init_scan_by_port(t_opt *opt, t_link *ip)
+static void init_scan_by_port(t_opt *opt, t_nmap_app *ip)
 {
-    t_list  *newscan, *it;
-    void    *content;
+//    t_list  *newscan, *it;
+//    void    *content;
 
-    it = ip->cross.nd;
-    while (it) {
-        for (uint16_t i = 0; i < MAX_SCAN_TYPE; i++) {
-            content = calloc(1, sizeof(t_scan));
-            if (content == NULL) {
-                fatal_error(-1, STR_ENOMEM, opt);
-            }
-//			((t_scan*)content)->cross.scan_id = i;
-			memset(((t_scan*)content)->cross.execution_target, 0, MAX_EXECUTION_LIST); // TODO DEBUG
-			memset(((t_scan*)content)->cross.execution_task_list, 0, MAX_EXECUTION_LIST); // TODO DEBUG
-			((t_scan*)content)->cross.execution_task_list[0] = 0 | TASK_EXECUTION_TODO_MSK;
-			((t_scan*)content)->cross.execution_task_list[1] = 1 | TASK_EXECUTION_TODO_MSK;
-			((t_scan*)content)->cross.execution_task_list[2] = 2 | TASK_EXECUTION_TODO_MSK;
-			((t_scan*)content)->cross.execution_task_list[3] = 3 | TASK_EXECUTION_TODO_MSK;
-			((t_scan*)content)->cross.execution_task_list[4] = 4 | TASK_EXECUTION_TODO_MSK;
-			// TODO set tcpflag here
-//			((t_scan*)content)->cross.lock = 0;
-            newscan = ft_lstnew(content);
-            if (newscan == NULL) {
-                fatal_error(-1, STR_ENOMEM, opt);
-            }
-            if (((t_app *)it->content)->cross.rd == NULL) {
-                ((t_app *)it->content)->cross.rd = newscan;
-            }
-            else {
-                ft_lstadd_back(&((t_app *)it->content)->cross.rd, newscan);
-            }
-        }
-        it = it->next;
-    }
+	(void)opt;
+	(void)ip;
+	// TODO 			integrate this with sety
+//    it = ip->cross.nd;
+//    while (it) {
+//		while (opt->scans != 0)
+//		{
+//			if ((opt->scans & S_SYN) != 0)
+//			{
+//				opt->scans &= ~S_SYN;
+//            	content = calloc(1, sizeof(t_scan));
+//            	if (content == NULL)
+//				{
+//            	    fatal_error(-1, STR_ENOMEM, opt);
+//            	}
+//				memset(((t_scan*)content)->cross.execution_target, 0, MAX_EXECUTION_LIST);
+//				memset(((t_scan*)content)->cross.execution_task_list, 0, MAX_EXECUTION_LIST);
+//				((t_scan*)content)->cross.execution_task_list[0] = 0 | TASK_EXECUTION_TODO_MSK;
+//				((t_scan*)content)->cross.execution_task_list[1] = 1 | TASK_EXECUTION_TODO_MSK;
+//				((t_scan*)content)->cross.execution_task_list[2] = 2 | TASK_EXECUTION_TODO_MSK;
+//				((t_scan*)content)->cross.execution_task_list[3] = 3 | TASK_EXECUTION_TODO_MSK;
+//				((t_scan*)content)->cross.execution_task_list[4] = 4 | TASK_EXECUTION_TODO_MSK;
+//				// TODO set tcpflag here
+////				((t_scan*)content)->cross.lock = 0;
+//            	newscan = ft_lstnew(content);
+//            	if (newscan == NULL) {
+//            	    fatal_error(-1, STR_ENOMEM, opt);
+//            	}
+//            	if (((t_app *)it->content)->cross.rd == NULL) {
+//            	    ((t_app *)it->content)->cross.rd = newscan;
+//            	}
+//            	else {
+//            	    ft_lstadd_back(&((t_app *)it->content)->cross.rd, newscan);
+//            	}
+//			}
+//			else
+//			{
+//				opt->scans = 0;
+//			}
+//		}
+//        for (uint16_t i = 0; i < MAX_SCAN_TYPE; i++) {
+//            content = calloc(1, sizeof(t_scan));
+//            if (content == NULL) {
+//                fatal_error(-1, STR_ENOMEM, opt);
+//            }
+////			((t_scan*)content)->cross.scan_id = i;
+//			memset(((t_scan*)content)->cross.execution_target, 0, MAX_EXECUTION_LIST); // TODO DEBUG
+//			memset(((t_scan*)content)->cross.execution_task_list, 0, MAX_EXECUTION_LIST); // TODO DEBUG
+//			((t_scan*)content)->cross.execution_task_list[0] = 0 | TASK_EXECUTION_TODO_MSK;
+//			((t_scan*)content)->cross.execution_task_list[1] = 1 | TASK_EXECUTION_TODO_MSK;
+//			((t_scan*)content)->cross.execution_task_list[2] = 2 | TASK_EXECUTION_TODO_MSK;
+//			((t_scan*)content)->cross.execution_task_list[3] = 3 | TASK_EXECUTION_TODO_MSK;
+//			((t_scan*)content)->cross.execution_task_list[4] = 4 | TASK_EXECUTION_TODO_MSK;
+//			// TODO set tcpflag here
+////			((t_scan*)content)->cross.lock = 0;
+//            newscan = ft_lstnew(content);
+//            if (newscan == NULL) {
+//                fatal_error(-1, STR_ENOMEM, opt);
+//            }
+//            if (((t_app *)it->content)->cross.rd == NULL) {
+//                ((t_app *)it->content)->cross.rd = newscan;
+//            }
+//            else {
+//                ft_lstadd_back(&((t_app *)it->content)->cross.rd, newscan);
+//            }
+//        }
+//        it = it->next;
+//    }
 }
 
 static void init_port_by_ip(t_opt *opt)
@@ -89,23 +128,23 @@ static void init_port_by_ip(t_opt *opt)
     it = opt->ip_lst;
     while (it) {
         for (uint16_t i = 0; i < PORTS_SCAN_LIMIT && opt->ports[i] != 0; i++) {
-            content = calloc(1, sizeof(t_app));
+            content = calloc(1, sizeof(t_nmap_app));
             if (content == NULL) {
                 fatal_error(-1, STR_ENOMEM, opt);
             }
-            ft_memcpy(&((t_app*)content)->port,&opt->ports[i], sizeof(uint16_t));
+            ft_memcpy(&((t_nmap_app*)content)->port,&opt->ports[i], sizeof(uint16_t));
             newport = ft_lstnew(content);
             if (newport == NULL) {
                 fatal_error(-1, STR_ENOMEM, opt);
             }
-            if (((t_link *)it->content)->cross.nd == NULL) {
-                ((t_link *)it->content)->cross.nd = newport;
-            }
-            else {
-                ft_lstadd_back(&((t_link *)it->content)->cross.nd, newport);
-            }
+//            if (((t_nmap_app *)it->content)->cross.nd == NULL) {
+//                ((t_nmap_app *)it->content)->cross.nd = newport;
+//            }
+//            else {
+//                ft_lstadd_back(&((t_nmap_app *)it->content)->cross.nd, newport);
+//            }
         }
-		init_scan_by_port(opt, (t_link *)it->content);
+		init_scan_by_port(opt, (t_nmap_app *)it->content);
         it = it->next;
     }
 }

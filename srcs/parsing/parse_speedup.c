@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_seedup.c                                     :+:      :+:    :+:   */
+/*   parse_speedup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:18 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 13:57:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:23:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap.h"
+#include "libft.h"
+#include "ft_nmap_parsing.h"
+#include "ft_nmap_error.h"
 
 void    set_speedup(t_opt *opt, char *value)
 {

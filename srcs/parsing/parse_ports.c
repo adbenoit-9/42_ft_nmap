@@ -6,11 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/08 17:12:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:24:15 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap.h"
+#include "libft.h"
+#include "ft_nmap_parsing.h"
+#include "ft_nmap_error.h"
 
 static void	check_ports(char *value, int32_t begin, int32_t end,
 bool isrange, t_opt *opt)
