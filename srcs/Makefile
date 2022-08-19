@@ -20,8 +20,7 @@ INCFLAGS = $(foreach D,$(INCDIR), -I$(D))
 
 BINARY = ft_nmap
 
-SRCS = 	./setupy/setupy.c \
-./nmap/main.c \
+SRCS = 	./nmap/main.c \
 ./setupy/setupy_ipv6_tcp.c \
 ./setupy/setupy_ipv4_tcp.c \
 ./setupy/setupy_ipv4_udp.c \
@@ -44,13 +43,11 @@ SRCS = 	./setupy/setupy.c \
 ./sendy/sendy_ipv6_udp.c \
 ./sendy/sendy_ipv4_tcp.c \
 ./sendy/sendy_ipv4_udp.c \
-./sendy/sendy.c \
 ./buildy/buildy_ipv4_tcp.c \
 ./buildy/buildy_ipv6_tcp.c \
 ./buildy/buildy_utils.c \
 ./buildy/buildy_ipv6_udp.c \
 ./buildy/buildy_ipv4_udp.c \
-./buildy/buildy.c \
 ./parsing/error.c  \
  
 # $(warning Variables HERE: .VARIABLES)
