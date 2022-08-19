@@ -1,25 +1,24 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-OPTFLAGS = -O2  
-DEPFLAGS = -MP -MD
 
-INCDIR = \
-	 ./nmap 	\
-	 ./buildy 	\
+
+MODULES = ./buildy\
 	 ./cleany	\
 	 ./mappy	\
-	 ./parsing	\
+	 ./parsing\
 	 ./proty	\
 	 ./recy		\
 	 ./sendy	\
 	 ./setupy	\
+	 ./nmap \
 	 ./libft/inc \
-	./nmap
 
-INCFLAGS = $(foreach D,$(INCDIR), -I$(D))
 
+INCFLAGS = $(foreach D,$(MODULES), -I$(D))
+
+CFLAGS = -Wall -Wextra -Werror
+OPTFLAGS = -O2
+DEPFLAGS = -MP -MD
 BINARY = ft_nmap
-
 SRCS = 	./setupy/setupy.c \
 ./nmap/main.c \
 ./setupy/setupy_ipv6_tcp.c \
@@ -53,46 +52,31 @@ SRCS = 	./setupy/setupy.c \
 ./buildy/buildy.c \
 ./parsing/error.c  \
  
-# $(warning Variables HERE: .VARIABLES)
+#./sety/sety.c 
 
-PREP = $(SRCS:.c=.i)
 ASSS = $(SRCS:.c=.s)
 OBJS = $(SRCS:.c=.o)
 DEPS = $(SRCS:.c=.d)
-
-
 #DEPS = $(pathsubst %.c,%.d,$(SRCS))
 
-LIBFT=./libft/libft.a
+all : ./Makefile $(BINARY) 
 
-
-all :  ./Makefile $(BINARY) $(PREP) $(ASSS) 
-
-$(BINARY):  $(OBJS) $(LIBFT) 
+$(BINARY): $(ASSS) $(OBJS) 
 	$(CC) -o $@ $(OBJS) ./libft/libft.a
 
-%.o:%.c 
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -c $^ -o $@ -save-temps=obj
-	#$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -fdump-ada-spec -c $^ -o $@ -save-temps=obj
+
+%.o:%.c
+	$(CC) $(CFLAGS)  $(INCFLAGS) $(DEPFLAGS) -c -o $@ $^ 
 
 %.s:%.c
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -S -o $@ $^
-
-%.i:%.c
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -E -o $@ $^  
-
-$(LIBFT):
-	make -C libft/
+	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -S -o $@ $^ 
 
 
 clean :
 	rm -rf $(BINARY)
 	rm -rf $(OBJS)
 	rm -rf $(DEPS)
-
-fclean : clean
 	rm -rf $(ASSS)
-	rm -rf $(PREP)
 
 release: clean
 	tar zcvf release.tgz *
@@ -102,7 +86,7 @@ gstats:
 gdiff:
 	git diff --color --stat
 
-re: fclean all
+re: clean all
 
 
 

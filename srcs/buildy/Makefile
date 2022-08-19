@@ -1,23 +1,32 @@
 CC = gcc
+DEPS =   ../buildy\
+	 		../cleany	\
+	 		../mappy	\
+	 		../parsing\
+	 		../proty	\
+	 		../recy		\
+	 		../sendy	\
+	 		../setupy	\
+	 		../nmap \
 
-SRC_DIR 		:= ./srcs
-OBJ_DIR 		:= ./obj
-INC_DIR 		:= ./incs
+OBJ_NAME	=	$(CHAR:.c=.o)
+OBJ_NAME	+=	$(GNL:.c=.o)
+OBJ_NAME	+=	$(LST:.c=.o)
+OBJ_NAME	+=	$(MEM:.c=.o)
+OBJ_NAME	+=	$(NBR:.c=.o)
+OBJ_NAME	+=	$(STR:.c=.o)
+OBJ_NAME	+=	$(TAB:.c=.o)
+PATH_nmap     += nmap   
 
-MODULES = ../buildy\
-	 ../cleany	\
-	 ../mappy	\
-	 ../parsing\
-	 ../proty	\
-	 ../recy		\
-	 ../sendy	\
-	 ../setupy	\
-	 ../nmap \
-	 ../libft/inc \
+OBJ			=	$(addprefix $(OBJ_DIR),$(OBJ_NAME))
+ASS			=	$(addprefix $(ASS_DIR),$(OBJ_NAME))
+
+$(OBJ_PATH)%.o:	$(CHAR_PATH)%.c $(HEADER)
+
 
 INCFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-BINARY = ft_nmap
+ARCHIVE=
 
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
@@ -38,7 +47,7 @@ SPEC=
 all : ./Makefile $(BINARY) 
 
 $(BINARY): $(ASSS) $(OBJS)  $(SPEC)
-	$(CC) -o $@ $(OBJS) ./libft/libft.a
+	ar rc $(OBJS)
 
 
 %.o:%.c
@@ -63,7 +72,9 @@ gdiff:
 	git diff --color --stat
 
 spec: $(OBJS)
-	$(CC) -o $@ $(OBJS)
+	$(CC) -o $@ $(OBJS) -fdump-ada-spec
+	mkdir -f ads
+	mv *.ads ads
 	
 
 re: clean all

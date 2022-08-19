@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:24:43 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/19 01:24:13 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 ** buildy
 */
 
-#include <stdint.h>
-#include <string.h>
-
-#include "mappy.h"
-#include "ft_nmap_structs.h"
-
-#include "proty_ip.h"
-#include "proty_tcp.h"
-#include "proty_udp.h"
-#include <arpa/inet.h>
-#include "buildy_utils.h"
 
 
 //static const	uint8_t		template_ipv4[20] = {
