@@ -62,18 +62,19 @@ DEPS = $(SRCS:.c=.d)
 
 
 #DEPS = $(pathsubst %.c,%.d,$(SRCS))
+	#$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -fdump-ada-spec -c $^ -o $@ -save-temps=obj
 
 LIBFT=./libft/libft.a
 
 
 all :  ./Makefile $(BINARY) $(PREP) $(ASSS) 
 
-$(BINARY):  $(OBJS) $(LIBFT) 
+$(BINARY):  $(LIBFT) $(OBJS)  
 	$(CC) -o $@ $(OBJS) ./libft/libft.a
 
 %.o:%.c 
 	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -c $^ -o $@ -save-temps=obj
-	#$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -fdump-ada-spec -c $^ -o $@ -save-temps=obj
+
 
 %.s:%.c
 	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -S -o $@ $^
@@ -86,6 +87,7 @@ $(LIBFT):
 
 
 clean :
+	make -C libft/ fclean
 	rm -rf $(BINARY)
 	rm -rf $(OBJS)
 	rm -rf $(DEPS)

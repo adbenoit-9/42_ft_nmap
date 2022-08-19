@@ -23,37 +23,46 @@
 #define RUNNY_OK 0
 #define RUNNY_ERROR -1
 
+static		uint8_t		buf[MAPPY_SIZE + SETY_SIZE];
+
+
 int main(int ac, char **av)
 {
 	int32_t 		r = RUNNY_OK;
-	uint8_t	*buf;
-	t_opt	opt;
-	(void)opt;
-//	pthread_t	threads[opt->speedup];
+	uint8_t			*buf;
+	t_nmap_config	opt;
 
-	buf = malloc(MAPPY_SIZE);
 	if (buf == NULL)
 	{
 		r = RUNNY_ERROR;
 	}
 	if (r == RUNNY_OK)
 	{
-		opt = parser(ac, av);
-		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
-		//scan_start(&opt);
+		/* Set buffer config and map */
+		opt.map = buf;
+		opt.config = &buf[MAPPY_SIZE];
+
+		/* Now fill opt with cmdline options */
+		opt = parsy_getopt(ac, av, opt);
+
+		/* Set opt tasks + elements_nb -> function sety_root_hook ? */
+		opt.elements_nb = 0x42;
+		int i = 0;
+		while (j < opt.elements_nb)
+		{
+			/* Cmd target */
+			/* Hook target */
+		}
+		r = sety_root(&opt);
+		r = mappy(&opt);
+
 //		for (uint8_t i = 0; i < 250; i++) {
 //			if (pthread_create(&threads[i], NULL, (void *)routine, opt) != 0)
 //				fatal_error(-1, "thread_create: failed", opt);
 //		}
-//		r = mappy(buf, opt.ip_lst);
 //		for (uint8_t i = 0; i < 250; i++) {
 //			pthread_join(threads[i], NULL);
 //		}
 	}
-//	if (r == RUNNY_OK)
-//	{
-//		ft_lstclear(&opt.ip_lst, clear_ip);
-		free(buf);
-//	}
 	return (r);
 }
