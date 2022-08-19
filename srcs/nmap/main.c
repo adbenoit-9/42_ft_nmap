@@ -25,7 +25,6 @@
 
 static		uint8_t		buf[MAPPY_SIZE + SETY_SIZE];
 
-
 int main(int ac, char **av)
 {
 	int32_t 		r = RUNNY_OK;
@@ -45,7 +44,7 @@ int main(int ac, char **av)
 		/* Now fill opt with cmdline options */
 		opt = parsy_getopt(ac, av, opt);
 
-		/* Set opt tasks + elements_nb -> function sety_root_hook ? */
+		/* Set opt tasks + elements_nb -> function nmap_config_branch_hook -> hooky ? */
 		opt.elements_nb = 0x42;
 		int i = 0;
 		while (j < opt.elements_nb)
