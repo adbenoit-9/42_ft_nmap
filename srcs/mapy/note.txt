@@ -1,0 +1,8 @@
+
+
+
+This one use imbriqued array of struct from the top
+
+It's tricky because it's not more nmap that use mappy but mappy that need the struct of nmap
+at compile time.
+We can avoid too much dependdency with define.

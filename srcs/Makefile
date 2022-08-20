@@ -7,14 +7,13 @@ INCDIR = \
 	 ./nmap 	\
 	 ./buildy 	\
 	 ./cleany	\
-	 ./mappy	\
+	 ./mapy	\
 	 ./parsing	\
 	 ./proty	\
 	 ./recy		\
 	 ./sendy	\
 	 ./setupy	\
 	 ./libft/inc \
-	./nmap
 
 INCFLAGS = $(foreach D,$(INCDIR), -I$(D))
 
@@ -26,8 +25,7 @@ SRCS = 	./nmap/main.c \
 ./setupy/setupy_ipv4_udp.c \
 ./setupy/setupy_ipv6_udp.c \
 ./cleany/cleany.c \
-./mappy/mappy.c \
-./mappy/sety.c \
+./mapy/mapy.c \
 ./recy/recy_ipv6_udp.c \
 ./recy/recy_ipv4_tcp.c \
 ./recy/recy_ipv4_udp.c \

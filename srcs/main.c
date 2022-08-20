@@ -16,12 +16,19 @@
 #include "mappy.h"
 #include "sendy.h"
 #include <pthread.h>
+//	BUILD_BUG_ON(sizeof()) ((void)sizeof(char[1 - 2*!!(condition)]))
+
+#define 
+static		uint8_t		set[];
+static		uint8_t		map[MAPPY_SIZE + SETY_SIZE];
 
 int main(int ac, char **av)
 {
+//	BUILD_BUG_ON(sizeof(buf))
+
 	int32_t 		r = FT_NMAP_OK;
 	uint8_t	*buf;
-	t_namp_setting		opt = {0};
+	t_nmap_setting		opt = {0};
 //	pthread_t	threads[opt->speedup];
 
 	buf = malloc(MAPPY_SIZE);
