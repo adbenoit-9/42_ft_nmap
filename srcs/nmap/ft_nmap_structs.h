@@ -18,20 +18,19 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#define PORTS_SCAN_LIMIT 1024
+#define SCAN_LIMIT			6
+#define PORT_LIMIT			1024
+#define IP_LIMIT			16
 
-typedef struct				s_nmap_setting {
-	t_proto_root							cross;
-	uint32_t 									nmap_flag;
-	uint16_t									ports[PORTS_SCAN_LIMIT]; // Great nd config
-	uint8_t										scans[MAPPY_MAX_RD]; // rd config
-	int8_t										speedup; // We open it in the nmap so meh
-	char											ipfile; // from a mmap
-	t_list										*ip_lst; // ?
-	char										*ips[MAPPY_MAX_ST]; // only take char ** from gnl TODO
-	struct sockaddr_storage		socks[MAPPY_MAX_ST];
-
-}								t_nmap_setting;
+typedef struct		s_nmap_setting {
+	uint16_t							ports[PORT_LIMIT];
+	uint8_t								scans[SCAN_LIMIT];
+	int8_t								speedup;
+	char								*ips[IP_LIMIT];
+	int									ip_nb;
+	int									port_nb;
+	int									scan_nb;
+}					t_nmap_setting;
 
 
 typedef struct		s_nmap_link {
@@ -42,7 +41,7 @@ typedef struct		s_nmap_link {
 
 typedef struct		s_nmap_app {
 	t_proto_tree				cross;
-	uint16_t					ports[PORTS_SCAN_LIMIT]; // Great nd config
+	uint16_t					ports[PORT_LIMIT]; // Great nd config
 	int								sock; // TODO remove
 	uint8_t 					nd_flag;
 	int								port;		// TODO remove ?

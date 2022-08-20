@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/17 23:19:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/20 17:47:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <netdb.h>
 # include <arpa/inet.h>
 # include "../libft/inc/libft.h"
+# include "ft_nmap_structs.h"
 
 # define NFLAG 6
-# define PORTS_SCAN_LIMIT 1024
 # define PORT_MAX 65536
 
 # define NONE		0
@@ -90,7 +90,7 @@
 
 typedef struct		s_opt
 {
-	uint16_t	ports[PORTS_SCAN_LIMIT];
+	uint16_t	ports[PORT_LIMIT];
 	uint8_t		scans;
 	int8_t		speedup;
 	t_list		*ip_lst;

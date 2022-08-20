@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/18 21:40:14 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/20 17:47:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void print_option(t_opt opt)
 		tmp = tmp->next;
 	}
 	printf("\nports:");
-	for (uint32_t i = 0; opt.ports[i] != 0 && i < PORTS_SCAN_LIMIT; i++)
+	for (uint32_t i = 0; opt.ports[i] != 0 && i < PORT_LIMIT; i++)
 		printf(" %d", opt.ports[i]);
 	printf("\nscans:");
 	for (int16_t i = 0; i < 6; i++) {
