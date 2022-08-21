@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recvy.c                                            :+:      :+:    :+:   */
+/*   recy_ipv4_tcp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 20:53:15 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 16:19:34 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 		seq += 1;
 		while (r != -1 && seq != htonl(seqverif) && seq - 1 != htonl(seqverif))
 		{
-			r = recvfrom(((t_nmap_scan*)conf_exec)->socket, buf,
+			r = recvfrom(((t_nmap_app*)conf_nd)->socket, buf,
 				((t_nmap_scan*)conf_exec)->packet_length - 4, 0,
-				 (struct sockaddr*)&((t_nmap_app*)conf_st)->sock, &sockaddrlen);
+				 (struct sockaddr*)&((t_nmap_link*)conf_st)->sock, &sockaddrlen);
 			GET_TCP_ACK(&buf[sizeof(struct iphdr)], seqverif);
 //			fprintf(stderr, "seq = %08x ack = %08x\n", seq, htonl(seqverif));
 		}
@@ -47,7 +47,7 @@ int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 		{
 			//print_packet(buf, length);
 			GET_TCP_FLAGS(&buf[sizeof(struct iphdr)], flag);
-			((t_nmap_scan*)conf_exec)->scan_result = flag;
+			((t_nmap_scan*)conf_exec)->result = flag;
 			r = RECY_OK;
 //			fprintf(stderr, "flag received = %04x\n", flag);
 		}

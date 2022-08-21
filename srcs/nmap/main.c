@@ -60,16 +60,36 @@ int main(int ac, char **av)
 		((t_root*)buf)->st_nb = 5;
 		((t_root*)buf)->nd_nb = 5;
 		((t_root*)buf)->rd_nb = 5;
-		set_st(root, set_sockaddr);
-		set_nd(root, set_port);
-		set_rd(root, set_tcpflag);
+		if (set_st(root, set_sockaddr))
+			return (-1);
+		if (set_nd(root, set_port))
+			return (-1);
+		if (set_nd(root, set_socket))
+			return (-1);
+		if (set_rd(root, set_tcpflag))
+			return (-1);
 
-		set_st(root, print_st);
-		set_nd(root, print_nd);
-		set_rd(root, print_rd);
+		if (set_st(root, print_st))
+			return (-1);
+		if (set_nd(root, print_nd))
+			return (-1);
+		if (set_rd(root, print_rd))
+			return (-1);
 
-		mapy_f(root, build_ipv4_tcp);
-		mapy_f(root, print_all);
+
+		if (mapy_f(root, build_ipv4_tcp))
+			return (-1);
+
+
+		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		if (mapy_f(root, send_ipv4_tcp))
+			return (-1);
+		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		if (set_nd(root, clean_net))
+			return (-1);
+		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		if (mapy_f(root, print_all))
+			return (-1);
 //		// mapy_f(root, test_mapy);
 //		exey_ctrl(root, test_exey);
 		//exey_rd(root, test_exey_print);

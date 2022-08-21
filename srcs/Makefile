@@ -28,9 +28,11 @@ SRCS = 	./nmap/main.c \
 ./mapy/exey_f.c \
 ./prompty/prompty.c \
 ./buildy/buildy_ipv4_tcp.c \
+./recy/recy_ipv4_tcp.c \
+./sendy/sendy_ipv4_tcp.c \
 ./buildy/buildy_utils.c \
+./cleany/cleany.c \
 
-#./cleany/cleany.c \
 # ./parsing/error.c  \
 # ./parsing/ft_isnumber.c \
 # ./parsing/parse_scan.c \

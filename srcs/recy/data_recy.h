@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapy_data.h                                        :+:      :+:    :+:   */
+/*   data_recy.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:25:30 by leon             ###   ########.fr       */
+/*   Created: 2022/08/21 15:58:41 by leon              #+#    #+#             */
+/*   Updated: 2022/08/21 16:12:46 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPY_DATA_H
-# define MAPY_DATA_H
+#ifndef DATA_RECY_H
+# define DATA_RECY_H
 
-//#include "mapy.h"
-#include "data_buildy.h"
-#include "data_sendy.h"
-//#include "data_cleany.h"
-#include "data_recy.h"
-//#include "data_setupy.h"
+#include "export_recy.h"
 
-t_func_mapy *_exec[EXEC_MAX_CMD] = {
-	_buildy_exec,
-	_sendy_exec,
-	_recy_exec,
+#ifdef MAP_CMD_INDEX
+# define RECY_CMD_INDEX MAP_CMD_INDEX
+#endif
+
+t_func_mapy _recy_exec[EXEC_MAX_CMD] = {
+		recv_ipv4_tcp,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
 };
-
-//	_sendy_exec,
-//	_recy_exec,
-//	_cleany_exec,
-//	_setupy_exec,
 
 
 #endif

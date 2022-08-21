@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapy_data.h                                        :+:      :+:    :+:   */
+/*   data_cleany.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:25:30 by leon             ###   ########.fr       */
+/*   Created: 2022/08/21 15:55:59 by leon              #+#    #+#             */
+/*   Updated: 2022/08/21 16:24:19 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPY_DATA_H
-# define MAPY_DATA_H
+#ifndef DATA_CLEANY_H
+# define DATA_CLEANY_H
 
-//#include "mapy.h"
-#include "data_buildy.h"
-#include "data_sendy.h"
-//#include "data_cleany.h"
-#include "data_recy.h"
-//#include "data_setupy.h"
+#include "export_cleany.h"
 
-t_func_mapy *_exec[EXEC_MAX_CMD] = {
-	_buildy_exec,
-	_sendy_exec,
-	_recy_exec,
-};
+#ifdef MAP_CMD_INDEX
+# define CLEANY_CMD_INDEX MAP_CMD_INDEX
+#endif
 
-//	_sendy_exec,
-//	_recy_exec,
-//	_cleany_exec,
-//	_setupy_exec,
+
+// sety function
+// t_func_mapy _cleany_exec[EXEC_MAX_CMD] = {
+// 		clean_net,
+// 		NULL,
+// 		NULL,
+// 		NULL,
+// 		NULL,
+// };
 
 
 #endif
