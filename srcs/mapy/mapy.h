@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "mapy_config.h"
+#include "nmap_mapy_config.h"
 
 #define MAPY_ERR	-1
 #define MAPY_OK		0
@@ -47,6 +47,7 @@ typedef struct			s_root {
 	int				nd_nb;
 	int				rd_nb;
 	uint8_t			*map;
+//	int				tasks_scheduler[EXEC_LST_SIZE];
 	t_st			st[ST_MAX];
 }						t_root;
 

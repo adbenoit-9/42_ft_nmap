@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-OPTFLAGS = -O2  
+OPTFLAGS = -g3
 DEPFLAGS = -MP -MD
 
 UNAME	:= $(shell uname)
@@ -28,6 +28,7 @@ SRCS = 	./nmap/main.c \
 ./nmap/sety_hooks.c \
 ./nmap/test_hooks.c \
 ./nmap/mapy_hooks.c \
+./nmap/exey_hooks.c \
 ./mapy/mapy.c \
 ./mapy/sety_f.c \
 ./mapy/exey_f.c \
