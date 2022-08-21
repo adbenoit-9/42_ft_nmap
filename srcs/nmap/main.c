@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "hooks.h"
+#include "ft_nmap_parsing.h"
 
 #define MAPY_DEBUG
 
@@ -21,7 +22,7 @@ int main(int ac, char **av)
 	//test_root		*conf;
 	
 	buf = (uint8_t*)malloc(SIZE);
-
+	parser(ac, av);
 	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
  i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
 						T_CLIENT_RD_PRINT,

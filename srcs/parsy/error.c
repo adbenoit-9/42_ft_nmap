@@ -6,18 +6,15 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:27:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_nmap.h"
-#include "nmap_structs.h"
-#include "ft_nmap_error.h"
-#include <errno.h>
+#include "ft_nmap_parsing.h"
 
 #ifdef DEBUG
 
-static void print_nmap_settingion(t_nmap_setting opt)
+static void print_nmap_setting(t_nmap_setting opt)
 {
 	char	ip[INET6_ADDRSTRLEN];
 	char	*scan_str[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP"};
@@ -57,31 +54,8 @@ static void print_nmap_settingion(t_nmap_setting opt)
 
 #endif
 
-//void	clear_ip(void *ip)
-//{
-//	
-//	t_list		*head1;
-//	t_list		*tmp;
-//
-//	head1 = ((t_link*)ip)->cross.nd;
-//	while (head1)
-//	{
-//		ft_lstclear(&((t_app*)head1->content)->cross.rd, free);	
-//		free(head1->content);
-//		tmp = head1;
-//		head1 = head1->next;
-//		free(tmp);
-//	}
-//	ft_lstclear(&((t_link*)ip)->cross.st, free);	
-//	free(ip);
-//}
-
-void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt)
+void    fatal_error(int16_t error, char *arg)
 {
-	(void)opt;
-#ifdef DEBUG
-	print_nmap_settingion(*opt);
-#endif
 	dprintf(STDERR_FILENO, "ft_nmap: ");
 	switch (error)
 	{
@@ -122,6 +96,5 @@ void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt)
 		dprintf(STDERR_FILENO, "%s\n", arg);
 		break;
 	}
-//	ft_lstclear(&opt->ip_lst, clear_ip);
 	exit(EXIT_FAILURE);
 }

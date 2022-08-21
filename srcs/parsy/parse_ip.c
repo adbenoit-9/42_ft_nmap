@@ -6,13 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:47:17 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:05:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "ft_nmap.h"
-#include "nmap_structs.h"
-#include "ft_nmap_error.h"
+#include "ft_nmap_parsing.h"
 
 static void	set_ip(char *host, t_nmap_setting *settings)
 {
@@ -46,9 +45,13 @@ static void	set_ip(char *host, t_nmap_setting *settings)
 	// else {
 	// 	ft_lstadd_back(&settings->ip_lst, ip);
 	// }
+	if (settings->ip_nb < IP_LIMIT) {
+		ft_strcpy(settings->ips[settings->ip_nb], host);
+		++settings->ip_nb;
+	}
 }
 
-void    set_ip_from_file(t_nmap_setting *opt, char *file)
+void    set_ip_from_file(t_nmap_setting *settings, char *file)
 {
 	FILE		*stream;
 	int32_t		fd;
@@ -56,7 +59,7 @@ void    set_ip_from_file(t_nmap_setting *opt, char *file)
 	int32_t		ret;
 	
 	if (file == NULL) {
-		fatal_error(E_NOARG, "--file", opt);
+		fatal_error(E_NOARG, "--file");
 	}
 	stream = fopen(file, "r");
 	if (stream != NULL) {
@@ -64,21 +67,21 @@ void    set_ip_from_file(t_nmap_setting *opt, char *file)
 		do {
 			ret = get_next_line(fd, &host);
 			if (ret > 0) {
-				set_ip(host, opt);
+				set_ip(host, settings);
 			}
 		} while (ret > 0);
 		close(fd);
 		fclose(stream);
 	}
 	else {
-		fatal_error(E_BADFILE, file, opt);
+		fatal_error(E_BADFILE, file);
 	}
 }
 
 void    set_ip_from_arg(t_nmap_setting *settings, char *host)
 {
 	if (host == NULL) {
-		fatal_error(E_NOARG, "--ip", settings);
+		fatal_error(E_NOARG, "--ip");
 	}
 	set_ip(host, settings);
 }

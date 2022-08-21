@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parsy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:37:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:19:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_nmap.h"
-#include "nmap_structs.h"
-#include "ft_nmap_error.h"
+#include "ft_nmap_parsing.h"
 
-static void    init_nmap_setting(t_nmap_setting *opt)
+static void    init_nmap_settings(t_nmap_setting *settings)
 {
-	opt->ip_lst = NULL;
-	ft_bzero(opt->ports, PORT_LIMIT * sizeof(uint16_t));
-	opt->scans = NONE;
-	opt->speedup = 0;
+	ft_bzero(settings->ports, PORT_LIMIT * sizeof(uint16_t));
+	ft_bzero(settings->ips, IP_LIMIT * sizeof(uint64_t));
+	ft_bzero(settings->scans, SCAN_LIMIT * sizeof(uint8_t));
+	settings->speedup = 0;
+	settings->ip_nb = 0;
+	settings->port_nb = 0;
+	settings->scan_nb = 0;
 }
 
 static void    print_usage(void)
@@ -39,40 +40,9 @@ static void    print_usage(void)
 static void    exit_help(t_nmap_setting *opt, char *value)
 {
 	(void)value;
-	print_usage();
-	ft_lstclear(&opt->ip_lst, free);
-	exit(EXIT_SUCCESS);
-}
-
-// TODO LMA take input
-static void init_scan_by_port(t_nmap_setting *opt, t_nmap_app *ip)
-{
-
 	(void)opt;
-	(void)ip;
-}
-
-static void init_port_by_ip(t_nmap_setting *opt)
-{
-	t_list  *newport, *it;
-	void    *content;
-
-	it = opt->ip_lst;
-	while (it) {
-		for (uint16_t i = 0; i < PORT_LIMIT && opt->ports[i] != 0; i++) {
-			content = calloc(1, sizeof(t_nmap_app));
-			if (content == NULL) {
-				fatal_error(-1, STR_ENOMEM, opt);
-			}
-			ft_memcpy(&((t_nmap_app*)content)->port,&opt->ports[i], sizeof(uint16_t));
-			newport = ft_lstnew(content);
-			if (newport == NULL) {
-				fatal_error(-1, STR_ENOMEM, opt);
-			}
-		}
-		init_scan_by_port(opt, (t_nmap_app *)it->content);
-		it = it->next;
-	}
+	print_usage();
+	exit(EXIT_SUCCESS);
 }
 
 t_nmap_setting parser(int ac, char **av)
@@ -89,7 +59,7 @@ t_nmap_setting parser(int ac, char **av)
 		print_usage();
 		exit(EXIT_FAILURE);
 	}
-	init_nmap_setting(&settings);
+	init_nmap_settings(&settings);
 	for (i = 1; av[i]; i++)  {
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
@@ -100,22 +70,21 @@ t_nmap_setting parser(int ac, char **av)
 		}
 		if (j == NFLAG) {
 			if (av[i][0] == '-') {
-				fatal_error(E_BADOPT, av[i], &settings);
+				fatal_error(E_BADOPT, av[i]);
 			}
 			else {
-				fatal_error(E_BADARG, av[i], &settings);
+				fatal_error(E_BADARG, av[i]);
 			}
 		}
 	}
-	if (settings.ip_lst == NULL) {
-		fatal_error(E_NOHOST, NULL, &settings);
+	if (settings.ip_nb == 0) {
+		fatal_error(E_NOHOST, NULL);
 	}
-	if (settings.scans == NONE) {
-		settings.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;
-	}
-	if (settings.ports[0] == NONE) {
+	// if (settings.scans == NONE) {
+	// 	settings.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;
+	// }
+	if (settings.ports[0] == 0) {
 		copy_new_range(settings.ports, 0, 1, PORT_LIMIT);
 	}
-	// init_port_by_ip(&settings);
 	return (settings);
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:44:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:20:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "ft_nmap_parsing.h"
 #include "ft_nmap_error.h"
 
-static void	check_ports(char *value, int32_t begin, int32_t end,
-bool isrange, t_nmap_setting *settings)
+static void	check_ports(char *value, int32_t begin, int32_t end, bool isrange)
 {
 	uint64_t i = ft_strlen(value);
 
@@ -24,16 +23,16 @@ bool isrange, t_nmap_setting *settings)
 		if (isrange == true) {
 			value[i] = '-';
 		}
-		fatal_error(E_BADPORT, value, settings);
+		fatal_error(E_BADPORT, value);
 	}
 	else if (end - begin < 0 || end - begin > PORT_LIMIT) {
-		fatal_error(E_LIMIT_EXCEED, NULL, settings);
+		fatal_error(E_LIMIT_EXCEED, NULL);
 	}
 	else if (begin < 0 || begin > PORT_MAX) {
-		fatal_error(E_BADPORT, value, settings);
+		fatal_error(E_BADPORT, value);
 	}
 	else if (end < 0 || end > PORT_MAX) {
-		fatal_error(E_BADPORT, value + i + 1, settings);
+		fatal_error(E_BADPORT, value + i + 1);
 	}
 }
 
@@ -81,11 +80,11 @@ static void	add_ports(t_nmap_setting *settings, int32_t begin, int32_t end)
 	i = copy_ports_inf(new_ports, settings->ports, begin);
 	i = copy_new_range(new_ports, i, begin, end);
 	if (i == -1) {
-		fatal_error(E_LIMIT_EXCEED, NULL, settings);
+		fatal_error(E_LIMIT_EXCEED, NULL);
 	}
 	i = copy_ports_sup(new_ports, settings->ports, end, i);
 	if (i == -1) {
-		fatal_error(E_LIMIT_EXCEED, NULL, settings);
+		fatal_error(E_LIMIT_EXCEED, NULL);
 	}
 	ft_memcpy(settings->ports, new_ports, PORT_LIMIT * sizeof(uint16_t));
 }
@@ -97,7 +96,7 @@ void    set_ports(t_nmap_setting *settings, char *value)
 	int32_t		begin, end;
 
 	if (value == NULL) {
-		fatal_error(E_NOARG, "--ports", settings);
+		fatal_error(E_NOARG, "--ports");
 	}
 	isrange = false;
 	i = 0;
@@ -115,6 +114,6 @@ void    set_ports(t_nmap_setting *settings, char *value)
 	else {
 		end = begin;
 	}
-	check_ports(value, begin, end, isrange, settings);
+	check_ports(value, begin, end, isrange);
 	add_ports(settings, begin, end);
 }

@@ -6,14 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 20:28:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_NMAP_ERROR_H
 # define FT_NMAP_ERROR_H
-
-#include "ft_nmap_parsing.h"
 
 # define E_NOHOST 1
 # define E_BADHOST 2
@@ -55,7 +53,6 @@
 
 # define STR_ENOMEM "Out of memory"
 
-
-void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt);
+void    fatal_error(int16_t error, char *arg);
 
 #endif

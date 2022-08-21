@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_speedup.c                                    :+:      :+:    :+:   */
+/*   parse_scan.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 13:57:18 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:39:52 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/08/21 20:02:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "nmap_structs.h"
 #include "ft_nmap_parsing.h"
 #include "ft_nmap_error.h"
+#include <errno.h>
 
-void    set_speedup(t_nmap_setting *settings, char *value)
+void    set_scan(t_nmap_setting *settings, char *value)
 {
-	int32_t	nb;
+	char	*scan_list[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP", NULL};
+	char	value_list[] = {S_SYN, S_NULL, S_ACK, S_FIN, S_XMAS, S_UDP};
 
 	if (value == NULL) {
-		fatal_error(E_NOARG, "--speedup", settings);
+		fatal_error(E_NOARG, "--scan");
 	}
-	nb = ft_atoi(value);
-	if (ft_isnumber(value) == false || nb < 0 || nb > 250) {
-		fatal_error(E_BADSPEEDUP, value, settings);
+	for (int32_t i = 0; scan_list[i]; i++) {
+		if (ft_strcmp(value, scan_list[i]) == 0) {
+			settings->scans[i] |= value_list[i];
+			return ;
+		}
 	}
-	settings->speedup = (uint8_t)nb;
+	fatal_error(E_BADSCAN, value);
 }

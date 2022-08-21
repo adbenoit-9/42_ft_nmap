@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 19:43:19 by leon             ###   ########.fr        #
+#    Updated: 2022/08/21 20:31:53 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,14 @@ SEND_DIR		:= $(SRC_DIR)/sendy
 SETUP_DIR		:= $(SRC_DIR)/setupy
 REC_DIR			:= $(SRC_DIR)/recy
 MAP_DIR			:= $(SRC_DIR)/mapy
+PARS_DIR		:= $(SRC_DIR)/parsy
 
 LIB_NAMES		:= $(LIBFT_DIR)/libft.a\
 					$(BUILD_DIR)/buildy.a\
 					$(CLEAN_DIR)/cleany.a\
 					$(REC_DIR)/recy.a\
 					$(SEND_DIR)/sendy.a\
+					$(PARS_DIR)/parsy.a\
 # $(MAP_DIR)/mapy.a
 # $(SETUP_DIR)/setupy.a
 
@@ -53,7 +55,7 @@ INC_SUB_DIR		:= buildy\
 					libft/inc\
 					mapy\
 					nmap\
-					parsing\
+					parsy\
 					prompty\
 					proty\
 					recy\
@@ -124,6 +126,7 @@ lib:
 	@make -C $(CLEAN_DIR)
 	@make -C $(REC_DIR)
 	@make -C $(SEND_DIR)
+	@make -C $(PARS_DIR)
 # @make -C $(SETUP_DIR)
 # @make -C $(MAPY_DIR)
 	
@@ -133,6 +136,7 @@ lib_clean:
 	@make -C $(CLEAN_DIR) clean
 	@make -C $(REC_DIR) clean
 	@make -C $(SEND_DIR) clean
+	@make -C $(PARS_DIR) clean
 # @make -C $(SETUP_DIR) clean
 # @make -C $(MAPY_DIR) clean
 	
