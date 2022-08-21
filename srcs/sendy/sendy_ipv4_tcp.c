@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sendy.c                                            :+:      :+:    :+:   */
+/*   sendy_ipv4_tcp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:04:36 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 16:20:53 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 // int 				send_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 // int 				send_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 
-int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd,
-														void *conf_exec)
+//int 				send_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec)
+
+int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			r		= SENDY_OK;
 
@@ -36,7 +37,7 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd,
 			
 			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
 			{
-				r = sendto(((t_nmap_scan*)conf_exec)->socket,
+				r = sendto(((t_nmap_app*)conf_nd)->socket,
 						buf,
 						((t_nmap_scan*)conf_exec)->packet_length,
 						0,
@@ -45,7 +46,7 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd,
 			}
 			else
 			{
-				r = sendto(((t_nmap_scan*)conf_exec)->socket,
+				r = sendto(((t_nmap_app*)conf_nd)->socket,
 						buf,
 						((t_nmap_scan*)conf_exec)->packet_length,
 						0,

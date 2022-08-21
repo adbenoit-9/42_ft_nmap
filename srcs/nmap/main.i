@@ -2693,11 +2693,23 @@ int print_rd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app, t_nmap_sc
 
 int build_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec);
 # 20 "./nmap/mapy_hooks.h" 2
+# 1 "./sendy/export_sendy.h" 1
+# 18 "./sendy/export_sendy.h"
+int send_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec);
+# 21 "./nmap/mapy_hooks.h" 2
+# 1 "./cleany/export_cleany.h" 1
+# 22 "./cleany/export_cleany.h"
+int clean_net(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app);
+# 22 "./nmap/mapy_hooks.h" 2
+# 1 "./recy/export_recy.h" 1
+# 19 "./recy/export_recy.h"
+int recv_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec);
+# 23 "./nmap/mapy_hooks.h" 2
 
 int print_all(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
 # 18 "./nmap/hooks.h" 2
 # 1 "./nmap/sety_hooks.h" 1
-# 21 "./nmap/sety_hooks.h"
+# 23 "./nmap/sety_hooks.h"
 int set_sockaddr(t_nmap_setting *root, t_nmap_link *link);
 
 int set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app);
@@ -2759,30 +2771,50 @@ int main(int ac, char **av)
   ((t_root*)buf)->st_nb = 5;
   ((t_root*)buf)->nd_nb = 5;
   ((t_root*)buf)->rd_nb = 5;
-  set_st(root, set_sockaddr);
-  set_nd(root, set_port);
-  set_rd(root, set_tcpflag);
+  if (set_st(root, set_sockaddr))
+   return (-1);
+  if (set_nd(root, set_port))
+   return (-1);
+  if (set_nd(root, set_socket))
+   return (-1);
+  if (set_rd(root, set_tcpflag))
+   return (-1);
 
-  set_st(root, print_st);
-  set_nd(root, print_nd);
-  set_rd(root, print_rd);
-
-  mapy_f(root, build_ipv4_tcp);
-  mapy_f(root, print_all);
-
-
-
-
-
-
-
-  fprintf(__stderrp, "%s:%d r = %d", __func__, 80, r);
+  if (set_st(root, print_st))
+   return (-1);
+  if (set_nd(root, print_nd))
+   return (-1);
+  if (set_rd(root, print_rd))
+   return (-1);
 
 
+  if (mapy_f(root, build_ipv4_tcp))
+   return (-1);
 
 
-  fprintf(__stderrp, "%s:%d\n", __func__, 85);
-# 96 "nmap/main.c"
+  fprintf(__stderrp, "%s:%d r = %d", __func__, 84, r);
+  if (mapy_f(root, send_ipv4_tcp))
+   return (-1);
+  fprintf(__stderrp, "%s:%d r = %d", __func__, 87, r);
+  if (set_nd(root, clean_net))
+   return (-1);
+  fprintf(__stderrp, "%s:%d r = %d", __func__, 90, r);
+  if (mapy_f(root, print_all))
+   return (-1);
+
+
+
+
+
+
+
+  fprintf(__stderrp, "%s:%d r = %d", __func__, 100, r);
+
+
+
+
+  fprintf(__stderrp, "%s:%d\n", __func__, 105);
+# 116 "nmap/main.c"
  }
 
 

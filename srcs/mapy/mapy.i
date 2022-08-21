@@ -1330,13 +1330,51 @@ t_func_mapy _buildy_exec[8] = {
   ((void *)0),
 };
 # 18 "./nmap/mapy_data.h" 2
+# 1 "./sendy/data_sendy.h" 1
+# 16 "./sendy/data_sendy.h"
+# 1 "./sendy/export_sendy.h" 1
+# 18 "./sendy/export_sendy.h"
+int send_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec);
+# 17 "./sendy/data_sendy.h" 2
 
 
 
+
+
+t_func_mapy _sendy_exec[8] = {
+  send_ipv4_tcp,
+  ((void *)0),
+  ((void *)0),
+  ((void *)0),
+  ((void *)0),
+};
+# 19 "./nmap/mapy_data.h" 2
+
+# 1 "./recy/data_recy.h" 1
+# 16 "./recy/data_recy.h"
+# 1 "./recy/export_recy.h" 1
+# 19 "./recy/export_recy.h"
+int recv_ipv4_tcp(uint8_t *buf, t_nmap_link *conf_st, t_nmap_app *conf_nd, t_nmap_scan *conf_exec);
+# 17 "./recy/data_recy.h" 2
+
+
+
+
+
+t_func_mapy _recy_exec[8] = {
+  recv_ipv4_tcp,
+  ((void *)0),
+  ((void *)0),
+  ((void *)0),
+  ((void *)0),
+};
+# 21 "./nmap/mapy_data.h" 2
 
 
 t_func_mapy *_exec[8] = {
  _buildy_exec,
+ _sendy_exec,
+ _recy_exec,
 };
 # 7 "mapy/mapy.c" 2
 

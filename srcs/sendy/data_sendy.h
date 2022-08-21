@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sendy.h                                            :+:      :+:    :+:   */
+/*   data_sendy.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:48:30 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/21 16:02:05 by leon              #+#    #+#             */
+/*   Updated: 2022/08/21 16:08:27 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_SENDY_H
-# define FT_NMAP_SENDY_H
+#ifndef DATA_SENDY_H
+#define DATA_SENDY_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include "export_sendy.h"
 
-#include "nmap_structs.h"
+#ifdef MAP_CMD_INDEX
+# define SENDY_CMD_INDEX MAP_CMD_INDEX
+#endif
 
-#define SENDY_OK	0
-#define SENDY_ERROR	-1
+t_func_mapy _sendy_exec[EXEC_MAX_HOOK] = {
+		send_ipv4_tcp,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+};
 
 #endif

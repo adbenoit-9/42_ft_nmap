@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:58:35 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 15:07:21 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 16:28:58 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /* For using sety_f */
 
 #include "mapy.h"
+#include "export_cleany.h"
+// #include "export_setupy.h"
 
 /* ST : t_func_sety_st */
 int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link);

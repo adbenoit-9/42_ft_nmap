@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sendy.h                                            :+:      :+:    :+:   */
+/*   data_recy.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:48:30 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/21 15:58:41 by leon              #+#    #+#             */
+/*   Updated: 2022/08/21 16:12:46 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_SENDY_H
-# define FT_NMAP_SENDY_H
+#ifndef DATA_RECY_H
+# define DATA_RECY_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include "export_recy.h"
 
-#include "nmap_structs.h"
+#ifdef MAP_CMD_INDEX
+# define RECY_CMD_INDEX MAP_CMD_INDEX
+#endif
 
-#define SENDY_OK	0
-#define SENDY_ERROR	-1
+t_func_mapy _recy_exec[EXEC_MAX_CMD] = {
+		recv_ipv4_tcp,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+};
+
 
 #endif

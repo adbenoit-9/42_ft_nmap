@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sendy.h                                            :+:      :+:    :+:   */
+/*   data_setupy.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:48:30 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/21 16:04:19 by leon              #+#    #+#             */
+/*   Updated: 2022/08/21 16:05:12 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_SENDY_H
-# define FT_NMAP_SENDY_H
+#ifndef DATA_SETUPY_H
+# define DATA_SETUPY_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include "export_setupy.h"
 
-#include "nmap_structs.h"
+t_func_mappy _setupy_exec[MAPPY_MAX_EXECUTION_HOOK] = {
+		setup_ipv4_tcp,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+};
 
-#define SENDY_OK	0
-#define SENDY_ERROR	-1
+
 
 #endif

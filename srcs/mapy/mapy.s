@@ -527,12 +527,36 @@ __buildy_exec:
 	.quad	0
 	.quad	0
 
+	.globl	__sendy_exec                    ## @_sendy_exec
+	.p2align	4
+__sendy_exec:
+	.quad	_send_ipv4_tcp
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+
+	.globl	__recy_exec                     ## @_recy_exec
+	.p2align	4
+__recy_exec:
+	.quad	_recv_ipv4_tcp
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+	.quad	0
+
 	.globl	__exec                          ## @_exec
 	.p2align	4
 __exec:
 	.quad	__buildy_exec
-	.quad	0
-	.quad	0
+	.quad	__sendy_exec
+	.quad	__recy_exec
 	.quad	0
 	.quad	0
 	.quad	0

@@ -6,36 +6,20 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 19:56:10 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 16:13:11 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RECY_EXPORT
-# define RECY_EXPORT
+#ifndef EXPORT_RECY
+# define EXPORT_RECY
 
-#include "mappy.h"
-
-#ifdef MAP_CMD_INDEX
-# define RECY_CMD_INDEX MAP_CMD_INDEX
-#endif
-
+#include "mapy.h"
 
 /* Exported Functions */
-int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
-int 				recv_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
-int 				recv_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
-int 				recv_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
-
-t_func_mappy _recy_exec[MAPPY_MAX_EXECUTION_HOOK] = {
-		recv_ipv4_tcp,
-		recv_ipv4_udp,
-		recv_ipv6_tcp,
-		recv_ipv6_udp,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-};
+int 				recv_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec);
+//int 				recv_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
+//int 				recv_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
+//int 				recv_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 
 #define SELECT_HOOK_RECY(sockaddr, nd, hook) do { \
 if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
@@ -51,6 +35,5 @@ if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 	} \
 } \
 } while (0)
-
 
 #endif
