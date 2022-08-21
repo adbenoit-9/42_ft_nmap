@@ -1,36 +1,88 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
+#    Updated: 2022/08/21 18:39:57 by adbenoit         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME=bin
-SRCS= mapy.c \
-		test/main.c \
-		test/test.c \
-		mapy_f.c \
-		sety_f.c \
-		exey_f.c
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+OPTFLAGS = -O2
+DEPFLAGS = -MP -MD
 
-#OPTFLAGS=-O3
-#OPTFLAGS=-fsanitize=thread -g3
-OPTFLAGS= -g3
+UNAME	:= $(shell uname)
+ifeq ($(UNAME), Darwin)
+	CFLAGS += -DMAC
+endif
 
-OBJS = $(SRCS:.c=.o)
-PREP = $(SRCS:.c=.i)
+MODULES		:= ../nmap
 
-all: $(NAME)
+IFLAGS		:= $(foreach D,$(MODULES), -I$(D))
 
-	
+SRC			:= mapy.c \
+				sety_f.c \
+				exey_f.c
 
-$(NAME):  $(LIBFT) $(OBJS)  
-	$(CC) -o $@ $(OBJS) 
+BUILD 		:= .build
+OBJ_DIR 	:= $(BUILD)/obj
+ASM_DIR 	:= $(BUILD)/asm
 
-%.i:%.c
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -E -o $@ $^  
+OBJ			:= $(SRC:%.c=$(OBJ_DIR)/%.o)
+ASM			:= $(SRC:%.c=$(ASM_DIR)/%.s)
 
-%.o:%.c 
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -c $^ -o $@ -save-temps=obj
+NAME	:= mapy.a
 
-#	gcc -c $(SRCS) -save-temps=obj
-#	gcc -c $(SRCS) -save-temps=obj
+all : $(NAME) 
+
+$(NAME): $(OBJ) $(ASM)
+	@ar rc $(NAME) $(OBJ)
+	@echo "Compilation of \033[33;1m$(NAME)\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
+
+$(BUILD):
+	@mkdir $@ $(OBJ_DIR) $(ASM_DIR)
+
+$(OBJ_DIR)/%.o:%.c | $(BUILD)
+	@$(CC) $(CFLAGS)  $(IFLAGS) $(DEPFLAGS) -c -o $@ $^ 
+
+$(ASM_DIR)/%.s:%.c | $(BUILD)
+	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
 clean:
-	rm  $(OBJS) $(ASSS)
+	@rm -Rf $(BUILD)
 
-re: clean all
+fclean: clean
+	@rm -Rf $(NAME)
+
+release: clean
+	@tar zcvf release.tgz *
+gstats:
+	@git status
+
+gdiff:
+	@git diff --color --stat
+
+spec: $(OBJ)
+	@$(CC) -o $@ $(OBJ) -fdump-ada-spec
+	@mkdir -f ads
+	@mv *.ads ads
+	
+re: fclean all
+
+.PHONY: all clean fclean re debug
+
+
+#
+# 			-mtune broadwell
+#		src/ft_strlen.c
+# LIBS = 
+# CODEDIRS =. 
+#	./src
+# CFILES = $(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
+#OBJS = $(pathsubst %.c,%.o,$(SRCS))
+# install:
+# flash:
