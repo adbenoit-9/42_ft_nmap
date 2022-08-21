@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildy_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/08/15 15:10:57 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:55:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include "nmap_structs.h"
 
 // TODO bufferriser avec une static
 // 4096 bytes should do it

@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 17:34:10 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 18:05:19 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,33 +33,31 @@ CLEAN_DIR		:= $(SRC_DIR)/cleany
 SEND_DIR		:= $(SRC_DIR)/sendy
 SETUP_DIR		:= $(SRC_DIR)/setupy
 REC_DIR			:= $(SRC_DIR)/recy
-LIB_NAMES		:= $(LIB_DIR)/libft.a\
-					$(BUILD_DIR)/buildy.a\
-					$(CLEAN_DIR)/cleany.a\
-					$(SEND_DIR)/sendy.a\
-					$(SETUP_DIR)/setupy.a
-# LIB_NAMES		:= $(LIB_DIR)/recy.a
+LIB_NAMES		:= $(LIBFT_DIR)/libft.a
+# $(BUILD_DIR)/buildy.a\
+# $(CLEAN_DIR)/cleany.a\
+# $(SEND_DIR)/sendy.a\
+# $(SETUP_DIR)/setupy.a
 
 # MAIN
 BUILD 			:= .build
 OBJ_DIR 		:= $(BUILD)/obj
 ASM_DIR 		:= $(BUILD)/asm
 PROC_DIR 		:= $(BUILD)/proc
-INC_DIR 		:= $(SRC_DIR)/nmap\
-					$(SRC_DIR)/buildy\
-					$(SRC_DIR)/cleany\
-					$(SRC_DIR)/mapy\
-					$(SRC_DIR)/parsing\
-					$(SRC_DIR)/proty\
-					$(SRC_DIR)/recy\
-					$(SRC_DIR)/sendy\
-					$(SRC_DIR)/setupy\
-					$(SRC_DIR)/libft/inc
-SUB_DIR			:= parsing\
-					nmap\
+SUB_DIR			:= buildy\
+					cleany\
+					libft\
 					mapy\
+					nmap\
+					parsing\
 					prompty\
-					buildy
+					proty\
+					recy\
+					sendy\
+					setupy
+INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(SUB_DIR))\
+					$(SRC_DIR)/libft/inc
+					
 DIRS			:= $(OBJ_DIR) $(ASM_DIR) $(PROC_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 
 
@@ -67,13 +65,13 @@ DIRS			:= $(OBJ_DIR) $(ASM_DIR) $(PROC_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 NAME			:= ft_nmap
 SRC				:=
 
-SUB_SRC			:= parser.c \
-					parse_ip.c \
-					parse_scan.c \
-					parse_ports.c \
-					parse_speedup.c \
-					ft_isnumber.c
-SRC				+= $(addprefix parsing/, $(SUB_SRC))
+# SUB_SRC			:= parser.c \
+# 					parse_ip.c \
+# 					parse_scan.c \
+# 					parse_ports.c \
+# 					parse_speedup.c \
+# 					ft_isnumber.c
+# SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
 SUB_SRC			:= main.c \
 					sety_hooks.c \
@@ -92,6 +90,15 @@ SRC				+= $(addprefix prompty/, $(SUB_SRC))
 SUB_SRC			:= buildy_ipv4_tcp.c \
 					buildy_utils.c
 SRC				+= $(addprefix buildy/, $(SUB_SRC))
+
+SUB_SRC			:= recy_ipv4_tcp.c
+SRC				+= $(addprefix recy/, $(SUB_SRC))
+
+SUB_SRC			:= sendy_ipv4_tcp.c
+SRC				+= $(addprefix sendy/, $(SUB_SRC))
+
+SUB_SRC			:= cleany.c
+SRC				+= $(addprefix cleany/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 PREP			:= $(SRCS:.c=$(OBJ_DIR)/%.i)
