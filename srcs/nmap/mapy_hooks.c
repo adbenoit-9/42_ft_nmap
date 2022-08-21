@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:28:22 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 15:33:07 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 15:45:27 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int					print_all(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan 
 	(void)app;
 	(void)scan;
 	fprintf(stderr, "%s:%d buf=%p\n\n", __func__, __LINE__, buf);
-	while (i < MAP_BLCK_SIZE)
+	while (i < scan->packet_length)
 	{
 		if (i % 32 == 0)
 		{
