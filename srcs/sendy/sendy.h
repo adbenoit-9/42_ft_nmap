@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:20:13 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 18:01:38 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_NMAP_SENDY_H
@@ -21,5 +21,6 @@
 
 #define SENDY_OK	0
 #define SENDY_ERROR	-1
+
 
 #endif

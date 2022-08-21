@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 15:26:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 18:50:11 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link)
 			freeaddrinfo(res);
 		}
 	}
-	fprintf(stderr, "%s:%d r=%d\n", __func__, __LINE__, r);
+	//fprintf(stderr, "%s:%d r=%d\n", __func__, __LINE__, r);
 	return (r);
 }
 
@@ -59,7 +59,7 @@ int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
 	(void)root;
 	(void)link;
 	app->port = 4242;
-	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+//	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	return (NMAP_OK);
 }
 

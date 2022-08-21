@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 16:04:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:05:12 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 18:00:22 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 t_func_mappy _setupy_exec[MAPPY_MAX_EXECUTION_HOOK] = {
 		setup_ipv4_tcp,
+		NULL,
+		NULL,
+		NULL,
 		NULL,
 		NULL,
 		NULL,

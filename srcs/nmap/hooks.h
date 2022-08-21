@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:05:11 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 15:06:42 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:27:58 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "test_hooks.h"
 #include "mapy_hooks.h"
 #include "sety_hooks.h"
+#include "exey_hooks.h"
 
 
 #endif

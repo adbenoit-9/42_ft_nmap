@@ -47,6 +47,7 @@ typedef struct			s_root {
 	int				nd_nb;
 	int				rd_nb;
 	uint8_t			*map;
+//	int				tasks_scheduler[EXEC_LST_SIZE];
 	t_st			st[ST_MAX];
 }						t_root;
 

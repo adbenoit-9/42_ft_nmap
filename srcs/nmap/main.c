@@ -77,22 +77,25 @@ int main(int ac, char **av)
 			return (-1);
 
 
-		if (mapy_f(root, build_ipv4_tcp))
-			return (-1);
+	//	if (mapy_f(root, build_ipv4_tcp))
+	//		return (-1);
 
 
-		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
-		if (mapy_f(root, send_ipv4_tcp))
-			return (-1);
-		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
-		if (set_nd(root, clean_net))
-			return (-1);
-		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		exey_ctrl(root, nmap_init_exey);
+		r = mapy(root);
+		fprintf(stderr, "%s: r = %d\n", __func__, r);
+
 		if (mapy_f(root, print_all))
 			return (-1);
-//		// mapy_f(root, test_mapy);
+//		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+//		if (mapy_f(root, send_ipv4_tcp))
+//			return (-1);
+//		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+//		if (set_nd(root, clean_net))
+//			return (-1);
+//		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		// mapy_f(root, test_mapy);
 //		exey_ctrl(root, test_exey);
-		//exey_rd(root, test_exey_print);
 
 //		r = mapy(root);
 //		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
