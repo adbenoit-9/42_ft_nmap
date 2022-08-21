@@ -1,15 +1,25 @@
-CC = gcc
-DEPS =   ../buildy\
-	 		../cleany	\
-	 		../mappy	\
-	 		../parsing\
-	 		../proty	\
-	 		../recy		\
-	 		../sendy	\
-	 		../setupy	\
-	 		../nmap \
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
+#    Updated: 2022/08/21 18:18:27 by adbenoit         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-MODULES	:= ../mapy
+CC = gcc
+
+UNAME	:= $(shell uname)
+ifeq ($(UNAME), Darwin)
+	CFLAGS += -DMAC
+endif
+
+MODULES	:= ../mapy\
+			../nmap\
+			../proty
 
 OBJ			=	$(addprefix $(OBJ_DIR),$(OBJ_NAME))
 ASS			=	$(addprefix $(ASS_DIR),$(OBJ_NAME))
@@ -17,7 +27,7 @@ ASS			=	$(addprefix $(ASS_DIR),$(OBJ_NAME))
 $(OBJ_PATH)%.o:	$(CHAR_PATH)%.c $(HEADER)
 
 
-INCFLAGS = $(foreach D,$(MODULES), -I$(D))
+IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 ARCHIVE=
 
@@ -56,10 +66,10 @@ $(BUILD):
 	@mkdir $@ $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o:%.c | $(BUILD)
-	@$(CC) $(CFLAGS)  $(INCFLAGS) $(DEPFLAGS) -c -o $@ $^ 
+	@$(CC) $(CFLAGS)  $(IFLAGS) $(DEPFLAGS) -c -o $@ $^ 
 
-$(OBJ_DIR)/%.s:%.c | $(BUILD)
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -S -o $@ $^ 
+$(ASM_DIR)/%.s:%.c | $(BUILD)
+	$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
 
 clean :
@@ -88,7 +98,7 @@ re: fclean all
 .PHONY: all clean fclean re debug
 
 debug:
-	@echo $(OBJ_DIR)/%.o
+	@echo $(IFLAGS)
 
 
 

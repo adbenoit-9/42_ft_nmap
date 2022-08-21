@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 18:05:19 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 18:15:33 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -159,10 +159,8 @@ norm:
 
 re: fclean all
 
-# debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-# debug: re
-debug:
-	@echo $(IFLAGS)
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 .PHONY: all clean fclean re debug lib
 
