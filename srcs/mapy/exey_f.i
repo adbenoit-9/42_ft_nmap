@@ -825,6 +825,25 @@ int disconnectx(int, sae_associd_t, sae_connid_t);
 
 
 
+
+
+struct iphdr {
+ uint8_t ihl:4;
+ uint8_t version:4;
+ uint8_t tos;
+ uint16_t tot_len;
+ uint16_t id;
+ uint16_t frag_off;
+ uint8_t ttl;
+ uint8_t protocol;
+ uint16_t check;
+ uint32_t saddr;
+ uint32_t daddr;
+
+};
+
+
+
 typedef struct s_nmap_setting {
  uint16_t ports[1024];
  uint8_t scans[6];

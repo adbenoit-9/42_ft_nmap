@@ -3,6 +3,11 @@ CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 
+UNAME	:= $(shell uname)
+ifeq ($(UNAME), Darwin)
+	CFLAGS += -DMAC
+endif
+
 INCDIR = \
 	 ./nmap 	\
 	 ./buildy 	\

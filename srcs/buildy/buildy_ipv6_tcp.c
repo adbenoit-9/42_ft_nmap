@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildy_ipv6_tcp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:20:27 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "mappy.h"
 #include <arpa/inet.h>
 
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 
 //static const	uint8_t		template_ipv4[20] = {
 //	0x45, 0x0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

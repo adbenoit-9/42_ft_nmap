@@ -6,12 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/18 20:56:19 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "ft_nmap.h"
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 #include "ft_nmap_error.h"
 
 static void	set_ip(char *host, t_opt *opt) {

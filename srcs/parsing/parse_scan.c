@@ -6,12 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/17 23:21:26 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 #include "ft_nmap_parsing.h"
 #include "ft_nmap_error.h"
 #include <errno.h>

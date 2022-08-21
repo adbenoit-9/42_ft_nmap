@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recy.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:26:38 by leon              #+#    #+#             */
-/*   Updated: 2022/08/17 23:06:39 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <sys/socket.h>
 
 #include "proty_tcp.h" // TODO Avoid this dependency 
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 
 #define RECY_OK 0
 #define RECY_ERROR -1

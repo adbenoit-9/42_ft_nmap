@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setupy.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 23:43:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 19:51:23 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <sys/socket.h>
 
 /* Project header */
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 
 #include "proty_ip.h"
 #include "proty_tcp.h"

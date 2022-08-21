@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleany.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 23:58:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/17 02:54:09 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 /* Project Header */
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 
 #define CLEANY_OK	0
 #define CLEANY_ERROR	-1

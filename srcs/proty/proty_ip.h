@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap_ip.h                                       :+:      :+:    :+:   */
+/*   proty_ip.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:27 by leon              #+#    #+#             */
-/*   Updated: 2022/08/08 02:04:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:36:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,6 @@
 
 # include <netinet/ip.h>
 # include <netinet/ip6.h>
-
-# ifdef OS
-
-struct iphdr {
-	uint8_t		ihl:4;
-	uint8_t		version:4;
-	uint8_t		tos;
-	uint16_t	tot_len;
-	uint16_t	id;
-	uint16_t	frag_off;
-	uint8_t		ttl;
-	uint8_t		protocol;
-	uint16_t	check;
-	uint32_t	saddr;
-	uint32_t	daddr;
-	/*The opts start here. */
-};
-
-# endif
 
 #define SET_IP4_VERSION(ip, value) do {((struct iphdr*)ip)->version =\
 					(uint8_t)value & (uint8_t)0x0F;} while (0)

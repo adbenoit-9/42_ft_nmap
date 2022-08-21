@@ -9,14 +9,7 @@ DEPS =   ../buildy\
 	 		../setupy	\
 	 		../nmap \
 
-OBJ_NAME	=	$(CHAR:.c=.o)
-OBJ_NAME	+=	$(GNL:.c=.o)
-OBJ_NAME	+=	$(LST:.c=.o)
-OBJ_NAME	+=	$(MEM:.c=.o)
-OBJ_NAME	+=	$(NBR:.c=.o)
-OBJ_NAME	+=	$(STR:.c=.o)
-OBJ_NAME	+=	$(TAB:.c=.o)
-PATH_nmap     += nmap   
+MODULES	:= ../mapy
 
 OBJ			=	$(addprefix $(OBJ_DIR),$(OBJ_NAME))
 ASS			=	$(addprefix $(ASS_DIR),$(OBJ_NAME))
@@ -31,37 +24,51 @@ ARCHIVE=
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
 DEPFLAGS = -MP -MD
-SRCS = buildy.c  buildy_ipv4_tcp.c  buildy_ipv4_udp.c	buildy_ipv6_tcp.c  buildy_ipv6_udp.c  buildy_utils.c
-SRCS += 
 
-OBJ_DIR 		:= obj
-INC_DIR 		:= incs
+SRC = buildy_ipv4_tcp.c\
+		buildy_utils.c
+# buildy_ipv4_udp.c\
+# buildy_ipv6_tcp.c\
+# buildy_ipv6_udp.c
+
+BUILD 		:= .build
+OBJ_DIR 	:= $(BUILD)/obj
+ASM_DIR 	:= $(BUILD)/asm
+# INC_DIR 		:= incs
 #ASS_DIR			:= 
- 
-ASSS = $(SRCS:.c=.s)
-OBJS:= $(SRC:%.c=$(OBJ_DIR)/%.o)
-DEPS = $(SRCS:.c=.d)
-SPEC=
+
+OBJ			:= $(SRC:%.c=$(OBJ_DIR)/%.o)
+ASM			:= $(SRC:%.c=$(ASM_DIR)/%.o)
+# DEPS		:= $(SRC:.c=.d)
+# SPEC=
 #DEPS = $(pathsubst %.c,%.d,$(SRCS))
 
-all : ./Makefile $(BINARY) 
+NAME	:= buildy.a
 
-$(BINARY): $(ASSS) $(OBJS)  $(SPEC)
-	ar rc $(OBJS)
+all : $(NAME) 
 
+$(NAME): $(OBJ) $(ASM)
+	@ar rc $(NAME) $(OBJ)
+	@printf "\n"
+	@echo "Compilation of \033[33;1m$(NAME)\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
 
-%.o:%.c
-	$(CC) $(CFLAGS)  $(INCFLAGS) $(DEPFLAGS) -c -o $@ $^ 
+$(BUILD):
+	@mkdir $@ $(OBJ_DIR)
 
-%.s:%.c
+$(OBJ_DIR)/%.o:%.c | $(BUILD)
+	@$(CC) $(CFLAGS)  $(INCFLAGS) $(DEPFLAGS) -c -o $@ $^ 
+
+$(OBJ_DIR)/%.s:%.c | $(BUILD)
 	$(CC) $(CFLAGS) $(OPTFLAGS) $(INCFLAGS) -S -o $@ $^ 
 
 
 clean :
-	rm -rf $(BINARY)
-	rm -rf $(OBJS)
-	rm -rf $(DEPS)
-	rm -rf $(ASSS)
+	@rm -Rf $(BUILD)
+	@echo "\033[33;1m$(NAME)\033[0;1m: objects deleted\033[0m"
+
+fclean: clean
+	@rm -Rf $(NAME)
+	@echo "\033[33;1m$(NAME)\033[0;1m: deleted\033[0m"
 
 release: clean
 	tar zcvf release.tgz *
@@ -71,13 +78,17 @@ gstats:
 gdiff:
 	git diff --color --stat
 
-spec: $(OBJS)
-	$(CC) -o $@ $(OBJS) -fdump-ada-spec
+spec: $(OBJ)
+	$(CC) -o $@ $(OBJ) -fdump-ada-spec
 	mkdir -f ads
 	mv *.ads ads
 	
+re: fclean all
 
-re: clean all
+.PHONY: all clean fclean re debug
+
+debug:
+	@echo $(OBJ_DIR)/%.o
 
 
 
