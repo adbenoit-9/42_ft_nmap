@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 18:49:35 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 18:44:22 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ MODULES	:= ../nmap\
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = setupy_ipv4_tcp.c
-# setupy_ipv4_udp.c\
-# setupy_ipv6_tcp.c\
-# setupy_ipv6_udp.c
+SRC = recy_ipv4_tcp.c
+# recy_ipv4_udp.c\
+# recy_ipv6_tcp.c\
+# recy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
@@ -37,7 +37,7 @@ ASM_DIR 	:= $(BUILD)/asm
 OBJ			:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 ASM			:= $(SRC:%.c=$(ASM_DIR)/%.s)
 
-NAME	:= setupy.a
+NAME	:= recy.a
 
 all : $(NAME) 
 
@@ -77,3 +77,4 @@ spec: $(OBJ)
 re: fclean all
 
 .PHONY: all clean fclean re debug
+

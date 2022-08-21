@@ -6,9 +6,11 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 18:05:19 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 19:10:18 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME			:= ft_nmap
 
 # COMPILATION
 
@@ -33,20 +35,22 @@ CLEAN_DIR		:= $(SRC_DIR)/cleany
 SEND_DIR		:= $(SRC_DIR)/sendy
 SETUP_DIR		:= $(SRC_DIR)/setupy
 REC_DIR			:= $(SRC_DIR)/recy
-LIB_NAMES		:= $(LIBFT_DIR)/libft.a
-# $(BUILD_DIR)/buildy.a\
-# $(CLEAN_DIR)/cleany.a\
-# $(SEND_DIR)/sendy.a\
+MAP_DIR			:= $(SRC_DIR)/mapy
+
+LIB_NAMES		:= $(LIBFT_DIR)/libft.a\
+					$(BUILD_DIR)/buildy.a\
+					$(CLEAN_DIR)/cleany.a\
+					$(REC_DIR)/recy.a\
+					$(SEND_DIR)/sendy.a\
+# $(MAP_DIR)/mapy.a
 # $(SETUP_DIR)/setupy.a
 
-# MAIN
+# FILES
 BUILD 			:= .build
-OBJ_DIR 		:= $(BUILD)/obj
-ASM_DIR 		:= $(BUILD)/asm
-PROC_DIR 		:= $(BUILD)/proc
-SUB_DIR			:= buildy\
+
+INC_SUB_DIR		:= buildy\
 					cleany\
-					libft\
+					libft/inc\
 					mapy\
 					nmap\
 					parsing\
@@ -55,14 +59,15 @@ SUB_DIR			:= buildy\
 					recy\
 					sendy\
 					setupy
-INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(SUB_DIR))\
-					$(SRC_DIR)/libft/inc
+INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(INC_SUB_DIR))
+
+SUB_DIR			:= nmap\
+					mapy\
+					prompty\
+					setupy
 					
-DIRS			:= $(OBJ_DIR) $(ASM_DIR) $(PROC_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
+DIRS			:= $(addprefix $(BUILD)/, $(SUB_DIR))
 
-
-# FILES
-NAME			:= ft_nmap
 SRC				:=
 
 # SUB_SRC			:= parser.c \
@@ -87,23 +92,10 @@ SRC				+= $(addprefix mapy/, $(SUB_SRC))
 SUB_SRC			:= prompty.c
 SRC				+= $(addprefix prompty/, $(SUB_SRC))
 
-SUB_SRC			:= buildy_ipv4_tcp.c \
-					buildy_utils.c
-SRC				+= $(addprefix buildy/, $(SUB_SRC))
-
-SUB_SRC			:= recy_ipv4_tcp.c
-SRC				+= $(addprefix recy/, $(SUB_SRC))
-
-SUB_SRC			:= sendy_ipv4_tcp.c
-SRC				+= $(addprefix sendy/, $(SUB_SRC))
-
-SUB_SRC			:= cleany.c
-SRC				+= $(addprefix cleany/, $(SUB_SRC))
-
-OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
-PREP			:= $(SRCS:.c=$(OBJ_DIR)/%.i)
-ASSS			:= $(SRCS:.c=$(OBJ_DIR)/%.s)
-DEPS			:= $(SRCS:.c=$(OBJ_DIR)/%.d)
+OBJ				:= $(SRC:%.c=$(BUILD)/%.o)
+PREP			:= $(SRC:%.c=$(BUILD)/%.i)
+ASSS			:= $(SRC:%.c=$(BUILD)/%.s)
+DEPS			:= $(SRC:%.c=$(BUILD)/%.d)
 
 # COLORS
 NONE			= \033[0m
@@ -127,21 +119,21 @@ $(NAME): lib $(OBJ) $(PREP) $(ASSS)
 
 lib:
 	@make -C $(LIBFT_DIR)
-# @make -C $(BUILD_DIR)
-# @make -C $(CLEAN_DIR)
-# @make -C $(MAPY_DIR)
-# @make -C $(CLEAN_DIR)
-# @make -C $(SEND_DIR)
+	@make -C $(BUILD_DIR)
+	@make -C $(CLEAN_DIR)
+	@make -C $(REC_DIR)
+	@make -C $(SEND_DIR)
 # @make -C $(SETUP_DIR)
+# @make -C $(MAPY_DIR)
 	
 lib_clean:
 	@make -C $(LIBFT_DIR) clean
-# @make -C $(BUILD_DIR) clean
-# @make -C $(CLEAN_DIR) clean
-# @make -C $(MAPY_DIR) clean
-# @make -C $(CLEAN_DIR) clean
-# @make -C $(SEND_DIR) clean
+	@make -C $(BUILD_DIR) clean
+	@make -C $(CLEAN_DIR) clean
+	@make -C $(REC_DIR) clean
+	@make -C $(SEND_DIR) clean
 # @make -C $(SETUP_DIR) clean
+# @make -C $(MAPY_DIR) clean
 	
 all: $(NAME)
 
@@ -159,24 +151,22 @@ norm:
 
 re: fclean all
 
-# debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-# debug: re
-debug:
-	@echo $(IFLAGS)
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 .PHONY: all clean fclean re debug lib
 
 $(BUILD):
 	@mkdir $@ $(DIRS)
 
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c | $(BUILD)
+$(BUILD)/%.o:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs object : $(B_CYAN)$< $(NONE)...\r"
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
 
-$(ASM_DIR)/%.s:$(SRC_DIR)/%.c | $(BUILD)
+$(BUILD)/%.s:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs asm : $(B_CYAN)$< $(NONE)...\r"
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^
+	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^
 
-$(PROC_DIR)/%.i:$(SRC_DIR)/%.c | $(BUILD)
+$(BUILD)/%.i:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs preprocessed : $(B_CYAN)$< $(NONE)...\r"
-	$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -E -o $@ $^
+	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -E -o $@ $^

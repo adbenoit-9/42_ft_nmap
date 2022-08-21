@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/13 18:38:18 by adbenoit          #+#    #+#              #
-#    Updated: 2021/07/05 13:39:20 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 19:12:08 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,51 +72,41 @@ all:	$(NAME)
 
 $(NAME) : $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@printf "\n"
-	@echo "Compilation of \033[33;1mLibft\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
+	@echo "Compilation of \033[33;1m$(NAME)\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
 
 $(OBJ_PATH)%.o:	$(CHAR_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(GNL_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(LST_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(MEM_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(NBR_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(STR_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(OBJ_PATH)%.o:	$(TAB_PATH)%.c $(HEADER)
-	@printf "\033[34;1m|\033[0;m"
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJ_PATH)
-	@echo "\033[33;1mLibft\033[0;1m: objects deleted\033[0m"
 
 fclean: clean
 	@$(RM) $(NAME) 
-	@echo "\033[33;1mLibft\033[0;1m: $(NAME) deleted\033[0m"
 
 FILE=norme_error.txt
 ERROR= `cat $(FILE) | grep -B 1 "Error"`

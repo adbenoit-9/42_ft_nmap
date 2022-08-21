@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 18:49:35 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 18:31:55 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,11 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES	:= ../nmap\
-			../proty
+MODULES	:= ../nmap
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = setupy_ipv4_tcp.c
-# setupy_ipv4_udp.c\
-# setupy_ipv6_tcp.c\
-# setupy_ipv6_udp.c
+SRC = cleany.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
@@ -37,7 +33,7 @@ ASM_DIR 	:= $(BUILD)/asm
 OBJ			:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 ASM			:= $(SRC:%.c=$(ASM_DIR)/%.s)
 
-NAME	:= setupy.a
+NAME	:= cleany.a
 
 all : $(NAME) 
 
@@ -77,3 +73,19 @@ spec: $(OBJ)
 re: fclean all
 
 .PHONY: all clean fclean re debug
+
+debug:
+	@echo $(ASM)
+
+
+
+#
+# 			-mtune broadwell
+#		src/ft_strlen.c
+# LIBS = 
+# CODEDIRS =. 
+#	./src
+# CFILES = $(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
+#OBJS = $(pathsubst %.c,%.o,$(SRCS))
+# install:
+# flash:
