@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:47:17 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,41 @@
 #include "nmap_structs.h"
 #include "ft_nmap_error.h"
 
-static void	set_ip(char *host, t_opt *opt) {
-	t_nmap_app			*content;
-	t_list			*ip;
-	struct addrinfo	hints;
-	struct addrinfo	*res;
-	int				ret;
+static void	set_ip(char *host, t_nmap_setting *settings)
+{
+	// t_nmap_app			*content;
+	// t_list			*ip;
+	// struct addrinfo	hints;
+	// struct addrinfo	*res;
+	// int				ret;
 
-	content = ft_calloc(1, sizeof(t_nmap_app));
-	if (content == NULL) {
-		fatal_error(-1, STR_ENOMEM, opt);
-	}
+	// content = ft_calloc(1, sizeof(t_nmap_app));
+	// if (content == NULL) {
+	// 	fatal_error(-1, STR_ENOMEM, settings);
+	// }
 		
-	ft_memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;
-	hints.ai_flags = 0;
-	ret = getaddrinfo(host, NULL, &hints, &res);
-	if (ret != 0)
-		fatal_error(E_BADHOST, host, opt);
-	ft_memcpy(&content->sock, res->ai_addr, sizeof(struct sockaddr_storage));
-	freeaddrinfo(res);
+	// ft_memset(&hints, 0, sizeof(hints));
+	// hints.ai_family = AF_UNSPEC;
+	// hints.ai_flags = 0;
+	// ret = getaddrinfo(host, NULL, &hints, &res);
+	// if (ret != 0)
+	// 	fatal_error(E_BADHOST, host, settings);
+	// ft_memcpy(&content->sock, res->ai_addr, sizeof(struct sockaddr_storage));
+	// freeaddrinfo(res);
 
-	ip = ft_lstnew(content);
-	if (ip == NULL) {
-		fatal_error(-1, STR_ENOMEM, opt);
-	}
-	if (opt->ip_lst == NULL) {
-		opt->ip_lst = ip;
-	}
-	else {
-		ft_lstadd_back(&opt->ip_lst, ip);
-	}
+	// ip = ft_lstnew(content);
+	// if (ip == NULL) {
+	// 	fatal_error(-1, STR_ENOMEM, settings);
+	// }
+	// if (settings->ip_lst == NULL) {
+	// 	settings->ip_lst = ip;
+	// }
+	// else {
+	// 	ft_lstadd_back(&settings->ip_lst, ip);
+	// }
 }
 
-void    set_ip_from_file(t_opt *opt, char *file)
+void    set_ip_from_file(t_nmap_setting *opt, char *file)
 {
 	FILE		*stream;
 	int32_t		fd;
@@ -74,10 +75,10 @@ void    set_ip_from_file(t_opt *opt, char *file)
 	}
 }
 
-void    set_ip_from_arg(t_opt *opt, char *host)
+void    set_ip_from_arg(t_nmap_setting *settings, char *host)
 {
 	if (host == NULL) {
-		fatal_error(E_NOARG, "--ip", opt);
+		fatal_error(E_NOARG, "--ip", settings);
 	}
-	set_ip(host, opt);
+	set_ip(host, settings);
 }

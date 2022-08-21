@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ft_nmap_error.h"
 #include <errno.h>
 
-void    set_scan(t_opt *opt, char *value)
+void    set_scan(t_nmap_setting *opt, char *value)
 {
 	char	*scan_list[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP", NULL};
 	char	value_list[] = {S_SYN, S_NULL, S_ACK, S_FIN, S_XMAS, S_UDP};

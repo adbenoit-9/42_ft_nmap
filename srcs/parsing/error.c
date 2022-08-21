@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #ifdef DEBUG
 
-static void print_option(t_opt opt)
+static void print_nmap_settingion(t_nmap_setting opt)
 {
 	char	ip[INET6_ADDRSTRLEN];
 	char	*scan_str[] = {"SYN", "NULL", "ACK", "FIN", "XMAS", "UDP"};
@@ -44,7 +44,7 @@ static void print_option(t_opt opt)
 		tmp = tmp->next;
 	}
 	printf("\nports:");
-	for (uint32_t i = 0; opt.ports[i] != 0 && i < PORTS_SCAN_LIMIT; i++)
+	for (uint32_t i = 0; opt.ports[i] != 0 && i < PORT_LIMIT; i++)
 		printf(" %d", opt.ports[i]);
 	printf("\nscans:");
 	for (int16_t i = 0; i < 6; i++) {
@@ -76,11 +76,11 @@ static void print_option(t_opt opt)
 //	free(ip);
 //}
 
-void    fatal_error(int16_t error, char *arg, t_opt *opt)
+void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt)
 {
 	(void)opt;
 #ifdef DEBUG
-	print_option(*opt);
+	print_nmap_settingion(*opt);
 #endif
 	dprintf(STDERR_FILENO, "ft_nmap: ");
 	switch (error)

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/17 23:19:18 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 19:44:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <errno.h>
 # include <netdb.h>
 # include <arpa/inet.h>
-# include "../libft/inc/libft.h"
+# include "libft.h"
+# include "nmap_structs.h"
 
 # define NFLAG 6
-# define PORTS_SCAN_LIMIT 1024
 # define PORT_MAX 65536
 
 # define NONE		0
@@ -86,25 +86,25 @@
 #define MAX_LL							128
 #define MAX_HL							1024
 #define MAX_PACKET_SIZE					64
-#define MAX_SCAN_TYPE					6
+// #define MAX_SCAN_TYPE					6
 
 typedef struct		s_opt
 {
-	uint16_t	ports[PORTS_SCAN_LIMIT];
+	uint16_t	ports[PORT_LIMIT];
 	uint8_t		scans;
 	int8_t		speedup;
 	t_list		*ip_lst;
-}               	t_opt;
+}               	t_nmap_setting;
 
-t_opt	parser(int ac, char **av);
-void    set_ip_from_file(t_opt *opt, char *file);
-void    set_ip_from_arg(t_opt *opt, char *ip);
-void    set_ports(t_opt *opt, char *value);
-void    set_scan(t_opt *opt, char *value);
-void    set_speedup(t_opt *opt, char *value);
+t_nmap_setting	parser(int ac, char **av);
+void    set_ip_from_file(t_nmap_setting *opt, char *file);
+void    set_ip_from_arg(t_nmap_setting *opt, char *ip);
+void    set_ports(t_nmap_setting *opt, char *value);
+void    set_scan(t_nmap_setting *opt, char *value);
+void    set_speedup(t_nmap_setting *opt, char *value);
 bool	ft_isnumber(char *str);
 int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
 
-void    fatal_error(int16_t error, char *arg, t_opt *opt);
+void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt);
 
 #endif
