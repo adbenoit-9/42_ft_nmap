@@ -53,3 +53,5 @@ dkms.conf
 ft_nmap
 .vscode*
 *.build
+*.s
+*.i

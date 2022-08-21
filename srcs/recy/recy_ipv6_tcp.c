@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:28:39 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 18:55:20 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int 				recv_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 	uint32_t		seqverif = 0;
 	uint16_t		flag;
 
-//	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+	
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
 		r = RECY_ERROR;

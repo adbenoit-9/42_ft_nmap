@@ -25,6 +25,9 @@ t_func_mapy _buildy_exec[EXEC_MAX_CMD] = {
 		NULL,
 		NULL,
 		NULL,
+		NULL,
+		NULL,
+		NULL,
 };
 
 #endif

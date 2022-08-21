@@ -19,17 +19,12 @@
 #define T_EXE							t_exe
 #define T_BLK							t_blk
 
-//#define T_CLIENT_RD						t_nmap_scan
-//#define T_CLIENT_ND						t_nmap_app
-//#define T_CLIENT_ST						t_nmap_link
-//#define T_CLIENT_ROOT						t_nmap_setting
+#define T_CLIENT_RD_PRINT					"t_nmap_scan"
+#define T_CLIENT_ND_PRINT					"t_nmap_app"
+#define T_CLIENT_ST_PRINT					"t_nmap_link"
+#define T_CLIENT_ROOT_PRINT					"t_nmap_setting"
 
-#define T_CLIENT_RD_PRINT						"test_root"
-#define T_CLIENT_ND_PRINT						"test_st"
-#define T_CLIENT_ST_PRINT						"test_nd"
-#define T_CLIENT_ROOT_PRINT						"test_rd"
-
-// definition of this
+// definition of this typedef
 #include "nmap_structs.h"
 
 // Execution control

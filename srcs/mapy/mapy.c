@@ -14,20 +14,26 @@
 
 int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 {
-	int			r			= MAPY_OK;
+	int			r			= EXEY_OK;
 	int			i			= 0;
 //	bool		b			= 1;
 
 	i = 0;
 	/* Find the 1st task to do */
+	fprintf(stderr, "taks[]=%x", rd->exe.tasks[i]);
 	while (i < EXEC_LST_SIZE && ((rd->exe.tasks[i] & EXEC_TODO_MSK) == 0))
 	{
 		++i;
+		fprintf(stderr, ":%x", rd->exe.tasks[i]);
 	}
+	fprintf(stderr, "\n");
 	if (i == EXEC_LST_SIZE)
 	{
 		/* Nothing to do, exit */
 		r = EXEY_IDLE;
+#ifdef EXEY_DEBUG
+		fprintf(stderr, "%s:%d IDLE \n", __func__, __LINE__); // id
+#endif /* EXEY_DEBUG */
 	}
 //	r = exey_check_blkhdr(root, exe, blk);
 	if (r == EXEY_OK)
@@ -43,21 +49,22 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 	{
 		/* Clear exec flag */
 		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
-		r = EXEY_RUN;
+	fprintf(stderr, "taks[]=%x\n", rd->exe.tasks[i]);
 #ifdef EXEY_DEBUG
-		fprintf(stderr, "%s:%d task=%d hook=%d \n", __func__, __LINE__,
+		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
 						rd->exe.tasks[i], rd->exe.hook[i]);
 #endif /* EXEY_DEBUG */
 		r = (*_exec[rd->exe.tasks[i]]
 								[rd->exe.hook[i]])
 								(&root->map[index], &st->client, &nd->client, &rd->client);
+		r = EXEY_RUN;
 	}
 	return (r);
 }
 
 int			mapy(t_root *root)
 {
-	int		r = MAPY_OK;
+	int		r = EXEY_RUN;
 	int		i = 0;
 	int		j = 0;
 	int		k = 0;
@@ -69,38 +76,45 @@ int			mapy(t_root *root)
 	}
 	else
 	{
-		while (i < root->st_nb)
+		while (r == EXEY_RUN)
 		{
-			j = 0;
-			while (j < root->nd_nb)
+			i = 0;
+			while (r == EXEY_RUN && i < root->st_nb)
 			{
-				k = 0;
-				while (k < root->rd_nb)
+				j = 0;
+				while (r == EXEY_RUN && j < root->nd_nb)
 				{
-					if (root->st[i].nd[j].rd[k].exe.init == 0)
+					k = 0;
+					while (r == EXEY_RUN && k < root->rd_nb)
 					{
-						fprintf(stderr, "%s:%d\n", __func__, __LINE__);
-						root->st[i].nd[j].rd[k].exe.init = 1;
-						root->st[i].nd[j].rd[k].exe.id = i + j + k;
+//						if (root->st[i].nd[j].rd[k].exe.init == 0)
+//						{
+//							fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+//							root->st[i].nd[j].rd[k].exe.init = 1;
+//							root->st[i].nd[j].rd[k].exe.id = i + j + k;
+//						}
+//						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
+//						r = exey_check();
+						index = (((i * root->st_nb) * (j * root->nd_nb) * (k * root->rd_nb) +
+													(j * root->nd_nb) * (k * root->rd_nb) +
+													k) % BLCK_NB) * MAP_BLCK_SIZE;
+//						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
+						r = exey_wrapper(root, 
+										&root->st[i],
+										&root->st[i].nd[j],
+										&root->st[i].nd[j].rd[k], index);
+						fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
+						if (r == EXEY_IDLE)
+						{
+						}
+//								&root->st[i].nd[j].rd[k].exe,
+//								&root->buf[index]);
+						k++;
 					}
-					fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
-//					r = exey_check();
-					index = (((i * root->st_nb) * (j * root->nd_nb) * (k * root->rd_nb) +
-												(j * root->nd_nb) * (k * root->rd_nb) +
-												k) % BLCK_NB) * MAP_BLCK_SIZE;
-					fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
-					r = exey_wrapper(root, 
-									&root->st[i],
-									&root->st[i].nd[j],
-									&root->st[i].nd[j].rd[k], index);
-					fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
-//							&root->st[i].nd[j].rd[k].exe,
-//							&root->buf[index]);
-					k++;
+					j++;
 				}
-				j++;
+				i++;
 			}
-			i++;
 		}
 	}
 	return (r);
@@ -113,7 +127,6 @@ int			mapy_f(t_root *root, t_func_mapy f)
 	int		j = 0;
 	int		k = 0;
 	uint64_t		index;
-	int		map_id;
 	
 	fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, __FILE__);
 	if (!root)
@@ -145,7 +158,7 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 //						r, i, index, rd->exe.tasks[i], rd->exe.hook[i]);
 #endif /* MAPY_DEBUG */
 					r = (*f)
-								(&(root->map)[index + sizeof(map_id)],
+								(&(root->map)[index],
 								(T_CLIENT_ST*)&root->st[i].client,
 								(T_CLIENT_ND*)&root->st[i].nd[j].client, 
 								(T_CLIENT_RD*)&root->st[i].nd[j].rd[k].client);
