@@ -6,16 +6,16 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:08:09 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 13:48:35 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildy.h"
 #include <string.h>
-#include "mappy.h"
+#include "mapy.h"
 #include <arpa/inet.h>
 
-#include "ft_nmap_structs.h"
+#include "nmap_structs.h"
 
 //static const	uint8_t		template_ipv4[20] = {
 //	0x45, 0x0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -42,7 +42,7 @@ int 				build_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, 
 									((t_scan*)conf_exec)->tcpflag);
 #endif /* BUILDY_DEBUG */
-		memset(buf, 0, MAPPY_MAX_BUFFER_SIZE);
+		memset(buf, 0, MAP_BLCK_SIZE);
 //		memcpy(buf, template_ipv4, 20);
 //		memcpy(&buf[20], template_tcp, 20);
 		r = get_urandom(random, 16);
@@ -75,7 +75,7 @@ int 				build_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	   			SET_TCP_DATA(&buf[sizeof(struct iphdr)], syn_mss, 4);
 			}
 			SET_TCP_FLAGS(&buf[sizeof(struct iphdr)], ((t_nmap_scan*)conf_exec)->tcpflag); // TODO 
-			SET_TCP_DPORT(&buf[sizeof(struct iphdr)], htons(((t_nmap_app*)conf_nd)->port));
+			SET_TCP_DPORT(&buf[sizeof(struct iphdr)], __builtin_bswap16(((t_nmap_app*)conf_nd)->port));
 			SET_TCP_OFF(&buf[sizeof(struct iphdr)], tcpoff);
 			SET_IP4_TOT_LEN(buf, htons(length));
 			SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf,

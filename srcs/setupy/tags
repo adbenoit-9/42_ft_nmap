@@ -139,7 +139,7 @@ OBJ_DIR	sendy/Makefile	/^OBJ_DIR 		:= $(BUILD)\/obj$/;"	m
 OBJ_NAME	libft/Makefile	/^OBJ_NAME	=	$(CHAR:.c=.o)$/;"	m
 OBJ_PATH	libft/Makefile	/^OBJ_PATH	=	obj\/$/;"	m
 OPTFLAGS	Makefile	/^OPTFLAGS = -O2 $/;"	m
-PORT_LIMIT	parsing/ft_nmap_parsing.h	25;"	d
+PORTS_SCAN_LIMIT	parsing/ft_nmap_parsing.h	25;"	d
 PORT_MAX	parsing/ft_nmap_parsing.h	26;"	d
 PRINT_EBADARG	parsing/ft_nmap_error.h	42;"	d
 PRINT_EBADFILE	parsing/ft_nmap_error.h	32;"	d
@@ -381,8 +381,8 @@ nd_flag	nmap/ft_nmap_structs.h	/^	uint8_t 					nd_flag;$/;"	m	struct:s_nmap_app
 next	libft/inc/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
 parser	parsing/parser.c	/^t_opt parser(int ac, char **av)$/;"	f
 parser	parsing/parser.s	/^parser:$/;"	l
-ports	nmap/ft_nmap_structs.h	/^	uint16_t					ports[PORT_LIMIT]; \/\/ Great nd config$/;"	m	struct:s_nmap_app
-ports	parsing/ft_nmap_parsing.h	/^	uint16_t	ports[PORT_LIMIT];$/;"	m	struct:s_opt
+ports	nmap/ft_nmap_structs.h	/^	uint16_t					ports[PORTS_SCAN_LIMIT]; \/\/ Great nd config$/;"	m	struct:s_nmap_app
+ports	parsing/ft_nmap_parsing.h	/^	uint16_t	ports[PORTS_SCAN_LIMIT];$/;"	m	struct:s_opt
 print_option	error.c	/^static void print_option(t_opt opt)$/;"	f	file:
 print_usage	parsing/parser.c	/^static void    print_usage(void)$/;"	f	file:
 print_usage	parsing/parser.s	/^print_usage:$/;"	l

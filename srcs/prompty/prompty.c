@@ -25,6 +25,7 @@
 +#+#+#+#+#+   +#+        +#+#+#+#+#+   +#+        +#+#+#+#+#+   +#+        +#+#+#+#+#+   +#+        
      #+#    #+#               #+#    #+#               #+#    #+#               #+#    #+#          
     ###   ########.fr        ###   ########.fr        ###   ########.fr        ###   ########.fr    
+
 */
 
 
@@ -41,3 +42,17 @@
 #define B_WHITE = "\033[1;37m"
 
 
+#define print_full_debug( ) do { \
+if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
+	if (nd == NMAP_UDP) { \
+		hook = 1; \
+}	else { \
+		hook = 0; \
+}else { \
+	if { \
+		hook = 4; \
+}	else { \
+		hook = 3; \
+	} \
+} \
+} while (0)

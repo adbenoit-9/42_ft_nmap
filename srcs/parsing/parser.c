@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/20 17:47:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:01:21 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void    init_opt(t_opt *opt)
 {
     opt->ip_lst = NULL;
-    ft_bzero(opt->ports, PORT_LIMIT * sizeof(uint16_t));
+    ft_bzero(opt->ports, PORTS_SCAN_LIMIT * sizeof(uint16_t));
     opt->scans = NONE;
     opt->speedup = 0;
 }
@@ -30,7 +30,7 @@ static void    print_usage(void)
     printf("\nopts:\n");
     printf("--ip <host>                 host to scan\n");
     printf("--file <path>               read an IP list to scan from a file\n");
-    printf("--ports <number/range>      ports to be scanned (default 1 to PORT_LIMIT)\n");
+    printf("--ports <number/range>      ports to be scanned (default 1 to PORTS_SCAN_LIMIT)\n");
     printf("--scan <type>               type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
     printf("--speedup <number>          number of threads (default 0), to make the scan faster\n");
     
@@ -127,7 +127,7 @@ static void init_port_by_ip(t_opt *opt)
 
     it = opt->ip_lst;
     while (it) {
-        for (uint16_t i = 0; i < PORT_LIMIT && opt->ports[i] != 0; i++) {
+        for (uint16_t i = 0; i < PORTS_SCAN_LIMIT && opt->ports[i] != 0; i++) {
             content = calloc(1, sizeof(t_nmap_app));
             if (content == NULL) {
                 fatal_error(-1, STR_ENOMEM, opt);
@@ -187,7 +187,7 @@ t_opt parser(int ac, char **av)
         opt.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;
     }
     if (opt.ports[0] == NONE) {
-        copy_new_range(opt.ports, 0, 1, PORT_LIMIT);
+        copy_new_range(opt.ports, 0, 1, PORTS_SCAN_LIMIT);
     }
     init_port_by_ip(&opt);
     return (opt);

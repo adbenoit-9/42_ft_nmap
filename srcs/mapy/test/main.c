@@ -1,24 +1,33 @@
 
-#include "mapy.h"
+#include "../mapy.h"
 //#include <pthread.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "hooks.h"
+
+//uint8_t				buf[SIZE] = {0};
+//uint8_t				buf[SIZE];
 
 #define MAPY_DEBUG
 
+//int 				test_test1(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
+int 				test_mapy(uint8_t *buf, test_st *st, test_nd *nd, test_rd *rd);
+int 				test_sety_rd(test_root *root, test_st *st, test_nd *nd, test_rd *rd);
+int 				test_sety_nd(test_root *root, test_st *st, test_nd *nd);
+int 				test_sety_st(test_root *root, test_st *st);
+int					test_mapy_print(uint8_t *buf, test_st *st, test_nd *nd, test_rd *rd);
+
+int					test_exey(test_root *root, t_exe *exe , t_blk *blk);
+int					test_exey_print(test_root *root, t_exe *exe , t_blk *blk);
 
 int main(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
 	int32_t 		r		= 0;
 	uint8_t			*buf;
 	t_root			*root;
-	//test_root		*conf;
+	test_root		*conf;
 	
 	buf = (uint8_t*)malloc(SIZE);
 
@@ -60,23 +69,17 @@ int main(int ac, char **av)
 		((t_root*)buf)->st_nb = 5;
 		((t_root*)buf)->nd_nb = 5;
 		((t_root*)buf)->rd_nb = 5;
-		set_st(root, set_sockaddr);
-		set_nd(root, set_port);
-		set_rd(root, set_tcpflag);
-
-		set_st(root, print_st);
-		set_nd(root, print_nd);
-		set_rd(root, print_rd);
-
-		mapy_f(root, build_ipv4_tcp);
-		mapy_f(root, print_all);
-//		// mapy_f(root, test_mapy);
-//		exey_ctrl(root, test_exey);
+		set_rd(root, test_sety_rd);
+		set_nd(root, test_sety_nd);
+		set_st(root, test_sety_st);
+		// mapy_f(root, test_mapy);
+		// mapy_f(root, test_mapy_print);
+		exey_ctrl(root, test_exey);
 		//exey_rd(root, test_exey_print);
 
-//		r = mapy(root);
-//		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
-//		r = mapy(root);
+		r = mapy(root);
+		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
+		r = mapy(root);
 		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
 		
 		//mapy_f(root, test_mapy_print);

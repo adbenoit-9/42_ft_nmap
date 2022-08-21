@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/20 17:47:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:24:15 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool isrange, t_opt *opt)
 		}
 		fatal_error(E_BADPORT, value, opt);
 	}
-	else if (end - begin < 0 || end - begin > PORT_LIMIT) {
+	else if (end - begin < 0 || end - begin > PORTS_SCAN_LIMIT) {
 		fatal_error(E_LIMIT_EXCEED, NULL, opt);
 	}
 	else if (begin < 0 || begin > PORT_MAX) {
@@ -41,7 +41,7 @@ static int32_t	copy_ports_inf(uint16_t *dest, uint16_t *src, uint16_t max)
 {
 	int32_t i;
 	
-	for (i = 0; src[i] < max && src[i] != 0 && i < PORT_LIMIT; i++) {
+	for (i = 0; src[i] < max && src[i] != 0 && i < PORTS_SCAN_LIMIT; i++) {
 		dest[i] = src[i];
 	}
 	return (i);
@@ -50,7 +50,7 @@ static int32_t	copy_ports_inf(uint16_t *dest, uint16_t *src, uint16_t max)
 static int32_t	copy_ports_sup(uint16_t *dest, uint16_t *src, uint16_t min, int32_t n)
 {
 	for (uint16_t i = 0; src[i] != 0; i++) {
-		if (n >= PORT_LIMIT)
+		if (n >= PORTS_SCAN_LIMIT)
 			return (-1);
 		if (src[i] <= min) {
 			continue ;
@@ -64,7 +64,7 @@ static int32_t	copy_ports_sup(uint16_t *dest, uint16_t *src, uint16_t min, int32
 int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
 {
 	for (; begin <= end; i++, begin++) {
-		if (i >= PORT_LIMIT) {
+		if (i >= PORTS_SCAN_LIMIT) {
 			return (-1);
 		}
 		dest[i] = begin;
@@ -75,9 +75,9 @@ int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
 static void	add_ports(t_opt *opt, int32_t begin, int32_t end)
 {
 	int32_t		i;
-	uint16_t	new_ports[PORT_LIMIT];
+	uint16_t	new_ports[PORTS_SCAN_LIMIT];
 
-	bzero(new_ports, PORT_LIMIT * sizeof(uint16_t));
+	bzero(new_ports, PORTS_SCAN_LIMIT * sizeof(uint16_t));
 	i = copy_ports_inf(new_ports, opt->ports, begin);
 	i = copy_new_range(new_ports, i, begin, end);
 	if (i == -1) {
@@ -87,7 +87,7 @@ static void	add_ports(t_opt *opt, int32_t begin, int32_t end)
 	if (i == -1) {
 		fatal_error(E_LIMIT_EXCEED, NULL, opt);
 	}
-	ft_memcpy(opt->ports, new_ports, PORT_LIMIT * sizeof(uint16_t));
+	ft_memcpy(opt->ports, new_ports, PORTS_SCAN_LIMIT * sizeof(uint16_t));
 }
 
 void    set_ports(t_opt *opt, char *value)

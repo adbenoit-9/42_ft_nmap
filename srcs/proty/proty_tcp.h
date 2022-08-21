@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap_tcp.h                                      :+:      :+:    :+:   */
+/*   proty_tcp.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 20:11:38 by leon              #+#    #+#             */
-/*   Updated: 2022/08/15 15:12:43 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/20 15:50:44 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 
 static const uint8_t syn_mss[4] = {0x02, 0x04, 0x05, 0xb4};
 
-#define FLAG_S_SYN				TH_SYN
 #define FLAG_S_NULL				0x00
+#define FLAG_S_SYN				TH_SYN
 #define FLAG_S_ACK				TH_ACK
 #define FLAG_S_FIN				TH_RST | TH_ACK
 #define FLAG_S_XMAS				TH_FIN | TH_SYN | TH_RST | TH_ACK
