@@ -62,6 +62,11 @@ typedef int (*t_func_sety_rd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *, T_C
 typedef int (*t_func_sety_nd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *);
 typedef int (*t_func_sety_st)(T_CLIENT_ROOT *, T_CLIENT_ST *);
 
+/* Iter hook is made for access a client config with its index in his lvl of the tree */
+typedef int (*t_func_iter_rd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
+typedef int (*t_func_iter_nd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *);
+typedef int (*t_func_iter_st)(T_CLIENT_ROOT *, T_CLIENT_ST *);
+
 /* exey access to exe and blk control structure*/
 typedef int (*t_func_exey)(T_CLIENT_ROOT *, T_EXE *, T_BLK *);
 
