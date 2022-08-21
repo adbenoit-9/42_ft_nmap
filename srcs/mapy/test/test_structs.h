@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 13:33:37 by leon              #+#    #+#             */
-/*   Updated: 2022/08/20 13:41:59 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 01:39:40 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,26 @@
 #define SCAN_LIMIT			6
 #define IP_LIMIT			16
 
-typedef struct		s_nmap_setting {
-	uint16_t							ports[PORT_LIMIT]; // Great nd config
-	uint8_t								scans[SCAN_LIMIT]; // rd config
-	int8_t								speedup;
-	char								ipfile; // from a mmap
-	char								*ips[IP_LIMIT];
-
-}					t_nmap_setting;
+typedef struct		test_root {
+	uint8_t				buf[128];
+	uint8_t				flag;
+}					test_root;
 
 
-typedef struct		s_nmap_link {
-	struct sockaddr_storage				sock;
-}					t_nmap_link;
+typedef struct		test_st {
+	uint8_t				buf[128];
+	uint8_t				flag;
+}					test_st;
 
-typedef struct		s_nmap_app {
-	uint16_t							port;
-	int									sock;
-}					t_nmap_app;
+typedef struct		test_nd {
+	uint8_t				buf[128];
+	uint8_t				flag;
+}					test_nd;
 
-typedef struct		s_nmap_scan {
-	int									packet_length;
-	uint8_t								tcpflag;
-	int									result;
-}					t_nmap_scan;
+typedef struct		test_rd {
+	uint8_t				buf[32];
+	uint8_t				flag;
+}					test_rd;
 
 
 #endif

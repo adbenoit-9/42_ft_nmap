@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:25:20 by leon              #+#    #+#             */
-/*   Updated: 2022/08/19 20:15:14 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 13:48:31 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "mappy.h"
-#include "ft_nmap_structs.h"
+#include "mapy.h"
+#include "nmap_structs.h"
 
 #include "proty_ip.h"
 #include "proty_tcp.h"

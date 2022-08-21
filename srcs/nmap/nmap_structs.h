@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap_structs.h                                  :+:      :+:    :+:   */
+/*   nmap_structs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/20 17:24:19 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/21 15:17:08 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #ifndef FT_NMAP_STRUCTS_H
 # define FT_NMAP_STRUCTS_H
 
+#include <stdint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
@@ -37,10 +38,10 @@ typedef struct		s_nmap_link {
 
 typedef struct		s_nmap_app {
 	int									socket;
+	uint16_t							port;
 }					t_nmap_app;
 
 typedef struct		s_nmap_scan {
-	uint16_t							port;
 	int									packet_length;
 	uint8_t								tcpflag;
 	int									result;

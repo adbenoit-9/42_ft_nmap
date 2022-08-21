@@ -1,4 +1,10 @@
+
+//#define SETY_DEBUG
+
 #include "mapy.h"
+#ifdef SETY_DEBUG
+#include "stdio.h"
+#endif
 
 #define SETY_OK		0
 
@@ -9,6 +15,7 @@ int				set_rd(t_root *root, t_func_sety_rd f)
 	int			j;
 	int			k;
 
+	//fprintf(stderr, "%s:%d %s\n",__func__, __LINE__, __FILE__);
 	i = 0;
 	while (r == SETY_OK && i < root->st_nb)
 	{
@@ -18,6 +25,13 @@ int				set_rd(t_root *root, t_func_sety_rd f)
 			k = 0;
 			while (r == SETY_OK && k < root->rd_nb)
 			{
+#ifdef SETY_DEBUG
+				fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
+							(void *)&root->client,
+							(void *)&root->st[i].client,
+							(void *)&root->st[i].nd[j].client,
+							(void *)&root->st[i].nd[j].rd[k].client, i, j, k);
+#endif
 				r = (*f)((T_CLIENT_ROOT *)&root->client,
 							(T_CLIENT_ST *)&root->st[i].client,
 							(T_CLIENT_ND *)&root->st[i].nd[j].client,

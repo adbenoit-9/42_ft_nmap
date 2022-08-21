@@ -42,7 +42,7 @@
 #define B_WHITE = "\033[1;37m"
 
 
-#define write_x_y(buffer, nd, hook) do { \
+#define print_full_debug( ) do { \
 if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 	if (nd == NMAP_UDP) { \
 		hook = 1; \
