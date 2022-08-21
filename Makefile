@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/16 01:26:32 by leon             ###   ########.fr        #
+#    Updated: 2022/08/21 17:34:10 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,42 +14,59 @@
 
 CC		= gcc
 CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
-# -DMAPPY_DEBUG
-
-IFLAGS 	= -I./incs
+OPTFLAGS = -O2  
+DEPFLAGS = -MP -MD
+	 	 
+IFLAGS 	= $(foreach D,$(INC_DIR), -I$(D))
 
 UNAME	:= $(shell uname)
 ifeq ($(UNAME), Darwin)
-	CFLAGS += -DOS
+	CFLAGS += -DMAC
 endif
 
-# LIBFT
-LIB_DIR			:= libft
-LIB_NAME		:= $(LIB_DIR)/libft.a
-
-# DIRECTORIES
-BUILD 			:= .build
 SRC_DIR 		:= srcs
+
+## LIBRARIES
+LIBFT_DIR		:= $(SRC_DIR)/libft
+BUILD_DIR		:= $(SRC_DIR)/buildy
+CLEAN_DIR		:= $(SRC_DIR)/cleany
+SEND_DIR		:= $(SRC_DIR)/sendy
+SETUP_DIR		:= $(SRC_DIR)/setupy
+REC_DIR			:= $(SRC_DIR)/recy
+LIB_NAMES		:= $(LIB_DIR)/libft.a\
+					$(BUILD_DIR)/buildy.a\
+					$(CLEAN_DIR)/cleany.a\
+					$(SEND_DIR)/sendy.a\
+					$(SETUP_DIR)/setupy.a
+# LIB_NAMES		:= $(LIB_DIR)/recy.a
+
+# MAIN
+BUILD 			:= .build
 OBJ_DIR 		:= $(BUILD)/obj
-INC_DIR 		:= incs
-SUB_DIR			:= parsing
-DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
+ASM_DIR 		:= $(BUILD)/asm
+PROC_DIR 		:= $(BUILD)/proc
+INC_DIR 		:= $(SRC_DIR)/nmap\
+					$(SRC_DIR)/buildy\
+					$(SRC_DIR)/cleany\
+					$(SRC_DIR)/mapy\
+					$(SRC_DIR)/parsing\
+					$(SRC_DIR)/proty\
+					$(SRC_DIR)/recy\
+					$(SRC_DIR)/sendy\
+					$(SRC_DIR)/setupy\
+					$(SRC_DIR)/libft/inc
+SUB_DIR			:= parsing\
+					nmap\
+					mapy\
+					prompty\
+					buildy
+DIRS			:= $(OBJ_DIR) $(ASM_DIR) $(PROC_DIR) $(addprefix $(OBJ_DIR)/, $(SUB_DIR))
 
 
 # FILES
 NAME			:= ft_nmap
-SRC				:=	main.c \
-						sendy.c \
-						buildy.c \
-						buildy_utils.c \
-						mappy.c \
-						recvy.c \
-						setupy.c \
-						cleany.c \
-						error.c \
+SRC				:=
 
-SUB_SRC			:= 
-# SRC				+= $(addprefix {name}, $(SUB_SRC))
 SUB_SRC			:= parser.c \
 					parse_ip.c \
 					parse_scan.c \
@@ -58,8 +75,28 @@ SUB_SRC			:= parser.c \
 					ft_isnumber.c
 SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
-OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
+SUB_SRC			:= main.c \
+					sety_hooks.c \
+					test_hooks.c \
+					mapy_hooks.c
+SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
+SUB_SRC			:= mapy.c \
+					sety_f.c \
+					exey_f.c
+SRC				+= $(addprefix mapy/, $(SUB_SRC))
+
+SUB_SRC			:= prompty.c
+SRC				+= $(addprefix prompty/, $(SUB_SRC))
+
+SUB_SRC			:= buildy_ipv4_tcp.c \
+					buildy_utils.c
+SRC				+= $(addprefix buildy/, $(SUB_SRC))
+
+OBJ				:= $(SRC:%.c=$(OBJ_DIR)/%.o)
+PREP			:= $(SRCS:.c=$(OBJ_DIR)/%.i)
+ASSS			:= $(SRCS:.c=$(OBJ_DIR)/%.s)
+DEPS			:= $(SRCS:.c=$(OBJ_DIR)/%.d)
 
 # COLORS
 NONE			= \033[0m
@@ -75,27 +112,39 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME):  $(LIB_NAME) $(OBJ)
+$(NAME): lib $(OBJ) $(PREP) $(ASSS)
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAME) -o $@ -lpthread
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
-$(LIB_NAME):
-	@printf "$(B_GREY)libft ..."
-	@make -C $(LIB_DIR) > /dev/null
-	@echo "\r$(CL_LINE)$(B_GREY)libft $(B_GREEN)✔$(NONE)"
+lib:
+	@make -C $(LIBFT_DIR)
+# @make -C $(BUILD_DIR)
+# @make -C $(CLEAN_DIR)
+# @make -C $(MAPY_DIR)
+# @make -C $(CLEAN_DIR)
+# @make -C $(SEND_DIR)
+# @make -C $(SETUP_DIR)
+	
+lib_clean:
+	@make -C $(LIBFT_DIR) clean
+# @make -C $(BUILD_DIR) clean
+# @make -C $(CLEAN_DIR) clean
+# @make -C $(MAPY_DIR) clean
+# @make -C $(CLEAN_DIR) clean
+# @make -C $(SEND_DIR) clean
+# @make -C $(SETUP_DIR) clean
 	
 all: $(NAME)
 
-clean:
-	@make -C $(LIB_DIR) clean > /dev/null
+clean: lib_clean
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 fclean: clean
 	@rm -Rf $(NAME)
-	@rm -Rf $(LIB_NAME)
+	@rm -Rf $(LIB_NAMES)
 	@echo "$(B_GREY)$(NAME)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
 norm:
@@ -103,15 +152,24 @@ norm:
 
 re: fclean all
 
-debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-debug: re
+# debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+# debug: re
+debug:
+	@echo $(IFLAGS)
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug lib
 
 $(BUILD):
 	@mkdir $@ $(DIRS)
 
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c ./incs/ft_nmap.h | $(BUILD)
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs object : $(B_CYAN)$< $(NONE)...\r"
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
 
+$(ASM_DIR)/%.s:$(SRC_DIR)/%.c | $(BUILD)
+	@printf "$(CL_LINE)Compiling srcs asm : $(B_CYAN)$< $(NONE)...\r"
+	$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^
+
+$(PROC_DIR)/%.i:$(SRC_DIR)/%.c | $(BUILD)
+	@printf "$(CL_LINE)Compiling srcs preprocessed : $(B_CYAN)$< $(NONE)...\r"
+	$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -E -o $@ $^
