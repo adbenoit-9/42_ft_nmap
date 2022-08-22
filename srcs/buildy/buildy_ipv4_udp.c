@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 14:41:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildy.h"
 #include <string.h>
-#include "mappy.h"
+#include "mapy.h"
 #include <arpa/inet.h>
 
 #include "nmap_structs.h"
@@ -25,7 +25,7 @@
 //	0x45, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 //	0x00, 0x00, 0x00, 0x00 };
 
-int 				build_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
+int 				build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec)
 {
 	int			r			= BUILDY_OK;
 	uint8_t		random[16]	= {0};
@@ -42,13 +42,18 @@ int 				build_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, 
 									((t_scan*)conf_exec)->tcpflag);
 #endif /* BUILDY_DEBUG */
-		memset(buf, 0, MAPPY_MAX_BUFFER_SIZE);
+		memset(buf, 0, MAP_BLCK_SIZE);
 //		memcpy(buf, template_ipv4, 20);
 //		memcpy(&buf[20], template_tcp, 20);
 		r = get_urandom(random, 16);
 		if (r == BUILDY_OK)
 		{
-
+			SET_UDP_SPORT(buf, (uint16_t)(*(&random[7])));
+			SET_UDP_DPORT(buf, htons(((t_nmap_app*)conf_nd)->port));
+			SET_UDP_SEQ(buf, (uint32_t)(*(&random[3])));
+			SET_UDP_ACK(buf, ipv4_checksum((uint16_t *)buf, sizeof(struct udphdr)));
+			
+			buf += sizeof(struct udphdr);
 			uint32_t	dip; // DEBUG
 			inet_pton(AF_INET, "127.0.0.1", &dip); // DEBUG
 			SET_IP4_DADDR(buf, dip); // DEBUG
