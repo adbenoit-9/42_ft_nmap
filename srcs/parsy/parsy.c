@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 08:53:28 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 10:33:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ static void    init_nmap_settings(t_nmap_setting *settings)
 {
 	ft_bzero(settings->ports, PORT_LIMIT * sizeof(uint16_t));
 	ft_bzero(settings->ips, IP_LIMIT * sizeof(uint64_t));
-	//ft_bzero(settings->scans, SCAN_LIMIT * sizeof(uint8_t));
-	memcpy(settings->scans, default_scans, SCAN_LIMIT);
+	ft_bzero(settings->scans, SCAN_LIMIT * sizeof(uint8_t));
 	settings->speedup = 0;
 	settings->ip_nb = 0;
 	settings->port_nb = 1024;
-	settings->scan_nb = 6;
+	settings->scan_nb = 0;
 }
 
 static void    print_usage(void)
@@ -85,9 +84,9 @@ int parser(int ac, char **av, t_nmap_setting	*settings)
 	if (settings->ip_nb == 0) {
 		fatal_error(E_NOHOST, NULL);
 	}
-	//if (settings->scans == NONE) {
-	//	memcpy(settings->scans, default_scans, SCAN_LIMIT);
-	//}
+	if (settings->scan_nb == 0) {
+		memcpy(settings->scans, default_scans, SCAN_LIMIT);
+	}
 	if (settings->ports[0] == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
 	}

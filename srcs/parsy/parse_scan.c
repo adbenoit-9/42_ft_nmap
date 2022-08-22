@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 20:02:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 10:31:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void    set_scan(t_nmap_setting *settings, char *value)
 	}
 	for (int32_t i = 0; scan_list[i]; i++) {
 		if (ft_strcmp(value, scan_list[i]) == 0) {
-			settings->scans[i] |= value_list[i];
+			settings->scans[settings->scan_nb] = value_list[i];
+			++settings->scan_nb;
 			return ;
 		}
 	}
