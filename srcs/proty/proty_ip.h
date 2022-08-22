@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:27 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 15:47:24 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:51:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@
 #define SET_IP4_DADDR(ip, value) do {((struct iphdr*)ip)->daddr =\
 					(uint32_t)value;} while (0)
 
+#define SET_IP6_VFC(ip, version, class) do {((struct ip6_hdr*)ip)->ip6_vfc =\
+					((uint32_t)version & IPV6_VERSION_MASK) | ((uint32_t)class & ~IPV6_VERSION_MASK);} while (0)
 #define SET_IP6_FLOW(ip, value) do {((struct ip6_hdr*)ip)->ip6_flow =\
-					(uint32_t)value & (uint32_t)0x000FFFFF;} while (0)
+					(uint32_t)value & IPV6_FLOWLABEL_MASK;} while (0)
 #define SET_IP6_PLEN(ip, value) do {((struct ip6_hdr*)ip)->ip6_plen =\
 						(uint16_t)value;} while (0)
 #define SET_IP6_NXT(ip, value) do {((struct ip6_hdr*)ip)->ip6_nxt =\

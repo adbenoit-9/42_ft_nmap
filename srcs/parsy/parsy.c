@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 14:28:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:18:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ int parser(int ac, char **av, t_nmap_setting	*settings)
 	}
 	if (settings->ports[0] == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
+		settings->port_nb = PORT_LIMIT;
+	}
+	else {
+		settings->port_nb = 0;
+		while (settings->port_nb < PORT_LIMIT && settings->ports[settings->port_nb])
+			++settings->port_nb;
 	}
 	return (PARSY_OK);
 }
