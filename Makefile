@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/22 09:52:31 by leon             ###   ########.fr        #
+#    Updated: 2022/08/22 14:26:18 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,7 +117,7 @@ B_WHITE 		= \033[1;37m
 # MAKEFILE
 $(NAME): lib $(OBJ) $(PREP) 
 	@printf "$(CL_LINE)"
-	$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread
+	$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread -lpcap
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 

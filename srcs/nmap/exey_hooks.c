@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:25:33 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 10:18:48 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 11:00:06 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 	(void)root;
 	(void)blk;
 	i = 0;
-	while (i < 2) //sizeof(default_execution_list))
+	while (i < 3) //sizeof(default_execution_list))
 	{
 		exe->tasks[i] = default_execution_list[i] | EXEC_TODO_MSK;
 		exe->hook[i] = 0x00;

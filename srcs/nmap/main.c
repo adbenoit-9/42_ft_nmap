@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <pcap/pcap.h>
+
 #include "hooks.h"
 #include "ft_nmap_parsing.h"
 
@@ -13,6 +15,7 @@
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
+	pcap_lib_version();
 	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
  i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
 						T_CLIENT_RD_PRINT,
@@ -105,16 +108,18 @@ int main(int ac, char **av)
 //		if (set_rd(root, print_rd))
 //			return (-1);
 
-		exey_ctrl(root, nmap_init_exey);
-		r = mapy(root);
+//		exey_ctrl(root, nmap_init_exey);
+//		r = mapy(root);
 
-		if (mapy_f(root, print_report))
+		if (mapy_f(root, build_ipv4_tcp))
 			return (-1);
+		if (mapy_f(root, print_all))
+			return (-1);
+//		if (mapy_f(root, print_report))
+//			return (-1);
 
 //		fprintf(stderr, "%s: r = %d\n", __func__, r);
 //
-//		if (mapy_f(root, print_all))
-//			return (-1);
 
 //		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
 //		if (mapy_f(root, send_ipv4_tcp))
