@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/22 14:30:21 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/22 15:54:16 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,9 @@ IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC			:= buildy_ipv4_tcp.c\
 				buildy_utils.c\
-				buildy_ipv4_udp.c
-# buildy_ipv6_tcp.c
-# buildy_ipv6_udp.c
+				buildy_ipv4_udp.c\
+				buildy_ipv6_tcp.c\
+				buildy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

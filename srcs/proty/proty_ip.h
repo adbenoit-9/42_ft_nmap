@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:27 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:36:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 15:47:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,17 @@
 #define SET_IP4_DADDR(ip, value) do {((struct iphdr*)ip)->daddr =\
 					(uint32_t)value;} while (0)
 
-#define SET_IP6_VERSION(ip, value) do {((struct ip6_hdr*)ip)->ip6_vfc =\
-					(uint8_t)value & (uint8_t)0x0F;} while (0)
-#define SET_IP6_TC(ip, value) do {(((struct ip6_hdr*)ip)->ip6_vfc >> 4) =\
-					(uint8_t)value;} while (0)
 #define SET_IP6_FLOW(ip, value) do {((struct ip6_hdr*)ip)->ip6_flow =\
 					(uint32_t)value & (uint32_t)0x000FFFFF;} while (0)
 #define SET_IP6_PLEN(ip, value) do {((struct ip6_hdr*)ip)->ip6_plen =\
 						(uint16_t)value;} while (0)
 #define SET_IP6_NXT(ip, value) do {((struct ip6_hdr*)ip)->ip6_nxt =\
-       					(uint16_t)value;} while (0)
-#define SET_IP6_HLIM(ip, value) do {((struct ip6_hdr*)ip)->ip6_hlim =\
-						(uint16_t)value;} while (0)
-#define SET_IP6_HOPS(ip, value) do {((struct ip6_hdr*)ip)->ip6_hops =\
-       					(uint16_t)value;} while (0)
-#define SET_IP6_SRC(ip, value) do {((struct ip6_hdr*)ip)->ip6_src =\
-						(uint8_t)value;} while (0)
-#define SET_IP6_DST(ip, value) do {((struct ip6_hdr*)ip)->ip6_dst =\
        					(uint8_t)value;} while (0)
+#define SET_IP6_HLIM(ip, value) do {((struct ip6_hdr*)ip)->ip6_hops =\
+       					(uint8_t)value;} while (0)
+#define SET_IP6_SRC(ip, value) do {((struct ip6_hdr*)ip)->ip6_src =\
+						(struct in6_addr)value;} while (0)
+#define SET_IP6_DST(ip, value) do {((struct ip6_hdr*)ip)->ip6_dst =\
+       					(struct in6_addr)value;} while (0)
 
 #endif /* FT_NMAP_IP */
