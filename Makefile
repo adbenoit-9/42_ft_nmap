@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 20:31:53 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/22 09:52:31 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ endif
 SRC_DIR 		:= srcs
 
 ## LIBRARIES
-LIBFT_DIR		:= $(SRC_DIR)/libft
 BUILD_DIR		:= $(SRC_DIR)/buildy
 CLEAN_DIR		:= $(SRC_DIR)/cleany
 SEND_DIR		:= $(SRC_DIR)/sendy
@@ -37,13 +36,14 @@ SETUP_DIR		:= $(SRC_DIR)/setupy
 REC_DIR			:= $(SRC_DIR)/recy
 MAP_DIR			:= $(SRC_DIR)/mapy
 PARS_DIR		:= $(SRC_DIR)/parsy
+LIBFT_DIR		:= $(SRC_DIR)/libft
 
-LIB_NAMES		:= $(LIBFT_DIR)/libft.a\
-					$(BUILD_DIR)/buildy.a\
+LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(CLEAN_DIR)/cleany.a\
 					$(REC_DIR)/recy.a\
 					$(SEND_DIR)/sendy.a\
 					$(PARS_DIR)/parsy.a\
+					$(LIBFT_DIR)/libft.a\
 # $(MAP_DIR)/mapy.a
 # $(SETUP_DIR)/setupy.a
 
@@ -84,7 +84,8 @@ SUB_SRC			:= main.c \
 					sety_hooks.c \
 					test_hooks.c \
 					mapy_hooks.c \
-					exey_hooks.c
+					exey_hooks.c \
+					iter_hooks.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
 SUB_SRC			:= mapy.c \
@@ -97,7 +98,7 @@ SRC				+= $(addprefix prompty/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(BUILD)/%.o)
 PREP			:= $(SRC:%.c=$(BUILD)/%.i)
-ASSS			:= $(SRC:%.c=$(BUILD)/%.s)
+#ASSS			:= $(SRC:%.c=$(BUILD)/%.s)
 DEPS			:= $(SRC:%.c=$(BUILD)/%.d)
 
 # COLORS
@@ -114,9 +115,9 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME): lib $(OBJ) $(PREP) $(ASSS)
+$(NAME): lib $(OBJ) $(PREP) 
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread
+	$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 

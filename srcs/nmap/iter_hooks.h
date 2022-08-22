@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapy_hooks.h                                       :+:      :+:    :+:   */
+/*   iter_hooks.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 14:07:46 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 10:00:30 by leon             ###   ########.fr       */
+/*   Created: 2022/08/21 23:05:17 by leon              #+#    #+#             */
+/*   Updated: 2022/08/22 08:24:50 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPY_HOOKS_H
-# define MAPY_HOOKS_H
+#include "nmap_structs.h"
 
-/* for using mapy_f */
-
-#include "mapy.h"
-#include "export_buildy.h"
-#include "export_sendy.h"
-#include "export_cleany.h"
-#include "export_recy.h"
-
-int					print_all(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
-int					print_report(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
-
-#endif
-
-
+/* ND : t_func_iter_nd */
+int					iter_set_port(t_nmap_setting *root, t_nmap_app *app, uint32_t index);
+/* RD : t_func_iter_rd */
+int					iter_set_tcpflag(t_nmap_setting *root, t_nmap_scan *scan, uint32_t index);

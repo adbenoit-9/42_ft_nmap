@@ -5,7 +5,8 @@
 
 #include "mapy_data.h"
 
-#define EXEY_DEBUG
+//#define EXEY_DEBUG
+
 #define EXEY_ERR	-1
 #define EXEY_OK		0
 #define EXEY_IDLE	1
@@ -20,13 +21,10 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 
 	i = 0;
 	/* Find the 1st task to do */
-	fprintf(stderr, "taks[]=%x", rd->exe.tasks[i]);
 	while (i < EXEC_LST_SIZE && ((rd->exe.tasks[i] & EXEC_TODO_MSK) == 0))
 	{
 		++i;
-		fprintf(stderr, ":%x", rd->exe.tasks[i]);
 	}
-	fprintf(stderr, "\n");
 	if (i == EXEC_LST_SIZE)
 	{
 		/* Nothing to do, exit */
@@ -49,7 +47,6 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 	{
 		/* Clear exec flag */
 		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
-	fprintf(stderr, "taks[]=%x\n", rd->exe.tasks[i]);
 #ifdef EXEY_DEBUG
 		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
 						rd->exe.tasks[i], rd->exe.hook[i]);
@@ -103,7 +100,7 @@ int			mapy(t_root *root)
 										&root->st[i],
 										&root->st[i].nd[j],
 										&root->st[i].nd[j].rd[k], index);
-						fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
+//						fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
 						if (r == EXEY_IDLE)
 						{
 						}

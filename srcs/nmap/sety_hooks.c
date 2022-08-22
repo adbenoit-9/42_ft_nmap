@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 18:50:11 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 09:17:35 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,39 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link)
 	return (r);
 }
 
+int					set_socket(t_nmap_setting *root, t_nmap_link *link)
+{
+	int				r = NMAP_OK;
+	int				optval = 1;
+
+	if (!root || !link)
+	{
+		r = NMAP_ERROR;
+	}
+	else
+	{
+		//app->socket = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+		link->socket = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+		if (link->socket < 0)
+		{
+			r = NMAP_ERROR;
+			perror("socket");
+		}
+		if (r == NMAP_OK)
+		{
+			if (setsockopt(link->socket, IPPROTO_IP, IP_HDRINCL,
+							&optval, sizeof(int)) < 0)
+			{
+				r = NMAP_ERROR;
+				perror("setsockopt");
+			}
+		}
+	}
+	fprintf(stderr, "%s:%d r=%d\n", __func__, __LINE__, r);
+	return (r);
+}
+
+
 /* ND : t_func_sety_nd */
 int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
 {
@@ -61,35 +94,6 @@ int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
 	app->port = 4242;
 //	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	return (NMAP_OK);
-}
-
-int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
-{
-	int				r = NMAP_OK;
-	int				optval = 1;
-
-	if (!root || !link || !app)
-	{
-		r = NMAP_ERROR;
-	}
-	else
-	{
-		app->socket = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
-		if (app->socket < 0)
-		{
-			r = NMAP_ERROR;
-		}
-		if (r == NMAP_OK)
-		{
-			if (setsockopt(app->socket, IPPROTO_IP, IP_HDRINCL,
-							&optval, sizeof(int)) < 0)
-			{
-				r = NMAP_ERROR;
-			}
-		}
-	}
-	fprintf(stderr, "%s:%d r=%d\n", __func__, __LINE__, r);
-	return (r);
 }
 
 /* RD : t_func_sety_rd */

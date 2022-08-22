@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:28:22 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 15:45:27 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 10:01:18 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,14 @@ int					print_all(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan 
 		fprintf(stderr, "%02x.",buf[i++]);
 	}
 	fprintf(stderr, "\n\n");
+	return (0);
+}
+
+int					print_report(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan)
+{
+	(void)buf;
+	(void)link;
+	fprintf(stdout, "localhost: port:%d : scan:%d -> result:%d\n",
+						app->port, scan->tcpflag, scan->result);
 	return (0);
 }

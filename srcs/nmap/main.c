@@ -11,18 +11,8 @@
 
 #define MAPY_DEBUG
 
-
-int main(int ac, char **av)
+void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
-	(void)ac;
-	(void)av;
-	int32_t 		r		= 0;
-	uint8_t			*buf;
-	t_root			*root;
-	//test_root		*conf;
-	
-	buf = (uint8_t*)malloc(SIZE);
-	parser(ac, av);
 	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
  i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
 						T_CLIENT_RD_PRINT,
@@ -43,51 +33,89 @@ int main(int ac, char **av)
 						EXEC_MAX_HOOK,
 						SETY_EXEC_MAX_CMD,
 						SETY_EXEC_MAX_HOOK);
+		//fprintf(stderr, "%s:%d buffer=%lu\n", __func__, __LINE__, sizeof(buf));
+		fprintf(stderr, "%s:%d configsize=%lx\n", __func__, __LINE__, sizeof(t_root));
+		fprintf(stderr, "%s:%d bufferptr=%p\n", __func__, __LINE__, buf);
+		fprintf(stderr, "%s:%d mapptr=%p\n", __func__, __LINE__, &buf[sizeof(t_root)]);
+		fprintf(stderr, "%s:%d limit_buffer=%p\n", __func__, __LINE__, &buf[SIZE]);
+		fprintf(stderr, "ft_nmapconfig:speedup = %d\n", settings->speedup);
+		int i = 0;
+		fprintf(stderr, "ft_nmapconfig:port = %x", settings->ports[i++]);
+		while (i < PORT_LIMIT)
+		{
+			fprintf(stderr, ":%x", settings->ports[i++]);
+		}
+		fprintf(stderr, "\n");
+		i = 0;
+		fprintf(stderr, "ft_nmapconfig:scans = %x", settings->scans[i++]);
+		while (i < SCAN_LIMIT)
+		{
+			fprintf(stderr, ":%x", settings->scans[i++]);
+		}
+		fprintf(stderr, "\n");
+		fprintf(stderr, "ip_nb = %d\n", settings->ip_nb);
+		fprintf(stderr, "port_nb = %d\n", settings->port_nb);
+		fprintf(stderr, "scan_nb = %d\n", settings->scan_nb);
+}
+
+int main(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	int32_t 		r		= 0;
+	uint8_t			*buf;
+	t_root			*root;
+	t_nmap_setting	*settings;
+	//test_root		*conf;
+	
+	buf = (uint8_t*)malloc(SIZE);
 	if (buf == NULL)
 	{
 		r = -1;
 	}
 	if (r == 0)
 	{
-		//fprintf(stderr, "%s:%d buffer=%lu\n", __func__, __LINE__, sizeof(buf));
-		fprintf(stderr, "%s:%d configsize=%lx\n", __func__, __LINE__, sizeof(t_root));
-		fprintf(stderr, "%s:%d bufferptr=%p\n", __func__, __LINE__, buf);
-		fprintf(stderr, "%s:%d mapptr=%p\n", __func__, __LINE__, &buf[sizeof(t_root)]);
-		fprintf(stderr, "%s:%d limit_buffer=%p\n", __func__, __LINE__, &buf[SIZE]);
 		root = (t_root*)buf;
 		root->map = &buf[sizeof(t_root)];
+		settings = &root->client;
+		parser(ac, av, settings);
+		dump_config(buf, settings);
 		//conf = (test_root*)root->client;
 
-		((t_root*)buf)->st_nb = 5;
-		((t_root*)buf)->nd_nb = 5;
-		((t_root*)buf)->rd_nb = 5;
-		if (set_st(root, set_sockaddr))
+		((t_root*)buf)->st_nb = settings->ip_nb;
+		((t_root*)buf)->nd_nb = settings->port_nb;
+		((t_root*)buf)->rd_nb = settings->scan_nb;
+//		if (set_st(root, set_sockaddr))
+//			return (-1);
+//		if (set_nd(root, set_port))
+//			return (-1);
+//		if (set_rd(root, set_tcpflag))
+//			return (-1);
+//
+//		if (set_st(root, print_st))
+//			return (-1);
+		if (set_iter_nd(root, iter_set_port))
 			return (-1);
-		if (set_nd(root, set_port))
+		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
-		if (set_nd(root, set_socket))
+		if (set_st(root, set_socket))
 			return (-1);
-		if (set_rd(root, set_tcpflag))
-			return (-1);
-
-		if (set_st(root, print_st))
-			return (-1);
-		if (set_nd(root, print_nd))
-			return (-1);
-		if (set_rd(root, print_rd))
-			return (-1);
-
-
-	//	if (mapy_f(root, build_ipv4_tcp))
-	//		return (-1);
-
+//		if (set_nd(root, print_nd))
+//			return (-1);
+//		if (set_rd(root, print_rd))
+//			return (-1);
 
 		exey_ctrl(root, nmap_init_exey);
 		r = mapy(root);
-		fprintf(stderr, "%s: r = %d\n", __func__, r);
 
-		if (mapy_f(root, print_all))
+		if (mapy_f(root, print_report))
 			return (-1);
+
+//		fprintf(stderr, "%s: r = %d\n", __func__, r);
+//
+//		if (mapy_f(root, print_all))
+//			return (-1);
+
 //		fprintf(stderr, "%s:%d r = %d", __func__, __LINE__, r);
 //		if (mapy_f(root, send_ipv4_tcp))
 //			return (-1);

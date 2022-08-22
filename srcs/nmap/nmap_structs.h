@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:41:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 09:13:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ typedef struct		s_nmap_setting {
 
 typedef struct		s_nmap_link {
 	struct sockaddr_storage				sock;
+	int									socket;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {
-	int									socket;
+	//int									socket;
 	uint16_t							port;
 }					t_nmap_app;
 

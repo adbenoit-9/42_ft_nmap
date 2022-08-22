@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:20:53 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 09:16:31 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 			
 			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
 			{
-				r = sendto(((t_nmap_app*)conf_nd)->socket,
+				r = sendto(((t_nmap_link*)conf_st)->socket,
 						buf,
 						((t_nmap_scan*)conf_exec)->packet_length,
 						0,
@@ -46,7 +46,7 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 			}
 			else
 			{
-				r = sendto(((t_nmap_app*)conf_nd)->socket,
+				r = sendto(((t_nmap_link*)conf_st)->socket,
 						buf,
 						((t_nmap_scan*)conf_exec)->packet_length,
 						0,

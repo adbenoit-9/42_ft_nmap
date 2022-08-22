@@ -7,6 +7,8 @@ int					print_st(t_nmap_setting *root, t_nmap_link *link)
 	(void)root;
 	fprintf(stderr, "%s:%d link->sock.ss_family = %08x\n", __func__, __LINE__,
 					link->sock.ss_family);
+	fprintf(stderr, "%s:%d link->socket = %08x\n", __func__, __LINE__,
+					link->socket);
 	return (0);
 }
 
@@ -15,8 +17,6 @@ int					print_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
 {
 	(void)root;
 	(void)link;
-	fprintf(stderr, "%s:%d link->socket = %08x\n", __func__, __LINE__,
-					app->socket);
 	fprintf(stderr, "%s:%d link->port = %04x\n", __func__, __LINE__,
 					app->port);
 	return (0);
