@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 18:35:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:00:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			inet_pton(AF_INET6, "::1", &dip); // DEBUG
 			SET_IP6_SRC(buf, dip); // DEBUG
 			SET_IP6_DST(buf, dip); // DEBUG
-			SET_IP6_FLOW(buf, 0x0f0000);
+			SET_IP6_FLOW(buf, 0x0b0500);
 			SET_IP6_NXT(buf, 0x11); // UDP
 			SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));
 			SET_IP6_VFC(buf, IPV6_VERSION, 0x0);

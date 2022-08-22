@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 17:18:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:14:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define PARSY_OK 0
 
-static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS};
+static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS, FLAG_S_UDP};
 
 static void    init_nmap_settings(t_nmap_setting *settings)
 {
