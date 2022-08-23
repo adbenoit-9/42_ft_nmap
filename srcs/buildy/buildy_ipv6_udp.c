@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 18:36:39 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:33:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			
 			SET_UDP_SPORT(&buf[sizeof(struct ip6_hdr)], (uint16_t)(*(&random[7])));
 			SET_UDP_DPORT(&buf[sizeof(struct ip6_hdr)], htons(conf_nd->port));
-			SET_UDP_SEQ(&buf[sizeof(struct ip6_hdr)], (uint32_t)(*(&random[3])));
+			SET_UDP_LEN(&buf[sizeof(struct iphdr)], htons(conf_exec->packet_length));
 			SET_UDP_ACK(&buf[sizeof(struct ip6_hdr)], ipv4_checksum((uint16_t *)buf, sizeof(struct udphdr)));
 		}
 	}

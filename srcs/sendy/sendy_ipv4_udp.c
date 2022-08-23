@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 11:34:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:43:36 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int 				send_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 			sock = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
 			// if (setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
 			// 	perror("setsockopt");
+			printf("len : %d\n", ((t_nmap_scan*)conf_exec)->packet_length);
 			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
 			{
 				r = sendto(sock,
@@ -66,6 +67,7 @@ int 				send_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 			{
 				r = SENDY_OK;
 			}
+			close(sock);
 	}
 	return (r);
 }

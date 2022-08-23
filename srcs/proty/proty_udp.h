@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proty_udp.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 20:11:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 22:07:14 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 15:29:12 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 						(uint16_t)value;} while (0)
 #define SET_UDP_DPORT(udp, value) do {((struct udphdr*)udp)->uh_dport =\
 						(uint16_t)value;} while (0)
-#define SET_UDP_SEQ(udp, value) do {((struct udphdr*)udp)->uh_ulen =\
+#define SET_UDP_LEN(udp, value) do {((struct udphdr*)udp)->uh_ulen =\
        					(uint16_t)value;} while (0)
 #define SET_UDP_ACK(udp, value) do {((struct udphdr*)udp)->uh_sum =\
        					(uint16_t)value;} while (0)

@@ -112,9 +112,9 @@ int main(int ac, char **av)
 		exey_ctrl(root, nmap_init_exey);
 		r = mapy(root);
 
-		if (mapy_f(root, build_ipv4_tcp))
+		if (mapy_f(root, build_ipv6_udp))
 			return (-1);
-		if (mapy_f(root, send_ipv4_tcp))
+		if (mapy_f(root, send_ipv6_udp))
 			return (-1);
 		if (mapy_f(root, print_all))
 			return (-1);

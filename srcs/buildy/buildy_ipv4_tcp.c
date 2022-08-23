@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:42:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:12:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int 				build_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 					sizeof(struct iphdr)));
 			SET_TCP_SUM(&buf[sizeof(struct iphdr)], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 			((t_nmap_scan*)conf_exec)->packet_length = length;
+			printf("length: %d\n", length);
 		}
 	}
 	return (r);

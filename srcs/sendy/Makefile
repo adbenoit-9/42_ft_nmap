@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/22 19:31:34 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/23 14:47:16 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ MODULES	:= ../nmap\
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC			:= sendy_ipv4_tcp.c\
-				sendy_ipv4_udp.c
-# sendy_ipv6_tcp.c\
-# sendy_ipv6_udp.c
+				sendy_ipv4_udp.c\
+				sendy_ipv6_tcp.c\
+				sendy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

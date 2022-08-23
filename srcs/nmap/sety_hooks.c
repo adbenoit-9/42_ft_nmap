@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 13:36:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:52:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 	int						r 			= NMAP_OK;
 	struct 		addrinfo	hints		= {0};
 	struct 		addrinfo	*res		= NULL;
-	char					*host		= "localhost";
+	char					*host		= "::1";
 
 	(void)app;
 	(void)scan;
