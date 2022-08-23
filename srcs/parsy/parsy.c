@@ -6,6 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/08/23 11:54:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +15,7 @@
 
 #define PARSY_OK 0
 
-static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS};
+static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS, FLAG_S_UDP};
 
 static void    init_nmap_settings(t_nmap_setting *settings)
 {
@@ -89,6 +90,12 @@ int parser(int ac, char **av, t_nmap_setting	*settings)
 	}
 	if (settings->ports[0] == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
+		settings->port_nb = PORT_LIMIT;
+	}
+	else {
+		settings->port_nb = 0;
+		while (settings->port_nb < PORT_LIMIT && settings->ports[settings->port_nb])
+			++settings->port_nb;
 	}
 	return (PARSY_OK);
 }

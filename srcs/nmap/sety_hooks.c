@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   sety_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 10:51:06 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 11:54:42 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nmap_structs.h"
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <pcap/pcap.h>
 #include <netdb.h>
