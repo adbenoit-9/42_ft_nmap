@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 20:16:25 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 18:57:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:35:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				ft_isprint(int c);
 */
 
 int				ft_atoi(const char *str);
-char			*ft_itoa(int n, char *dest);
+char			*ft_itoa(int n);
 void			ft_putnbr_fd(int n, int fd);
 
 /*
