@@ -8,7 +8,7 @@
 
 #define SETY_OK		0
 
-int				set_rd(t_root *root, t_func_sety_rd f)
+int				sety_f(t_root *root, t_func_sety f)
 {
 	int			r = SETY_OK;
 	int			i;
@@ -45,7 +45,7 @@ int				set_rd(t_root *root, t_func_sety_rd f)
 	return (r);
 }
 
-int				set_nd(t_root *root, t_func_sety_nd f)
+int				set_nd(t_root *root, t_func_sety f)
 {
 	int			r = SETY_OK;
 	int			i;
@@ -59,7 +59,8 @@ int				set_nd(t_root *root, t_func_sety_nd f)
 		{
 			r = (*f)((T_CLIENT_ROOT *)&root->client,
 						(T_CLIENT_ST *)&root->st[i].client,
-						(T_CLIENT_ND *)&root->st[i].nd[j].client);
+						(T_CLIENT_ND *)&root->st[i].nd[j].client,
+						0);
 			j++;
 		}
 		++i;
@@ -67,7 +68,7 @@ int				set_nd(t_root *root, t_func_sety_nd f)
 	return (r);
 }
 
-int				set_st(t_root *root, t_func_sety_st f)
+int				set_st(t_root *root, t_func_sety f)
 {
 	int			r = SETY_OK;
 	int			i;
@@ -76,7 +77,9 @@ int				set_st(t_root *root, t_func_sety_st f)
 	while (r == SETY_OK && i < root->st_nb)
 	{
 		r = (*f)((T_CLIENT_ROOT *)&root->client,
-						(T_CLIENT_ST *)&root->st[i].client);
+					(T_CLIENT_ST *)&root->st[i].client,
+					0,
+					0);
 		++i;
 	}
 	return (r);

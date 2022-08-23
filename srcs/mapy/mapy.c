@@ -5,7 +5,7 @@
 
 #include "mapy_data.h"
 
-//#define EXEY_DEBUG
+#define EXEY_DEBUG
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0

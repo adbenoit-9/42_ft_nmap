@@ -15,7 +15,7 @@
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
-	pcap_lib_version();
+	fprintf(stderr, "pcap_version=%s\n", pcap_lib_version());
 	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
  i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
 						T_CLIENT_RD_PRINT,
@@ -84,17 +84,16 @@ int main(int ac, char **av)
 		parser(ac, av, settings);
 		dump_config(buf, settings);
 		//conf = (test_root*)root->client;
-
+	//	pcap_test(settings);
 		((t_root*)buf)->st_nb = settings->ip_nb;
 		((t_root*)buf)->nd_nb = settings->port_nb;
 		((t_root*)buf)->rd_nb = settings->scan_nb;
-//		if (set_st(root, set_sockaddr))
-//			return (-1);
+		if (set_st(root, set_sockaddr))
+			return (-1);
 //		if (set_nd(root, set_port))
 //			return (-1);
 //		if (set_rd(root, set_tcpflag))
 //			return (-1);
-//
 //		if (set_st(root, print_st))
 //			return (-1);
 		if (set_iter_nd(root, iter_set_port))
@@ -103,16 +102,22 @@ int main(int ac, char **av)
 			return (-1);
 		if (set_st(root, set_socket))
 			return (-1);
+//		if (set_st(root, set_pcap_init))
+//			return (-1);
+//		if (set_st(root, set_pcap_close))
+//			return (-1);
+//		if (mapy_f(root, recv_ipv4_tcp))
+//			return (-1);
 //		if (set_nd(root, print_nd))
 //			return (-1);
 //		if (set_rd(root, print_rd))
 //			return (-1);
 
-//		exey_ctrl(root, nmap_init_exey);
-//		r = mapy(root);
+		exey_ctrl(root, nmap_init_exey);
+		r = mapy(root);
 
-		if (mapy_f(root, build_ipv4_tcp))
-			return (-1);
+//		if (mapy_f(root, build_ipv4_tcp))
+//			return (-1);
 		if (mapy_f(root, print_all))
 			return (-1);
 //		if (mapy_f(root, print_report))

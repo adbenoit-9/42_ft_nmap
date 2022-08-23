@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 09:13:57 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 09:07:46 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pcap/pcap.h>
 
 #define SCAN_LIMIT			6
 #define PORT_LIMIT			1024
@@ -53,7 +54,9 @@ typedef struct		s_nmap_setting {
 
 typedef struct		s_nmap_link {
 	struct sockaddr_storage				sock;
+	char								host[32];
 	int									socket;
+	pcap_t								*pcap_handler;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {

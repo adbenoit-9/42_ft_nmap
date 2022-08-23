@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 18:44:22 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/23 10:39:07 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ ifeq ($(UNAME), Darwin)
 endif
 
 MODULES	:= ../nmap\
-			../proty
+			../proty \
+			../libft/inc
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 

@@ -58,9 +58,7 @@ typedef struct			s_root {
 typedef int (*t_func_mapy)(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 
 /* Sety hook is made for access a client config with all upper config */
-typedef int (*t_func_sety_rd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
-typedef int (*t_func_sety_nd)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *);
-typedef int (*t_func_sety_st)(T_CLIENT_ROOT *, T_CLIENT_ST *);
+typedef int (*t_func_sety)(T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 
 /* Iter hook is made for access a client config with its index in his lvl of the tree */
 typedef int (*t_func_iter_rd)(T_CLIENT_ROOT *, T_CLIENT_RD *, uint32_t index);
@@ -75,9 +73,9 @@ typedef int (*t_func_exey)(T_CLIENT_ROOT *, T_EXE *, T_BLK *);
 int								mapy(t_root *root);
 int								mapy_f(t_root *root, t_func_mapy f);
 
-int								set_rd(t_root *root, t_func_sety_rd f);
-int								set_nd(t_root *root, t_func_sety_nd f);
-int								set_st(t_root *root, t_func_sety_st f);
+int								set_rd(t_root *root, t_func_sety f);
+int								set_nd(t_root *root, t_func_sety f);
+int								set_st(t_root *root, t_func_sety f);
 
 int								exey(t_root *root, t_func_exey f);
 int								exey_rd(t_root *root, t_func_exey f);

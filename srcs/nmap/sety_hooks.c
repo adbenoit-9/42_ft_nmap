@@ -6,13 +6,14 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 09:17:35 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:51:06 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nmap_structs.h"
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pcap/pcap.h>
 #include <netdb.h>
 #include <string.h>
 #include "proty_tcp.h"
@@ -23,12 +24,16 @@
 #define NMAP_ERROR		-1
 
 /* ST : t_func_sety_st */
-int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link)
+int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
 {
 	int						r 			= NMAP_OK;
 	struct 		addrinfo	hints		= {0};
 	struct 		addrinfo	*res		= NULL;
+	char					*host		= "localhost";
 
+	(void)app;
+	(void)scan;
 	if (!root || !link)
 	{
 		r = NMAP_ERROR;
@@ -38,13 +43,15 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link)
 		memset(&hints, 0, sizeof(hints));
 		hints.ai_family = AF_UNSPEC;
 		hints.ai_flags = 0;
-		r = getaddrinfo("localhost", NULL, &hints, &res);
+		r = getaddrinfo(host, NULL, &hints, &res);
 		if (r != 0)
 		{
 			r = NMAP_ERROR;
 		}
 		if (r == NMAP_OK)
 		{
+			bzero(link->host, 32);
+			memcpy(link->host, host, strlen(host));
 			memcpy(&link->sock, res->ai_addr, sizeof(struct sockaddr_storage));
 			freeaddrinfo(res);
 		}
@@ -53,11 +60,14 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link)
 	return (r);
 }
 
-int					set_socket(t_nmap_setting *root, t_nmap_link *link)
+int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
 {
 	int				r = NMAP_OK;
 	int				optval = 1;
 
+	(void)app;
+	(void)scan;
 	if (!root || !link)
 	{
 		r = NMAP_ERROR;
@@ -85,19 +95,87 @@ int					set_socket(t_nmap_setting *root, t_nmap_link *link)
 	return (r);
 }
 
+int			set_pcap_init(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
+{
+	int					r 						= NMAP_OK;
+	pcap_if_t			*alldevs				= NULL;
+	char				err[PCAP_ERRBUF_SIZE]	= {0};
+	pcap_t 				*pcap					= NULL;
+
+	(void)app;
+	(void)scan;
+	if (!root || !link)
+	{
+		r = NMAP_ERROR;
+	}
+	else
+	{
+		r = pcap_findalldevs(&alldevs, err);
+		/* Note we cannot capture WiFi target as is , so check */
+		if (r == 0)
+		{
+			while (alldevs && (alldevs->flags & PCAP_IF_LOOPBACK) == 0)
+			{
+				// fprintf(stderr, "%s: name = %s\n", __func__, alldevs->name);
+				// fprintf(stderr, "%s: description = %s\n", __func__, alldevs->description);
+				// fprintf(stderr, "%s: flag = %08x\n\n", __func__, alldevs->flags);
+				alldevs = alldevs->next;
+			}
+			fprintf(stderr, "%s: Selected dev: name = %s\n", __func__, alldevs->name); 
+		}
+		/* Note BUFSIZ is defined in stdio for std buffer : 8192 */
+		if (r == 0)
+		{
+			pcap = pcap_open_live(alldevs->name, BUFSIZ, 1, 1000, err);
+			if (pcap == NULL)
+			{
+				r = NMAP_ERROR;
+			}
+		}
+		if (r == 0)
+		{
+			// TODO save src addr too (only the one corresponding to this link layer)
+			link->pcap_handler = pcap;
+			pcap_freealldevs(alldevs);
+		}
+	}
+	if (r == PCAP_ERROR)
+	{
+		fprintf(stderr, "%s,%d", __func__, __LINE__);
+		pcap_perror(pcap, "open_live:");
+		while (1)
+			;
+	}
+	return (r);
+}
+
+int			set_pcap_close(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
+{
+	(void)root;
+	(void)app;
+	(void)scan;
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+	pcap_close(link->pcap_handler);
+	return (NMAP_OK);
+}
 
 /* ND : t_func_sety_nd */
-int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app)
+int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
 {
 	(void)root;
 	(void)link;
+	(void)scan;
 	app->port = 4242;
 //	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	return (NMAP_OK);
 }
 
 /* RD : t_func_sety_rd */
-int					set_tcpflag(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan)
+int					set_tcpflag(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
 {
 	(void)root;
 	(void)link;
