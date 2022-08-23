@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 19:44:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:34:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int 				send_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 {
 	int			r		= SENDY_OK;
 	int			sock;
-	int			optval	= 1;
+	// int			optval	= 1;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
@@ -37,27 +37,26 @@ int 				send_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif /* SENDY_DEBUG */
 			sock = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
-			if (sock < 0)
-				perror("socket");
-			setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &optval, sizeof(int));
-			// if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
-			// {
-			r = sendto(sock,
-					buf,
-					((t_nmap_scan*)conf_exec)->packet_length,
-					0,
-					(const struct sockaddr *)&((t_nmap_link*)conf_st)->sock,
-					sizeof(struct sockaddr_in6));
-			// }
-			// else
-			// {
-			// 	r = sendto(sock,
-			// 			buf,
-			// 			((t_nmap_scan*)conf_exec)->packet_length,
-			// 			0,
-			// 		 	(const struct sockaddr*)&((t_nmap_link*)conf_st)->sock,
-			// 			sizeof(struct sockaddr_in6));
-			// }
+			// if (setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
+			// 	perror("setsockopt");
+			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
+			{
+				r = sendto(sock,
+						buf,
+						((t_nmap_scan*)conf_exec)->packet_length,
+						0,
+						(const struct sockaddr *)&((t_nmap_link*)conf_st)->sock,
+						sizeof(struct sockaddr));
+			}
+			else
+			{
+				r = sendto(sock,
+						buf,
+						((t_nmap_scan*)conf_exec)->packet_length,
+						0,
+					 	(const struct sockaddr*)&((t_nmap_link*)conf_st)->sock,
+						sizeof(struct sockaddr_in6));
+			}
 			if (r < 0)
 			{
 				perror("sendto");
