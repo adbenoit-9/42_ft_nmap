@@ -98,7 +98,7 @@ int main(int ac, char **av)
 
 		if (mapy_f(root, build_ipv4_udp))
 			return (-1);
-		if (mapy_f(root, send_ipv4_udp))
+		if (mapy_f(root, send_udp))
 			return (-1);
 		if (mapy_f(root, print_all))
 			return (-1);

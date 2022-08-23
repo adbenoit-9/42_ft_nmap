@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 17:27:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:57:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,26 @@
 //	0x45, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 //	0x00, 0x00, 0x00, 0x00 };
 
-int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec)
+int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
+					T_CLIENT_RD *conf_exec)
 {
-	int			r			= BUILDY_OK;
+	int			ret			= BUILDY_OK;
 	uint8_t		random[16]	= {0};
 	uint8_t		tcpoff		= 0;
 	uint32_t	length;
 	uint32_t	dip;
 
-	if (!buf || !conf_st || !conf_nd || !conf_exec)
-	{
-		r = BUILDY_ERROR;
+	if (!buf || !conf_st || !conf_nd || !conf_exec) {
+		ret = BUILDY_ERROR;
 	}
-	else
-	{
+	else {
 #ifdef BUILDY_DEBUG
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, 
 									((t_scan*)conf_exec)->tcpflag);
 #endif /* BUILDY_DEBUG */
 		memset(buf, 0, MAP_BLCK_SIZE);
-		r = get_urandom(random, 16);
-		if (r == BUILDY_OK)
+		ret = get_urandom(random, 16);
+		if (ret == BUILDY_OK)
 		{
 			dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
 			SET_IP4_DADDR(buf, dip);
@@ -81,6 +80,6 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_C
 			printf("length: %d\n", length);
 		}
 	}
-	return (r);
+	return (ret);
 }
 

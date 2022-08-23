@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_sendy.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 16:02:05 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:59:07 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 23:47:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #endif
 
 t_func_mapy _sendy_exec[EXEC_MAX_HOOK] = {
-		send_ipv4_tcp,
+		send_tcp,
 		NULL,
 		NULL,
 		NULL,

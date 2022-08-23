@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/22 19:31:10 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/23 23:54:03 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,8 @@ SRC				:=
 
 SUB_SRC			:= main.c \
 					sety_hooks.c \
-					test_hooks.c \
-					mapy_hooks.c \
+					print_hooks.c \
+					nmap_print.c \
 					exey_hooks.c \
 					iter_hooks.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))

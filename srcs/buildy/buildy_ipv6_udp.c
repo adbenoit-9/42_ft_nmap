@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 17:30:31 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:57:51 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		if (ret == BUILDY_OK) {
 			dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
 			conf_exec->packet_length = sizeof(struct ip6_hdr) + sizeof(struct udphdr);
-			conf_exec->packet_length = sizeof(struct iphdr) + sizeof(struct udphdr);
 
 			SET_IP6_SRC(buf, dip); // DEBUG
 			SET_IP6_DST(buf, dip); // DEBUG

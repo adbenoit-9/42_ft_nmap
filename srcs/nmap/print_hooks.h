@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_hooks.h                                       :+:      :+:    :+:   */
+/*   print_hooks.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:58:34 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 14:59:10 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 23:38:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef TEST_HOOKS_H
-# define TEST_HOOKS_H
+#ifndef PRINT_HOOKS_H
+# define PRINT_HOOKS_H
 
 #include "nmap_structs.h"
 
