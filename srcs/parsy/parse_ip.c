@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/23 11:03:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:47:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static void	set_ip(char *host, t_nmap_setting *settings)
 {
 	if (settings->ip_nb < IP_LIMIT) {
-		ft_strcpy(settings->ips[settings->ip_nb], host);
+		settings->ips[settings->ip_nb] = host;
+		printf("host[%d] : %s\n", settings->ip_nb, settings->ips[settings->ip_nb]);
 		++settings->ip_nb;
 	}
 }

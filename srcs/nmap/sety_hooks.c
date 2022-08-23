@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 14:52:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:37:45 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,14 @@
 #define NMAP_ERROR		-1
 
 /* ST : t_func_sety_st */
-int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
-			t_nmap_scan *scan)
+int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 {
 	int						r 			= NMAP_OK;
 	struct 		addrinfo	hints		= {0};
 	struct 		addrinfo	*res		= NULL;
-	char					*host		= "::1";
+	char					*host;
 
-	(void)app;
-	(void)scan;
+	host = root->ips[index];
 	if (!root || !link)
 	{
 		r = NMAP_ERROR;
@@ -46,6 +44,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 		r = getaddrinfo(host, NULL, &hints, &res);
 		if (r != 0)
 		{
+			dprintf(2, "%s: Name or service not known\n", host);
 			r = NMAP_ERROR;
 		}
 		if (r == NMAP_OK)

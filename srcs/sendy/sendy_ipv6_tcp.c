@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 14:51:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:33:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int 				send_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd,
 			{
 				r = SENDY_OK;
 			}
+			close(sock);
 	}
 	return (r);
 }

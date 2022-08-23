@@ -63,13 +63,10 @@ void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 
 int main(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
 	int32_t 		r		= 0;
 	uint8_t			*buf;
 	t_root			*root;
 	t_nmap_setting	*settings;
-	//test_root		*conf;
 	
 	buf = (uint8_t*)malloc(SIZE);
 	if (buf == NULL)
@@ -83,43 +80,28 @@ int main(int ac, char **av)
 		settings = &root->client;
 		parser(ac, av, settings);
 		dump_config(buf, settings);
-		//conf = (test_root*)root->client;
-	//	pcap_test(settings);
 		((t_root*)buf)->st_nb = settings->ip_nb;
 		((t_root*)buf)->nd_nb = settings->port_nb;
 		((t_root*)buf)->rd_nb = settings->scan_nb;
-		if (set_st(root, set_sockaddr))
+
+		if (set_iter_st(root, set_sockaddr))
 			return (-1);
-//		if (set_nd(root, set_port))
-//			return (-1);
-//		if (set_rd(root, set_tcpflag))
-//			return (-1);
-//		if (set_st(root, print_st))
-//			return (-1);
 		if (set_iter_nd(root, iter_set_port))
 			return (-1);
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
 		if (set_st(root, set_socket))
 			return (-1);
-		if (set_st(root, set_sockaddr))
-			return (-1);
-//		if (set_nd(root, print_nd))
-//			return (-1);
-//		if (set_rd(root, print_rd))
-//			return (-1);
 
 		exey_ctrl(root, nmap_init_exey);
 		r = mapy(root);
 
-		if (mapy_f(root, build_ipv6_udp))
+		if (mapy_f(root, build_ipv4_udp))
 			return (-1);
-		if (mapy_f(root, send_ipv6_udp))
+		if (mapy_f(root, send_ipv4_udp))
 			return (-1);
 		if (mapy_f(root, print_all))
 			return (-1);
-//		if (mapy_f(root, print_report))
-//			return (-1);
 
 //		fprintf(stderr, "%s: r = %d\n", __func__, r);
 //

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 19:21:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:24:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		T_CLIENT_RD *conf_exec)
 {
-	int			ret			= BUILDY_OK;
-	uint8_t		random[16]	= {0};
-	uint8_t		tcpoff		= 0;
-	uint32_t	length;
+	int				ret			= BUILDY_OK;
+	uint8_t			random[16]	= {0};
+	uint8_t			tcpoff		= 0;
+	uint32_t		length;
+	struct in6_addr	dip;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
@@ -35,12 +36,11 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		memset(buf, 0, MAP_BLCK_SIZE);
 		ret = get_urandom(random, 16);
 		if (ret == BUILDY_OK) {
-			struct in6_addr	dip; // DEBUG
+			dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
 			length = sizeof(struct ip6_hdr) + sizeof(struct tcphdr);
 			
-			inet_pton(AF_INET6, "::1", &dip); // DEBUG
-			SET_IP6_SRC(buf, dip); // DEBUG
-			SET_IP6_DST(buf, dip); // DEBUG
+			SET_IP6_SRC(buf, dip);
+			SET_IP6_DST(buf, dip);
 			SET_IP6_FLOW(buf, 0x0b0500); // NOT OK
 			SET_IP6_NXT(buf, 0x11); // UDP
 			SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));

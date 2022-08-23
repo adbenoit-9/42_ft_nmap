@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 14:49:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:35:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int 				send_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 														void *conf_exec)
 {
 	int			r		= SENDY_OK;
+	int			optval	= 1;
 	int			sock;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
@@ -32,6 +33,7 @@ int 				send_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 #endif /* SENDY_DEBUG */
 			
 			sock = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
+			setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
 			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
 			{
 				r = sendto(sock,
@@ -59,6 +61,7 @@ int 				send_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd,
 			{
 				r = SENDY_OK;
 			}
+			close(sock);
 	}
 	return (r);
 }
