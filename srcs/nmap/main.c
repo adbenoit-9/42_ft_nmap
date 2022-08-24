@@ -89,7 +89,7 @@ int main(int ac, char **av)
 		/* Pcap handler init */
 		if (set_pcap_init(&root->client) != 0)
 			return (-1);
-		pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
+		 pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
 		/* Fill parameters in tree */
 		if (set_iter_st(root, set_sockaddr))
 			return (-1);
@@ -104,12 +104,12 @@ int main(int ac, char **av)
 		/* Mappy execute task list */
 		r = mapy(root);
 
-		pthread_join(root->client.thread, (void**)&thread_r);
-		fprintf(stderr, "%s:%d thread_r = %d\n", __func__, __LINE__, thread_r);
+		 pthread_join(root->client.thread, (void**)&thread_r);
+		// fprintf(stderr, "%s:%d thread_r = %d\n", __func__, __LINE__, thread_r);
 		/* TODO: Analyse and print report */
 
-		//if (mapy_f(root, send_udp))
-		//	return (-1);
+//		if (mapy_f(root, send_tcp))
+//			return (-1);
 		//if (mapy_f(root, print_all))
 		//	return (-1);
 	}
