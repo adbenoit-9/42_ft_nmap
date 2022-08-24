@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 11:38:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 07:01:52 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sendy.h"
-#include "proty_ip.h"
 #include "proty_tcp.h"
+#include <unistd.h>
 
 // int 				send_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 // int 				send_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
@@ -36,12 +36,18 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 #endif /* SENDY_DEBUG */
 			int optval = 1;
 			int sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+			if (sock == -1)
+			{
+				perror("socket");
+				return (-1);
+			}
 			if (setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
+			{
 				perror("setsockopt");
-			printf("socket : %d\n", ((t_nmap_scan*)conf_exec)->packet_length);
+				return (-1);
+			}
 			if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET)
 			{
-				printf("ipv4\n");
 				r = sendto(sock,
 						buf,
 						((t_nmap_scan*)conf_exec)->packet_length,
@@ -67,6 +73,8 @@ int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 			{
 				r = SENDY_OK;
 			}
+			close(sock);
+		//	recv_ipv4_tcp(buf, conf_st, conf_nd, conf_exec);
 	}
 	return (r);
 }

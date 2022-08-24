@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:58:35 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 07:42:10 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 15:29:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 				t_nmap_scan *scan);
 int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 				t_nmap_scan *scan);
-int					set_pcap_init(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
-			t_nmap_scan *scan);
-int					set_pcap_close(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
-			t_nmap_scan *scan);
+//int					set_pcap_init(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+//			t_nmap_scan *scan);
+//int					set_pcap_close(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+//			t_nmap_scan *scan);
 /* ND : t_func_sety_nd */
 int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 				t_nmap_scan *scan);

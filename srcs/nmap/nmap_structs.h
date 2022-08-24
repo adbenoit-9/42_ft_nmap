@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 09:07:46 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/23 17:43:58 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,16 @@ typedef struct		s_nmap_setting {
 	int									ip_nb;
 	int									port_nb;
 	int									scan_nb;
+	pcap_t								*pcap_handler;
+	pthread_t							thread;
+	//struct sockaddr_storage				ip4_src;
+	//struct sockaddr_storage				ip6_src;
 }					t_nmap_setting;
 
 typedef struct		s_nmap_link {
 	struct sockaddr_storage				sock;
 	char								host[32];
 	int									socket;
-	pcap_t								*pcap_handler;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {

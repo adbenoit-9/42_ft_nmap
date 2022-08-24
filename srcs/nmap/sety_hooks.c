@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 13:36:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:32:45 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,71 +95,6 @@ int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 	return (r);
 }
 
-int			set_pcap_init(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
-			t_nmap_scan *scan)
-{
-	int					r 						= NMAP_OK;
-	pcap_if_t			*alldevs				= NULL;
-	char				err[PCAP_ERRBUF_SIZE]	= {0};
-	pcap_t 				*pcap					= NULL;
-
-	(void)app;
-	(void)scan;
-	if (!root || !link)
-	{
-		r = NMAP_ERROR;
-	}
-	else
-	{
-		r = pcap_findalldevs(&alldevs, err);
-		/* Note we cannot capture WiFi target as is , so check */
-		if (r == 0)
-		{
-			while (alldevs && (alldevs->flags & PCAP_IF_LOOPBACK) == 0)
-			{
-				// fprintf(stderr, "%s: name = %s\n", __func__, alldevs->name);
-				// fprintf(stderr, "%s: description = %s\n", __func__, alldevs->description);
-				// fprintf(stderr, "%s: flag = %08x\n\n", __func__, alldevs->flags);
-				alldevs = alldevs->next;
-			}
-			fprintf(stderr, "%s: Selected dev: name = %s\n", __func__, alldevs->name); 
-		}
-		/* Note BUFSIZ is defined in stdio for std buffer : 8192 */
-		if (r == 0)
-		{
-			pcap = pcap_open_live(alldevs->name, BUFSIZ, 1, 1000, err);
-			if (pcap == NULL)
-			{
-				r = NMAP_ERROR;
-			}
-		}
-		if (r == 0)
-		{
-			// TODO save src addr too (only the one corresponding to this link layer)
-			link->pcap_handler = pcap;
-			pcap_freealldevs(alldevs);
-		}
-	}
-	if (r == PCAP_ERROR)
-	{
-		fprintf(stderr, "%s,%d", __func__, __LINE__);
-		pcap_perror(pcap, "open_live:");
-		while (1)
-			;
-	}
-	return (r);
-}
-
-int			set_pcap_close(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
-			t_nmap_scan *scan)
-{
-	(void)root;
-	(void)app;
-	(void)scan;
-	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
-	pcap_close(link->pcap_handler);
-	return (NMAP_OK);
-}
 
 /* ND : t_func_sety_nd */
 int					set_port(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
