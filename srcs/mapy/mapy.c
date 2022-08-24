@@ -90,7 +90,7 @@ int			mapy(t_root *root)
 //							root->st[i].nd[j].rd[k].exe.init = 1;
 //							root->st[i].nd[j].rd[k].exe.id = i + j + k;
 //						}
-//						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
+						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
 //						r = exey_check();
 						index = (((i * root->st_nb) * (j * root->nd_nb) * (k * root->rd_nb) +
 													(j * root->nd_nb) * (k * root->rd_nb) +
@@ -103,6 +103,7 @@ int			mapy(t_root *root)
 //						fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
 						if (r == EXEY_IDLE)
 						{
+							
 						}
 //								&root->st[i].nd[j].rd[k].exe,
 //								&root->buf[index]);

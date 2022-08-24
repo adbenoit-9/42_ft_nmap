@@ -97,8 +97,8 @@ int main(int ac, char **av)
 			return (-1);
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
-		if (set_st(root, set_socket))
-			return (-1);
+		//if (set_st(root, set_socket))
+		//	return (-1);
 		/* Set tasks list */
 		exey_ctrl(root, nmap_init_exey);
 		/* Mappy execute task list */

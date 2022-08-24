@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 20:11:38 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 19:17:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:18:50 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static const uint8_t syn_mss[4] = {0x02, 0x04, 0x05, 0xb4};
 #define FLAG_S_NULL				0x00
 #define FLAG_S_SYN				TH_SYN
 #define FLAG_S_ACK				TH_ACK
-#define FLAG_S_FIN				TH_RST | TH_ACK
-#define FLAG_S_XMAS				TH_FIN | TH_SYN | TH_RST | TH_ACK
+#define FLAG_S_FIN				TH_FIN
+#define FLAG_S_XMAS				TH_FIN | TH_PUSH | TH_URG
 #define FLAG_S_UDP				-1
 
 #endif /* FT_NMAP_TCP */

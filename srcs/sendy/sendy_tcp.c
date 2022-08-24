@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 09:38:17 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 09:48:03 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
         /* Send this scan */
 #ifdef SENDY_DEBUG
 			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
 #endif /* SENDY_DEBUG */
         if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
-			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
             socklen = sizeof(struct sockaddr);
             sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
         }
         else {
-			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
             socklen = sizeof(struct sockaddr_in6);
             sock = socket(AF_INET6, SOCK_RAW, IPPROTO_TCP);
         }

@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 07:31:30 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 09:20:22 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 10:01:46 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "string.h"
 
 static char pre_built_filter_icmp[] = "icmp[icmptype] == icmp-unreach";
-static char pre_built_filter_rst[] = "(tcp[tcpflags] & tcp-rst) == tcp-rst";
+static char pre_built_filter_rst[] = "(tcp[tcpflags] & tcp-rst) != 0";
 static char pre_built_filter_synack[] = "(tcp[tcpflags] & (tcp-syn | tcp-ack)) == (tcp-syn | tcp-ack)";
 
 void				ft_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
@@ -35,7 +35,7 @@ void				ft_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 	/* TODO : some scan need to be re-send when timeout */
 	i = 14; // pcap_hdr
 	fprintf(stderr, "%s:%d h->len= %d\n", __func__, __LINE__, h->len);
-//	fprintf(stderr, "port src = %d\n", ((struct tcphdr*)&bytes[i + sizeof(struct iphdr)])->th_sport);
+	fprintf(stderr, "port src = %d\n", htons(((struct tcphdr*)&bytes[i + sizeof(struct iphdr)])->th_sport));
 	while (i < h->len)
 	{
 		fprintf(stderr, "%02x:", bytes[i]);
@@ -55,12 +55,12 @@ void		*run_pcap(void *root)
 
 int			set_pcap_init(t_nmap_setting *nmap)
 {
-	int					r 						= MAPY_OK;
-	pcap_if_t			*alldevs				= NULL;
-	char				err[PCAP_ERRBUF_SIZE]	= {0};
-	pcap_addr_t			*addrs					= NULL;
-	char					filter[256]			= {0};
-	struct	bpf_program		bpf 				= {0};
+	int						r 						= MAPY_OK;
+	pcap_if_t				*alldevs				= NULL;
+	char					err[PCAP_ERRBUF_SIZE]	= {0};
+	pcap_addr_t				*addrs					= NULL;
+	char					filter[256]				= {0};
+	struct	bpf_program		bpf 					= {0};
 
 	r = pcap_findalldevs(&alldevs, err);
 	/* Note: we cannot capture WiFi target as is , so check */
@@ -100,7 +100,7 @@ int			set_pcap_init(t_nmap_setting *nmap)
 	{
 		// TODO save src addr too (only the one corresponding to this link layer)
 		pcap_freealldevs(alldevs);
-		snprintf(filter, sizeof(filter), "src host %s and (%s or %s or %s)",
+		snprintf(filter, sizeof(filter), "src host %s and tcp src portrange 1-1024 and (%s or %s or %s)",
 							"localhost",
 							pre_built_filter_icmp,
 							pre_built_filter_rst,
