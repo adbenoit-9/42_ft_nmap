@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:34:27 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 17:27:56 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:25:32 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,26 @@
 
 # include <netinet/ip.h>
 # include <netinet/ip6.h>
+
+# ifdef MAC
+
+struct iphdr {
+	uint8_t		ihl:4;
+	uint8_t		version:4;
+	uint8_t		tos;
+	uint16_t	tot_len;
+	uint16_t	id;
+	uint16_t	frag_off;
+	uint8_t		ttl;
+	uint8_t		protocol;
+	uint16_t	check;
+	uint32_t	saddr;
+	uint32_t	daddr;
+	/*The opts start here. */
+};
+
+# endif
+
 
 #define SET_IP4_VERSION(ip, value) do {((struct iphdr*)ip)->version =\
 					(uint8_t)value & (uint8_t)0x0F;} while (0)

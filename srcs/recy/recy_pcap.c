@@ -6,13 +6,15 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 07:31:30 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 07:39:47 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 09:20:22 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mapy.h"
+#include "proty.h"
 #include <pcap/pcap.h>
 #include <pthread.h>
+#include "string.h"
 
 static char pre_built_filter_icmp[] = "icmp[icmptype] == icmp-unreach";
 static char pre_built_filter_rst[] = "(tcp[tcpflags] & tcp-rst) == tcp-rst";
@@ -24,10 +26,16 @@ void				ft_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 	( void)user;
 	uint32_t		i;
 
+	if (!user || !h || !bytes)
+	{
+		fprintf(stderr, "%s:%d ERROR\n", __func__, __LINE__);
+		return ;
+	}
 	/* TODO : go in tree and find corresponding scan for this response */
 	/* TODO : some scan need to be re-send when timeout */
 	i = 14; // pcap_hdr
 	fprintf(stderr, "%s:%d h->len= %d\n", __func__, __LINE__, h->len);
+//	fprintf(stderr, "port src = %d\n", ((struct tcphdr*)&bytes[i + sizeof(struct iphdr)])->th_sport);
 	while (i < h->len)
 	{
 		fprintf(stderr, "%02x:", bytes[i]);
@@ -55,7 +63,7 @@ int			set_pcap_init(t_nmap_setting *nmap)
 	struct	bpf_program		bpf 				= {0};
 
 	r = pcap_findalldevs(&alldevs, err);
-	/* Note we cannot capture WiFi target as is , so check */
+	/* Note: we cannot capture WiFi target as is , so check */
 	if (r == 0)
 	{
 		while (alldevs && (alldevs->flags & PCAP_IF_LOOPBACK) == 0)
@@ -66,14 +74,14 @@ int			set_pcap_init(t_nmap_setting *nmap)
 		addrs = alldevs->addresses;
 		while (addrs != NULL)
 		{
-	//		if (((struct sockaddr_storage*)addrs->addr)->ss_family == AF_INET)
-	//		{
-	//			memcpy(&nmap->ip4_src, addrs->addr, sizeof(struct sockaddr_storage));
-	//		}
-	//		if (((struct sockaddr_storage*)addrs->addr)->ss_family == AF_INET6)
-	//		{ // TODO LMA this will not work as sockaddr is too small
-	//			memcpy(&nmap->ip6_src, addrs->addr, sizeof(struct sockaddr_storage));
-	//		}
+			if (((struct sockaddr_storage*)addrs->addr)->ss_family == AF_INET)
+			{
+//				memcpy(&nmap->ip4_src, addrs->addr, sizeof(struct sockaddr_storage));
+			}
+			if (((struct sockaddr_storage*)addrs->addr)->ss_family == AF_INET6)
+			{ // TODO LMA this will not work as sockaddr is too small
+//				memcpy(&nmap->ip6_src, addrs->addr, sizeof(struct sockaddr_storage));
+			}
 			//fprintf(stderr, "ss_family = %d\n", 
 			//	((struct sockaddr_storage*)addrs->addr)->ss_family);
 			addrs = addrs->next;

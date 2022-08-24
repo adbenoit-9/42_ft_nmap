@@ -9,9 +9,8 @@
 #include <pcap/pcap.h>
 #include <pthread.h>
 
-#include "hooks.h"
+#include "nmap_hooks.h"
 #include "ft_nmap_parsing.h"
-
 #define MAPY_DEBUG
 
 

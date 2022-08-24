@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exey_hooks.c                                       :+:      :+:    :+:   */
+/*   nmap_exey_hooks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:25:33 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 11:50:12 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 08:20:13 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mapy.h"
 
-#define EXEY_DEBUG
+//#define EXEY_DEBUG
+
 #define EXEY_OK 0
 
 #ifdef EXEY_DEBUG
@@ -21,9 +22,6 @@
 
 static const uint8_t default_execution_list[] = {0x00, 0x01, 0x02};
 
-//int					nmap_update_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
-//
-//
 int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 {
 	uint32_t		i;
@@ -43,4 +41,5 @@ int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 	return (EXEY_OK);
 }
 
+//int					nmap_update_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 //	 = SELECT_HOOK_BUILDY(root.stexe->hook[i++])

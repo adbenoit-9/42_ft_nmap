@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 17:43:58 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 09:40:32 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,6 @@
 #define SCAN_LIMIT			6
 #define PORT_LIMIT			1024
 #define IP_LIMIT			16
-
-# ifdef MAC
-
-struct iphdr {
-	uint8_t		ihl:4;
-	uint8_t		version:4;
-	uint8_t		tos;
-	uint16_t	tot_len;
-	uint16_t	id;
-	uint16_t	frag_off;
-	uint8_t		ttl;
-	uint8_t		protocol;
-	uint16_t	check;
-	uint32_t	saddr;
-	uint32_t	daddr;
-	/*The opts start here. */
-};
-
-# endif
 
 typedef struct		s_nmap_setting {
 	uint16_t							ports[PORT_LIMIT];
@@ -58,7 +39,6 @@ typedef struct		s_nmap_setting {
 
 typedef struct		s_nmap_link {
 	struct sockaddr_storage				sock;
-	char								host[32];
 	int									socket;
 }					t_nmap_link;
 

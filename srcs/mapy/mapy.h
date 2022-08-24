@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 18:30:24 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 07:45:56 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ typedef struct			s_exe {
 	int				hook[EXEC_LST_SIZE]; 
 	int				tasks[EXEC_LST_SIZE];
 	bool			init;
-	int				flag; // contain flag from exey :
-	uint32_t		id; // exe id
+	int				flag;
+	uint32_t		id;
 }						t_exe;
 
+/* Header block structure : can be use for controlling access to blocks */
 typedef	struct				s_blk {
-	uint32_t		id;						// block id
-// TODO id unique with preprocessing ? builtin_random ?
-}						t_blk;
-
+	uint32_t		id;
+}							t_blk;
 
 typedef struct			s_rd {
 	T_EXE				exe;
@@ -54,19 +53,16 @@ typedef struct			s_st {
 }						t_st;
 
 typedef struct			s_root {
+	t_st			st[ST_MAX];
 	T_CLIENT_ROOT	client;
 	int				st_nb;
 	int				nd_nb;
 	int				rd_nb;
 	uint8_t			*map;
-//	int				tasks_scheduler[EXEC_LST_SIZE];
-	t_st			st[ST_MAX];
 }						t_root;
 
 
 /* Mappy hook access to the map with all client config struct */
-//typedef int (*t_func_mapy)(uint8_t *, T_CLIENT_ROOT *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
-//typedef int (*t_func_mapy)(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 typedef int (*t_func_mapy)(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 
 /* Sety hook is made for access a client config with all upper config */
@@ -77,8 +73,7 @@ typedef int (*t_func_iter_rd)(T_CLIENT_ROOT *, T_CLIENT_RD *, uint32_t index);
 typedef int (*t_func_iter_nd)(T_CLIENT_ROOT *, T_CLIENT_ND *, uint32_t index);
 typedef int (*t_func_iter_st)(T_CLIENT_ROOT *, T_CLIENT_ST *, uint32_t index);
 
-
-/* exey access to exe and blk control structure*/
+/* exey access to exe and blk control structure in third lvl of tree */
 typedef int (*t_func_exey)(T_CLIENT_ROOT *, T_EXE *, T_BLK *);
 
 /* Exported functions */
@@ -93,8 +88,8 @@ int								exey(t_root *root, t_func_exey f);
 int								exey_rd(t_root *root, t_func_exey f);
 int								exey_ctrl(t_root *root, t_func_exey f);
 
-int				set_iter_st(t_root *root, t_func_iter_st f);
-int				set_iter_nd(t_root *root, t_func_iter_nd f);
-int				set_iter_rd(t_root *root, t_func_iter_rd f);
+int								set_iter_st(t_root *root, t_func_iter_st f);
+int								set_iter_nd(t_root *root, t_func_iter_nd f);
+int								set_iter_rd(t_root *root, t_func_iter_rd f);
 
 #endif

@@ -3,7 +3,7 @@
 
 #define EXEY_OK 0
 #define EXEY_ERR -1
-#define MAPY_DEBUG
+//#define MAPY_DEBUG
 
 int				exey_ctrl(t_root *root, t_func_exey f)
 {

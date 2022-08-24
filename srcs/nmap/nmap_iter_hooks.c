@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter_hooks.c                                       :+:      :+:    :+:   */
+/*   nmap_iter_hooks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 23:04:51 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 08:27:42 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 08:20:38 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int					iter_set_port(t_nmap_setting *root, t_nmap_app *app, uint32_t index)
 int					iter_set_tcpflag(t_nmap_setting *root, t_nmap_scan *scan, uint32_t index)
 {
 	scan->tcpflag = root->scans[index];
-	//scan->tcpflag = FLAG_S_SYN;
 	return (NMAP_OK);
 }

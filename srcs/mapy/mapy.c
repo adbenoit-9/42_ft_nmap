@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "mapy_data.h"
+#include "nmap_mapy_data.h"
 
-#define EXEY_DEBUG
+//#define EXEY_DEBUG
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0
@@ -17,7 +17,6 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 {
 	int			r			= EXEY_OK;
 	int			i			= 0;
-//	bool		b			= 1;
 
 	i = 0;
 	/* Find the 1st task to do */
@@ -84,6 +83,7 @@ int			mapy(t_root *root)
 					k = 0;
 					while (r == EXEY_RUN && k < root->rd_nb)
 					{
+//		fprintf(stderr, "%s:%d i=%d j=%d k=%d st_nb=%d nd_nb=%d rd_nb=%d\n", __func__, __LINE__, i, j, k, root->st_nb, root->nd_nb, root->rd_nb);
 //						if (root->st[i].nd[j].rd[k].exe.init == 0)
 //						{
 //							fprintf(stderr, "%s:%d\n", __func__, __LINE__);

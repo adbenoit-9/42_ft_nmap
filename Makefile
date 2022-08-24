@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/23 23:54:03 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/24 08:14:35 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,11 +81,10 @@ SRC				:=
 # SRC				+= $(addprefix parsing/, $(SUB_SRC))
 
 SUB_SRC			:= main.c \
-					sety_hooks.c \
-					print_hooks.c \
+					nmap_sety_hooks.c \
 					nmap_print.c \
-					exey_hooks.c \
-					iter_hooks.c
+					nmap_exey_hooks.c \
+					nmap_iter_hooks.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
 SUB_SRC			:= mapy.c \
