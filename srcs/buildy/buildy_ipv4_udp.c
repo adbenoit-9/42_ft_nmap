@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 16:01:50 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:27:45 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 {
 	int			ret			= BUILDY_OK;
 	uint8_t		random[16]	= {0};
-
+	uint32_t	dip;
+	
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}
@@ -33,12 +34,11 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		memset(buf, 0, MAP_BLCK_SIZE);
 		ret = get_urandom(random, 16);
 		if (ret == BUILDY_OK) {
-			uint32_t	dip; // DEBUG
+			dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
 			conf_exec->packet_length = sizeof(struct iphdr) + sizeof(struct udphdr);
-			
-			inet_pton(AF_INET, "127.0.0.1", &dip); // DEBUG
-			SET_IP4_DADDR(buf, dip); // DEBUG
-			SET_IP4_SADDR(buf, dip); // DEBUG
+
+			SET_IP4_DADDR(buf, dip);
+			SET_IP4_SADDR(buf, dip);
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);
@@ -51,7 +51,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			
 			SET_UDP_SPORT(&buf[sizeof(struct iphdr)], (uint16_t)(*(&random[7])));
 			SET_UDP_DPORT(&buf[sizeof(struct iphdr)], htons(conf_nd->port));
-			SET_UDP_SEQ(&buf[sizeof(struct iphdr)], (uint32_t)(*(&random[3])));
+			SET_UDP_LEN(&buf[sizeof(struct iphdr)], htons(conf_exec->packet_length));
 			SET_UDP_ACK(&buf[sizeof(struct iphdr)], ipv4_checksum((uint16_t *)buf, sizeof(struct udphdr)));
 		}
 	}
