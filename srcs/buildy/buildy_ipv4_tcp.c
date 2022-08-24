@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:33:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:34:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 #ifndef MAC
 			SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 			SET_IP4_TOT_LEN(buf, htons(length));
-			SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf, i));
+			SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf, sizeof(struct iphdr)));
 #else
 			SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length));
 #endif
