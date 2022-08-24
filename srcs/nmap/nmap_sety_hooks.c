@@ -94,3 +94,13 @@ int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 	}
 	return (r);
 }
+
+int					dump_config_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan)
+{
+	(void)root;
+	(void)link;
+	(void)scan;
+	fprintf(stderr, "port=%d\n", app->port);
+	return (0);
+}

@@ -5,13 +5,47 @@
 
 #include "nmap_mapy_data.h"
 
-//#define EXEY_DEBUG
+#define MAPY_DEBUG
+#define EXEY_DEBUG
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0
 #define EXEY_IDLE	1
 #define EXEY_BUSY	2
 #define EXEY_RUN	3
+
+int				exey_check_blkhdr(t_exe *exe, t_blk *blk)
+{
+	int			r = EXEY_OK;
+
+	if (!exe || !blk)
+	{
+		r = EXEY_ERR;
+	}
+	else
+	{
+		if (exe->id == blk->id)
+		{
+//			fprintf(stderr, "%s:%d block ok exe id=%08x\n", __func__, __LINE__, exe->id);
+			r = EXEY_OK;
+		}
+		else
+		{
+			if (blk->id == 0x00000000)
+			{
+				r = EXEY_OK;
+				blk->id = exe->id;
+//				fprintf(stderr, "%s:%d block assignment id=%08x\n", __func__, __LINE__, blk->id);
+			}
+			else
+			{
+//				fprintf(stderr, "%s:%d block busy exe id=%08x\n", __func__, __LINE__, exe->id);
+				r = EXEY_BUSY;
+			}
+		}
+	}
+	return (r);
+}
 
 int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 {
@@ -28,13 +62,19 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 	{
 		/* Nothing to do, exit */
 		r = EXEY_IDLE;
+		if (((t_blk*)&root->map[index])->id == rd->exe.id)
+		{ /* Release the blk */
+			//((t_blk*)&root->map[index])->id = 0x00000000;
+			memset(&root->map[index], 0, MAP_BLCK_SIZE);
+//			fprintf(stdout, "%s:%d block release \n", __func__, __LINE__); // id
+		}
 #ifdef EXEY_DEBUG
-		fprintf(stderr, "%s:%d IDLE \n", __func__, __LINE__); // id
+//		fprintf(stderr, "%s:%d IDLE \n", __func__, __LINE__); // id
 #endif /* EXEY_DEBUG */
 	}
-//	r = exey_check_blkhdr(root, exe, blk);
 	if (r == EXEY_OK)
 	{
+		r = exey_check_blkhdr(&rd->exe, (t_blk*)&root->map[index]);
 		/* Check value */
 		if (rd->exe.tasks[i] > EXEC_MAX_CMD - 1 ||
 				rd->exe.hook[i] > EXEC_MAX_HOOK - 1)
@@ -47,12 +87,13 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 		/* Clear exec flag */
 		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
 #ifdef EXEY_DEBUG
-		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
-						rd->exe.tasks[i], rd->exe.hook[i]);
+//		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
+//						rd->exe.tasks[i], rd->exe.hook[i]);
 #endif /* EXEY_DEBUG */
 		r = (*_exec[rd->exe.tasks[i]]
 								[rd->exe.hook[i]])
-								(&root->map[index], &st->client, &nd->client, &rd->client);
+								(&root->map[index + sizeof(t_blk)], &st->client,
+								&nd->client, &rd->client);
 		r = EXEY_RUN;
 	}
 	return (r);
@@ -64,6 +105,7 @@ int			mapy(t_root *root)
 	int		i = 0;
 	int		j = 0;
 	int		k = 0;
+	bool	b = 0;
 	int		index;
 	
 	if (!root)
@@ -72,38 +114,43 @@ int			mapy(t_root *root)
 	}
 	else
 	{
-		while (r == EXEY_RUN)
+		while (r == EXEY_RUN || r == EXEY_BUSY)
 		{
+			b = 0;
 			i = 0;
-			while (r == EXEY_RUN && i < root->st_nb)
+			while ((r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb)
 			{
 				j = 0;
-				while (r == EXEY_RUN && j < root->nd_nb)
+				while ((r == EXEY_RUN  || r == EXEY_BUSY) && j < root->nd_nb)
 				{
 					k = 0;
-					while (r == EXEY_RUN && k < root->rd_nb)
+					while ((r == EXEY_RUN  || r == EXEY_BUSY) && k < root->rd_nb)
 					{
 //		fprintf(stderr, "%s:%d i=%d j=%d k=%d st_nb=%d nd_nb=%d rd_nb=%d\n", __func__, __LINE__, i, j, k, root->st_nb, root->nd_nb, root->rd_nb);
-//						if (root->st[i].nd[j].rd[k].exe.init == 0)
-//						{
-//							fprintf(stderr, "%s:%d\n", __func__, __LINE__);
-//							root->st[i].nd[j].rd[k].exe.init = 1;
-//							root->st[i].nd[j].rd[k].exe.id = i + j + k;
-//						}
-						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
-//						r = exey_check();
-						index = (((i * root->st_nb) * (j * root->nd_nb) * (k * root->rd_nb) +
-													(j * root->nd_nb) * (k * root->rd_nb) +
-													k) % BLCK_NB) * MAP_BLCK_SIZE;
+						if (root->st[i].nd[j].rd[k].exe.init == 0)
+						{
+							//fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+							root->st[i].nd[j].rd[k].exe.init = 1;
+							root->st[i].nd[j].rd[k].exe.id = i * 100000 + j * 1000 + k;
+						}
 //						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
+//						r = exey_check();
+						index = ((i * (root->nd_nb * (root->rd_nb))) +
+													(j * (root->rd_nb) +
+													k) % BLCK_NB) * MAP_BLCK_SIZE;
+						fprintf(stderr, "%s:%d i=%d j=%d k=%d index = %d\n", __func__, __LINE__, i, j, k, index % BLCK_NB);
 						r = exey_wrapper(root, 
 										&root->st[i],
 										&root->st[i].nd[j],
 										&root->st[i].nd[j].rd[k], index);
-//						fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
-						if (r == EXEY_IDLE)
+						//fprintf(stderr, "%s:%d i=%d j=%d k=%d r= %d\n", __func__, __LINE__, i, j, k, r);
+						if (r != EXEY_IDLE)
 						{
-							
+							b = 1;
+						}
+						else
+						{
+							r = EXEY_RUN;
 						}
 //								&root->st[i].nd[j].rd[k].exe,
 //								&root->buf[index]);
@@ -112,6 +159,10 @@ int			mapy(t_root *root)
 					j++;
 				}
 				i++;
+			}
+			if (b == 0)
+			{
+				r = EXEY_IDLE;
 			}
 		}
 	}
@@ -141,8 +192,8 @@ int			mapy_f(t_root *root, t_func_mapy f)
 				k = 0;
 				while (k < root->rd_nb)
 				{
-					index = (((i * root->st_nb) * (j * root->nd_nb) * (k * root->rd_nb) +
-												(j * root->nd_nb) * (k * root->rd_nb) +
+					index = (((i * root->st_nb)  +
+												(j * root->nd_nb) +
 												k) % BLCK_NB) * MAP_BLCK_SIZE;
 #ifdef MAPY_DEBUG
 					fprintf(stderr, "%s:%d i=%d j=%d k=%d\
@@ -156,7 +207,7 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 //						r, i, index, rd->exe.tasks[i], rd->exe.hook[i]);
 #endif /* MAPY_DEBUG */
 					r = (*f)
-								(&(root->map)[index],
+								(&(root->map)[index + sizeof(t_blk)],
 								(T_CLIENT_ST*)&root->st[i].client,
 								(T_CLIENT_ND*)&root->st[i].nd[j].client, 
 								(T_CLIENT_RD*)&root->st[i].nd[j].rd[k].client);

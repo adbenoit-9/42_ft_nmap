@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 23:04:51 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:30:16 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 11:51:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int					iter_set_port(t_nmap_setting *root, t_nmap_app *app, uint32_t index)
 {
 	app->port = root->ports[index];
-	fprintf(stdout, "port=%d\n", app->port);
 	return (NMAP_OK);
 }
 

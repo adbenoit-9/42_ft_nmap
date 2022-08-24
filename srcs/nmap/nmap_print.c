@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 15:28:22 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 23:34:20 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:52:10 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int					print_report(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_sc
 {
 	(void)buf;
 	(void)link;
-	fprintf(stdout, "localhost: port:%d : scan:%d -> result:%d\n",
+	fprintf(stderr, "localhost: port:%d : scan:%d -> result:%d\n",
 						app->port, scan->tcpflag, scan->result);
 	return (0);
 }

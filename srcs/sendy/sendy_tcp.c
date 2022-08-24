@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:38:12 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 13:23:37 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	int			ret		= SENDY_OK;
 	int			sock;
 	socklen_t	socklen;
-
+//	fprintf(stdout, "%s:%d port=%d\n", __func__, __LINE__, ((t_nmap_app*)conf_nd)->port);
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = SENDY_ERROR;
 	}
 	else {
         /* Send this scan */
 #ifdef SENDY_DEBUG
-			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
-			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
+//			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+//			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
 #endif /* SENDY_DEBUG */
         if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
             socklen = sizeof(struct sockaddr);

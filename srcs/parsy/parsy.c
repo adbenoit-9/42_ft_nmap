@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/24 07:56:55 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 11:57:33 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int parser(int ac, char **av, t_nmap_setting	*settings)
 	}
 	if (settings->scan_nb == 0) {
 		memcpy(settings->scans, default_scans, SCAN_LIMIT);
-		settings->scan_nb = 6;
+		settings->scan_nb = 5;
 	}
 	if (settings->ports[0] == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);

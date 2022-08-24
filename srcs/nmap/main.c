@@ -67,7 +67,7 @@ int main(int ac, char **av)
 	uint8_t			*buf;
 	t_root			*root;
 	t_nmap_setting	*settings;
-	int				thread_r;
+//	int				thread_r;
 	
 	buf = (uint8_t*)malloc(SIZE);
 	if (buf == NULL)
@@ -87,9 +87,9 @@ int main(int ac, char **av)
 		((t_root*)buf)->nd_nb = settings->port_nb;
 		((t_root*)buf)->rd_nb = settings->scan_nb;
 		/* Pcap handler init */
-		if (set_pcap_init(&root->client) != 0)
-			return (-1);
-		 pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
+		//if (set_pcap_init(&root->client) != 0)
+		//	return (-1);
+		// pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
 		/* Fill parameters in tree */
 		if (set_iter_st(root, set_sockaddr))
 			return (-1);
@@ -97,6 +97,11 @@ int main(int ac, char **av)
 			return (-1);
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
+//		set_nd(root, dump_config_nd); 
+		//if (mapy_f(root, build_ipv4_tcp))
+		//	return (-1);
+		//if (mapy_f(root, send_tcp))
+		//	return (-1);
 		//if (set_st(root, set_socket))
 		//	return (-1);
 		/* Set tasks list */
@@ -104,7 +109,7 @@ int main(int ac, char **av)
 		/* Mappy execute task list */
 		r = mapy(root);
 
-		 pthread_join(root->client.thread, (void**)&thread_r);
+		// pthread_join(root->client.thread, (void**)&thread_r);
 		// fprintf(stderr, "%s:%d thread_r = %d\n", __func__, __LINE__, thread_r);
 		/* TODO: Analyse and print report */
 

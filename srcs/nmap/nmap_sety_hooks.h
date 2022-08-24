@@ -22,4 +22,6 @@
 //int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
 /* RD : t_func_sety_rd */
 
+int					dump_config_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
+			t_nmap_scan *scan);
 #endif
