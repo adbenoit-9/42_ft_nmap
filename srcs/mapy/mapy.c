@@ -106,6 +106,7 @@ int			mapy(t_root *root)
 	int		j = 0;
 	int		k = 0;
 	bool	b = 0;
+	uint64_t	count = 0;
 	int		index;
 	
 	if (!root)
@@ -118,6 +119,7 @@ int			mapy(t_root *root)
 		{
 			b = 0;
 			i = 0;
+			count = 0;
 			while ((r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb)
 			{
 				j = 0;
@@ -131,12 +133,11 @@ int			mapy(t_root *root)
 						{
 							//fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 							root->st[i].nd[j].rd[k].exe.init = 1;
-							root->st[i].nd[j].rd[k].exe.id = i * 100000 + j * 1000 + k;
+							root->st[i].nd[j].rd[k].exe.id = count + 1;
 						}
 //						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
 //						r = exey_check();
-						index = ((i * root->nd_nb * root->rd_nb + j * root->rd_nb + k) % BLCK_NB) * MAP_BLCK_SIZE;
-						printf(">>index  : %d\n", index / MAP_BLCK_SIZE);
+						index = (count % BLCK_NB) * MAP_BLCK_SIZE;
 						r = exey_wrapper(root,
 										&root->st[i],
 										&root->st[i].nd[j],
@@ -152,6 +153,7 @@ int			mapy(t_root *root)
 						}
 //								&root->st[i].nd[j].rd[k].exe,
 //								&root->buf[index]);
+						++count;
 						k++;
 					}
 					j++;
@@ -194,8 +196,8 @@ int			mapy_f(t_root *root, t_func_mapy f)
 												(j * root->nd_nb) +
 												k) % BLCK_NB) * MAP_BLCK_SIZE;
 #ifdef MAPY_DEBUG
-					fprintf(stderr, "%s:%d i=%d j=%d k=%d\
- index=%08lx\n", __func__, __LINE__, i, j, k, index);
+					// fprintf(stderr, "%s:%d i=%d j=%d k=%d\
+//  index=%08lx\n", __func__, __LINE__, i, j, k, index);
 					fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
 rd->exe.[i].client=%p\n", __func__, __LINE__, 
 								&root->st[i].client,
