@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:30:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:10:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			conf_exec->packet_length = sizeof(struct udphdr);
 #ifndef MAC
 			uint32_t dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
+			struct ifaddrs	*saddr;
+			getifaddrs(&saddr);
 			conf_exec->packet_length += sizeof(struct iphdr);
 			i = sizeof(struct iphdr);
 			SET_IP4_DADDR(buf, dip);
-			SET_IP4_SADDR(buf, dip); // DEBUG
+			SET_IP4_SADDR(buf, saddr->ifa_addr); // DEBUG
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);
