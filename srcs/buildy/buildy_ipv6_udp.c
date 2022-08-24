@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 10:59:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:30:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			conf_exec->packet_length += sizeof(struct ip6_hdr);
 			i = sizeof(struct ip6_hdr);
 			SET_IP6_SRC(buf, dip); // DEBUG
-			SET_IP6_DST(buf, dip); // DEBUG
-			SET_IP6_FLOW(buf, 0x050b00);
+			SET_IP6_DST(buf, dip);
+			SET_IP6_FLOW(buf, 0x050b00); // DEBUG
 			SET_IP6_NXT(buf, 0x11); // UDP
 			SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));
 			SET_IP6_VFC(buf, IPV6_VERSION, 0x0);

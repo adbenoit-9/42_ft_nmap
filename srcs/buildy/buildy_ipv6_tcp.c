@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:03:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:30:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			struct in6_addr dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
 			length += sizeof(struct ip6_hdr);
 			i = sizeof(struct ip6_hdr);
-			SET_IP6_SRC(buf, dip);
+			SET_IP6_SRC(buf, dip); // DEBUG
 			SET_IP6_DST(buf, dip);
-			SET_IP6_FLOW(buf, 0x0b0500); // NOT OK
+			SET_IP6_FLOW(buf, 0x0b0500); // DEBUG
 			SET_IP6_NXT(buf, 0x11); // UDP
 			SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));
 			SET_IP6_VFC(buf, IPV6_VERSION, 0x0);

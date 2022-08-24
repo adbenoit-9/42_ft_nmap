@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:03:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:31:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			length += sizeof(struct iphdr);
 			i = sizeof(struct iphdr);
 			SET_IP4_DADDR(buf, dip);
-			SET_IP4_SADDR(buf, dip);
+			SET_IP4_SADDR(buf, dip); // DEBUG
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);
@@ -75,15 +75,15 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			SET_TCP_FLAGS(&buf[i], conf_exec->tcpflag); // TODO 
 			SET_TCP_DPORT(&buf[i], __builtin_bswap16(conf_nd->port));
 			SET_TCP_OFF(&buf[i], tcpoff);
-			SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf,
-					i));
 			conf_exec->packet_length = length;
 #ifndef MAC
 			SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 			SET_IP4_TOT_LEN(buf, htons(length));
+			SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf,
 #else
 			SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length));
 #endif
+					i));
 		}
 	}
 	return (ret);
