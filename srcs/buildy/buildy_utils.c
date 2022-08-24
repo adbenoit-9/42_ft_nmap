@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 13:36:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:09:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "nmap_structs.h"
+#include "proty_ip.h"
 
 // TODO bufferriser avec une static
 // 4096 bytes should do it

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 23:28:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 10:18:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			ret		= SENDY_OK;
-	int			optval	= 1;
 	int			sock;
 	socklen_t	socklen;
 
@@ -36,7 +35,10 @@ int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
             socklen = sizeof(struct sockaddr_in6);
             sock = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
         }
+#ifndef MAC
+        int	optval	= 1;
         setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
+#endif
         ret = sendto(sock, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
             (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, socklen);
         if (ret < 0)  {
