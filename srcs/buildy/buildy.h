@@ -6,26 +6,29 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:25:20 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 13:43:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:04:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILDY_H
 # define BUILDY_H
 
-#include <stdint.h>
-#include <string.h>
+# include <stdint.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <ifaddrs.h>
 
-#include "mapy.h"
-#include "nmap_structs.h"
+# include "mapy.h"
+# include "nmap_structs.h"
+	 
+# include "proty_ip.h"
+# include "proty_tcp.h"
+# include "proty_udp.h"
+# include "buildy_utils.h"
 
-#include "proty_ip.h"
-#include "proty_tcp.h"
-#include "proty_udp.h"
-#include "buildy_utils.h"
-
-#define BUILDY_OK	0
-#define BUILDY_ERROR -1
+# define BUILDY_OK	0
+# define BUILDY_ERROR -1
 
 # ifndef MAC
 
@@ -46,7 +49,7 @@
 
 # endif
 
-#define SELECT_HOOK_BUILDY(sockaddr, nd, hook) do { \
+# define SELECT_HOOK_BUILDY(sockaddr, nd, hook) do { \
 if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 	if (nd == NMAP_UDP) { \
 		hook = 1; \

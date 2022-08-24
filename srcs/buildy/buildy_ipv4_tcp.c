@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:34:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:10:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			length = sizeof(struct tcphdr);
 #ifndef MAC
 			uint32_t	dip  = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
+			struct ifaddrs	*saddr;
+			getifaddrs(&saddr);
 			length += sizeof(struct iphdr);
 			i = sizeof(struct iphdr);
 			SET_IP4_DADDR(buf, dip);
-			SET_IP4_SADDR(buf, dip); // DEBUG
+			SET_IP4_SADDR(buf, saddr->ifa_addr); // DEBUG
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);
@@ -61,6 +63,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
 			SET_IP4_TTL(buf, (uint8_t)(*(&random[2]))); //ttl);
 #endif
+			
 			SET_TCP_SEQ(&buf[i], (uint32_t)(*(&random[3])));
 			SET_TCP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 			SET_TCP_WIN(&buf[i], 0x0004);
@@ -73,7 +76,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	   			SET_TCP_DATA(&buf[i], syn_mss, 4);
 			}
 			SET_TCP_FLAGS(&buf[i], conf_exec->tcpflag); // TODO 
-			SET_TCP_DPORT(&buf[i], __builtin_bswap16(conf_nd->port));
+			SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 			SET_TCP_OFF(&buf[i], tcpoff);
 			conf_exec->packet_length = length;
 #ifndef MAC

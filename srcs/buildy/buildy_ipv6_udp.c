@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:30:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:13:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		if (ret == BUILDY_OK) {
 			conf_exec->packet_length = sizeof(struct udphdr);
 #ifndef MAC
+			struct ifaddrs	*saddr;
+			getifaddrs(&saddr);
 			struct in6_addr dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
 			conf_exec->packet_length += sizeof(struct ip6_hdr);
 			i = sizeof(struct ip6_hdr);
-			SET_IP6_SRC(buf, dip); // DEBUG
+			SET_IP6_SRC(buf, *(struct in6_addr *)&saddr->ifa_addr); // DEBUG
 			SET_IP6_DST(buf, dip);
 			SET_IP6_FLOW(buf, 0x050b00); // DEBUG
 			SET_IP6_NXT(buf, 0x11); // UDP

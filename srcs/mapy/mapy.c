@@ -135,11 +135,9 @@ int			mapy(t_root *root)
 						}
 //						fprintf(stderr, "%s:%d i=%d j=%d k=%d\n", __func__, __LINE__, i, j, k);
 //						r = exey_check();
-						index = ((i * (root->nd_nb * (root->rd_nb))) +
-													(j * (root->rd_nb) +
-													k) % BLCK_NB) * MAP_BLCK_SIZE;
-						fprintf(stderr, "%s:%d i=%d j=%d k=%d index = %d\n", __func__, __LINE__, i, j, k, index % BLCK_NB);
-						r = exey_wrapper(root, 
+						index = ((i * root->nd_nb * root->rd_nb + j * root->rd_nb + k) % BLCK_NB) * MAP_BLCK_SIZE;
+						printf(">>index  : %d\n", index / MAP_BLCK_SIZE);
+						r = exey_wrapper(root,
 										&root->st[i],
 										&root->st[i].nd[j],
 										&root->st[i].nd[j].rd[k], index);
