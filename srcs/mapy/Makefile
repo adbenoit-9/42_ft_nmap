@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/24 07:47:25 by leon             ###   ########.fr        #
+#    Updated: 2022/08/25 18:34:04 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES		:= ../nmap \
+MODULES		:= ../nmap/incs \
 
 IFLAGS		:= $(foreach D,$(MODULES), -I$(D))
 

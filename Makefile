@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/25 14:09:38 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/25 18:36:14 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ INC_SUB_DIR		:= buildy\
 					cleany\
 					libft/inc\
 					mapy\
-					nmap\
+					nmap/incs\
 					parsy\
 					prompty\
 					proty\
@@ -72,19 +72,12 @@ DIRS			:= $(addprefix $(BUILD)/, $(SUB_DIR))
 
 SRC				:=
 
-# SUB_SRC			:= parser.c \
-# 					parse_ip.c \
-# 					parse_scan.c \
-# 					parse_ports.c \
-# 					parse_speedup.c \
-# 					ft_isnumber.c
-# SRC				+= $(addprefix parsing/, $(SUB_SRC))
-
 SUB_SRC			:= main.c \
 					nmap_sety_hooks.c \
 					nmap_print.c \
 					nmap_exey_hooks.c \
-					nmap_iter_hooks.c
+					nmap_iter_hooks.c \
+					nmap_scany.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
 SUB_SRC			:= mapy.c \
