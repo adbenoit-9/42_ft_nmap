@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 16:57:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:09:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			mapy(t_root *root)
 {
 	int			r = EXEY_RUN;
 	bool		b = 0;
-	uint64_t	count = 0;
+	uint64_t	count;
 	uint64_t	index;
 	
 	if (!root) {
@@ -110,6 +110,7 @@ int			mapy(t_root *root)
 	while (r == EXEY_RUN || r == EXEY_BUSY)
 	{
 		b = 0;
+		count = 0;
 		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
 			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && j < root->nd_nb; j++) {
 				for (int k = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && k < root->rd_nb; k++, count++) {
