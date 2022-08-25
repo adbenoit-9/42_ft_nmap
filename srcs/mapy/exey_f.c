@@ -3,7 +3,7 @@
 
 #define EXEY_OK 0
 #define EXEY_ERR -1
-//#define MAPY_DEBUG
+//#define DEBUG
 
 int				exey_ctrl(t_root *root, t_func_exey f)
 {
@@ -17,7 +17,7 @@ int				exey_ctrl(t_root *root, t_func_exey f)
 	for (int i = 0; r == EXEY_OK && i < root->st_nb; i++) {
 		for (int j = 0; r == EXEY_OK && j < root->nd_nb; j++) {
 			for (int k = 0; r == EXEY_OK && k < root->rd_nb; k++, index++) {
-#ifdef MAPY_DEBUG
+#ifdef DEBUG
 				fprintf(stderr, "%s:%d i=%d j=%d k=%d \n", __func__, __LINE__, i, j, k);
 				fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
 rd->exe.[i].client=%p\n", __func__, __LINE__, 
@@ -27,7 +27,7 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 //			fprintf(stderr, "%s:%d r=%d i=%d index=%08x 
 // task=%d hook=%d \n", __func__, __LINE__,
 //						r, i, index, rd->exe.tasks[i], rd->exe.hook[i]);
-#endif /* MAPY_DEBUG */
+#endif /* DEBUG */
 				r = (*f)
 						((T_CLIENT_ROOT*)&root->st[i].client,
 						(T_EXE*)&root->st[i].nd[j].rd[k].exe,
@@ -112,10 +112,10 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 //		/* Clear exec flag */
 //		exe->tasks[i] &= ~EXEC_TODO_MSK;
 //		r = EXEY_RUN;
-//#ifdef EXEY_DEBUG
+//#ifdef DEBUG
 //		fprintf(stderr, " task=%d hook=%d \n", __func__, __LINE__,
 //						exe->tasks[i], exe->hook[i]);
-//#endif /* EXEY_DEBUG */
+//#endif /* DEBUG */
 //		r = (*_exec[exe->tasks[i]]
 //								[exe->hook[i]])
 //								(&(root->map)[index + sizeof(t_blk)],

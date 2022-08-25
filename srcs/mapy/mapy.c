@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 18:09:57 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:48:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include "nmap_mapy_data.h"
 #include <pthread.h>
 
-#define MAPY_DEBUG
-#define EXEY_DEBUG
+#define DEBUG
+#define DEBUG
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0
@@ -67,9 +67,9 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 			memset(&root->map[index + sizeof(pthread_mutex_t)], 0, MAP_BLCK_SIZE - sizeof(pthread_mutex_t));
 //			fprintf(stdout, "%s:%d block release \n", __func__, __LINE__); // id
 		}
-#ifdef EXEY_DEBUG
+#ifdef DEBUG
 //		fprintf(stderr, "%s:%d IDLE \n", __func__, __LINE__); // id
-#endif /* EXEY_DEBUG */
+#endif /* DEBUG */
 	}
 	if (r == EXEY_OK)
 	{
@@ -84,10 +84,10 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 	if (r == EXEY_OK) {
 		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
 		/* Clear exec flag */
-#ifdef EXEY_DEBUG
+#ifdef DEBUG
 //		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
 //						rd->exe.tasks[i], rd->exe.hook[i]);
-#endif /* EXEY_DEBUG */
+#endif /* DEBUG */
 		r = (*_exec[rd->exe.tasks[i]]
 								[rd->exe.hook[i]])
 								(&root->map[index + sizeof(t_blk)], &st->client,
@@ -173,7 +173,7 @@ int			mapy_f(t_root *root, t_func_mapy f)
 					index = (((i * root->st_nb)  +
 												(j * root->nd_nb) +
 												k) % BLCK_NB) * MAP_BLCK_SIZE;
-#ifdef MAPY_DEBUG
+#ifdef DEBUG
 					// fprintf(stderr, "%s:%d i=%d j=%d k=%d\
 //  index=%08lx\n", __func__, __LINE__, i, j, k, index);
 					fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
@@ -183,7 +183,7 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 								&root->st[i].nd[j].rd[k].client);
 //			fprintf(stderr, "%s:%d r=%d i=%d index=%08x task=%d hook=%d \n", __func__, __LINE__,
 //						r, i, index, rd->exe.tasks[i], rd->exe.hook[i]);
-#endif /* MAPY_DEBUG */
+#endif /* DEBUG */
 					r = (*f)
 								(&(root->map)[index + sizeof(t_blk)],
 								(T_CLIENT_ST*)&root->st[i].client,

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 16:56:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:52:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		ret = BUILDY_ERROR;
 	}
 	else {
-#ifdef BUILDY_DEBUG
-		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, 
-									((t_scan*)conf_exec)->tcpflag);
-#endif /* BUILDY_DEBUG */
+#ifdef DEBUG
+		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->tcpflag);
+#endif /* DEBUG */
 		ret = get_urandom(random, 16);
 		if (ret == BUILDY_OK) {
 			length = sizeof(struct tcphdr);

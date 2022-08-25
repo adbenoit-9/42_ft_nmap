@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/25 18:36:14 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/25 18:54:31 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			:= ft_nmap
 # COMPILATION
 
 CC		= gcc
-CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=thread -g3
+CFLAGS 	= -Wall -Wextra -Werror
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 	 	 
@@ -113,6 +113,14 @@ $(NAME): lib $(OBJ) $(PREP)
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
+lib_debug:
+	@make -C $(LIBFT_DIR) debug
+	@make -C $(BUILD_DIR) debug
+	@make -C $(CLEAN_DIR) debug
+	@make -C $(REC_DIR) debug
+	@make -C $(SEND_DIR) debug
+	@make -C $(PARS_DIR) debug
+
 lib:
 	@make -C $(LIBFT_DIR)
 	@make -C $(BUILD_DIR)
@@ -150,7 +158,11 @@ norm:
 re: fclean all
 
 debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-debug: re
+debug: lib_debug $(OBJ) $(PREP) 
+	@printf "$(CL_LINE)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $(NAME) -lpthread -lpcap
+	@echo "[1 / 1] - $(B_MAGENTA)$(NAME)"
+	@echo "$(B_GREEN)(debug) Compilation done !$(NONE)"
 
 .PHONY: all clean fclean re debug lib
 

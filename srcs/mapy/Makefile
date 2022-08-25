@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/25 18:34:04 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/25 18:48:51 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,9 @@ $(OBJ_DIR)/%.o:%.c | $(BUILD)
 $(ASM_DIR)/%.s:%.c | $(BUILD)
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
+
 clean:
 	@rm -Rf $(BUILD)
 
@@ -74,15 +77,3 @@ spec: $(OBJ)
 re: fclean all
 
 .PHONY: all clean fclean re debug
-
-
-#
-# 			-mtune broadwell
-#		src/ft_strlen.c
-# LIBS = 
-# CODEDIRS =. 
-#	./src
-# CFILES = $(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
-#OBJS = $(pathsubst %.c,%.o,$(SRCS))
-# install:
-# flash:

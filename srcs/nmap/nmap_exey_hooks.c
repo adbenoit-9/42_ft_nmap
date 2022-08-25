@@ -6,14 +6,14 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:25:33 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 16:46:45 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:48:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mapy.h"
 #include <pthread.h>
 
-//#define EXEY_DEBUG
+//#define DEBUG
 
 #define EXEY_OK 0
 #define EXEY_ERR -1
@@ -44,7 +44,7 @@ int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 		exe->tasks[i] = default_execution_list[i] | EXEC_TODO_MSK;
 		exe->hook[i] = 0x00;
 
-#ifdef EXEY_DEBUG
+#ifdef DEBUG
 		fprintf(stderr, "%s:%d exe->tasks[%d] = %08x hook=%08x\n", __func__, __LINE__, i, exe->tasks[i], exe->hook[i]);
 #endif
 		i++;

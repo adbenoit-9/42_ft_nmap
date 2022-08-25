@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/13 18:38:18 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 19:12:08 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/25 18:50:15 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,32 +121,4 @@ re: fclean all
 
 .PHONY: all clean fclean re bonus
 
-debug :
-	@echo "\033[36;1m---------- \033[0;m\033[36;4mDEBUG\033[0;m\
-	\033[36;1m ----------\033[0;m\n"
-	@echo "\033[34;1mobj path = \033[0;m$(OBJ_PATH)\n"
-	@echo "\033[34;1mobj\t= \033[0;m$(OBJ)\n"
-	@echo "\033[34;1mobj name = \033[0;m$(OBJ_NAME)"
-	@echo "\n\033[34;1m$(CHAR_PATH) = \033[0;m"$(CHAR)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(CHAR_PATH)
-	@echo "\n\033[34;1m$(GNL_PATH) = \033[0;m"$(GNL)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(GNL_PATH)
-	@echo "\n\033[34;1m$(LST_PATH) = \033[0;m"$(LST)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(LST_PATH)
-	@echo "\n\033[34;1m$(MEM_PATH) = \033[0;m"$(MEM)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(MEM_PATH)
-	@echo "\n\033[34;1m$(NBR_PATH) = \033[0;m"$(NBR)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(NBR_PATH)
-	@echo "\n\033[34;1m$(STR_PATH) = \033[0;m"$(STR)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(STR_PATH)
-	@echo "\n\033[34;1m$(TAB_PATH) = \033[0;m"$(TAB)
-	@printf "\033[35;1mls = \033[0;m"
-	@ls $(TAB_PATH)
-	@echo "\n\033[34;1mNORM = \033[0;m"$(NORM)
-	@echo "\n\033[34;1mREF = \033[0;m"$(REF)
+debug : re
