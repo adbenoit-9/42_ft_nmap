@@ -1,8 +1,8 @@
 
-//#define SETY_DEBUG
+//#define DEBUG
 
 #include "mapy.h"
-#ifdef SETY_DEBUG
+#ifdef DEBUG
 #include "stdio.h"
 #endif
 
@@ -25,7 +25,7 @@ int				sety_f(t_root *root, t_func_sety f)
 			k = 0;
 			while (r == SETY_OK && k < root->rd_nb)
 			{
-#ifdef SETY_DEBUG
+#ifdef DEBUG
 				fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
 							(void *)&root->client,
 							(void *)&root->st[i].client,
@@ -102,7 +102,7 @@ int				set_iter_rd(t_root *root, t_func_iter_rd f)
 			k = 0;
 			while (r == SETY_OK && k < root->rd_nb)
 			{
-#ifdef SETY_DEBUG
+#ifdef DEBUG
 				fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
 							(void *)&root->client,
 							(void *)&root->st[i].client,
@@ -132,7 +132,7 @@ int				set_iter_nd(t_root *root, t_func_iter_nd f)
 		j = 0;
 		while (r == SETY_OK && j < root->nd_nb)
 		{
-#ifdef SETY_DEBUG
+#ifdef DEBUG
 			fprintf(stderr, "%s:%d i=%d j=%d root->st_nb=%d, root->nd_nb=%d", __func__, __LINE__, i, j,
 						root->st_nb, root->nd_nb);
 #endif
@@ -153,7 +153,7 @@ int				set_iter_st(t_root *root, t_func_iter_st f)
 	i = 0;
 	while (r == SETY_OK && i < root->st_nb)
 	{
-#ifdef SETY_DEBUG
+#ifdef DEBUG
 		fprintf(stderr, "%s:%d i=%d", __func__, __LINE__, i);
 #endif
 		r = (*f)((T_CLIENT_ROOT *)&root->client,

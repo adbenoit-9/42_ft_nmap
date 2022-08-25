@@ -10,7 +10,7 @@
 //uint8_t				buf[SIZE] = {0};
 //uint8_t				buf[SIZE];
 
-#define MAPY_DEBUG
+#define DEBUG
 
 //int 				test_test1(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 int 				test_mapy(uint8_t *buf, test_st *st, test_nd *nd, test_rd *rd);
