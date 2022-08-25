@@ -1,18 +1,13 @@
 
 #include "mapy.h"
-//#include <pthread.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <pcap/pcap.h>
-#include <pthread.h>
-
 #include "nmap_hooks.h"
 #include "ft_nmap_parsing.h"
-#define MAPY_DEBUG
 
+int	scany(t_nmap_setting *settings, t_root *root);
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
@@ -61,27 +56,18 @@ void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 		fprintf(stderr, "scan_nb = %d\n", settings->scan_nb);
 }
 
-void	*handle_mapy(void *root)
-{
-	mapy(root);
-	return (NULL);
-}
-
 int main(int ac, char **av)
 {
 	int32_t 		r		= 0;
 	uint8_t			*buf;
 	t_root			*root;
 	t_nmap_setting	*settings;
-//	int				thread_r;
 	
 	buf = (uint8_t*)malloc(SIZE);
-	if (buf == NULL)
-	{
+	if (buf == NULL) {
 		r = -1;
 	}
-	if (r == 0)
-	{
+	if (r == 0) {
 		root = (t_root*)buf;
 		root->map = &buf[sizeof(t_root)];
 		settings = &root->client;
@@ -92,10 +78,6 @@ int main(int ac, char **av)
 		((t_root*)buf)->st_nb = settings->ip_nb;
 		((t_root*)buf)->nd_nb = settings->port_nb;
 		((t_root*)buf)->rd_nb = settings->scan_nb;
-		/* Pcap handler init */
-		//if (set_pcap_init(&root->client) != 0)
-		//	return (-1);
-		// pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
 		/* Fill parameters in tree */
 		if (set_iter_st(root, set_sockaddr))
 			return (-1);
@@ -104,24 +86,8 @@ int main(int ac, char **av)
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
 		exey_ctrl(root, nmap_init_exey);
-		pthread_t ph[settings->speedup];
-		for (int i = 0; i < settings->speedup; i++) {
-			pthread_create(&ph[i], NULL, handle_mapy, (void *)root);
-		}
-		r = mapy(root);
-		
-		for (int i = 0; i < settings->speedup; i++) {
-			pthread_join(ph[i], NULL);
-		}
+		scany(settings, root);
 		exey_ctrl(root, nmap_clean_exey);
-		// pthread_join(root->client.thread, (void**)&thread_r);
-		// fprintf(stderr, "%s:%d thread_r = %d\n", __func__, __LINE__, thread_r);
-		/* TODO: Analyse and print report */
-
-//		if (mapy_f(root, send_tcp))
-//			return (-1);
-		//if (mapy_f(root, print_all))
-		//	return (-1);
 	}
 	return (r);
 }
