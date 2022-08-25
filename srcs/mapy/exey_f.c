@@ -31,7 +31,7 @@ rd->exe.[i].client=%p\n", __func__, __LINE__,
 				r = (*f)
 						((T_CLIENT_ROOT*)&root->st[i].client,
 						(T_EXE*)&root->st[i].nd[j].rd[k].exe,
-						index >= 250 ? NULL : (T_BLK*)&root->map[index]);
+						index >= BLCK_NB ? NULL : (T_BLK*)&root->map[index * MAP_BLCK_SIZE]);
 			}
 		}
 	}

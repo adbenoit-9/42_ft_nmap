@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 14:13:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:57:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, 
 									((t_scan*)conf_exec)->tcpflag);
 #endif /* BUILDY_DEBUG */
-		memset(buf, 0, MAP_BLCK_SIZE);
 		ret = get_urandom(random, 16);
 		if (ret == BUILDY_OK) {
 			conf_exec->packet_length = sizeof(struct udphdr);

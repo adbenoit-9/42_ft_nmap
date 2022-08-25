@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:25:33 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 16:20:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:46:45 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 
 	(void)root;
 	i = 0;
-	ret = EXEY_ERR;
-	if ((ret = pthread_mutex_init(&exe->mutex, NULL)) != 0) {
-		dprintf(STDERR_FILENO, "pthread_mutex_init (exe): %s\n", strerror(ret));
-		ret = EXEY_ERR;
+	ret = pthread_mutex_init(&exe->mutex, NULL);
+	if (ret == EXEY_OK && blk) {
+		ret = pthread_mutex_init(&blk->mutex, NULL);
 	}
-	if (blk && (ret = pthread_mutex_init(&blk->mutex, NULL)) != 0) {
-		dprintf(STDERR_FILENO, "pthread_mutex_init (blk): %s\n", strerror(ret));
+	if (ret != EXEY_OK) {
+		dprintf(STDERR_FILENO, "pthread_mutex_init: %s\n", strerror(ret));
 		ret = EXEY_ERR;
 	}
 	while (ret == EXEY_OK && i < 2) //sizeof(default_execution_list))
@@ -57,7 +56,8 @@ int					nmap_clean_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 {
 	(void)root;
 	pthread_mutex_destroy(&exe->mutex);
-	pthread_mutex_destroy(&blk->mutex);
+	if (blk)
+		pthread_mutex_destroy(&blk->mutex);
 	return (EXEY_OK);
 }
 
