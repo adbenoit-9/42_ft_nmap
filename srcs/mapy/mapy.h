@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/24 07:45:56 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/25 15:57:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ typedef struct			s_exe {
 	bool			init;
 	int				flag;
 	uint32_t		id;
+	pthread_mutex_t	mutex;
 }						t_exe;
 
 /* Header block structure : can be use for controlling access to blocks */
 typedef	struct				s_blk {
+	pthread_mutex_t	mutex;
 	uint32_t		id;
 }							t_blk;
 

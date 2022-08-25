@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/24 08:14:35 by leon             ###   ########.fr        #
+#    Updated: 2022/08/25 14:09:38 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			:= ft_nmap
 # COMPILATION
 
 CC		= gcc
-CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
+CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=thread -g3
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 	 	 

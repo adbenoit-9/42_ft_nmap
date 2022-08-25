@@ -61,6 +61,12 @@ void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 		fprintf(stderr, "scan_nb = %d\n", settings->scan_nb);
 }
 
+void	*handle_mapy(void *root)
+{
+	mapy(root);
+	return (NULL);
+}
+
 int main(int ac, char **av)
 {
 	int32_t 		r		= 0;
@@ -97,18 +103,17 @@ int main(int ac, char **av)
 			return (-1);
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
-//		set_nd(root, dump_config_nd); 
-		//if (mapy_f(root, build_ipv4_tcp))
-		//	return (-1);
-		//if (mapy_f(root, send_tcp))
-		//	return (-1);
-		//if (set_st(root, set_socket))
-		//	return (-1);
-		/* Set tasks list */
 		exey_ctrl(root, nmap_init_exey);
-		/* Mappy execute task list */
+		pthread_t ph[settings->speedup];
+		for (int i = 0; i < settings->speedup; i++) {
+			pthread_create(&ph[i], NULL, handle_mapy, (void *)root);
+		}
 		r = mapy(root);
-
+		
+		for (int i = 0; i < settings->speedup; i++) {
+			pthread_join(ph[i], NULL);
+		}
+		exey_ctrl(root, nmap_clean_exey);
 		// pthread_join(root->client.thread, (void**)&thread_r);
 		// fprintf(stderr, "%s:%d thread_r = %d\n", __func__, __LINE__, thread_r);
 		/* TODO: Analyse and print report */
