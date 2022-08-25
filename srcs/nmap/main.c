@@ -1,13 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/08/25 18:38:23 by adbenoit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "mapy.h"
-#include <stdint.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "nmap_hooks.h"
-#include "ft_nmap_parsing.h"
-
-int	scany(t_nmap_setting *settings, t_root *root);
+#include "nmap.h"
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {

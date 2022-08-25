@@ -6,15 +6,11 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:23:46 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 18:31:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:39:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap_parsing.h"
-#include "mapy.h"
-#include "nmap_hooks.h"
-#include <pcap/pcap.h>
-#include <pthread.h>
+#include "nmap.h"
 
 static void *run_mapy(void *root)
 {
