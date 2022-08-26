@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 22:53:49 by leon             ###   ########.fr        #
+#    Updated: 2022/08/26 11:04:01 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ INC_SUB_DIR		:= buildy\
 					cleany\
 					libft/inc\
 					mapy\
-					nmap\
+					nmap/incs\
 					parsy\
 					prompty\
 					proty\
@@ -79,13 +79,12 @@ SRC				:=
 # 					parse_speedup.c \
 # 					ft_isnumber.c
 # SRC				+= $(addprefix parsing/, $(SUB_SRC))
-
-SUB_SRC			:= main.c\
-					sety_hooks.c \
-					test_hooks.c \
-					mapy_hooks.c \
-					exey_hooks.c
-
+SUB_SRC			:= main.c \
+					nmap_sety_hooks.c \
+					nmap_print.c \
+					nmap_exey_hooks.c \
+					nmap_iter_hooks.c \
+					nmap_scany.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
 SUB_SRC			:= mapy.c \
@@ -98,7 +97,7 @@ SRC				+= $(addprefix prompty/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(BUILD)/%.o)
 PREP			:= $(SRC:%.c=$(BUILD)/%.i)
-ASSS			:= $(SRC:%.c=$(BUILD)/%.s)
+#ASSS			:= $(SRC:%.c=$(BUILD)/%.s)
 DEPS			:= $(SRC:%.c=$(BUILD)/%.d)
 
 # COLORS
@@ -115,11 +114,19 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME): lib $(OBJ) $(PREP) $(ASSS)
+$(NAME): lib $(OBJ) $(PREP) 
 	@printf "$(CL_LINE)"
-	$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread -lpcap
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
+
+lib_debug:
+	@make -C $(LIBFT_DIR) debug
+	@make -C $(BUILD_DIR) debug
+	@make -C $(CLEAN_DIR) debug
+	@make -C $(REC_DIR) debug
+	@make -C $(SEND_DIR) debug
+	@make -C $(PARS_DIR) debug
 
 lib:
 	@make -C $(LIBFT_DIR)
@@ -158,7 +165,11 @@ norm:
 re: fclean all
 
 debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-debug: re
+debug: lib_debug $(OBJ) $(PREP) 
+	@printf "$(CL_LINE)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $(NAME) -lpthread -lpcap
+	@echo "[1 / 1] - $(B_MAGENTA)$(NAME)"
+	@echo "$(B_GREEN)(debug) Compilation done !$(NONE)"
 
 .PHONY: all clean fclean re debug lib
 

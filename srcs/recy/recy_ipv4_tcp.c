@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 19:32:49 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/24 07:00:23 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 //			- using pcap
 
 #include "recy.h"
+#include "proty.h"
+#include "libft.h"
 #include "nmap_mapy_config.h"
 #include <stdio.h>
+#include <string.h>
+
 
 int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
@@ -34,16 +38,17 @@ int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 	}
 	else
 	{
+		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 		GET_TCP_SEQ(&buf[sizeof(struct iphdr)], seq);
 		seq = htonl(seq);
 		seq += 1;
-		while (r != -1 && seq != htonl(seqverif) && seq - 1 != htonl(seqverif))
+		seqverif = seq;
+		while (seq != htonl(seqverif) && seq - 1 != htonl(seqverif))
 		{
-			r = recvfrom(((t_nmap_app*)conf_nd)->socket, buf,
+			r = recvfrom(((t_nmap_link*)conf_st)->socket, buf,
 							MAP_BLCK_SIZE, 0,
 				 (struct sockaddr*)&((t_nmap_link*)conf_st)->sock, &sockaddrlen);
 			GET_TCP_ACK(&buf[sizeof(struct iphdr)], seqverif);
-//			fprintf(stderr, "seq = %08x ack = %08x\n", seq, htonl(seqverif));
 		}
 		if (r != -1)
 		{
@@ -53,7 +58,11 @@ int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 			r = RECY_OK;
 			fprintf(stderr, "flag received = %04x\n", flag);
 		}
+		else
+		{
+			perror("recv");
+		}
 	}
-			((t_nmap_scan*)conf_exec)->packet_length = MAP_BLCK_SIZE;
+	((t_nmap_scan*)conf_exec)->packet_length = MAP_BLCK_SIZE;
 	return (r);
 }

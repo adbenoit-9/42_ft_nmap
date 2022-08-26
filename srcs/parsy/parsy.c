@@ -6,11 +6,16 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 20:19:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:57:33 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap_parsing.h"
+#include "proty_tcp.h"
+
+#define PARSY_OK 0
+
+static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS, FLAG_S_UDP};
 
 static void    init_nmap_settings(t_nmap_setting *settings)
 {
@@ -19,7 +24,7 @@ static void    init_nmap_settings(t_nmap_setting *settings)
 	ft_bzero(settings->scans, SCAN_LIMIT * sizeof(uint8_t));
 	settings->speedup = 0;
 	settings->ip_nb = 0;
-	settings->port_nb = 0;
+	settings->port_nb = 1024;
 	settings->scan_nb = 0;
 }
 
@@ -45,9 +50,8 @@ static void    exit_help(t_nmap_setting *opt, char *value)
 	exit(EXIT_SUCCESS);
 }
 
-t_nmap_setting parser(int ac, char **av)
+int parser(int ac, char **av, t_nmap_setting	*settings)
 {
-	t_nmap_setting	settings;
 	void			(*flags_handler[])(t_nmap_setting *, char *) = {
 						set_ip_from_file, exit_help, set_ip_from_arg,
 						set_ports, set_scan, set_speedup};
@@ -59,11 +63,11 @@ t_nmap_setting parser(int ac, char **av)
 		print_usage();
 		exit(EXIT_FAILURE);
 	}
-	init_nmap_settings(&settings);
+	init_nmap_settings(settings);
 	for (i = 1; av[i]; i++)  {
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
-				flags_handler[j](&settings, av[i + 1]);
+				flags_handler[j](settings, av[i + 1]);
 				i++;
 				break ;
 			}
@@ -77,14 +81,21 @@ t_nmap_setting parser(int ac, char **av)
 			}
 		}
 	}
-	if (settings.ip_nb == 0) {
+	if (settings->ip_nb == 0) {
 		fatal_error(E_NOHOST, NULL);
 	}
-	// if (settings.scans == NONE) {
-	// 	settings.scans = S_ACK | S_FIN | S_NULL | S_SYN | S_UDP | S_XMAS;
-	// }
-	if (settings.ports[0] == 0) {
-		copy_new_range(settings.ports, 0, 1, PORT_LIMIT);
+	if (settings->scan_nb == 0) {
+		memcpy(settings->scans, default_scans, SCAN_LIMIT);
+		settings->scan_nb = 5;
 	}
-	return (settings);
+	if (settings->ports[0] == 0) {
+		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
+		settings->port_nb = PORT_LIMIT;
+	}
+	else {
+		settings->port_nb = 0;
+		while (settings->port_nb < PORT_LIMIT && settings->ports[settings->port_nb])
+			++settings->port_nb;
+	}
+	return (PARSY_OK);
 }

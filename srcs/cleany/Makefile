@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 22:56:15 by leon             ###   ########.fr        #
+#    Updated: 2022/08/26 11:02:39 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES	:= ../nmap
+MODULES	:= ../nmap/incs
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
@@ -51,6 +51,8 @@ $(OBJ_DIR)/%.o:%.c | $(BUILD)
 $(ASM_DIR)/%.s:%.c | $(BUILD)
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 clean:
 	@rm -Rf $(BUILD)
@@ -74,19 +76,3 @@ spec: $(OBJ)
 re: fclean all
 
 .PHONY: all clean fclean re debug
-
-debug:
-	@echo $(ASM)
-
-
-
-#
-# 			-mtune broadwell
-#		src/ft_strlen.c
-# LIBS = 
-# CODEDIRS =. 
-#	./src
-# CFILES = $(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
-#OBJS = $(pathsubst %.c,%.o,$(SRCS))
-# install:
-# flash:

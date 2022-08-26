@@ -6,14 +6,16 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
+/*   Updated: 2022/08/23 14:08:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_SENDY_H
+# ifndef FT_NMAP_SENDY_H
 # define FT_NMAP_SENDY_H
 
 #include <stdint.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 

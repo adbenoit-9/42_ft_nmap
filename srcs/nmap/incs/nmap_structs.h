@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 17:41:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/24 09:40:32 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,11 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pcap/pcap.h>
 
 #define SCAN_LIMIT			6
 #define PORT_LIMIT			1024
 #define IP_LIMIT			16
-
-# ifdef MAC
-
-struct iphdr {
-	uint8_t		ihl:4;
-	uint8_t		version:4;
-	uint8_t		tos;
-	uint16_t	tot_len;
-	uint16_t	id;
-	uint16_t	frag_off;
-	uint8_t		ttl;
-	uint8_t		protocol;
-	uint16_t	check;
-	uint32_t	saddr;
-	uint32_t	daddr;
-	/*The opts start here. */
-};
-
-# endif
 
 typedef struct		s_nmap_setting {
 	uint16_t							ports[PORT_LIMIT];
@@ -49,14 +31,19 @@ typedef struct		s_nmap_setting {
 	int									ip_nb;
 	int									port_nb;
 	int									scan_nb;
+	pcap_t								*pcap_handler;
+	pthread_t							thread;
+	//struct sockaddr_storage				ip4_src;
+	//struct sockaddr_storage				ip6_src;
 }					t_nmap_setting;
 
 typedef struct		s_nmap_link {
 	struct sockaddr_storage				sock;
+	int									socket;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {
-	int									socket;
+	//int									socket;
 	uint16_t							port;
 }					t_nmap_app;
 

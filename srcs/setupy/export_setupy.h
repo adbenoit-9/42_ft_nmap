@@ -6,7 +6,7 @@
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:30:20 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 16:05:37 by leon             ###   ########.fr       */
+/*   Updated: 2022/08/22 18:20:32 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 
 /* Exported functions */
-int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
+int 				setup_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec);
 // int 				setup_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 // int 				setup_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);
 // int 				setup_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec);

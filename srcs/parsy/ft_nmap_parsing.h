@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 20:28:00 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/08/22 08:38:49 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@
 #define MAX_PACKET_SIZE					64
 // #define MAX_SCAN_TYPE					6
 
-t_nmap_setting	parser(int ac, char **av);
+int				parser(int ac, char **av, t_nmap_setting *settings);
 void            set_ip_from_file(t_nmap_setting *settings, char *file);
 void            set_ip_from_arg(t_nmap_setting *settings, char *ip);
 void            set_ports(t_nmap_setting *settings, char *value);
@@ -97,6 +97,6 @@ void            set_scan(t_nmap_setting *settings, char *value);
 void            set_speedup(t_nmap_setting *settings, char *value);
 bool	        ft_isnumber(char *str);
 int32_t	        copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
-t_nmap_setting  parser(int ac, char **av);
+//t_nmap_setting  parser(int ac, char **av);
 
 #endif

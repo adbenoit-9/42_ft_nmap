@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_hooks.h                                       :+:      :+:    :+:   */
+/*   nmap_iter_hooks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 14:58:34 by leon              #+#    #+#             */
-/*   Updated: 2022/08/21 14:59:10 by leon             ###   ########.fr       */
+/*   Created: 2022/08/21 23:04:51 by leon              #+#    #+#             */
+/*   Updated: 2022/08/24 11:51:57 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef TEST_HOOKS_H
-# define TEST_HOOKS_H
-
 #include "nmap_structs.h"
 
-int					print_st(t_nmap_setting *root, t_nmap_link *link);
-int					print_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app);
-int					print_rd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
+#include "proty.h"
 
-#endif
+#define NMAP_OK			0
+#define NMAP_ERROR		-1
+
+/* ND : t_func_iter_nd */
+int					iter_set_port(t_nmap_setting *root, t_nmap_app *app, uint32_t index)
+{
+	app->port = root->ports[index];
+	return (NMAP_OK);
+}
+
+int					iter_set_tcpflag(t_nmap_setting *root, t_nmap_scan *scan, uint32_t index)
+{
+	scan->tcpflag = root->scans[index];
+	return (NMAP_OK);
+}

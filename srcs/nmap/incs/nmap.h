@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleany.h                                           :+:      :+:    :+:   */
+/*   nmap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/15 23:58:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:47:52 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/08/25 18:39:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEANY_H
-# define CLEANY_H
+#ifndef NMAP_H
+# define NMAP_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <unistd.h>
+# include <stdint.h>
+# include <string.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <pcap/pcap.h>
+# include <pthread.h>
+# include "mapy.h"
+# include "nmap_hooks.h"
+# include "ft_nmap_parsing.h"
 
-/* Project Header */
-#include "nmap_structs.h"
-
-#define CLEANY_OK	0
-#define CLEANY_ERROR	-1
-
-// #define DEBUG
+int	scany(t_nmap_setting *settings, t_root *root);
 
 #endif

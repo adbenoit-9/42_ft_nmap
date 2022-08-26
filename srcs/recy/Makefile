@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 22:57:03 by leon             ###   ########.fr        #
+#    Updated: 2022/08/26 11:00:30 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,15 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES	:= ../nmap\
-			../proty
+MODULES	:= ../nmap/incs\
+			../proty \
+			../libft/inc \
+			../mapy
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = recy_ipv4_tcp.c
+SRC = recy_ipv4_tcp.c \
+		recy_pcap.c
 # recy_ipv4_udp.c\
 # recy_ipv6_tcp.c\
 # recy_ipv6_udp.c
@@ -55,6 +58,8 @@ $(OBJ_DIR)/%.o:%.c | $(BUILD)
 $(ASM_DIR)/%.s:%.c | $(BUILD)
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 clean:
 	@rm -Rf $(BUILD)

@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 22:56:57 by leon             ###   ########.fr        #
+#    Updated: 2022/08/26 11:00:42 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES	:= ../nmap\
-			../libft/inc
+MODULES	:= ../nmap/incs\
+			../libft/inc \
+			../proty
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
@@ -58,6 +59,8 @@ $(OBJ_DIR)/%.o:%.c | $(BUILD)
 $(ASM_DIR)/%.s:%.c | $(BUILD)
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 clean:
 	@rm -Rf $(BUILD)
