@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/13 18:38:18 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 19:12:08 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 22:56:10 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ all:	$(NAME)
 
 $(NAME) : $(OBJ)
 	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 	@echo "Compilation of \033[33;1m$(NAME)\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
 
 $(OBJ_PATH)%.o:	$(CHAR_PATH)%.c $(HEADER)

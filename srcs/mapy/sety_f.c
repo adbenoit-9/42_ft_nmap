@@ -117,7 +117,7 @@ int				set_iter_rd(t_root *root, t_func_iter_rd f)
 	return (r);
 }
 
-int				set_iter_nd(t_root *root, t_func_iter_st f)
+int				set_iter_nd(t_root *root, t_func_iter_nd f)
 {
 	int			r = SETY_OK;
 	int			i;

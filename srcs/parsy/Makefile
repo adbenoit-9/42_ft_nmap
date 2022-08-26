@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/21 20:33:42 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/08/21 22:56:57 by leon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ all : $(NAME)
 
 $(NAME): $(OBJ) $(ASM)
 	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 	@echo "Compilation of \033[33;1m$(NAME)\033[0;1m: [\033[1;32mOK\033[0;1m]\033[0m"
 
 $(BUILD):
