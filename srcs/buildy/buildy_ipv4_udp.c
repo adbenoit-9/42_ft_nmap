@@ -34,13 +34,14 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		if (ret == BUILDY_OK) {
 			conf_exec->packet_length = sizeof(struct udphdr);
 #ifndef MAC
-			uint32_t dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
 			struct ifaddrs	*saddr;
 			getifaddrs(&saddr);
+			uint32_t	sip  = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
+			uint32_t	dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
 			conf_exec->packet_length += sizeof(struct iphdr);
 			i = sizeof(struct iphdr);
 			SET_IP4_DADDR(buf, dip);
-			SET_IP4_SADDR(buf, saddr->ifa_addr); // DEBUG
+			SET_IP4_SADDR(buf, sip); // DEBUG
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);

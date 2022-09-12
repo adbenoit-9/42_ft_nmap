@@ -46,20 +46,21 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		{
 			length = sizeof(struct tcphdr);
 #ifndef MAC
-			uint32_t	dip  = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
 			struct ifaddrs	*saddr;
 			getifaddrs(&saddr);
+			uint32_t	dip  = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
+			uint32_t	sip  = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
 			length += sizeof(struct iphdr);
 			i = sizeof(struct iphdr);
 			SET_IP4_DADDR(buf, dip);
-			SET_IP4_SADDR(buf, saddr->ifa_addr); // DEBUG
+			SET_IP4_SADDR(buf, sip); // DEBUG
 			SET_IP4_VERSION(buf, 0x04);
 			SET_IP4_IHL(buf, 0x05);
 			SET_IP4_TOS(buf, 0x00);
 			SET_IP4_PROTOCOL(buf, 0x06);
 			SET_IP4_FRAG_OFF(buf, 0x0000);
 			SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
-			SET_IP4_TTL(buf, (uint8_t)(*(&random[2]))); //ttl);
+			SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 #endif
 			
 			SET_TCP_SEQ(&buf[i], (uint32_t)(*(&random[3])));

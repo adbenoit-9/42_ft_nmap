@@ -174,7 +174,7 @@ int			mapy_f(t_root *root, t_func_mapy f)
 												(j * root->nd_nb) +
 												k) % BLCK_NB) * MAP_BLCK_SIZE;
 #ifdef DEBUG
-					// fprintf(stderr, "%s:%d i=%d j=%d k=%d\
+					// fprintf(stderr, "%s:%d i=%d j=%d k=%d
 //  index=%08lx\n", __func__, __LINE__, i, j, k, index);
 					fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
 rd->exe.[i].client=%p\n", __func__, __LINE__, 
