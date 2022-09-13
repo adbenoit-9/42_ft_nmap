@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 16:07:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:27:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>
 #include <net/if.h>
 #include <ifaddrs.h>
+#include <stdio.h>
 #include "proty_ip.h"
 
 int				get_urandom(uint8_t *buf, int length)
@@ -71,6 +72,7 @@ struct in6_addr	get_src_ipv6(struct in6_addr dest)
 		sip = dest;
 	}
 	else {
+		printf("NOT LOOPBACK\n");
 		getifaddrs(&saddr);
 		sip = *(struct in6_addr *)saddr->ifa_addr;
 		while (saddr && (saddr->ifa_addr->sa_family != AF_INET6

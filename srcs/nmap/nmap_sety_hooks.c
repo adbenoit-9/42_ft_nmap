@@ -1,12 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap_sety_hooks.c                                  :+:      :+:    :+:   */
+/*   sety_hooks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/26 11:01:18 by leon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +55,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 	//		bzero(host, 32);
 	//		memcpy(host, host, strlen(host));
 			fprintf(stderr, "res->ai_addr.s_family=%x", res->ai_addr->sa_family);
-			memcpy(&link->sock, res->ai_addr, 16);
+			memcpy(&link->sock, res->ai_addr, sizeof(struct sockaddr_storage));
 			freeaddrinfo(res);
 		}
 	}
