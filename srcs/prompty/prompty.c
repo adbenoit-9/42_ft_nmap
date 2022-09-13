@@ -50,9 +50,9 @@ if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 		hook = 0; \
 }else { \
 	if { \
-		hook = 4; \
-}	else { \
 		hook = 3; \
+}	else { \
+		hook = 2; \
 	} \
 } \
 } while (0)

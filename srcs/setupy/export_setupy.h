@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_setupy.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 23:30:20 by leon              #+#    #+#             */
-/*   Updated: 2022/08/22 18:20:32 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/13 17:24:21 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 		hook = 0; \
 }else { \
 	if { \
-		hook = 3; \
+		hook = 2; \
 }	else { \
 		hook = 2; \
 	} \
