@@ -89,7 +89,8 @@ SRC				+= $(addprefix nmap/, $(SUB_SRC))
 
 SUB_SRC			:= mapy.c \
 					sety_f.c \
-					exey_f.c
+					exey_f.c \
+					blky.c
 SRC				+= $(addprefix mapy/, $(SUB_SRC))
 
 SUB_SRC			:= prompty.c

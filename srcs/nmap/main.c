@@ -14,27 +14,30 @@
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
+
 	fprintf(stderr, "pcap_version=%s\n", pcap_lib_version());
-	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
- i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
-						T_CLIENT_RD_PRINT,
-						T_CLIENT_ND_PRINT,
-						T_CLIENT_ST_PRINT,
-						T_CLIENT_ROOT_PRINT,
-						THREAD_NB,
-						BLCK_NB	,
-						MAP_BLCK_SIZE,
-						SIZE,
-						ST_MAX,
-						ND_MAX,
-						RD_MAX,
-						EXEC_LST_SIZE,
-						EXEC_TODO_MSK,
-						EXEC_MAX_LIST,
-						EXEC_MAX_CMD,
-						EXEC_MAX_HOOK,
-						SETY_EXEC_MAX_CMD,
-						SETY_EXEC_MAX_HOOK);
+/*
+**	fprintf(stderr, "Hello\na=%s b=%s c=%s  d=%s e=%d f=%d g=%d h=%d \
+** i=%d j=%d k=%d l=%d m=%d n=%d o=%d p=%d q=%d r=%d \n",
+**						T_CLIENT_RD_PRINT,
+**						T_CLIENT_ND_PRINT,
+**						T_CLIENT_ST_PRINT,
+**						T_CLIENT_ROOT_PRINT,
+**						THREAD_NB,
+**						BLCK_NB	,
+**						MAP_BLCK_SIZE,
+**						SIZE,
+**						ST_MAX,
+**						ND_MAX,
+**						RD_MAX,
+**						EXEC_LST_SIZE,
+**						EXEC_TODO_MSK,
+**						EXEC_MAX_LIST,
+**						EXEC_MAX_CMD,
+**						EXEC_MAX_HOOK,
+**						SETY_EXEC_MAX_CMD,
+**						SETY_EXEC_MAX_HOOK);
+*/
 		fprintf(stderr, "%s:%d configsize=%lx\n", __func__, __LINE__, sizeof(t_root));
 		fprintf(stderr, "%s:%d bufferptr=%p\n", __func__, __LINE__, buf);
 		fprintf(stderr, "%s:%d mapptr=%p\n", __func__, __LINE__, &buf[sizeof(t_root)]);
@@ -57,6 +60,7 @@ void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 		fprintf(stderr, "ip_nb = %d\n", settings->ip_nb);
 		fprintf(stderr, "port_nb = %d\n", settings->port_nb);
 		fprintf(stderr, "scan_nb = %d\n", settings->scan_nb);
+
 }
 
 int main(int ac, char **av)
@@ -88,9 +92,9 @@ int main(int ac, char **av)
 			return (-1);
 		if (set_iter_rd(root, iter_set_tcpflag))
 			return (-1);
-		exey_ctrl(root, nmap_init_exey);
+		//exey_ctrl(root, nmap_init_exey);
 		scany(settings, root);
-		exey_ctrl(root, nmap_clean_exey);
+		//exey_ctrl(root, nmap_clean_exey);
 	}
 	return (r);
 }

@@ -12,6 +12,7 @@
 
 NAME		=	libft.a
 
+CC=gcc-10
 INC			=	inc/
 HEADER		=	$(INC)libft.h
 

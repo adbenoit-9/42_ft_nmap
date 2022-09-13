@@ -24,5 +24,19 @@
 #define SENDY_OK	0
 #define SENDY_ERROR	-1
 
+# define SELECT_HOOK_SENDY(sockaddr, nd, hook) do { \
+if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET) { \
+	if (nd == UDP_FLAG_UDP) { \
+		hook = 1; \
+}	else { \
+		hook = 0; \
+}} else { \
+	if (nd == UDP_FLAG_UDP){ \
+		hook = 4; \
+}	else { \
+		hook = 3; \
+	} \
+} \
+} while (0)
 
 #endif

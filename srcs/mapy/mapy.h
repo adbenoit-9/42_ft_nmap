@@ -17,49 +17,66 @@
 #include <stdbool.h>
 #include "nmap_mapy_config.h"
 
+#define BLKY_OK 		0
+#define BLKY_ERROR 		-1
+
+#define BUILDY_INDEX	0
+#define SETUPY_INDEX	1
+#define SENDY_INDEX	2
+#define RECY_INDEX	3
+#define CLEANY_INDEX	4
+
+
 #define MAPY_ERR	-1
 #define MAPY_OK		0
 #define MAPY_IDLE	1
 #define MAPY_BUSY	2
 #define MAPY_RUN	3
 
-typedef struct			s_exe {
-	
+#define BLK_TODO 0x0
+#define BLK_DONE 0x1
+#define BLK_BUSY 0x2
+#define BLK_IDLE 0x3
+#define BLK_ERROR -1
+
+typedef struct					s_exe {
 	int				hook[EXEC_LST_SIZE]; 
 	int				tasks[EXEC_LST_SIZE];
-	bool			init;
-	int				flag;
-	uint32_t		id;
-	pthread_mutex_t	mutex;
 }						t_exe;
 
 /* Header block structure : can be use for controlling access to blocks */
 typedef	struct				s_blk {
-	pthread_mutex_t	mutex;
-	uint32_t		id;
+	t_exe			exe;
+	T_CLIENT_ROOT		*root;
+        T_CLIENT_ST		*st;
+        T_CLIENT_ND		*nd;
+	T_CLIENT_RD		*rd;
+	uint32_t		flag;
+	uint8_t			map[MAP_BLCK_SIZE];
 }							t_blk;
 
-typedef struct			s_rd {
-	T_EXE				exe;
+typedef struct					s_rd {
 	T_CLIENT_RD		client;
+	bool			flag;
 }						t_rd;
 
-typedef struct			s_nd {
-	t_rd			rd[RD_MAX];
+typedef struct					s_nd {
 	T_CLIENT_ND		client;
 }						t_nd;
 
-typedef struct			s_st {
-	t_nd			nd[ND_MAX];
+typedef struct					s_st {
 	T_CLIENT_ST		client;
 }						t_st;
 
-typedef struct			s_root {
+typedef struct					s_root {
+	t_rd			rd[RD_MAX];
+	t_nd			nd[ND_MAX];
 	t_st			st[ST_MAX];
-	T_CLIENT_ROOT	client;
-	int				st_nb;
-	int				nd_nb;
-	int				rd_nb;
+	T_CLIENT_ROOT		client;
+	uint8_t			blk_flag[RD_MAX * ND_MAX * ST_MAX];
+	int			st_nb;
+	int			nd_nb;
+	int			rd_nb;
 	uint8_t			*map;
 }						t_root;
 
@@ -98,5 +115,9 @@ int								exey_ctrl(t_root *root, t_func_exey f);
 int								set_iter_st(t_root *root, t_func_iter_st f);
 int								set_iter_nd(t_root *root, t_func_iter_nd f);
 int								set_iter_rd(t_root *root, t_func_iter_rd f);
+
+int			blky_branch_task_hooks(t_blk *blk);
+int			blky(t_blk *blk);
+
 
 #endif

@@ -26,19 +26,4 @@ void				ft_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 void		*run_pcap(void *root);
 int			set_pcap_init(t_nmap_setting *nmap);
 
-#define SELECT_HOOK_RECY(sockaddr, nd, hook) do { \
-if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
-	if (nd == NMAP_UDP) { \
-		hook = 1; \
-}	else { \
-		hook = 0; \
-}else { \
-	if { \
-		hook = 4; \
-}	else { \
-		hook = 3; \
-	} \
-} \
-} while (0)
-
 #endif

@@ -27,13 +27,13 @@ static const uint8_t default_execution_list[] = {0x00, 0x01, 0x02};
 int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 {
 	uint32_t	i;
-	int			ret;
+	int			ret = 0;
 
 	(void)root;
 	i = 0;
-	ret = pthread_mutex_init(&exe->mutex, NULL);
+//	ret = pthread_mutex_init(&exe->mutex, NULL);
 	if (ret == EXEY_OK && blk) {
-		ret = pthread_mutex_init(&blk->mutex, NULL);
+//		ret = pthread_mutex_init(&blk->mutex, NULL);
 	}
 	if (ret != EXEY_OK) {
 		dprintf(STDERR_FILENO, "pthread_mutex_init: %s\n", strerror(ret));
@@ -55,9 +55,11 @@ int					nmap_init_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 int					nmap_clean_exey(T_CLIENT_ROOT *root, t_exe *exe , t_blk *blk)
 {
 	(void)root;
-	pthread_mutex_destroy(&exe->mutex);
-	if (blk)
-		pthread_mutex_destroy(&blk->mutex);
+	(void)blk;
+	(void)exe;
+//	pthread_mutex_destroy(&exe->mutex);
+//	if (blk)
+//		pthread_mutex_destroy(&blk->mutex);
 	return (EXEY_OK);
 }
 

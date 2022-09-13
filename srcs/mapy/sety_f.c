@@ -29,13 +29,13 @@ int				sety_f(t_root *root, t_func_sety f)
 				fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
 							(void *)&root->client,
 							(void *)&root->st[i].client,
-							(void *)&root->st[i].nd[j].client,
-							(void *)&root->st[i].nd[j].rd[k].client, i, j, k);
+							(void *)&root->nd[j].client,
+							(void *)&root->rd[k].client, i, j, k);
 #endif
 				r = (*f)((T_CLIENT_ROOT *)&root->client,
 							(T_CLIENT_ST *)&root->st[i].client,
-							(T_CLIENT_ND *)&root->st[i].nd[j].client,
-							(T_CLIENT_RD *)&root->st[i].nd[j].rd[k].client);
+							(T_CLIENT_ND *)&root->nd[j].client,
+							(T_CLIENT_RD *)&root->rd[k].client);
 				k++;
 			}
 			j++;
@@ -59,7 +59,7 @@ int				set_nd(t_root *root, t_func_sety f)
 		{
 			r = (*f)((T_CLIENT_ROOT *)&root->client,
 						(T_CLIENT_ST *)&root->st[i].client,
-						(T_CLIENT_ND *)&root->st[i].nd[j].client,
+						(T_CLIENT_ND *)&root->nd[j].client,
 						0);
 			j++;
 		}
@@ -110,7 +110,7 @@ int				set_iter_rd(t_root *root, t_func_iter_rd f)
 							(void *)&root->st[i].nd[j].rd[k].client, i, j, k);
 #endif
 				r = (*f)((T_CLIENT_ROOT *)&root->client,
-							(T_CLIENT_RD *)&root->st[i].nd[j].rd[k].client, k);
+							(T_CLIENT_RD *)&root->rd[k].client, k);
 				k++;
 			}
 			j++;
@@ -137,7 +137,7 @@ int				set_iter_nd(t_root *root, t_func_iter_nd f)
 						root->st_nb, root->nd_nb);
 #endif
 			r = (*f)((T_CLIENT_ROOT *)&root->client,
-						(T_CLIENT_ND *)&root->st[i].nd[j].client, j);
+						(T_CLIENT_ND *)&root->nd[j].client, j);
 			j++;
 		}
 		++i;

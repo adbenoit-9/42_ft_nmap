@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc-10
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
 DEPFLAGS = -MP -MD

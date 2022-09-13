@@ -50,13 +50,13 @@
 # endif
 
 # define SELECT_HOOK_BUILDY(sockaddr, nd, hook) do { \
-if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
-	if (nd == NMAP_UDP) { \
+if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET) { \
+	if (nd == UDP_FLAG_UDP) { \
 		hook = 1; \
 }	else { \
 		hook = 0; \
-}else { \
-	if { \
+}} else { \
+	if (nd == UDP_FLAG_UDP){ \
 		hook = 4; \
 }	else { \
 		hook = 3; \

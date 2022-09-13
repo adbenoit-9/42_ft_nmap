@@ -6,7 +6,7 @@
 #define MAP_BLCK_SIZE					256
 // First 4 bytes are used to identify block owner
 #define MAX_CONFIG_SIZE					23726232
-#define SIZE							((MAP_BLCK_SIZE * BLCK_NB) + MAX_CONFIG_SIZE)
+#define SIZE							((sizeof(t_blk) * BLCK_NB) + MAX_CONFIG_SIZE)
 #define ST_MAX							16
 #define ND_MAX							1024
 #define RD_MAX							6
@@ -28,7 +28,7 @@
 #include "nmap_structs.h"
 
 // Execution control
-#define EXEC_LST_SIZE					10
+#define EXEC_LST_SIZE					8
 #define EXEC_TODO_MSK					0x80000000
 #define EXEC_INPROG_MSK					0x40000000
 #define EXEC_MAX_LIST 					8

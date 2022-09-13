@@ -5,38 +5,40 @@
 #define EXEY_ERR -1
 //#define DEBUG
 
-int				exey_ctrl(t_root *root, t_func_exey f)
-{
-	int			r = EXEY_OK;
-	uint64_t	index = 0;
-	
-	fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, __FILE__);
-	if (!root) {
-		r = EXEY_ERR;
-	}
-	for (int i = 0; r == EXEY_OK && i < root->st_nb; i++) {
-		for (int j = 0; r == EXEY_OK && j < root->nd_nb; j++) {
-			for (int k = 0; r == EXEY_OK && k < root->rd_nb; k++, index++) {
-#ifdef DEBUG
-				fprintf(stderr, "%s:%d i=%d j=%d k=%d \n", __func__, __LINE__, i, j, k);
-				fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
-rd->exe.[i].client=%p\n", __func__, __LINE__, 
-						&root->st[i].client,
-						&root->st[i].nd[j].client, 
-						&root->st[i].nd[j].rd[k].client);
-//			fprintf(stderr, "%s:%d r=%d i=%d index=%08x 
-// task=%d hook=%d \n", __func__, __LINE__,
-//						r, i, index, rd->exe.tasks[i], rd->exe.hook[i]);
-#endif /* DEBUG */
-				r = (*f)
-						((T_CLIENT_ROOT*)&root->st[i].client,
-						(T_EXE*)&root->st[i].nd[j].rd[k].exe,
-						index >= BLCK_NB ? NULL : (T_BLK*)&root->map[index * MAP_BLCK_SIZE]);
-			}
-		}
-	}
-	return (r);
-}
+/*
+**int				exey_ctrl(t_root *root, t_func_exey f)
+**{
+**	int			r = EXEY_OK;
+**	uint64_t	index = 0;
+**	
+**	fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, __FILE__);
+**	if (!root) {
+**		r = EXEY_ERR;
+**	}
+**	for (int i = 0; r == EXEY_OK && i < root->st_nb; i++) {
+**		for (int j = 0; r == EXEY_OK && j < root->nd_nb; j++) {
+**			for (int k = 0; r == EXEY_OK && k < root->rd_nb; k++, index++) {
+**#ifdef DEBUG
+**				fprintf(stderr, "%s:%d i=%d j=%d k=%d \n", __func__, __LINE__, i, j, k);
+**				fprintf(stderr, "%s:%d st->[i].client=%p nd->[i].client=%p \
+**rd->exe.[i].client=%p\n", __func__, __LINE__, 
+**						&root->st[i].client,
+**						&root->st[i].nd[j].client, 
+**						&root->st[i].nd[j].rd[k].client);
+**
+**
+**
+**#endif 
+**				r = (*f)
+**						((T_CLIENT_ROOT*)&root->st[i].client,
+**						(T_EXE*)&root->rd[k].exe,
+**						index >= BLCK_NB ? NULL : (T_BLK*)&root->map[index * sizeof(t_blk)]);
+**			}
+**		}
+**	}
+**	return (r);
+**}
+*/
 
 //int				exey_check_blkhdr(test_root *root, t_exe *exe , t_blk *blk)
 //{
