@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/13 17:38:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 19:04:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,17 @@ int			mapy(t_root *root)
 	if (!root) {
 		r = MAPY_ERR;
 	}
-	count = 0;
 	while (r == EXEY_RUN  || r == EXEY_BUSY)
 	{
 		r = EXEY_RUN;
+		count = 0;
 		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
 			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE) && j < root->nd_nb; j++) {
 				for (int k = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE)
 											&& k < root->rd_nb; k++, count++) {
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
-					printf("count = %ld\n", count);
-					if (root->blk_flag[count % BLCK_NB] == BLK_TODO) {
+					if (root->blk_flag[count] == BLK_TODO) {
 						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
 						}
@@ -60,12 +59,11 @@ int			mapy(t_root *root)
 							blk->rd = &root->rd[k].client;
 							blky_branch_task_hooks(blk);
 							r = blky(blk);
-							printf("ret = %d\n", r);
 							if (r == BLKY_OK) {
-								root->blk_flag[count % BLCK_NB] = BLK_DONE;
+								root->blk_flag[count] = BLK_DONE;
 							}
 							else {
-								root->blk_flag[count % BLCK_NB] = BLK_ERROR;
+								root->blk_flag[count] = BLK_ERROR;
 							}
 							blk->flag = BLK_IDLE;
 							r = EXEY_RUN;
