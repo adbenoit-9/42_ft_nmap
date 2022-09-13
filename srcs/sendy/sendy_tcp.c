@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:48:20 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 19:06:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
             socklen = sizeof(struct sockaddr);
             sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
             setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
-		fprintf(stderr, "%s:%d", __func__, __LINE__);
         }
         else {
-		fprintf(stderr, "%s:%d", __func__, __LINE__);
             socklen = sizeof(struct sockaddr_in6);
             sock = socket(AF_INET6, SOCK_RAW, IPPROTO_TCP);
             setsockopt(sock, IPPROTO_IPV6, IPV6_HDRINCL,  &optval, sizeof(int));

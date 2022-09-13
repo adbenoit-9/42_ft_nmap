@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 17:01:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 19:08:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 #ifdef DEBUG
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->tcpflag);
 #endif /* DEBUG */
+		bzero(buf, MAP_BLCK_SIZE);
 		ret = get_urandom(random, 16);
 		length = sizeof(struct tcphdr) + sizeof(struct iphdr);
 		i = sizeof(struct iphdr);
@@ -70,6 +71,8 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_PROTOCOL(buf, IPPROTO_TCP);
 		SET_IP4_FRAG_OFF(buf, 0x0000);
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
+		random[2] |= (1 << 8);
+		random[2] &= 0x8F;
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(length));
 		

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/13 17:38:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 19:04:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int			mapy(t_root *root)
 	{
 		count = 0;
 		r = EXEY_RUN;
+		count = 0;
 		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
 			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE) && j < root->nd_nb; j++) {
 				for (int k = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE)
@@ -69,16 +70,16 @@ int			mapy(t_root *root)
 							}
 							blk->flag = BLK_IDLE;
 						}
-						fprintf(stderr, "%s:%d count=%lu r=%d\n", __func__, __LINE__, count, r);
+						//fprintf(stderr, "%s:%d count=%lu r=%d\n", __func__, __LINE__, count, r);
 					}
 					else {
-						fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+						//fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 						r = EXEY_IDLE;
 					}
 				}
 			}
 		}
-		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+		//fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	}
 	return (r);
 }
