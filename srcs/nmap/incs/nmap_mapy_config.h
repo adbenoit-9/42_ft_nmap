@@ -28,12 +28,12 @@
 #include "nmap_structs.h"
 
 // Execution control
-#define EXEC_LST_SIZE						8
 #define EXEC_TODO_MSK						0x80000000
 #define EXEC_INPROG_MSK						0x40000000
-#define EXEC_MAX_LIST 						8
-#define EXEC_MAX_CMD						8
-#define EXEC_MAX_HOOK						8
+#define EXEC_MAX_LIST 						5
+#define EXEC_LST_SIZE						5
+#define EXEC_MAX_CMD						5
+#define EXEC_MAX_HOOK						4
 
 #define SETY_EXEC_MAX_CMD					8
 #define SETY_EXEC_MAX_HOOK					8

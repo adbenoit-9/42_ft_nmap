@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapy_data.h                                        :+:      :+:    :+:   */
+/*   nmap_mapy_data.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 07:46:40 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/13 17:23:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ t_func_mapy *_exec[EXEC_MAX_CMD] = {
 	_recy_exec,
 	_cleany_exec,
 };
-
-//	_sendy_exec,
-//	_recy_exec,
-//	_cleany_exec,
-//	_setupy_exec,
 
 
 #endif

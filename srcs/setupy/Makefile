@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc-10
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
 DEPFLAGS = -MP -MD
@@ -25,10 +25,10 @@ MODULES	:= ../nmap/incs\
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = setupy_ipv4_tcp.c
-# setupy_ipv4_udp.c\
-# setupy_ipv6_tcp.c\
-# setupy_ipv6_udp.c
+SRC = setupy_ipv4_tcp.c \
+setupy_ipv4_udp.c\
+setupy_ipv6_tcp.c\
+setupy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

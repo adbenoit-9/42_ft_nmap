@@ -44,8 +44,8 @@ LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(SEND_DIR)/sendy.a\
 					$(PARS_DIR)/parsy.a\
 					$(LIBFT_DIR)/libft.a\
+					$(SETUP_DIR)/setupy.a
 # $(MAP_DIR)/mapy.a
-# $(SETUP_DIR)/setupy.a
 
 # FILES
 BUILD 			:= .build
@@ -61,6 +61,7 @@ INC_SUB_DIR		:= buildy\
 					recy\
 					sendy\
 					setupy
+
 INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(INC_SUB_DIR))
 
 SUB_DIR			:= nmap\
@@ -128,6 +129,7 @@ lib_debug:
 	@make -C $(REC_DIR) debug
 	@make -C $(SEND_DIR) debug
 	@make -C $(PARS_DIR) debug
+	@make -C $(SETUP_DIR) debug
 
 lib:
 	@make -C $(LIBFT_DIR)
@@ -136,6 +138,7 @@ lib:
 	@make -C $(REC_DIR)
 	@make -C $(SEND_DIR)
 	@make -C $(PARS_DIR)
+	@make -C $(SETUP_DIR)
 # @make -C $(SETUP_DIR)
 # @make -C $(MAPY_DIR)
 	
@@ -145,6 +148,7 @@ lib_clean:
 	@make -C $(CLEAN_DIR) clean
 	@make -C $(REC_DIR) clean
 	@make -C $(SEND_DIR) clean
+	@make -C $(SETUP_DIR) clean
 	@make -C $(PARS_DIR) clean
 # @make -C $(SETUP_DIR) clean
 # @make -C $(MAPY_DIR) clean

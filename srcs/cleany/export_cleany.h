@@ -17,7 +17,7 @@
 #include "mapy.h"
 
 /* Exported function */
-int 				clean_net(T_CLIENT_ROOT *root, T_CLIENT_ST *link, T_CLIENT_ND *app);
+int 				clean_net(uint8_t *map, T_CLIENT_ST *link, T_CLIENT_ND *app, T_CLIENT_RD *scan);
 
 
 #endif

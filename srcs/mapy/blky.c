@@ -57,11 +57,13 @@ int			blky(t_blk *blk)
 	while (r == BLKY_OK && i < EXEC_LST_SIZE)
 	{
 		fprintf(stderr, "%s:%d task[]=%x hook[]=%x\n", __func__, __LINE__, blk->exe.tasks[i], blk->exe.hook[i]);
+		printf("last task: %d -> %d\n", blk->exe.tasks[i], blk->exe.hook[i]);
 		r = (*_exec[blk->exe.tasks[i]]
 				[blk->exe.hook[i]])
 				(blk->map, blk->st,
 				blk->nd, blk->rd);
 		i++;
 	}
+	printf("ok\n");
 	return (r);
 }
