@@ -28,19 +28,17 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 //			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 //			fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
 #endif /* DEBUG */
+        int	optval	= 1;
         if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
             socklen = sizeof(struct sockaddr);
             sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+            setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
         }
         else {
             socklen = sizeof(struct sockaddr_in6);
             sock = socket(AF_INET6, SOCK_RAW, IPPROTO_TCP);
+            setsockopt(sock, IPPROTO_IPV6, IPV6_HDRINCL,  &optval, sizeof(int));
         }
-#ifndef MAC
-        int	optval	= 1;
-        setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
-#endif
-        // fprintf(stdout, "<<<< port=%d\n", ntohs(((struct tcphdr*)buf)->th_dport));
         ret = sendto(sock, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
             (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, socklen);
         if (ret < 0)  {

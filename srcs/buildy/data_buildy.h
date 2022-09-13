@@ -21,9 +21,9 @@
 
 t_func_mapy _buildy_exec[EXEC_MAX_CMD] = {
 		build_ipv4_tcp,
-		NULL,
-		NULL,
-		NULL,
+		build_ipv4_udp,
+		build_ipv6_tcp,
+		build_ipv6_udp,
 		NULL,
 		NULL,
 		NULL,

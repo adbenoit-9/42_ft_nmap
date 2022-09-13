@@ -6,21 +6,17 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 11:09:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:07:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
-#include "nmap_structs.h"
+#include <net/if.h>
+#include <ifaddrs.h>
 #include "proty_ip.h"
 
-// TODO bufferriser avec une static
-// 4096 bytes should do it
 int				get_urandom(uint8_t *buf, int length)
 {
 	int			randomfd;
@@ -66,61 +62,42 @@ int				get_urandom(uint8_t *buf, int length)
 	return (r);
 }
 
-uint16_t			ipv4_checksum(uint16_t *addr, int len)
+struct in6_addr	get_src_ipv6(struct in6_addr dest)
 {
-	int							nleft;
-	int							sum;
-	uint16_t					*w;
-	uint16_t					answer;
+	struct ifaddrs	*saddr;
+	struct in6_addr	sip;
 
-	answer = 0;
-	w = addr;
-	sum = 0;
-	nleft = len;
-	while (nleft > 1)
-	{
-		sum += *w++;
-		nleft -= sizeof(uint16_t);
+	if (IN6_IS_ADDR_LOOPBACK(&dest)) {
+		sip = dest;
 	}
-	if (nleft == 1)
-	{
-		*(uint16_t*)(&answer) = *(uint16_t*)w;
-		sum += answer;
+	else {
+		getifaddrs(&saddr);
+		sip = *(struct in6_addr *)saddr->ifa_addr;
+		while (saddr && (saddr->ifa_addr->sa_family != AF_INET6
+				|| saddr->ifa_flags & IFF_LOOPBACK)) {
+			saddr = saddr->ifa_next;
+			sip = *(struct in6_addr *)saddr->ifa_addr;
+		}
 	}
-	sum = (sum >> 16) + (sum & 0xFFFF);
-	sum += (sum >> 16);
-	answer = ~sum;
-	return (answer);
+	return (sip);
 }
 
-#include <netinet/ip.h>
-#include <stdio.h>
-
-uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
+in_addr_t	get_src_ipv4(in_addr_t dest)
 {
-	uint8_t						tcp[64] = {0};
-	int							offset = 0;
-	uint16_t					tmp;
+	struct ifaddrs	*saddr;
+	in_addr_t	sip;
 
-	memcpy(&tcp[offset], &ip[12], 4);
-	offset += 4;
-	memcpy(&tcp[offset], &ip[16], 4);
-	offset += 4;
-	offset += 1;
-	memcpy(&tcp[offset], &ip[9], 1);
-	offset += 1;
-	tmp = htons(tcplen);
-	memcpy(&tcp[offset], &tmp, 2);
-	offset += 2;
-	memcpy(&tcp[offset], &ip[sizeof(struct iphdr)], tcplen);
-	offset += tcplen;
-	//fprintf(stderr, "tcplen=%d Pseudo-tcp hdr for sum : {", tcplen);
-	//int j = 0;
-	//while (j < offset)
-	//{
-	//	fprintf(stderr, "%02x ", tcp[j++]);
-	//}
-	//fprintf(stderr, "}\n");
-	
-	return (ipv4_checksum((uint16_t*)tcp, offset));
+	if (htonl(dest) != INADDR_LOOPBACK) {
+		getifaddrs(&saddr);
+		sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
+		while (saddr && (saddr->ifa_addr->sa_family != AF_INET
+				|| saddr->ifa_flags & IFF_LOOPBACK)) {
+			saddr = saddr->ifa_next;
+			sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
+		}
+	}
+	else {
+		sip = dest;
+	}
+	return (sip);
 }

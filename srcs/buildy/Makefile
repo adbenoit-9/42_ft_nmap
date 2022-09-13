@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:02:48 by leon             ###   ########.fr        #
+#    Updated: 2022/09/13 17:03:47 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRC			:= buildy_ipv4_tcp.c\
 				buildy_utils.c\
 				buildy_ipv4_udp.c\
 				buildy_ipv6_tcp.c\
-				buildy_ipv6_udp.c
+				buildy_ipv6_udp.c\
+				buildy_checksum.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

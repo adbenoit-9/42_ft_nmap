@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:03 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 19:16:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:24:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "nmap_structs.h"
 #include "ft_nmap_parsing.h"
 #include "ft_nmap_error.h"
-#include "proty_tcp.h"
 #include <errno.h>
 
 void    set_scan(t_nmap_setting *settings, char *value)

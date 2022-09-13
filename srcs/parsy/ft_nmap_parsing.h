@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/22 08:38:49 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/13 16:25:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include "libft.h"
 # include "nmap_structs.h"
 # include "ft_nmap_error.h"
+# include "proty_tcp.h"
+# include "proty_udp.h"
+
+# define PARSY_OK 0
 
 # define NFLAG 6
 # define PORT_MAX 65536

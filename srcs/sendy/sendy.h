@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 14:52:55 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 14:08:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 17:04:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 
 # define SELECT_HOOK_SENDY(sockaddr, nd, hook) do { \
 if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET) { \
-	if (nd == UDP_FLAG_UDP) { \
+	if (nd == FLAG_S_UDP) { \
 		hook = 1; \
 }	else { \
 		hook = 0; \
 }} else { \
-	if (nd == UDP_FLAG_UDP){ \
+	if (nd == FLAG_S_UDP){ \
 		hook = 4; \
 }	else { \
 		hook = 3; \

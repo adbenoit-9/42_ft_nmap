@@ -6,14 +6,11 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/24 11:57:33 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/13 16:25:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap_parsing.h"
-#include "proty_tcp.h"
-
-#define PARSY_OK 0
 
 static uint8_t default_scans[SCAN_LIMIT] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS, FLAG_S_UDP};
 
