@@ -82,7 +82,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(length));
 		
-		SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf, sizeof(struct iphdr)));
+		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
 		SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 	}
 	return (ret);

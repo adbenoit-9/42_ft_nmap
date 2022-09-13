@@ -55,13 +55,13 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(conf_exec->packet_length));
-		SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf, sizeof(struct iphdr)));
+		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
 
 		/* setup UDP header */
 		SET_UDP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 		SET_UDP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_UDP_LEN(&buf[i], htons(conf_exec->packet_length));
-		SET_UDP_ACK(&buf[i], ipv4_checksum((uint16_t *)buf, sizeof(struct udphdr)));
+		SET_UDP_ACK(&buf[i], checksum((uint16_t *)buf, sizeof(struct udphdr)));
 	}
 	return (ret);
 }

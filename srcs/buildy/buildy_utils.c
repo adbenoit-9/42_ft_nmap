@@ -66,7 +66,7 @@ int				get_urandom(uint8_t *buf, int length)
 	return (r);
 }
 
-uint16_t			ipv4_checksum(uint16_t *addr, int len)
+uint16_t			checksum(uint16_t *addr, int len)
 {
 	int							nleft;
 	int							sum;
@@ -102,12 +102,12 @@ uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 	int							offset = 0;
 	uint16_t					tmp;
 
-	memcpy(&tcp[offset], &ip[12], 4);
+	memcpy(&tcp[offset], &ip[12], 4); // saddr
 	offset += 4;
-	memcpy(&tcp[offset], &ip[16], 4);
+	memcpy(&tcp[offset], &ip[16], 4); // daddr
 	offset += 4;
-	offset += 1;
-	memcpy(&tcp[offset], &ip[9], 1);
+	offset += 1; // zero
+	memcpy(&tcp[offset], &ip[9], 1); // protocol
 	offset += 1;
 	tmp = htons(tcplen);
 	memcpy(&tcp[offset], &tmp, 2);
@@ -122,26 +122,26 @@ uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 	//}
 	//fprintf(stderr, "}\n");
 	
-	return (ipv4_checksum((uint16_t*)tcp, offset));
+	return (checksum((uint16_t*)tcp, offset));
 }
 
-uint16_t			tcp_ipv6_checksum(uint8_t *ip, uint16_t tcplen)
+uint16_t	ipv6_checksum(uint8_t *ip, uint16_t tcplen, uint8_t nxt_hdr)
 {
-	uint8_t						tcp[64] = {0};
-	int							offset = 0;
-	uint16_t					tmp;
+	uint8_t		tcp[64 + 16] = {0};
+	int			offset = 0;
+	uint32_t	len;
 
-	memcpy(&tcp[offset], &ip[12], 4);
+	memcpy(&tcp[offset], &ip[8], 16); // saddr
+	offset += 16;
+	memcpy(&tcp[offset], &ip[24], 16); // daddr
+	offset += 16;
+	len = htonl(tcplen);
+	memcpy(&tcp[offset], &len, 4);
 	offset += 4;
-	memcpy(&tcp[offset], &ip[16], 4);
-	offset += 4;
+	offset += 3; // zero
+ 	memcpy(&tcp[offset], &nxt_hdr, 1);
 	offset += 1;
-	memcpy(&tcp[offset], &ip[9], 1);
-	offset += 1;
-	tmp = htons(tcplen);
-	memcpy(&tcp[offset], &tmp, 2);
-	offset += 2;
 	memcpy(&tcp[offset], &ip[sizeof(struct ip6_hdr)], tcplen);
 	offset += tcplen;
-	return (ipv4_checksum((uint16_t*)tcp, offset));
+	return (checksum((uint16_t*)tcp, offset));
 }

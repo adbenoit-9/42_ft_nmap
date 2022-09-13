@@ -59,7 +59,7 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_UDP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 		SET_UDP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_UDP_LEN(&buf[i], htons(conf_exec->packet_length));
-		SET_UDP_ACK(&buf[i], ipv4_checksum((uint16_t *)buf, sizeof(struct udphdr)));
+		SET_UDP_ACK(&buf[i], ipv6_checksum((uint8_t *)buf, sizeof(struct udphdr), IPPROTO_UDP));
 	}
 	return (ret);
 }

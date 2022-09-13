@@ -71,7 +71,7 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP6_VFC(buf, IPV6_VERSION, 0x0);
 		SET_IP6_PLEN(buf, htons(length));
 
-		SET_TCP_SUM(&buf[i], tcp_ipv6_checksum(buf, length - sizeof(struct ip6_hdr)));
+		SET_TCP_SUM(&buf[i], ipv6_checksum(buf, length - sizeof(struct ip6_hdr), IPPROTO_TCP));
 	}
 	return (ret);
 }
