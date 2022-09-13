@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:51:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 15:41:15 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	uint8_t			random[16]	= {0};
 	uint8_t			tcpoff		= 5;
 	uint32_t		length, i;
-	struct ifaddrs	*saddr;
-	in_addr_t		dip, sip;
+	in_addr_t		dip;
 
 	printf("ipv4 tcp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
@@ -63,20 +62,13 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		conf_exec->packet_length = length;
 
 		/* setup IP header */
-		getifaddrs(&saddr);
 		dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
-		sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
-		while (saddr->ifa_addr->sa_family != AF_INET || (htonl(dip) != INADDR_LOOPBACK
-				&& saddr->ifa_flags & IFF_LOOPBACK)) {
-			saddr = saddr->ifa_next;
-			sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
-		}
+		SET_IP4_SADDR(buf, get_src_ipv4(dip));
 		SET_IP4_DADDR(buf, dip);
-		SET_IP4_SADDR(buf, sip);
 		SET_IP4_VERSION(buf, 0x04);
 		SET_IP4_IHL(buf, 0x05);
 		SET_IP4_TOS(buf, 0x00);
-		SET_IP4_PROTOCOL(buf, 0x06);
+		SET_IP4_PROTOCOL(buf, IPPROTO_TCP);
 		SET_IP4_FRAG_OFF(buf, 0x0000);
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));

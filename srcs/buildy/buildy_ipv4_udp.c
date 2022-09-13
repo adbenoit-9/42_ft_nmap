@@ -21,8 +21,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 {
 	int				ret			= BUILDY_OK;
 	uint8_t			random[16]	= {0};
-	uint32_t		i, sip, dip;
-	struct ifaddrs	*saddr;
+	uint32_t		i, dip;
 	
 	printf("ipv4 udp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
@@ -37,16 +36,9 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		i = sizeof(struct iphdr);
 		
 		/* setup IP header */
-		getifaddrs(&saddr);
 		dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
-		sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
-		while (saddr->ifa_addr->sa_family != AF_INET || (htonl(dip) != INADDR_LOOPBACK
-				&& saddr->ifa_flags & IFF_LOOPBACK)) {
-			saddr = saddr->ifa_next;
-			sip = ((struct sockaddr_in *)saddr->ifa_addr)->sin_addr.s_addr;
-		}
+		SET_IP4_SADDR(buf, get_src_ipv4(dip));
 		SET_IP4_DADDR(buf, dip);
-		SET_IP4_SADDR(buf, sip);
 		SET_IP4_VERSION(buf, 0x04);
 		SET_IP4_IHL(buf, 0x05);
 		SET_IP4_TOS(buf, 0x00);

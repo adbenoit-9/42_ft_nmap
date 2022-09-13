@@ -14,7 +14,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "mapy.h"
-#include <arpa/inet.h>
 #include "nmap_structs.h"
 
 int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
@@ -23,8 +22,7 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	int				ret = BUILDY_OK;
 	uint8_t			random[16] = {0};
 	uint32_t		i;
-	struct ifaddrs	*saddr;
-	struct in6_addr	dip, sip;
+	struct in6_addr	dip;
 
 	printf("ipv6 udp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
@@ -39,15 +37,8 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		i = sizeof(struct ip6_hdr);
 
 		/* setup IP6 header */
-		getifaddrs(&saddr);
 		dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
-		sip = *(struct in6_addr *)saddr->ifa_addr;
-		while (saddr && (saddr->ifa_addr->sa_family != AF_INET6 ||
-				(IN6_IS_ADDR_LOOPBACK(&dip) && saddr->ifa_flags & IFF_LOOPBACK))) {
-			saddr = saddr->ifa_next;
-			sip = *(struct in6_addr *)saddr->ifa_addr;
-		}
-		SET_IP6_SRC(buf, sip);
+		SET_IP6_SRC(buf, get_src_ipv6(dip));
 		SET_IP6_DST(buf, dip);
 		SET_IP6_FLOW(buf, 0);
 		SET_IP6_NXT(buf, IPPROTO_UDP);
