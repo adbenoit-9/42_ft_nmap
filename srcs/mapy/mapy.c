@@ -53,7 +53,6 @@ int			mapy(t_root *root)
 							r = EXEY_BUSY;
 						}
 						else {
-							r = EXEY_RUN;
 							blk->flag = BLK_BUSY;
 							blk->root = &root->client;
 							blk->st = &root->st[i].client;
@@ -69,6 +68,7 @@ int			mapy(t_root *root)
 								root->blk_flag[count % BLCK_NB] = BLK_ERROR;
 							}
 							blk->flag = BLK_IDLE;
+							r = EXEY_RUN;
 						}
 					}
 					else {
