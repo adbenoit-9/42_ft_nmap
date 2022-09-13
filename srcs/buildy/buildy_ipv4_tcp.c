@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 15:41:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:26:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	uint32_t		length, i;
 	in_addr_t		dip;
 
-	printf("ipv4 tcp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}
@@ -75,7 +74,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_TOT_LEN(buf, htons(length));
 		
 		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
-		SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
+		SET_TCP_SUM(&buf[i], ipv4_checksum(buf, length - sizeof(struct iphdr)));
 	}
 	return (ret);
 }

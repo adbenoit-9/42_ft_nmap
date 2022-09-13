@@ -440,7 +440,7 @@ t_nmap_link	nmap/ft_nmap_structs.h	/^}									t_nmap_link;$/;"	t	typeref:struct
 t_nmap_scan	nmap/ft_nmap_structs.h	/^}					t_nmap_scan;$/;"	t	typeref:struct:s_nmap_scan
 t_opt	parsing/ft_nmap_parsing.h	/^}               	t_opt;$/;"	t	typeref:struct:s_opt
 t_set_proto	sety/sety.h	/^}						t_set_proto;$/;"	t	typeref:struct:s_set_proto
-tcp_ipv4_checksum	buildy/buildy_utils.c	/^uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)$/;"	f
+ipv4_checksum	buildy/buildy_utils.c	/^uint16_t			ipv4_checksum(uint8_t *ip, uint16_t tcplen)$/;"	f
 tos	proty/proty_ip.h	/^	uint8_t		tos;$/;"	m	struct:iphdr
 tot_len	proty/proty_ip.h	/^	uint16_t	tot_len;$/;"	m	struct:iphdr
 ttl	proty/proty_ip.h	/^	uint8_t		ttl;$/;"	m	struct:iphdr

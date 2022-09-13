@@ -6,19 +6,15 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:25:21 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 15:43:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:07:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <net/if.h>
 #include <ifaddrs.h>
-#include "nmap_structs.h"
 #include "proty_ip.h"
 
 int				get_urandom(uint8_t *buf, int length)

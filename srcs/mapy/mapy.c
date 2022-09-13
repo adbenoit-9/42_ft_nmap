@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 18:48:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:23:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include "nmap_mapy_data.h"
+#include "proty_udp.h"
 #include <pthread.h>
 
 #define DEBUG
@@ -85,7 +86,7 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 		/* Clear exec flag */
 		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
 		r = (*_exec[rd->exe.tasks[i]]
-				[(st->client.sock.ss_family == AF_INET6 ? 2 : 0) + (rd->client.tcpflag == 0)])
+				[(st->client.sock.ss_family == AF_INET6 ? 2 : 0) + (rd->client.tcpflag == FLAG_S_UDP)])
 				(&root->map[index + sizeof(t_blk)], &st->client,
 				&nd->client, &rd->client);
 		r = EXEY_RUN;

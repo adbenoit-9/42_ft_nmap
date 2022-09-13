@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:52:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:26:47 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	uint8_t			random[16]	= {0};
 	uint32_t		i, dip;
 	
-	printf("ipv4 udp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}
@@ -42,7 +41,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_VERSION(buf, 0x04);
 		SET_IP4_IHL(buf, 0x05);
 		SET_IP4_TOS(buf, 0x00);
-		SET_IP4_PROTOCOL(buf, 0x06);
+		SET_IP4_PROTOCOL(buf, IPPROTO_UDP);
 		SET_IP4_FRAG_OFF(buf, 0x0000);
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
@@ -53,7 +52,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_UDP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 		SET_UDP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_UDP_LEN(&buf[i], htons(conf_exec->packet_length));
-		SET_UDP_ACK(&buf[i], checksum((uint16_t *)buf, sizeof(struct udphdr)));
+		SET_UDP_ACK(&buf[i], ipv4_checksum(buf, sizeof(struct udphdr)));
 	}
 	return (ret);
 }
