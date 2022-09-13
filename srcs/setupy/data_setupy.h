@@ -17,9 +17,9 @@
 
 t_func_mappy _setupy_exec[MAPPY_MAX_EXECUTION_HOOK] = {
 		setup_ipv4_tcp,
-		NULL,
-		NULL,
-		NULL,
+		setup_ipv4_udp,
+		setup_ipv6_tcp,
+		setup_ipv6_udp,
 		NULL,
 		NULL,
 		NULL,

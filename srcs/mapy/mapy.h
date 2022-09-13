@@ -118,6 +118,7 @@ int								set_iter_rd(t_root *root, t_func_iter_rd f);
 
 int			blky_branch_task_hooks(t_blk *blk);
 int			blky(t_blk *blk);
+int			blky_init(uint8_t *buf);
 
 
 #endif

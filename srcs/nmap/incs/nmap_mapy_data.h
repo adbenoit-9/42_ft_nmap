@@ -16,14 +16,16 @@
 //#include "mapy.h"
 #include "data_buildy.h"
 #include "data_sendy.h"
-//#include "data_cleany.h"
+#include "data_cleany.h"
 #include "data_recy.h"
-//#include "data_setupy.h"
+#include "data_setupy.h"
 
 t_func_mapy *_exec[EXEC_MAX_CMD] = {
 	_buildy_exec,
+	_setupy_exec,
 	_sendy_exec,
 	_recy_exec,
+	_cleany_exec,
 };
 
 //	_sendy_exec,

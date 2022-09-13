@@ -33,6 +33,7 @@ int			mapy(t_root *root)
 	uint64_t		index;
 	t_blk			*blk;
 	
+	memset(root->blk_flag, 0, sizeof(root->blk_flag));
 	if (!root) {
 		r = MAPY_ERR;
 	}

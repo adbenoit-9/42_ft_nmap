@@ -56,7 +56,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 	//		bzero(host, 32);
 	//		memcpy(host, host, strlen(host));
 			fprintf(stderr, "res->ai_addr.s_family=%x", res->ai_addr->sa_family);
-			memcpy(&link->sock, res->ai_addr, sizeof(struct sockaddr_storage));
+			memcpy(&link->sock, res->ai_addr, sizeof(*res->ai_addr));
 			freeaddrinfo(res);
 		}
 	}

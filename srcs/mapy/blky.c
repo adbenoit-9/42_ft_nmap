@@ -35,6 +35,20 @@ int			blky_branch_task_hooks(t_blk *blk)
 	return (0);
 }
 
+int			blky_init(uint8_t *blks)
+{
+	size_t		i = 0;
+	t_blk		*tmp;
+
+	while (i < (sizeof(t_blk) * BLCK_NB))
+	{
+		tmp = (t_blk*)&blks[i];
+		tmp->flag = BLK_IDLE;
+		i += sizeof(t_blk);
+	}
+	return (0);
+}
+
 int			blky(t_blk *blk)
 {
 	int		r = BLKY_OK;
@@ -42,6 +56,7 @@ int			blky(t_blk *blk)
 
 	while (r == BLKY_OK && i < EXEC_LST_SIZE)
 	{
+		fprintf(stderr, "%s:%d task[]=%x hook[]=%x\n", __func__, __LINE__, blk->exe.tasks[i], blk->exe.hook[i]);
 		r = (*_exec[blk->exe.tasks[i]]
 				[blk->exe.hook[i]])
 				(blk->map, blk->st,

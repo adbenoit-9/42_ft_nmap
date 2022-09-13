@@ -21,7 +21,7 @@
 
 #define SCAN_LIMIT			6
 #define PORT_LIMIT			1024
-#define IP_LIMIT			16
+#define IP_LIMIT			32
 
 typedef struct		s_nmap_setting {
 	uint16_t							ports[PORT_LIMIT];

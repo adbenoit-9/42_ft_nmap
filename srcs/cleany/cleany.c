@@ -12,10 +12,11 @@
 
 #include "cleany.h"
 
-int 				clean_net(void *root, void *link, void *app)
+int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 {
 	int			r		= CLEANY_OK;
 
+	(void)map;
 	if (!root || !link || !app)
 	{
 		r = CLEANY_ERROR;

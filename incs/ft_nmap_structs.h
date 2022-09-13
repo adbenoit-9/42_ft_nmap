@@ -17,11 +17,11 @@ typedef struct			s_app {
 typedef struct		s_scan {
 	t_exec_proto				cross;
 /* out value */
-	uint32_t					result;
+	uint32_t				result;
 /* internal use */
-	int							socket;
-	uint32_t					packet_length;
+	int					socket;
+	uint32_t				packet_length;
 /* in params */
-	uint16_t					tcpflag;
-}					t_scan;
+	uint16_t				tcpflag;
+}				t_scan;
 #endif

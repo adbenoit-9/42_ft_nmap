@@ -20,14 +20,13 @@
 #endif
 
 
-// sety function
-// t_func_mapy _cleany_exec[EXEC_MAX_CMD] = {
-// 		clean_net,
-// 		NULL,
-// 		NULL,
-// 		NULL,
-// 		NULL,
-// };
+t_func_mapy _cleany_exec[EXEC_MAX_CMD] = {
+		clean_net,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+};
 
 
 #endif
