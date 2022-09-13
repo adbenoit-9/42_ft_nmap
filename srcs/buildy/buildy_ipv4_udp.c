@@ -24,6 +24,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	uint32_t		i, sip, dip;
 	struct ifaddrs	*saddr;
 	
+	printf("ipv4 udp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}

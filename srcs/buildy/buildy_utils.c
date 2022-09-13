@@ -124,3 +124,24 @@ uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 	
 	return (ipv4_checksum((uint16_t*)tcp, offset));
 }
+
+uint16_t			tcp_ipv6_checksum(uint8_t *ip, uint16_t tcplen)
+{
+	uint8_t						tcp[64] = {0};
+	int							offset = 0;
+	uint16_t					tmp;
+
+	memcpy(&tcp[offset], &ip[12], 4);
+	offset += 4;
+	memcpy(&tcp[offset], &ip[16], 4);
+	offset += 4;
+	offset += 1;
+	memcpy(&tcp[offset], &ip[9], 1);
+	offset += 1;
+	tmp = htons(tcplen);
+	memcpy(&tcp[offset], &tmp, 2);
+	offset += 2;
+	memcpy(&tcp[offset], &ip[sizeof(struct ip6_hdr)], tcplen);
+	offset += tcplen;
+	return (ipv4_checksum((uint16_t*)tcp, offset));
+}

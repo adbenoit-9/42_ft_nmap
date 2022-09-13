@@ -21,9 +21,9 @@
 
 t_func_mapy _sendy_exec[EXEC_MAX_HOOK] = {
 		send_tcp,
-		NULL,
-		NULL,
-		NULL,
+		send_udp,
+		send_tcp,
+		send_udp,
 		NULL,
 		NULL,
 		NULL,

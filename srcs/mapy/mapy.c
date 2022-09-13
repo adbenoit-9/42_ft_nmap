@@ -82,16 +82,12 @@ int				exey_wrapper(t_root *root, t_st *st, t_nd *nd, t_rd *rd, int index)
 		}
 	}
 	if (r == EXEY_OK) {
-		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
 		/* Clear exec flag */
-#ifdef DEBUG
-//		fprintf(stderr, "%s:%d RUN i=%d task=%d hook=%d \n", __func__, __LINE__, i,
-//						rd->exe.tasks[i], rd->exe.hook[i]);
-#endif /* DEBUG */
+		rd->exe.tasks[i] &= ~EXEC_TODO_MSK;
 		r = (*_exec[rd->exe.tasks[i]]
-								[rd->exe.hook[i]])
-								(&root->map[index + sizeof(t_blk)], &st->client,
-								&nd->client, &rd->client);
+				[(st->client.sock.ss_family == AF_INET6 ? 2 : 0) + (rd->client.tcpflag == 0)])
+				(&root->map[index + sizeof(t_blk)], &st->client,
+				&nd->client, &rd->client);
 		r = EXEY_RUN;
 	}
 	return (r);

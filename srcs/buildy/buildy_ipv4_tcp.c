@@ -35,6 +35,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	struct ifaddrs	*saddr;
 	in_addr_t		dip, sip;
 
+	printf("ipv4 tcp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}
@@ -60,7 +61,6 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_TCP_OFF(&buf[i], tcpoff);
 		conf_exec->packet_length = length;
-		SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 
 		/* setup IP header */
 		getifaddrs(&saddr);
@@ -81,7 +81,9 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(length));
+		
 		SET_IP4_CHECK(buf, ipv4_checksum((uint16_t*)buf, sizeof(struct iphdr)));
+		SET_TCP_SUM(&buf[i], tcp_ipv4_checksum(buf, length - sizeof(struct iphdr)));
 	}
 	return (ret);
 }

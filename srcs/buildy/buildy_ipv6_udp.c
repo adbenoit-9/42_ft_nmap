@@ -26,6 +26,7 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	struct ifaddrs	*saddr;
 	struct in6_addr	dip, sip;
 
+	printf("ipv6 udp\n");
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
 	}
@@ -48,8 +49,8 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		}
 		SET_IP6_SRC(buf, sip);
 		SET_IP6_DST(buf, dip);
-		SET_IP6_FLOW(buf, 0x050b00); // DEBUG
-		SET_IP6_NXT(buf, 0x11); // UDP
+		SET_IP6_FLOW(buf, 0);
+		SET_IP6_NXT(buf, IPPROTO_UDP);
 		SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));
 		SET_IP6_VFC(buf, IPV6_VERSION, 0x0);
 		SET_IP6_PLEN(buf, htons(sizeof(struct udphdr)));

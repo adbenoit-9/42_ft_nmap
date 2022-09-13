@@ -28,7 +28,7 @@ if (((struct sockaddr_storage *)sockaddr).ss_family == AF_INET) { \
 }	else { \
 		hook = 0; \
 }else { \
-	if { \
+	if (nd == NMAP_UDP) { \
 		hook = 4; \
 }	else { \
 		hook = 3; \
