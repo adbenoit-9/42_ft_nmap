@@ -27,7 +27,7 @@ int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif /* DEBUG */
 		/* Close a socket */
-		close(((t_nmap_link*)link)->socket);
+//		close(((t_nmap_link*)link)->socket);
 	}
 	return (r);
 }

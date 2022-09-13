@@ -37,9 +37,9 @@ int			mapy(t_root *root)
 	if (!root) {
 		r = MAPY_ERR;
 	}
-	count = 0;
 	while (r == EXEY_RUN  || r == EXEY_BUSY)
 	{
+		count = 0;
 		r = EXEY_RUN;
 		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
 			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE) && j < root->nd_nb; j++) {
@@ -47,8 +47,7 @@ int			mapy(t_root *root)
 											&& k < root->rd_nb; k++, count++) {
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
-					printf("count = %ld\n", count);
-					if (root->blk_flag[count % BLCK_NB] == BLK_TODO) {
+					if (root->blk_flag[count] == BLK_TODO) {
 						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
 						}
@@ -60,23 +59,26 @@ int			mapy(t_root *root)
 							blk->rd = &root->rd[k].client;
 							blky_branch_task_hooks(blk);
 							r = blky(blk);
-							printf("ret = %d\n", r);
 							if (r == BLKY_OK) {
-								root->blk_flag[count % BLCK_NB] = BLK_DONE;
+								root->blk_flag[count] = BLK_DONE;
+								r = EXEY_RUN;
 							}
 							else {
-								root->blk_flag[count % BLCK_NB] = BLK_ERROR;
+								root->blk_flag[count] = BLK_ERROR;
+								r = EXEY_ERR;
 							}
 							blk->flag = BLK_IDLE;
-							r = EXEY_RUN;
 						}
+						fprintf(stderr, "%s:%d count=%lu r=%d\n", __func__, __LINE__, count, r);
 					}
 					else {
+						fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 						r = EXEY_IDLE;
 					}
 				}
 			}
 		}
+		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 	}
 	return (r);
 }
