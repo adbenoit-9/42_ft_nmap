@@ -36,7 +36,7 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->tcpflag);
 #endif /* DEBUG */
 		ret = get_urandom(random, 16);
-		length = sizeof(struct ip6_hdr) + sizeof(struct tcphdr);
+		length = sizeof(struct tcphdr);
 		i = sizeof(struct ip6_hdr);
 
 		/* setup TCP header */
@@ -49,7 +49,7 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			++tcpoff;
 			SET_TCP_DATA(&buf[i], syn_mss, 4);
 		}
-		conf_exec->packet_length = length;
+		conf_exec->packet_length = length + sizeof(struct ip6_hdr);
 		SET_TCP_FLAGS(&buf[i], conf_exec->tcpflag); // TODO 
 		SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_TCP_OFF(&buf[i], tcpoff);
@@ -67,11 +67,11 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP6_DST(buf, dip);
 		SET_IP6_FLOW(buf, 0);
 		SET_IP6_NXT(buf, IPPROTO_TCP);
-		SET_IP6_HLIM(buf, (uint8_t)(*(&random[2])));
+		SET_IP6_HLIM(buf, (uint8_t)(255));
 		SET_IP6_VFC(buf, IPV6_VERSION, 0x0);
 		SET_IP6_PLEN(buf, htons(length));
 
-		SET_TCP_SUM(&buf[i], ipv6_checksum(buf, length - sizeof(struct ip6_hdr), IPPROTO_TCP));
+		SET_TCP_SUM(&buf[i], ipv6_checksum(buf, length, IPPROTO_TCP));
 	}
 	return (ret);
 }

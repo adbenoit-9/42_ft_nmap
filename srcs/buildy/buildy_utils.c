@@ -114,20 +114,13 @@ uint16_t			tcp_ipv4_checksum(uint8_t *ip, uint16_t tcplen)
 	offset += 2;
 	memcpy(&tcp[offset], &ip[sizeof(struct iphdr)], tcplen);
 	offset += tcplen;
-	//fprintf(stderr, "tcplen=%d Pseudo-tcp hdr for sum : {", tcplen);
-	//int j = 0;
-	//while (j < offset)
-	//{
-	//	fprintf(stderr, "%02x ", tcp[j++]);
-	//}
-	//fprintf(stderr, "}\n");
 	
 	return (checksum((uint16_t*)tcp, offset));
 }
 
 uint16_t	ipv6_checksum(uint8_t *ip, uint16_t tcplen, uint8_t nxt_hdr)
 {
-	uint8_t		tcp[64 + 16] = {0};
+	uint8_t		tcp[64] = {0};
 	int			offset = 0;
 	uint32_t	len;
 
