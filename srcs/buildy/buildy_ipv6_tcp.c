@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:52:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:38:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP6_DST(buf, dip);
 		SET_IP6_FLOW(buf, 0);
 		SET_IP6_NXT(buf, IPPROTO_TCP);
-		SET_IP6_HLIM(buf, (uint8_t)(255));
+		SET_IP6_HLIM(buf, (uint8_t)255);
 		SET_IP6_VFC(buf, IPV6_VERSION, 0x0);
 		SET_IP6_PLEN(buf, htons(length));
 

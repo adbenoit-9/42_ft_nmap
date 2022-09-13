@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 16:26:47 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:30:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		/* setup UDP header */
 		SET_UDP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 		SET_UDP_DPORT(&buf[i], htons(conf_nd->port));
-		SET_UDP_LEN(&buf[i], htons(conf_exec->packet_length));
+		SET_UDP_LEN(&buf[i], htons(sizeof(struct udphdr)));
 		SET_UDP_ACK(&buf[i], ipv4_checksum(buf, sizeof(struct udphdr)));
 	}
 	return (ret);
