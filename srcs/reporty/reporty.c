@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap.h                                             :+:      :+:    :+:   */
+/*   reporty.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 13:15:26 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/14 14:22:51 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NMAP_H
-# define NMAP_H
+#include "reporty.h"
 
-# include <stdint.h>
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <pcap/pcap.h>
-# include <pthread.h>
-# include "mapy.h"
-# include "nmap_hooks.h"
-# include "ft_nmap_parsing.h"
+int report(uint8_t *map, void *root, void *link, void *app)
+{
+    int ret = REPORTY_OK;
 
-int	scany(t_nmap_setting *settings, t_root *root);
-int parse_results(t_root *root);
-
-#endif
+    if (!map || !root || !link || !app) {
+        ret = REPORTY_ERROR;
+    }
+    // else if (((t_nmap_link*)link)->nb_scanned == {
+        
+    // }
+    return (ret);
+}

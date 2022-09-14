@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap.h                                             :+:      :+:    :+:   */
+/*   export_reporty.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 13:15:26 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
+/*   Updated: 2022/09/14 13:49:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NMAP_H
-# define NMAP_H
+#ifndef EXPORT_REPORTY_H
+# define EXPORT_REPORTY_H
 
 # include <stdint.h>
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <pcap/pcap.h>
-# include <pthread.h>
 # include "mapy.h"
-# include "nmap_hooks.h"
-# include "ft_nmap_parsing.h"
 
-int	scany(t_nmap_setting *settings, t_root *root);
-int parse_results(t_root *root);
+/* Exported function */
+int report(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
+
+# define SELECT_HOOK_REPORTY(sockaddr, nd, hook) do { \
+		hook = 0; \
+} while (0)
 
 #endif

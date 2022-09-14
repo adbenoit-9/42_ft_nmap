@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 11:03:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:24:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,21 @@ int main(int ac, char **av)
 		/* Parsing */
 		r = parser(ac, av, settings);
 		if (r == PARSY_OK) {
-			if (getuid() != 0) {
-				dprintf(STDERR_FILENO, "You requested a scan type which requires root privileges.\nQUITTING!\n");
-			}
-			else {
-				dump_config(buf, settings);
-				/* Update size of tree params */
-				((t_root*)buf)->st_nb = settings->ip_nb;
-				((t_root*)buf)->nd_nb = settings->port_nb;
-				((t_root*)buf)->rd_nb = settings->scan_nb;
-				/* Fill parameters in tree */
-				if (set_iter_st(root, set_sockaddr))
-					return (-1);
-				if (set_iter_st(root, set_src_sockaddr))
-					return (-1);
-				if (set_iter_nd(root, iter_set_port))
-					return (-1);
-				if (set_iter_rd(root, iter_set_tcpflag))
-					return (-1);
-				//exey_ctrl(root, nmap_init_exey);
-				scany(settings, root);
-				//exey_ctrl(root, nmap_clean_exey);
-			}
+			dump_config(buf, settings);
+			/* Update size of tree params */
+			((t_root*)buf)->st_nb = settings->ip_nb;
+			((t_root*)buf)->nd_nb = settings->port_nb;
+			((t_root*)buf)->rd_nb = settings->scan_nb;
+			/* Fill parameters in tree */
+			if (set_iter_st(root, set_sockaddr))
+				return (-1);
+			if (set_iter_nd(root, iter_set_port))
+				return (-1);
+			if (set_iter_rd(root, iter_set_tcpflag))
+				return (-1);
+			//exey_ctrl(root, nmap_init_exey);
+			scany(settings, root);
+			//exey_ctrl(root, nmap_clean_exey);
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;

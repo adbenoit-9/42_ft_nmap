@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:04:01 by leon             ###   ########.fr        #
+#    Updated: 2022/09/14 13:39:05 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SETUP_DIR		:= $(SRC_DIR)/setupy
 REC_DIR			:= $(SRC_DIR)/recy
 MAP_DIR			:= $(SRC_DIR)/mapy
 PARS_DIR		:= $(SRC_DIR)/parsy
+REPORT_DIR		:= $(SRC_DIR)/reporty
 LIBFT_DIR		:= $(SRC_DIR)/libft
 
 LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
@@ -44,8 +45,8 @@ LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(SEND_DIR)/sendy.a\
 					$(PARS_DIR)/parsy.a\
 					$(LIBFT_DIR)/libft.a\
-					$(SETUP_DIR)/setupy.a
-# $(MAP_DIR)/mapy.a
+					$(SETUP_DIR)/setupy.a\
+					$(REPORT_DIR)/reporty.a
 
 # FILES
 BUILD 			:= .build
@@ -60,7 +61,8 @@ INC_SUB_DIR		:= buildy\
 					proty\
 					recy\
 					sendy\
-					setupy
+					setupy\
+					reporty
 
 INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(INC_SUB_DIR))
 
@@ -130,6 +132,7 @@ lib_debug:
 	@make -C $(SEND_DIR) debug
 	@make -C $(PARS_DIR) debug
 	@make -C $(SETUP_DIR) debug
+	@make -C $(REPORT_DIR) debug
 
 lib:
 	@make -C $(LIBFT_DIR)
@@ -139,8 +142,7 @@ lib:
 	@make -C $(SEND_DIR)
 	@make -C $(PARS_DIR)
 	@make -C $(SETUP_DIR)
-# @make -C $(SETUP_DIR)
-# @make -C $(MAPY_DIR)
+	@make -C $(REPORT_DIR)
 	
 lib_clean:
 	@make -C $(LIBFT_DIR) clean
@@ -150,8 +152,7 @@ lib_clean:
 	@make -C $(SEND_DIR) clean
 	@make -C $(SETUP_DIR) clean
 	@make -C $(PARS_DIR) clean
-# @make -C $(SETUP_DIR) clean
-# @make -C $(MAPY_DIR) clean
+	@make -C $(REPORT_DIR) clean
 	
 all: $(NAME)
 
