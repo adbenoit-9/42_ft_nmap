@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 16:22:22 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/14 16:36:21 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ REC_DIR			:= $(SRC_DIR)/recy
 MAP_DIR			:= $(SRC_DIR)/mapy
 PARS_DIR		:= $(SRC_DIR)/parsy
 REPORT_DIR		:= $(SRC_DIR)/reporty
+ANAL_DIR		:= $(SRC_DIR)/analysy
 LIBFT_DIR		:= $(SRC_DIR)/libft
 
 LIBFT_NAME		:= $(LIBFT_DIR)/libft.a
@@ -47,7 +48,8 @@ LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(PARS_DIR)/parsy.a\
 					$(LIBFT_DIR)/libft.a\
 					$(SETUP_DIR)/setupy.a\
-					$(REPORT_DIR)/reporty.a
+					$(REPORT_DIR)/reporty.a\
+					$(ANAL_DIR)/analysy.a
 
 # FILES
 BUILD 			:= .build
@@ -63,7 +65,8 @@ INC_SUB_DIR		:= buildy\
 					recy\
 					sendy\
 					setupy\
-					reporty
+					reporty\
+					analysy
 
 INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(INC_SUB_DIR))
 
@@ -76,7 +79,8 @@ SUB_DIR			:= buildy\
 					recy\
 					reporty\
 					sendy\
-					setupy
+					setupy\
+					analysy
 					
 DIRS			:= $(addprefix $(BUILD)/, $(SUB_DIR))
 
@@ -164,8 +168,9 @@ lib_debug:
 	@make -C $(PARS_DIR) debug
 	@make -C $(SETUP_DIR) debug
 	@make -C $(REPORT_DIR) debug
+	@make -C $(ANAL_DIR) debug
 
-lib: $(OBJ) $(PREP)
+lib:
 	@make -C $(LIBFT_DIR)
 	@make -C $(BUILD_DIR)
 	@make -C $(CLEAN_DIR)
@@ -174,7 +179,7 @@ lib: $(OBJ) $(PREP)
 	@make -C $(PARS_DIR)
 	@make -C $(SETUP_DIR)
 	@make -C $(REPORT_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread -lpcap
+	@make -C $(ANAL_DIR)
 	
 lib_clean:
 	@make -C $(LIBFT_DIR) clean
@@ -185,6 +190,7 @@ lib_clean:
 	@make -C $(SETUP_DIR) clean
 	@make -C $(PARS_DIR) clean
 	@make -C $(REPORT_DIR) clean
+	@make -C $(ANAL_DIR) clean
 	
 all: $(NAME)
 

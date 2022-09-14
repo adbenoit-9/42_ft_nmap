@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reporty.c                                          :+:      :+:    :+:   */
+/*   data_analysy.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:27:38 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/09/14 13:34:55 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/14 16:30:28 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reporty.h"
+#ifndef DATA_ANALYSY_H
+# define DATA_ANALYSY_H
 
-int report(uint8_t *map, void *root, void *link, void *app)
-{
-    int ret = REPORTY_OK;
+# include "export_analysy.h"
 
-    if (!map || !root || !link || !app) {
-        ret = REPORTY_ERROR;
-    }
-    // else if (((t_nmap_link*)link)->nb_scanned == {
-        
-    // }
-    return (ret);
-}
+#ifdef MAP_CMD_INDEX
+# define REPORTY_CMD_INDEX MAP_CMD_INDEX
+#endif
+
+t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
+	analyse,
+	NULL,
+	NULL,
+	NULL
+};
+
+#endif
