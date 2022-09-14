@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 14:24:00 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 17:23:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct		s_nmap_blkhdr {
 	int							socket;
 	pcap_t						*pcap_handler;
 	socklen_t					socklen;
+	uint8_t						result;
 }			t_nmap_blkhdr;
 
 typedef struct		s_nmap_setting {

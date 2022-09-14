@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 12:03:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 17:15:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct					s_exe {
 /* Header block structure : can be use for controlling access to blocks */
 typedef	struct						s_blk {
 	t_exe			exe;
-	T_CLIENT_ROOT		*root;
-        T_CLIENT_ST		*st;
-        T_CLIENT_ND		*nd;
+	T_CLIENT_ROOT	*root;
+    T_CLIENT_ST		*st;
+    T_CLIENT_ND		*nd;
 	T_CLIENT_RD		*rd;
 	uint32_t		flag;
 	uint8_t			map[MAP_BLCK_SIZE];

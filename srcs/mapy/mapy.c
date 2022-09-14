@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/13 19:04:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 17:27:53 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int			mapy(t_root *root)
 							blky_branch_task_hooks(blk);
 							r = blky(blk);
 							if (r == BLKY_OK) {
-								root->blk_flag[count] = BLK_DONE;
+								root->blk_flag[count] = ((t_nmap_blkhdr *)blk->map)->result;
 								r = EXEY_RUN;
 							}
 							else {
-								root->blk_flag[count] = BLK_ERROR;
+								root->blk_flag[count] = 0;
 								r = EXEY_ERR;
 							}
 							blk->flag = BLK_IDLE;
