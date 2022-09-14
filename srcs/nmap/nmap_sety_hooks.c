@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sety_hooks.c                                       :+:      :+:    :+:   */
+/*   nmap_sety_hooks.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
+/*   Updated: 2022/09/14 19:49:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nmap_structs.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <pcap/pcap.h>
 #include <netdb.h>
 #include <string.h>
 #include "proty_tcp.h"
+#include "nmap_structs.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -99,7 +100,6 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 
 	//		bzero(host, 32);
 	//		memcpy(host, host, strlen(host));
-			fprintf(stderr, "res->ai_addr.s_family=%x\n", res->ai_addr->sa_family);
 			memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 			freeaddrinfo(res);
 		}
