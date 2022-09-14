@@ -16,6 +16,7 @@
 int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			ret		= SENDY_OK;
+	t_nmap_blkhdr		*blkhdr		= (t_nmap_blkhdr*)buf;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = SENDY_ERROR;
@@ -25,26 +26,16 @@ int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 #ifdef DEBUG
 			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif /* DEBUG */
-        //int	optval	= 1;
-        //if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
-        //    socklen = sizeof(struct sockaddr);
-        //    sock = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
-        //    setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
-        //}
-        //else {
-        //    socklen = sizeof(struct sockaddr_in6);
-        //    sock = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
-        //    setsockopt(sock, IPPROTO_IPV6, IPV6_HDRINCL,  &optval, sizeof(int));
-        //}
-        ret = sendto(((t_nmap_link*)conf_st)->socket, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
-            (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, ((t_nmap_link*)conf_st)->socklen);
-        if (ret < 0)  {
-            perror("sendto");
-            ret = SENDY_ERROR;
-        }
-        else {
-            ret = SENDY_OK;
-        }
+		buf = &buf[sizeof(t_nmap_blkhdr)];
+        	ret = sendto(blkhdr->socket, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
+        	    (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, blkhdr->socklen);
+        	if (ret < 0)  {
+        	    perror("sendto");
+        	    ret = SENDY_ERROR;
+        	}
+        	else {
+        	    ret = SENDY_OK;
+        	}
 	}
 	return (ret);
 }

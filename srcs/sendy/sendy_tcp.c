@@ -17,6 +17,7 @@
 int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			ret		= SENDY_OK;
+	t_nmap_blkhdr		*blkhdr		= (t_nmap_blkhdr*)buf;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = SENDY_ERROR;
@@ -27,8 +28,9 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 		fprintf(stderr, "%s:%d ((t_nmap_link*)conf_st)->sock.ss_family = %d\n", __func__, __LINE__, ((t_nmap_link*)conf_st)->sock.ss_family);
 #endif /* DEBUG */
-        	ret = sendto(((t_nmap_link*)conf_st)->socket, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
-        	    (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, ((t_nmap_link*)conf_st)->socklen);
+		buf = &buf[sizeof(t_nmap_blkhdr)];
+        	ret = sendto(blkhdr->socket, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
+        	    (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, blkhdr->socklen);
         	if (ret < 0)  {
         	    perror("sendto");
         	    ret = SENDY_ERROR;

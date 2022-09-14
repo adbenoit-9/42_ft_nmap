@@ -16,6 +16,7 @@ int 				setup_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 {
 	int			r		= SETUPY_OK;
        	int			optval		= 1;
+	t_nmap_blkhdr		*blkhdr		= (t_nmap_blkhdr*)buf;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
@@ -23,8 +24,8 @@ int 				setup_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		((t_nmap_link*)conf_st)->socklen = sizeof(struct sockaddr);
-		((t_nmap_link*)conf_st)->socket = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
+		blkhdr->socklen = sizeof(struct sockaddr);
+		blkhdr->socket = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
 		if (((t_nmap_link*)conf_st)->socket < 0)
 		{
 			perror("socket");
@@ -32,7 +33,7 @@ int 				setup_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 		}
 		if (r == SETUPY_OK)
 		{
-			if (setsockopt(((t_nmap_link*)conf_st)->socket, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
+			if (setsockopt(blkhdr->socket, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
 			{
 				perror("setsockopt");
 				r = SETUPY_ERROR;

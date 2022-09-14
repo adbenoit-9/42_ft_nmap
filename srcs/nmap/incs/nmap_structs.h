@@ -23,6 +23,12 @@
 #define PORT_LIMIT			1024
 #define IP_LIMIT			32
 
+typedef struct		s_nmap_blkhdr {
+	int					socket;
+	pcap_t					*pcap_handler;
+	socklen_t				socklen;
+}			t_nmap_blkhdr;
+
 typedef struct		s_nmap_setting {
 	uint16_t							ports[PORT_LIMIT];
 	uint8_t								scans[SCAN_LIMIT];

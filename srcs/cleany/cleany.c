@@ -15,6 +15,7 @@
 int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 {
 	int			r		= CLEANY_OK;
+	t_nmap_blkhdr		*blkhdr		= (t_nmap_blkhdr*)map;
 
 	(void)map;
 	if (!root || !link || !app)
@@ -27,7 +28,7 @@ int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif /* DEBUG */
 		/* Close a socket */
-		close(((t_nmap_link*)link)->socket);
+		close(blkhdr->socket);
 	}
 	return (r);
 }

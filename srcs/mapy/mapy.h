@@ -44,10 +44,6 @@ typedef struct					s_exe {
 	int				tasks[EXEC_LST_SIZE];
 }						t_exe;
 
-typedef	struct						s_blk_var {
-	int	socket;
-}							t_blk_var;
-
 /* Header block structure : can be use for controlling access to blocks */
 typedef	struct						s_blk {
 	t_exe			exe;
@@ -56,7 +52,6 @@ typedef	struct						s_blk {
         T_CLIENT_ND		*nd;
 	T_CLIENT_RD		*rd;
 	uint32_t		flag;
-	t_blk_var		var;
 	uint8_t			map[MAP_BLCK_SIZE];
 }							t_blk;
 

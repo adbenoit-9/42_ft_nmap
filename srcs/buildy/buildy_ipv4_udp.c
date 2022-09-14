@@ -30,7 +30,8 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 #ifdef DEBUG
 		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->tcpflag);
 #endif /* DEBUG */
-		bzero(buf, MAP_BLCK_SIZE);
+		buf = &buf[sizeof(t_nmap_blkhdr)];
+		bzero(buf, MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		ret = get_urandom(random, 16);
 		conf_exec->packet_length = sizeof(struct iphdr) + sizeof(struct udphdr);
 		i = sizeof(struct iphdr);
