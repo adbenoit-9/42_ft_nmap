@@ -29,6 +29,7 @@ int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 #endif /* DEBUG */
 		/* Close a socket */
 		close(blkhdr->socket);
+		pcap_close(blkhdr->pcap_handler);
 	}
 	return (r);
 }

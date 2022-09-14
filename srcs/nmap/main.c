@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 13:27:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:24:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int main(int ac, char **av)
 			/* Fill parameters in tree */
 			if (set_iter_st(root, set_sockaddr))
 				return (-1);
+			if (set_iter_st(root, set_src_sockaddr))
+				return (-1);
 			if (set_iter_nd(root, iter_set_port))
 				return (-1);
 			if (set_iter_rd(root, iter_set_tcpflag))
@@ -76,7 +78,7 @@ int main(int ac, char **av)
 			//exey_ctrl(root, nmap_clean_exey);
 		}
 		else if (r == PARSY_STOP)
-			r = PARSY_OK;
+			r = PARSY_KO;
 	}
 	return (r);
 }

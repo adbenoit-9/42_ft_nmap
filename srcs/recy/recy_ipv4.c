@@ -32,11 +32,12 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
+		fprintf(stderr, "%s:%d", __func__, __LINE__);
 		r = RECY_ERROR;
 	}
 	else
 	{
-		snprintf(filter, FILTER_SIZE, "src host %s and (tcp port %d or %s or udp port %d)",
+		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
 			inet_ntoa(((struct sockaddr_in*)&((t_nmap_link*)conf_st)->src_sock)->sin_addr),
 			((t_nmap_app*)conf_nd)->port,
 			pre_built_filter_icmp,

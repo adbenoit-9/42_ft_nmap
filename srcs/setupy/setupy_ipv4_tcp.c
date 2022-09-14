@@ -39,18 +39,19 @@ int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 				r = SETUPY_ERROR;
 			}
 		}
-	//	if (r == SETUPY_OK)
-	//	{
-	//		/* Note BUFSIZ is defined in stdio for std buffer : 8192 */
-	//		if (r == 0)
-	//		{
-	//			nmap->pcap_handler = pcap_open_live(alldevs->name, BUFSIZ, 1, 1000, err);
-	//			if (nmap->pcap_handler == NULL)
-	//			{
-	//				r = MAPY_ERR;
-	//			}
-	//		}
-	//	}
+		if (r == SETUPY_OK)
+		{
+			/* Note BUFSIZ is defined in stdio for std buffer : 8192 */
+			if (r == 0)
+			{
+				blkhdr->pcap_handler = pcap_open_live(((t_nmap_link*)conf_st)->dev_name, BUFSIZ, 1, PCAP_BUFFER_TIMEOUT, NULL);
+				if (blkhdr->pcap_handler == NULL)
+				{
+					perror("pcap_open_live");
+					r = SETUPY_ERROR;
+				}
+			}
+		}
 	}
 	return (r);
 }
