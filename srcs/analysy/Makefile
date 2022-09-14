@@ -6,11 +6,12 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 16:14:21 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/14 16:29:27 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc-10
+CC		= gcc-10
+
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
 DEPFLAGS = -MP -MD
@@ -20,15 +21,13 @@ ifeq ($(UNAME), Darwin)
 	CFLAGS += -DMAC
 endif
 
-MODULES	:= ../nmap/incs\
+MODULES	:= ../mapy\
+			../nmap/incs\
 			../proty
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = setupy_ipv4_tcp.c \
-		setupy_ipv4_udp.c\
-		setupy_ipv6_tcp.c\
-		setupy_ipv6_udp.c
+SRC			:= analysy.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
@@ -37,7 +36,7 @@ ASM_DIR 	:= $(BUILD)/asm
 OBJ			:= $(SRC:%.c=$(OBJ_DIR)/%.o)
 ASM			:= $(SRC:%.c=$(ASM_DIR)/%.s)
 
-NAME	:= setupy.a
+NAME	:= analysy.a
 
 all : $(NAME) 
 
@@ -55,6 +54,8 @@ $(OBJ_DIR)/%.o:%.c | $(BUILD)
 $(ASM_DIR)/%.s:%.c | $(BUILD)
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -S -o $@ $^ 
 
+debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
+debug: re
 
 clean:
 	@rm -Rf $(BUILD)

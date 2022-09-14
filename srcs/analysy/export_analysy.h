@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reporty.c                                          :+:      :+:    :+:   */
+/*   export_analysy.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:27:38 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
+/*   Updated: 2022/09/14 16:30:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reporty.h"
+#ifndef EXPORT_ANALYSY_H
+# define EXPORT_ANALYSY_H
 
-int report(uint8_t *map, void *root, void *link, void *app)
-{
-    int ret = REPORTY_OK;
+# include <stdint.h>
+# include "mapy.h"
 
-    if (!map || !root || !link || !app) {
-        ret = REPORTY_ERROR;
-    }
-    // else if (((t_nmap_link*)link)->nb_scanned == {
-        
-    // }
-    return (ret);
-}
+/* Exported function */
+int analyse(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
+
+# define SELECT_HOOK_ANALYSY(sockaddr, nd, hook) do { \
+		hook = 0; \
+} while (0)
+
+#endif

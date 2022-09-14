@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:00:30 by leon             ###   ########.fr        #
+#    Updated: 2022/09/14 16:12:54 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ MODULES	:= ../nmap/incs\
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC = recy_ipv4.c \
-	recy_ipv6.c \
+		recy_ipv6.c \
 		recy_utils.c
 # recy_ipv4_udp.c\
 # recy_ipv6_tcp.c\

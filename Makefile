@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 13:39:05 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/14 16:36:21 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,10 @@ REC_DIR			:= $(SRC_DIR)/recy
 MAP_DIR			:= $(SRC_DIR)/mapy
 PARS_DIR		:= $(SRC_DIR)/parsy
 REPORT_DIR		:= $(SRC_DIR)/reporty
+ANAL_DIR		:= $(SRC_DIR)/analysy
 LIBFT_DIR		:= $(SRC_DIR)/libft
 
+LIBFT_NAME		:= $(LIBFT_DIR)/libft.a
 LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(CLEAN_DIR)/cleany.a\
 					$(REC_DIR)/recy.a\
@@ -46,7 +48,8 @@ LIB_NAMES		:= $(BUILD_DIR)/buildy.a\
 					$(PARS_DIR)/parsy.a\
 					$(LIBFT_DIR)/libft.a\
 					$(SETUP_DIR)/setupy.a\
-					$(REPORT_DIR)/reporty.a
+					$(REPORT_DIR)/reporty.a\
+					$(ANAL_DIR)/analysy.a
 
 # FILES
 BUILD 			:= .build
@@ -62,26 +65,26 @@ INC_SUB_DIR		:= buildy\
 					recy\
 					sendy\
 					setupy\
-					reporty
+					reporty\
+					analysy
 
 INC_DIR 		:= $(addprefix $(SRC_DIR)/, $(INC_SUB_DIR))
 
-SUB_DIR			:= nmap\
+SUB_DIR			:= buildy\
+					cleany\
 					mapy\
+					nmap\
+					parsy\
 					prompty\
-					setupy
+					recy\
+					reporty\
+					sendy\
+					setupy\
+					analysy
 					
 DIRS			:= $(addprefix $(BUILD)/, $(SUB_DIR))
 
 SRC				:=
-
-# SUB_SRC			:= parser.c \
-# 					parse_ip.c \
-# 					parse_scan.c \
-# 					parse_ports.c \
-# 					parse_speedup.c \
-# 					ft_isnumber.c
-# SRC				+= $(addprefix parsing/, $(SUB_SRC))
 SUB_SRC			:= main.c \
 					nmap_sety_hooks.c \
 					nmap_print.c \
@@ -89,13 +92,42 @@ SUB_SRC			:= main.c \
 					nmap_iter_hooks.c \
 					nmap_scany.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
-
+SUB_SRC			:= buildy_ipv4_tcp.c\
+					buildy_utils.c\
+					buildy_ipv4_udp.c\
+					buildy_ipv6_tcp.c\
+					buildy_ipv6_udp.c\
+					buildy_checksum.c
+SRC				+= $(addprefix buildy/, $(SUB_SRC))
+SUB_SRC			:= cleany.c
+SRC				+= $(addprefix cleany/, $(SUB_SRC))
+SUB_SRC			:= parsy.c \
+					parse_ip.c \
+					parse_scan.c \
+					parse_ports.c \
+					parse_speedup.c \
+					ft_isnumber.c \
+					error.c
+SRC				+= $(addprefix parsy/, $(SUB_SRC))
+SUB_SRC			:= recy_ipv4.c \
+					recy_ipv6.c \
+					recy_utils.c
+SRC				+= $(addprefix recy/, $(SUB_SRC))
+SUB_SRC			:= reporty.c
+SRC				+= $(addprefix reporty/, $(SUB_SRC))
+SUB_SRC			:= sendy_tcp.c\
+					sendy_udp.c
+SRC				+= $(addprefix sendy/, $(SUB_SRC))
+SUB_SRC			:= setupy_ipv4_tcp.c \
+					setupy_ipv4_udp.c\
+					setupy_ipv6_tcp.c\
+					setupy_ipv6_udp.c
+SRC				+= $(addprefix setupy/, $(SUB_SRC))
 SUB_SRC			:= mapy.c \
 					sety_f.c \
 					exey_f.c \
 					blky.c
 SRC				+= $(addprefix mapy/, $(SUB_SRC))
-
 SUB_SRC			:= prompty.c
 SRC				+= $(addprefix prompty/, $(SUB_SRC))
 
@@ -118,11 +150,14 @@ B_WHITE 		= \033[1;37m
 
 
 # MAKEFILE
-$(NAME): lib $(OBJ) $(PREP) 
+$(NAME): $(LIBFT_NAME) $(OBJ) $(PREP) 
 	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $@ -lpthread -lpcap
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_NAME) -o $@ -lpthread -lpcap
 	@echo "[1 / 1] - $(B_MAGENTA)$@"
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
+
+$(LIBFT_NAME):
+	@make -C $(LIBFT_DIR)
 
 lib_debug:
 	@make -C $(LIBFT_DIR) debug
@@ -133,6 +168,7 @@ lib_debug:
 	@make -C $(PARS_DIR) debug
 	@make -C $(SETUP_DIR) debug
 	@make -C $(REPORT_DIR) debug
+	@make -C $(ANAL_DIR) debug
 
 lib:
 	@make -C $(LIBFT_DIR)
@@ -143,6 +179,7 @@ lib:
 	@make -C $(PARS_DIR)
 	@make -C $(SETUP_DIR)
 	@make -C $(REPORT_DIR)
+	@make -C $(ANAL_DIR)
 	
 lib_clean:
 	@make -C $(LIBFT_DIR) clean
@@ -153,10 +190,11 @@ lib_clean:
 	@make -C $(SETUP_DIR) clean
 	@make -C $(PARS_DIR) clean
 	@make -C $(REPORT_DIR) clean
+	@make -C $(ANAL_DIR) clean
 	
 all: $(NAME)
 
-clean: lib_clean
+clean:
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"
 
@@ -177,8 +215,6 @@ debug: lib_debug $(OBJ) $(PREP)
 	@echo "[1 / 1] - $(B_MAGENTA)$(NAME)"
 	@echo "$(B_GREEN)(debug) Compilation done !$(NONE)"
 
-.PHONY: all clean fclean re debug lib
-
 $(BUILD):
 	@mkdir $@ $(DIRS)
 
@@ -193,3 +229,5 @@ $(BUILD)/%.s:$(SRC_DIR)/%.c | $(BUILD)
 $(BUILD)/%.i:$(SRC_DIR)/%.c | $(BUILD)
 	@printf "$(CL_LINE)Compiling srcs preprocessed : $(B_CYAN)$< $(NONE)...\r"
 	@$(CC) $(CFLAGS) $(OPTFLAGS) $(IFLAGS) -E -o $@ $^
+
+.PHONY: all clean fclean re debug lib lib_clean lib_debug norm

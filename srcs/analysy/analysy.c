@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reporty.c                                          :+:      :+:    :+:   */
+/*   analysy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:27:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:35:14 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reporty.h"
+#include "analysy.h"
 
-int report(uint8_t *map, void *root, void *link, void *app)
+int analyse(uint8_t *map, void *root, void *link, void *app)
 {
-    int ret = REPORTY_OK;
+    int ret = ANALYSY_OK;
 
     if (!map || !root || !link || !app) {
-        ret = REPORTY_ERROR;
+        ret = ANALYSY_ERROR;
     }
     // else if (((t_nmap_link*)link)->nb_scanned == {
         
