@@ -6,13 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 18:53:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 11:02:17 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nmap_parsing.h"
 
-void    fatal_error(int16_t error, char *arg)
+int    print_error(int16_t error, char *arg)
 {
 	dprintf(STDERR_FILENO, "ft_nmap: ");
 	switch (error)
@@ -50,9 +50,12 @@ void    fatal_error(int16_t error, char *arg)
 	case E_LIMIT_EXCEED:
 		PRINT_ELIMEXC;
 		break;
+	case E_NOPERM:
+		PRINT_ENOPERM;
+		break;
 	default:
 		dprintf(STDERR_FILENO, "%s\n", arg);
 		break;
 	}
-	exit(EXIT_FAILURE);
+	return(PARSY_KO);
 }

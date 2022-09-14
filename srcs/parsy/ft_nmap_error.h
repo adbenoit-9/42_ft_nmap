@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 20:28:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 11:01:41 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define E_NOARG 9
 # define E_BADOPT 10
 # define E_LIMIT_EXCEED 11
+# define E_NOPERM 12
 
 # define PRINT_ENOHOST do {dprintf(STDERR_FILENO,\
             "usage error: IP address required\n");}  while(0)
@@ -50,9 +51,11 @@
 # define PRINT_ELIMEXC do {dprintf(STDERR_FILENO,\
             "maximum limit of the number of ports scanned cannot exceed 1024\n");\
             } while(0)
-
+# define PRINT_ENOPERM do {dprintf(STDERR_FILENO,\
+            "You requested a scan type which requires root privileges.\nQUITTING!\n");\
+            } while(0)
 # define STR_ENOMEM "Out of memory"
 
-void    fatal_error(int16_t error, char *arg);
+int    print_error(int16_t error, char *arg);
 
 #endif
