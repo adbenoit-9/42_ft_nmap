@@ -21,7 +21,9 @@ void				nmap_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 		while (i < h->len && i < MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr))
 		{
 			((uint8_t*)user)[i] = bytes[i];
+			fprintf(stderr, "%02x:", user[i]);
 			i++;
 		}
+		fprintf(stderr, "\n");
 	}
 }

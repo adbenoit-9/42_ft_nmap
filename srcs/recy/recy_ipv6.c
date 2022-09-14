@@ -21,7 +21,8 @@
 #define RECY_OK 0
 #define RECY_ERROR -1
 
-static char pre_built_filter_icmp[] = "icmp[icmptype] == icmp-unreach";
+//static char pre_built_filter_icmp6[] = "icmp6type == icmp6-destinationrunreach";
+static char pre_built_filter_icmp6[] = "icmp6";
 
 int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
@@ -37,14 +38,20 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	}
 	else
 	{
-		inet_ntop(AF_INET6, &((struct sockaddr_in6*)&((t_nmap_link*)conf_st)->src_sock)->sin6_addr, ipstr, sizeof(struct sockaddr_in6)),
-		snprintf(filter, FILTER_SIZE, "src host %s and (tcp port %d or %s or udp port %d)",
+		if (!inet_ntop(AF_INET6, &((struct sockaddr_in6*)&((t_nmap_link*)conf_st)->src_sock)->sin6_addr, ipstr, sizeof(struct sockaddr_in6)))
+		{
+			perror("inet_ntop");
+			return (RECY_ERROR);
+		}
+		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
 			ipstr,
 			((t_nmap_app*)conf_nd)->port,
-			pre_built_filter_icmp,
+			pre_built_filter_icmp6,
 			((t_nmap_app*)conf_nd)->port);
+		fprintf(stderr, "filter = {%s}\n", filter);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
+			perror("pcap compile");
 			r = RECY_ERROR;
 		}
 		if (r == RECY_OK) {
@@ -53,6 +60,7 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			}
 		}
 		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		fprintf(stderr, "%s:%d", __func__, __LINE__);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
 		pcap_freecode(&bpf);

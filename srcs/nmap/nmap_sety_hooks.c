@@ -45,7 +45,9 @@ int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index
 	{
 		if (saddr->ifa_addr->sa_family == link->sock.ss_family && (saddr->ifa_flags & IFF_RUNNING))
 		{
-			if (htonl(((struct sockaddr_in*)&link->sock)->sin_addr.s_addr) == INADDR_LOOPBACK && (saddr->ifa_flags & IFF_LOOPBACK) != 0) {
+			if ((htonl(((struct sockaddr_in*)&link->sock)->sin_addr.s_addr) ==
+			INADDR_LOOPBACK ||
+			IN6_IS_ADDR_LOOPBACK(((struct sockaddr_in6*)&link->sock)->sin6_addr.s6_addr)) && (saddr->ifa_flags & IFF_LOOPBACK) != 0) {
 				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, sizeof(struct sockaddr_storage));
 				bzero(link->dev_name, 32);
 				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
