@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 10:10:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@
 
 # define STR_ENOMEM "Out of memory"
 
-void    fatal_error(int16_t error, char *arg, t_nmap_setting *opt);
+void    print_error(int16_t error, char *arg, t_nmap_setting *opt);
 
 #endif
