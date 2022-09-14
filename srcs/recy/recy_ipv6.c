@@ -48,7 +48,6 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			((t_nmap_app*)conf_nd)->port,
 			pre_built_filter_icmp6,
 			((t_nmap_app*)conf_nd)->port);
-		fprintf(stderr, "filter = {%s}\n", filter);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
 			perror("pcap compile");
@@ -60,7 +59,6 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			}
 		}
 		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
-		fprintf(stderr, "%s:%d", __func__, __LINE__);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
 		pcap_freecode(&bpf);

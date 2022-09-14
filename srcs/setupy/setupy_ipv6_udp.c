@@ -24,6 +24,7 @@ int 				setup_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
+		memset(blkhdr, 0, sizeof(*blkhdr));
         	blkhdr->socklen = sizeof(struct sockaddr_in6);
         	blkhdr->socket = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
 		if (((t_nmap_link*)conf_st)->socket < 0)

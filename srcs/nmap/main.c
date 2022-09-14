@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "nmap.h"
+#include "nmap_mapy_config.h"
 
 void	dump_config(uint8_t *buf, t_nmap_setting *settings)
 {
@@ -49,6 +50,7 @@ int main(int ac, char **av)
 	t_nmap_setting	*settings;
 	
 	buf = (uint8_t*)malloc(SIZE);
+	bzero(buf, SIZE);
 	if (buf == NULL) {
 		r = -1;
 	}
@@ -65,6 +67,9 @@ int main(int ac, char **av)
 			((t_root*)buf)->nd_nb = settings->port_nb;
 			((t_root*)buf)->rd_nb = settings->scan_nb;
 			/* Fill parameters in tree */
+			//memset(((t_root*)buf)->st, 0, sizeof(t_st) * ST_MAX);
+			//memset(((t_root*)buf)->nd, 0, sizeof(t_st) * ST_MAX);
+			//memset(((t_root*)buf)->rd, 0, sizeof(t_st) * ST_MAX);
 			if (set_iter_st(root, set_sockaddr))
 				return (-1);
 			if (set_iter_st(root, set_src_sockaddr))

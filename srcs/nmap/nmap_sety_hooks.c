@@ -48,13 +48,15 @@ int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index
 			if ((htonl(((struct sockaddr_in*)&link->sock)->sin_addr.s_addr) ==
 			INADDR_LOOPBACK ||
 			IN6_IS_ADDR_LOOPBACK(((struct sockaddr_in6*)&link->sock)->sin6_addr.s6_addr)) && (saddr->ifa_flags & IFF_LOOPBACK) != 0) {
-				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, sizeof(struct sockaddr_storage));
+				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr,
+				(((struct sockaddr_storage *)saddr->ifa_addr)->ss_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 				bzero(link->dev_name, 32);
 				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
 				b = 1;
 			}
 			else if ((saddr->ifa_flags & IFF_LOOPBACK) == 0) {
-				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, sizeof(struct sockaddr_storage));
+				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, 
+				(((struct sockaddr_storage *)saddr->ifa_addr)->ss_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 				bzero(link->dev_name, 32);
 				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
 				b = 1;
@@ -98,7 +100,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 	//		bzero(host, 32);
 	//		memcpy(host, host, strlen(host));
 			fprintf(stderr, "res->ai_addr.s_family=%x\n", res->ai_addr->sa_family);
-			memcpy(&link->sock, res->ai_addr, sizeof(struct sockaddr_storage));
+			memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 			freeaddrinfo(res);
 		}
 	}

@@ -10,7 +10,7 @@ void				nmap_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 							const u_char *bytes)
 {
 	int		r		= RECY_OK;
-	size_t		i		= 0;
+	size_t		i		= 14;
 
 	if (!user || !h || !bytes || h->len > MAP_BLCK_SIZE)
 	{
