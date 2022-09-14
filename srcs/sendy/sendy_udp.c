@@ -16,8 +16,6 @@
 int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			ret		= SENDY_OK;
-	int			sock;
-	socklen_t	socklen;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = SENDY_ERROR;
@@ -27,19 +25,19 @@ int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 #ifdef DEBUG
 			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif /* DEBUG */
-        int	optval	= 1;
-        if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
-            socklen = sizeof(struct sockaddr);
-            sock = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
-            setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
-        }
-        else {
-            socklen = sizeof(struct sockaddr_in6);
-            sock = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
-            setsockopt(sock, IPPROTO_IPV6, IPV6_HDRINCL,  &optval, sizeof(int));
-        }
-        ret = sendto(sock, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
-            (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, socklen);
+        //int	optval	= 1;
+        //if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET) {
+        //    socklen = sizeof(struct sockaddr);
+        //    sock = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
+        //    setsockopt(sock, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int));
+        //}
+        //else {
+        //    socklen = sizeof(struct sockaddr_in6);
+        //    sock = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
+        //    setsockopt(sock, IPPROTO_IPV6, IPV6_HDRINCL,  &optval, sizeof(int));
+        //}
+        ret = sendto(((t_nmap_link*)conf_st)->socket, buf,  ((t_nmap_scan*)conf_exec)->packet_length, 0,
+            (const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, ((t_nmap_link*)conf_st)->socklen);
         if (ret < 0)  {
             perror("sendto");
             ret = SENDY_ERROR;
@@ -47,7 +45,6 @@ int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
         else {
             ret = SENDY_OK;
         }
-        close(sock);
 	}
 	return (ret);
 }

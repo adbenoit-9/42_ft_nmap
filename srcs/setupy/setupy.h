@@ -27,21 +27,5 @@
 #include "proty_udp.h"
 
 #define SETUPY_OK 0
-#define SETUPY_KO -1
-
-# define SELECT_HOOK_SETUPY(sockaddr, nd, hook) do { \
-if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET) { \
-	if (nd == FLAG_S_UDP) { \
-		hook = 1; \
-}	else { \
-		hook = 0; \
-}} else { \
-	if (nd == FLAG_S_UDP){ \
-		hook = 3; \
-}	else { \
-		hook = 2; \
-	} \
-} \
-} while (0)
-
+#define SETUPY_ERROR -1
 #endif
