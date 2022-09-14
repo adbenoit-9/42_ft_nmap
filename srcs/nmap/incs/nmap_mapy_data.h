@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 14:13:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:14:19 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ t_func_mapy *_exec[EXEC_MAX_CMD] = {
 	_setupy_exec,
 	_sendy_exec,
 	_recy_exec,
-	_cleany_exec
+	_cleany_exec,
 	// _analysy_exec
+	_reporty_exec,
 };
 
 
