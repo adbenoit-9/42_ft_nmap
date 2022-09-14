@@ -51,12 +51,12 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_TCP_SPORT(&buf[i], (uint16_t)(*(&random[7])));
 		SET_TCP_WIN(&buf[i], 0x0004);
 		SET_TCP_URP(&buf[i], 0x0000);
-		if (conf_exec->tcpflag == FLAG_S_SYN) {
+		if (conf_exec->packet_flag == FLAG_S_SYN) {
 			length += 4;
 			++tcpoff;
 			SET_TCP_DATA(&buf[i], syn_mss, 4);
 		}
-		SET_TCP_FLAGS(&buf[i], conf_exec->tcpflag);
+		SET_TCP_FLAGS(&buf[i], conf_exec->packet_flag);
 		SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_TCP_OFF(&buf[i], tcpoff);
 		conf_exec->packet_length = length;

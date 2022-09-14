@@ -26,6 +26,6 @@ int					iter_set_port(t_nmap_setting *root, t_nmap_app *app, uint32_t index)
 
 int					iter_set_tcpflag(t_nmap_setting *root, t_nmap_scan *scan, uint32_t index)
 {
-	scan->tcpflag = root->scans[index];
+	scan->packet_flag = root->scans[index];
 	return (NMAP_OK);
 }

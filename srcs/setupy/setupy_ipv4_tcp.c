@@ -15,13 +15,41 @@
 int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
 	int			r		= SETUPY_OK;
+       	int			optval		= 1;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
-		r = SETUPY_KO;
+		r = SETUPY_ERROR;
 	}
 	else
 	{
+		((t_nmap_link*)conf_st)->socklen = sizeof(struct sockaddr);
+		((t_nmap_link*)conf_st)->socket = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+		if (((t_nmap_link*)conf_st)->socket < 0)
+		{
+			perror("socket");
+			r = SETUPY_ERROR;
+		}
+		if (r == SETUPY_OK)
+		{
+			if (setsockopt(((t_nmap_link*)conf_st)->socket, IPPROTO_IP, IP_HDRINCL,  &optval, sizeof(int)) < 0)
+			{
+				perror("setsockopt");
+				r = SETUPY_ERROR;
+			}
+		}
+	//	if (r == SETUPY_OK)
+	//	{
+	//		/* Note BUFSIZ is defined in stdio for std buffer : 8192 */
+	//		if (r == 0)
+	//		{
+	//			nmap->pcap_handler = pcap_open_live(alldevs->name, BUFSIZ, 1, 1000, err);
+	//			if (nmap->pcap_handler == NULL)
+	//			{
+	//				r = MAPY_ERR;
+	//			}
+	//		}
+	//	}
 	}
 	return (r);
 }

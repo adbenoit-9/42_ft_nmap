@@ -19,5 +19,8 @@
 /* Exported function */
 int 				clean_net(uint8_t *map, T_CLIENT_ST *link, T_CLIENT_ND *app, T_CLIENT_RD *scan);
 
+# define SELECT_HOOK_CLEANY(sockaddr, nd, hook) do { \
+		hook = 0; \
+} while (0)
 
 #endif

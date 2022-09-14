@@ -23,8 +23,4 @@
 #define CLEANY_OK	0
 #define CLEANY_ERROR	-1
 
-# define SELECT_HOOK_CLEANY(sockaddr, nd, hook) do { \
-		hook = 0; \
-} while (0)
-
 #endif

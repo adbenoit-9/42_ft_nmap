@@ -28,9 +28,9 @@ typedef struct		s_nmap_setting {
 	uint8_t								scans[SCAN_LIMIT];
 	int8_t								speedup;
 	char								*ips[IP_LIMIT];
-	int									ip_nb;
-	int									port_nb;
-	int									scan_nb;
+	int								ip_nb;
+	int								port_nb;
+	int								scan_nb;
 	pcap_t								*pcap_handler;
 	pthread_t							thread;
 	//struct sockaddr_storage				ip4_src;
@@ -38,8 +38,9 @@ typedef struct		s_nmap_setting {
 }					t_nmap_setting;
 
 typedef struct		s_nmap_link {
-	struct sockaddr_storage				sock;
+	struct sockaddr_storage							sock;
 	int									socket;
+	socklen_t								socklen;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {
@@ -49,7 +50,7 @@ typedef struct		s_nmap_app {
 
 typedef struct		s_nmap_scan {
 	int									packet_length;
-	uint8_t								tcpflag;
+	uint8_t									packet_flag;
 	int									result;
 }					t_nmap_scan;
 
