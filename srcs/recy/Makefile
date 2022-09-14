@@ -27,8 +27,9 @@ MODULES	:= ../nmap/incs\
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = recy_ipv4_tcp.c \
-		recy_pcap.c
+SRC = recy_ipv4.c \
+	recy_ipv6.c \
+		recy_utils.c
 # recy_ipv4_udp.c\
 # recy_ipv6_tcp.c\
 # recy_ipv6_udp.c

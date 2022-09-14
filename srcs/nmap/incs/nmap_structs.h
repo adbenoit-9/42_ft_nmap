@@ -47,6 +47,8 @@ typedef struct		s_nmap_link {
 	struct sockaddr_storage							sock;
 	int									socket;
 	socklen_t								socklen;
+	char									dev_name[32];
+	struct sockaddr_storage							src_sock;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {

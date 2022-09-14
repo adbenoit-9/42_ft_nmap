@@ -18,11 +18,52 @@
 #include "proty_tcp.h"
 
 #include <stdio.h>
+#include <stdbool.h>
+
+#include <net/if.h>
+#include <ifaddrs.h>
 
 #define NMAP_OK			0
 #define NMAP_ERROR		-1
 
 /* ST : t_func_sety_st */
+int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
+{
+	int		r = NMAP_OK;
+	struct ifaddrs	*top_saddr;
+	struct ifaddrs	*saddr;
+	bool			b = 0;
+
+	(void)root;
+	(void)index;
+	if (getifaddrs(&top_saddr) < 0)
+	{
+		r = NMAP_ERROR;
+	}
+	saddr = top_saddr;
+	while (saddr && b == 0 && r == NMAP_OK)
+	{
+		if (saddr->ifa_addr->sa_family == link->sock.ss_family && (saddr->ifa_flags & IFF_RUNNING))
+		{
+			if (htonl(((struct sockaddr_in*)&link->sock)->sin_addr.s_addr) == INADDR_LOOPBACK && (saddr->ifa_flags & IFF_LOOPBACK) != 0) {
+				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, sizeof(struct sockaddr_storage));
+				bzero(link->dev_name, 32);
+				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
+				b = 1;
+			}
+			else if ((saddr->ifa_flags & IFF_LOOPBACK) == 0) {
+				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, sizeof(struct sockaddr_storage));
+				bzero(link->dev_name, 32);
+				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
+				b = 1;
+			}
+		}
+		saddr = saddr->ifa_next;
+	}
+	freeifaddrs(top_saddr);
+	return (r);
+}
+
 int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 {
 	int						r 			= NMAP_OK;

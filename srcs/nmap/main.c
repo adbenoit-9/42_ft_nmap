@@ -93,6 +93,8 @@ int main(int ac, char **av)
 				/* Fill parameters in tree */
 				if (set_iter_st(root, set_sockaddr))
 					return (-1);
+				if (set_iter_st(root, set_src_sockaddr))
+					return (-1);
 				if (set_iter_nd(root, iter_set_port))
 					return (-1);
 				if (set_iter_rd(root, iter_set_tcpflag))
