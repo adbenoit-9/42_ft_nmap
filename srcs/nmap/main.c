@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 19:52:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 20:15:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	display_conf(t_nmap_setting *settings)
 	printf("Scan Configurations\nTarget Ip-Address : %s\n\
 No of Ports to scan : %d\n\
 Scans to be performed : %s\n\
-No of threads : %d\nScanning.\n",
+No of threads : %d\nScanning..\n",
 		ip_list, settings->port_nb, scan_list, settings->speedup);
 }
 
