@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 16:30:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:42:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "mapy.h"
 
 /* Exported function */
-int analyse(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
+int analyse_ipv4_tcp(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
 
 # define SELECT_HOOK_ANALYSY(sockaddr, nd, hook) do { \
 		hook = 0; \
