@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:00:03 by leon             ###   ########.fr        #
+#    Updated: 2022/09/14 16:14:21 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ MODULES	:= ../nmap/incs\
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC = setupy_ipv4_tcp.c \
-setupy_ipv4_udp.c\
-setupy_ipv6_tcp.c\
-setupy_ipv6_udp.c
+		setupy_ipv4_udp.c\
+		setupy_ipv6_tcp.c\
+		setupy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
