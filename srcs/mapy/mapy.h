@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 17:15:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 19:19:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #define SENDY_INDEX	2
 #define RECY_INDEX	3
 #define CLEANY_INDEX	4
+#define ANALYSY_INDEX	5
 
 
 #define MAPY_ERR	-1

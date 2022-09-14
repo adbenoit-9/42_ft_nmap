@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 19:10:34 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 19:21:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int analyse_fnxscan_ipv6(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *)
 	else {\
 		hook = 4;\
 	}\
-	if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET) {\
+	if (((struct sockaddr_storage *)sockaddr)->ss_family == AF_INET6) {\
 		++hook;\
 	}\
 } while (0)
