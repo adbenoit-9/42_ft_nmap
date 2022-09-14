@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 19:09:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 11:47:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP4_PROTOCOL(buf, IPPROTO_UDP);
 		SET_IP4_FRAG_OFF(buf, 0x0000);
 		SET_IP4_ID(buf, (uint16_t)(*(&random[0])));
+		random[2] |= (1 << 5);
+		random[2] &= 0x3F;
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(conf_exec->packet_length));
 		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
