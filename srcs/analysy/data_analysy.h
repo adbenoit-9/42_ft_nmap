@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:34:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:30:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:42:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #endif
 
 t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
-	analyse,
+	analyse_ipv4_tcp,
 	NULL,
 	NULL,
 	NULL

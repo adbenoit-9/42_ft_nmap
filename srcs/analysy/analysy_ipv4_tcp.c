@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analysy.c                                          :+:      :+:    :+:   */
+/*   analysy_ipv4_tcp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:35:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:50:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "analysy.h"
 
-int analyse(uint8_t *map, void *root, void *link, void *app)
+int analyse_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
     int ret = ANALYSY_OK;
 
-    if (!map || !root || !link || !app) {
+	if (!buf || !conf_st || !conf_nd || !conf_exec) {
         ret = ANALYSY_ERROR;
     }
-    // else if (((t_nmap_link*)link)->nb_scanned == {
+    else {
         
-    // }
+    }
     return (ret);
 }
