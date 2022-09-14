@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 18:12:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:55:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@
 # define CLOSED 0x04
 # define FILTERED 0x08
 # define UNFILTERED 0x10
+
+uint8_t  analyse_scan_icmp(struct icmphdr *icmp);
 
 #endif

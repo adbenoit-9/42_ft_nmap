@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 18:16:33 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/14 19:10:04 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,11 @@ SUB_SRC			:= main.c \
 					nmap_iter_hooks.c \
 					nmap_scany.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
-SUB_SRC			:= analysy_synscan.c
+SUB_SRC			:= analysy_synscan.c\
+					analysy_udpscan.c\
+					analysy_ackscan.c\
+					analysy_fnxscan.c\
+					analysy_utils.c
 SRC				+= $(addprefix analysy/, $(SUB_SRC))
 SUB_SRC			:= buildy_ipv4_tcp.c\
 					buildy_utils.c\

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analysy_synscan.c                                  :+:      :+:    :+:   */
+/*   analysy_finscan.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 18:55:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 19:06:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "analysy.h"
 
-static uint8_t  analyse_synscan_tcp(struct tcphdr *tcp)
+static uint8_t  analyse_fnxscan_tcp(struct tcphdr *tcp)
 {
     uint8_t result = 0;
     
-    if (tcp->th_flags & TH_SYN || tcp->th_flags & TH_ACK)
-        result = OPEN;
-    else if (tcp->th_flags & TH_RST)
+    if (tcp->th_flags & TH_RST)
         result = CLOSED;
     return (result);
 }
 
-int analyse_synscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
+int analyse_fnxscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
     int ret = ANALYSY_OK;
     struct iphdr *ip = (struct iphdr *)(&buf[sizeof(t_nmap_blkhdr)]);
@@ -33,10 +31,10 @@ int analyse_synscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
         ret = ANALYSY_ERROR;
     }
     else if (ip == NULL) {
-        ((t_nmap_blkhdr *)buf)->result |= FILTERED;
+        ((t_nmap_blkhdr *)buf)->result = FILTERED | OPEN;
     }
     else if (ip->protocol == IPPROTO_TCP) {
-        ((t_nmap_blkhdr *)buf)->result |= analyse_synscan_tcp(
+        ((t_nmap_blkhdr *)buf)->result |= analyse_fnxscan_tcp(
             (struct tcphdr *)(&buf[sizeof(t_nmap_blkhdr) +  sizeof(struct iphdr)]));
     }
     else if (ip->protocol == IPPROTO_ICMP) {
@@ -46,7 +44,7 @@ int analyse_synscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
     return (ret);
 }
 
-int analyse_synscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
+int analyse_fnxscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
     int ret = ANALYSY_OK;
     struct ip6_hdr *ip = (struct ip6_hdr *)(&buf[sizeof(t_nmap_blkhdr)]);
@@ -56,10 +54,10 @@ int analyse_synscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
         ret = ANALYSY_ERROR;
     }
     else if (ip == NULL) {
-        ((t_nmap_blkhdr *)buf)->result |= FILTERED;
+        ((t_nmap_blkhdr *)buf)->result = FILTERED | OPEN;
     }
     else if (ip->ip6_nxt == IPPROTO_TCP) {
-        ((t_nmap_blkhdr *)buf)->result |= analyse_synscan_tcp(
+        ((t_nmap_blkhdr *)buf)->result |= analyse_fnxscan_tcp(
             (struct tcphdr *)(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct ip6_hdr)]));
     }
     else if (ip->ip6_nxt == IPPROTO_ICMP) {

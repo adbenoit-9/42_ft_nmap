@@ -33,7 +33,7 @@
 #define EXEC_MAX_LIST 						6
 #define EXEC_LST_SIZE						6
 #define EXEC_MAX_CMD						6
-#define EXEC_MAX_HOOK						4
+#define EXEC_MAX_HOOK						8
 
 #define SETY_EXEC_MAX_CMD					8
 #define SETY_EXEC_MAX_HOOK					8
