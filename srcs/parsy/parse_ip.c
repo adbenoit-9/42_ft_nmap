@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 10:00:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 10:16:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +18,50 @@ static void	set_ip(char *host, t_nmap_setting *settings)
 		settings->ips[settings->ip_nb] = host;
 		++settings->ip_nb;
 	}
+	else {
+		dprintf(STDERR_FILENO, "Warning: maximum limit of the number of hosts is %d\n", IP_LIMIT);
+	}
 }
 
-void    set_ip_from_file(t_nmap_setting *settings, char *file)
+int    set_ip_from_file(t_nmap_setting *settings, char *file)
 {
 	FILE		*stream;
 	int32_t		fd;
 	char		*host;
-	int32_t		ret;
+	int			ret = PARSY_OK;
 	
 	if (file == NULL) {
-		fatal_error(E_NOARG, "--file");
-	}
-	stream = fopen(file, "r");
-	if (stream != NULL) {
-		fd = fileno(stream);
-		do {
-			ret = get_next_line(fd, &host);
-			if (ret > 0) {
-				set_ip(host, settings);
-			}
-		} while (ret > 0);
-		close(fd);
-		fclose(stream);
+		ret = print_error(E_NOARG, "--file");
 	}
 	else {
-		fatal_error(E_BADFILE, file);
+		stream = fopen(file, "r");
+		if (stream != NULL) {
+			fd = fileno(stream);
+			do {
+				ret = get_next_line(fd, &host);
+				if (ret > 0) {
+					set_ip(host, settings);
+				}
+			} while (ret > 0);
+			close(fd);
+			fclose(stream);
+		}
+		else {
+			ret = print_error(E_BADFILE, file);
+		}
 	}
+	return (ret);
 }
 
-void    set_ip_from_arg(t_nmap_setting *settings, char *host)
+int    set_ip_from_arg(t_nmap_setting *settings, char *host)
 {
+	int ret = PARSY_OK;
+	
 	if (host == NULL) {
-		fatal_error(E_NOARG, "--ip");
+		ret = print_error(E_NOARG, "--ip");
 	}
-	set_ip(host, settings);
+	else {
+		set_ip(host, settings);
+	}
+	return (ret);
 }

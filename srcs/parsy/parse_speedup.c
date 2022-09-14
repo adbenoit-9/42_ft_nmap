@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:18 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/21 20:02:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 10:35:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 #include "ft_nmap_parsing.h"
 #include "ft_nmap_error.h"
 
-void    set_speedup(t_nmap_setting *settings, char *value)
+int    set_speedup(t_nmap_setting *settings, char *value)
 {
 	int32_t	nb;
+	int32_t	ret = PARSY_OK;
 
 	if (value == NULL) {
-		fatal_error(E_NOARG, "--speedup");
+		ret = print_error(E_NOARG, "--speedup");
 	}
-	nb = ft_atoi(value);
-	if (ft_isnumber(value) == false || nb < 0 || nb > 250) {
-		fatal_error(E_BADSPEEDUP, value);
+	else {
+		nb = ft_atoi(value);
+		if (ft_isnumber(value) == false || nb < 0 || nb > 250) {
+			ret = print_error(E_BADSPEEDUP, value);
+		}
+		else {
+			settings->speedup = (uint8_t)nb;
+		}
 	}
-	settings->speedup = (uint8_t)nb;
+	return (ret);
 }

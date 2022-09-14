@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 09:59:19 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 10:37:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # define PARSY_OK   0
 # define PARSY_KO   -1
+# define PARSY_STOP	1
 
 # define NFLAG      6
 # define PORT_MAX   65536
@@ -45,13 +46,13 @@
 #define MAX_HL              1024
 #define MAX_PACKET_SIZE     64
 
-int				parser(int ac, char **av, t_nmap_setting *settings);
-void            set_ip_from_file(t_nmap_setting *settings, char *file);
-void            set_ip_from_arg(t_nmap_setting *settings, char *ip);
-void            set_ports(t_nmap_setting *settings, char *value);
-void            set_scan(t_nmap_setting *settings, char *value);
-void            set_speedup(t_nmap_setting *settings, char *value);
-bool	        ft_isnumber(char *str);
-int32_t	        copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
+int		parser(int ac, char **av, t_nmap_setting *settings);
+int		set_ip_from_file(t_nmap_setting *settings, char *file);
+int		set_ip_from_arg(t_nmap_setting *settings, char *ip);
+int		set_ports(t_nmap_setting *settings, char *value);
+int		set_scan(t_nmap_setting *settings, char *value);
+int		set_speedup(t_nmap_setting *settings, char *value);
+bool	ft_isnumber(char *str);
+int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
 
 #endif

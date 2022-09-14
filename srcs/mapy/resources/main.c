@@ -90,7 +90,7 @@ int main(int ac, char **av)
 		//scan_start(&opt);
 //		for (uint8_t i = 0; i < 250; i++) {
 //			if (pthread_create(&threads[i], NULL, (void *)routine, opt) != 0)
-//				fatal_error(-1, "thread_create: failed", opt);
+//				print_error(-1, "thread_create: failed", opt);
 //		}
 //		r = mappy(buf, opt.ip_lst);
 //		for (uint8_t i = 0; i < 250; i++) {

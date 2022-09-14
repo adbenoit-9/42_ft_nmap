@@ -287,7 +287,7 @@ execution_task_list	mappy/mappy.h	/^	uint8_t						execution_task_list[MAPPY_MAX_
 execution_task_list	sety/sety.h	/^	uint8_t						execution_task_list[SETY_MAX_EXECUTION_LIST];$/;"	m	struct:s_set_proto
 exit_help	parsing/parser.c	/^static void    exit_help(t_opt *opt, char *value)$/;"	f	file:
 exit_help	parsing/parser.s	/^exit_help:$/;"	l
-fatal_error	error.c	/^void    fatal_error(int16_t error, char *arg, t_opt *opt)$/;"	f
+print_error	error.c	/^void    print_error(int16_t error, char *arg, t_opt *opt)$/;"	f
 fd	libft/inc/get_next_line.h	/^	int		fd;$/;"	m	struct:s_gnl
 frag_off	proty/proty_ip.h	/^	uint16_t	frag_off;$/;"	m	struct:iphdr
 ft_atoi	libft/src/nbr/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
