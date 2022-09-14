@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 10:31:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 19:53:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	check_ports(char *value, int32_t begin, int32_t end, bool isrange)
 	else if (end - begin < 0 || end - begin > PORT_LIMIT) {
 		ret = print_error(E_LIMIT_EXCEED, NULL);
 	}
-	else if (begin < 0 || begin > PORT_MAX) {
+	else if (begin <= 0 || begin > PORT_MAX) {
 		ret = print_error(E_BADPORT, value);
 	}
-	else if (end < 0 || end > PORT_MAX) {
+	else if (end <= 0 || end > PORT_MAX) {
 		ret = print_error(E_BADPORT, value + i + 1);
 	}
 	return (ret);
