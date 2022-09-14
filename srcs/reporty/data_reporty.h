@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap_mapy_data.h                                   :+:      :+:    :+:   */
+/*   data_reporty.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 14:13:23 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/09/14 13:34:55 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/14 13:42:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPY_DATA_H
-# define MAPY_DATA_H
+#ifndef DATA_REPORTY_H
+# define DATA_REPORTY_H
 
-//#include "mapy.h"
-#include "data_buildy.h"
-#include "data_sendy.h"
-#include "data_cleany.h"
-#include "data_recy.h"
-#include "data_setupy.h"
-#include "data_reporty.h"
+# include "export_reporty.h"
 
-t_func_mapy *_exec[EXEC_MAX_CMD] = {
-	_buildy_exec,
-	_setupy_exec,
-	_sendy_exec,
-	_recy_exec,
-	_cleany_exec
-	// _analysy_exec
+#ifdef MAP_CMD_INDEX
+# define REPORTY_CMD_INDEX MAP_CMD_INDEX
+#endif
+
+t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
+	report,
+	NULL,
+	NULL,
+	NULL
 };
-
 
 #endif
