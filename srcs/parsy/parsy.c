@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 11:05:20 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 13:19:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static void    init_nmap_settings(t_nmap_setting *settings)
 static void    print_usage(void)
 {
 	printf("Usage:\n");
-	printf("  ft_nmap --ip <host> [opts]\n or\n");
-	printf("  ft_nmap --file <path> [opts]\n");
-	printf("\nopts:\n");
-	printf("--ip <host>                 host to scan\n");
-	printf("--file <path>               read an IP list to scan from a file\n");
-	printf("--ports <number/range>      ports to be scanned (default 1 to PORT_LIMIT)\n");
-	printf("--scan <type>               type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
-	printf("--speedup <number>          number of threads (default 0), to make the scan faster\n");
+	printf("  ft_nmap [OPTIONS]\n");
+	printf("\nOptions:\n");
+	printf("--help                      Print this help summary page\n");
+	printf("--ip <host>                 Ip addresses to scan\n");
+	printf("--file <name>               File name containing IP addresses to scan,\n");
+	printf("--ports <number/range>      Ports to be scanned (default 1 to 1024)\n");
+	printf("--scan <type>               Type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
+	printf("--speedup <number>          Number of parallel threads to use (default 0, max 250).\n");
 	
 }
 

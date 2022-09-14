@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/26 11:01:49 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/14 12:03:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ typedef struct					s_root {
 	t_rd			rd[RD_MAX];
 	t_nd			nd[ND_MAX];
 	t_st			st[ST_MAX];
-	T_CLIENT_ROOT		client;
+	T_CLIENT_ROOT	client;
 	uint8_t			blk_flag[RD_MAX * ND_MAX * ST_MAX];
-	int			st_nb;
-	int			nd_nb;
-	int			rd_nb;
+	int				st_nb;
+	int				nd_nb;
+	int				rd_nb;
 	uint8_t			*map;
 }						t_root;
 

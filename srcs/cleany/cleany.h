@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 23:58:41 by leon              #+#    #+#             */
-/*   Updated: 2022/08/25 18:47:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 13:50:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 #include "nmap_structs.h"
 
 #define CLEANY_OK	0
-#define CLEANY_ERROR	-1
+#define CLEANY_ERROR    -1
 
 #endif
