@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 14:24:00 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 12:02:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ typedef struct		s_nmap_link {
 	struct sockaddr_storage		sock;
 	int							socket;
 	socklen_t					socklen;
-	char						dev_name[32];
-	struct sockaddr_storage		src_sock;
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {

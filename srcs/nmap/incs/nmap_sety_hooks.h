@@ -24,5 +24,4 @@
 
 int					dump_config_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 			t_nmap_scan *scan);
-int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index);
 #endif

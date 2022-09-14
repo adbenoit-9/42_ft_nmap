@@ -25,7 +25,4 @@
 #define RECY_OK 0
 #define RECY_ERROR -1
 
-void				nmap_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
-							const u_char *bytes);
-
 #endif

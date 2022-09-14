@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 14:22:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 13:55:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int report(uint8_t *map, void *root, void *link, void *app)
     if (!map || !root || !link || !app) {
         ret = REPORTY_ERROR;
     }
-    // else if (((t_nmap_link*)link)->nb_scanned == {
+    else {
         
-    // }
+    }
     return (ret);
 }

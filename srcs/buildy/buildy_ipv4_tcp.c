@@ -64,7 +64,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 
 		/* setup IP header */
 		dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
-		SET_IP4_SADDR(buf, ((struct sockaddr_in*)&conf_st->src_sock)->sin_addr.s_addr);
+		SET_IP4_SADDR(buf, get_src_ipv4(dip));
 		SET_IP4_DADDR(buf, dip);
 		SET_IP4_VERSION(buf, 0x04);
 		SET_IP4_IHL(buf, 0x05);

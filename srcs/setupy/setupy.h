@@ -28,7 +28,4 @@
 
 #define SETUPY_OK 0
 #define SETUPY_ERROR -1
-
-#define PCAP_BUFFER_TIMEOUT 1
-
 #endif

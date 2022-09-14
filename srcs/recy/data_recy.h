@@ -20,10 +20,10 @@
 #endif
 
 t_func_mapy _recy_exec[EXEC_MAX_HOOK] = {
-		recv_ipv4,
-		recv_ipv4,
-		recv_ipv6,
-		recv_ipv6,
+		recv_ipv4_tcp,
+		recv_ipv4_tcp,
+		recv_ipv4_tcp,
+		recv_ipv4_tcp,
 };
 
 
