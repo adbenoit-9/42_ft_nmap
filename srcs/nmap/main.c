@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 11:03:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 11:57:02 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ int main(int ac, char **av)
 			//exey_ctrl(root, nmap_init_exey);
 			scany(settings, root);
 			//exey_ctrl(root, nmap_clean_exey);
+			parse_results(root);
 		}
 		else if (r == PARSY_STOP)
-			r = PARSY_KO;
+			r = PARSY_OK;
 	}
 	return (r);
 }
