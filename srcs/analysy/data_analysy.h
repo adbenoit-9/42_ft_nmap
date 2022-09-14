@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:34:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 16:42:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:26:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # define REPORTY_CMD_INDEX MAP_CMD_INDEX
 #endif
 
-t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
-	analyse_ipv4_tcp,
-	NULL,
+t_func_mapy _analysy_exec[EXEC_MAX_HOOK] = {
+	analyse_synscan_ipv4,
+	analyse_synscan_ipv6,
 	NULL,
 	NULL
 };

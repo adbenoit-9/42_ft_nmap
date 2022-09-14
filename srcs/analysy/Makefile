@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 16:43:09 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/14 18:15:22 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MODULES	:= ../mapy\
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC			:= analysy_ipv4_tcp.c
+SRC			:= analysy_synscan.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

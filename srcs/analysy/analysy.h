@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 17:03:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:12:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <netinet/ip_icmp.h>
+# include <netinet/tcp.h>
+# include <netinet/ip.h>
+# include <netinet/ip6.h>
 
 /* Project Header */
 # include "nmap_structs.h"

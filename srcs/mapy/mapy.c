@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 17:27:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:27:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			mapy(t_root *root)
 							r = blky(blk);
 							if (r == BLKY_OK) {
 								root->blk_flag[count] = ((t_nmap_blkhdr *)blk->map)->result;
+								printf("result = %d\n", ((t_nmap_blkhdr *)blk->map)->result);
 								r = EXEY_RUN;
 							}
 							else {
