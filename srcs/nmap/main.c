@@ -6,41 +6,21 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 20:15:56 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:12:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
+#include <sys/time.h>
 #include "nmap.h"
 #include "nmap_mapy_config.h"
 
-static void	display_conf(t_nmap_setting *settings)
+static	double elapse_time(struct timeval *begin, struct timeval *end)
 {
-	char	ip_list[settings->ip_nb * INET6_ADDRSTRLEN + settings->ip_nb];
-	char	scan_list[settings->scan_nb * 4 + settings->scan_nb];
-	char	*scan_str[] = {"NULL", "SYN", "ACK", "FIN", "XMAS", "UDP"};
-	char	scan_value[] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN,
-				FLAG_S_XMAS, FLAG_S_UDP};
+	double begin_sec = begin->tv_sec + (double)begin->tv_usec / 1000000;
+	double end_sec = end->tv_sec + (double)end->tv_usec / 1000000;
 
-	ip_list[0] = 0;
-	scan_list[0] = 0;
-	for (int i = 0; i < settings->ip_nb; i++) {
-		strcat(ip_list, settings->ips[i]);
-		strcat(ip_list, " ");
-	}
-	for (int i = 0; i < settings->scan_nb; i++) {
-		for (int j = 0; j < 6; j++) {
-			if (settings->scans[i] == scan_value[j]) {
-				strcat(scan_list, scan_str[j]);
-				break ;
-			}
-		}
-		strcat(scan_list, " ");
-	}
-	printf("Scan Configurations\nTarget Ip-Address : %s\n\
-No of Ports to scan : %d\n\
-Scans to be performed : %s\n\
-No of threads : %d\nScanning..\n",
-		ip_list, settings->port_nb, scan_list, settings->speedup);
+	return (end_sec - begin_sec);
 }
 
 int main(int ac, char **av)
@@ -49,6 +29,8 @@ int main(int ac, char **av)
 	uint8_t			*buf;
 	t_root			*root;
 	t_nmap_setting	*settings;
+	struct timeval	begin, end;
+	
 	
 	buf = (uint8_t*)malloc(SIZE);
 	bzero(buf, SIZE);
@@ -75,8 +57,13 @@ int main(int ac, char **av)
 				return (-1);
 			if (set_iter_rd(root, iter_set_tcpflag))
 				return (-1);
-			display_conf(settings);
+			signal(SIGALRM, handle_signal);
+			display_config(settings);
+			alarm(1);
+			gettimeofday(&begin, NULL);
 			scany(settings, root);
+			gettimeofday(&end, NULL);
+			display_report(root, elapse_time(&begin, &end));
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;

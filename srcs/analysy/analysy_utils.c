@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 18:02:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 18:54:52 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 15:32:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ uint8_t  analyse_scan_icmp(struct icmphdr *icmp)
                 icmp->code == ICMP_NET_ANO ||
                 icmp->code == ICMP_HOST_ANO ||
                 icmp->code == ICMP_PKT_FILTERED)) {
-        result = FILTERED;
+        result = PORT_S_FILTERED;
     }
     else {
-        result = UNFILTERED;
+        result = PORT_S_UNFILTERED;
     }
     return (result);
 }

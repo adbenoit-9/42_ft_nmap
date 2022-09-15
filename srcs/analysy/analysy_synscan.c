@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 18:55:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 15:19:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static uint8_t  analyse_synscan_tcp(struct tcphdr *tcp)
     uint8_t result = 0;
     
     if (tcp->th_flags & TH_SYN || tcp->th_flags & TH_ACK)
-        result = OPEN;
+        result = PORT_S_OPEN;
     else if (tcp->th_flags & TH_RST)
-        result = CLOSED;
+        result = PORT_S_CLOSED;
     return (result);
 }
 
@@ -33,7 +33,7 @@ int analyse_synscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
         ret = ANALYSY_ERROR;
     }
     else if (ip == NULL) {
-        ((t_nmap_blkhdr *)buf)->result |= FILTERED;
+        ((t_nmap_blkhdr *)buf)->result |= PORT_S_FILTERED;
     }
     else if (ip->protocol == IPPROTO_TCP) {
         ((t_nmap_blkhdr *)buf)->result |= analyse_synscan_tcp(
@@ -56,7 +56,7 @@ int analyse_synscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
         ret = ANALYSY_ERROR;
     }
     else if (ip == NULL) {
-        ((t_nmap_blkhdr *)buf)->result |= FILTERED;
+        ((t_nmap_blkhdr *)buf)->result |= PORT_S_FILTERED;
     }
     else if (ip->ip6_nxt == IPPROTO_TCP) {
         ((t_nmap_blkhdr *)buf)->result |= analyse_synscan_tcp(

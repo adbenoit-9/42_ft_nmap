@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recy_pcap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 07:31:30 by leon              #+#    #+#             */
-/*   Updated: 2022/08/24 10:01:46 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/15 13:33:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void				ft_pcap_handler(u_char *user, const struct pcap_pkthdr *h,
 	/* TODO : go in tree and find corresponding scan for this response */
 	/* TODO : some scan need to be re-send when timeout */
 	i = 14; // pcap_hdr
-	fprintf(stderr, "%s:%d h->len= %d\n", __func__, __LINE__, h->len);
-	fprintf(stderr, "port src = %d\n", htons(((struct tcphdr*)&bytes[i + sizeof(struct iphdr)])->th_sport));
-	while (i < h->len)
-	{
-		fprintf(stderr, "%02x:", bytes[i]);
-		i++;
-	}
-	fprintf(stderr, "\n");
+	// fprintf(stderr, "%s:%d h->len= %d\n", __func__, __LINE__, h->len);
+	// fprintf(stderr, "port src = %d\n", htons(((struct tcphdr*)&bytes[i + sizeof(struct iphdr)])->th_sport));
+	// while (i < h->len)
+	// {
+	// 	fprintf(stderr, "%02x:", bytes[i]);
+	// 	i++;
+	// }
+	// fprintf(stderr, "\n");
 }
 
 void		*run_pcap(void *root)
