@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 18:20:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:27:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
         for (int j = 0; ret == 0 && j < root->rd_nb; j++, flag_index++) {
             if (root->blk_flag[flag_index] & status) {
                 flag_concl |= root->blk_flag[flag_index];
-                str_flag_result(result, root->blk_flag[flag_index], root->rd[i].client.packet_flag);
+                str_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
                 if (j == root->rd_nb - 1) {
                     str_flag_conclusion(conclusion, flag_concl);
                     service = getservbyport(root->nd[i].client.port, NULL);

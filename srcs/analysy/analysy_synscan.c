@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 15:19:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:32:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static uint8_t  analyse_synscan_tcp(struct tcphdr *tcp)
 {
     uint8_t result = 0;
     
-    if (tcp->th_flags & TH_SYN || tcp->th_flags & TH_ACK)
-        result = PORT_S_OPEN;
-    else if (tcp->th_flags & TH_RST)
+    if (tcp->th_flags & TH_RST)
         result = PORT_S_CLOSED;
+    else if (tcp->th_flags & TH_SYN || tcp->th_flags & TH_ACK)
+        result = PORT_S_OPEN;
     return (result);
 }
 
