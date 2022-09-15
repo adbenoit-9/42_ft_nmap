@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 19:14:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:43:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define HDR_PRECISION(len_prec_val, len_prec_zone, len_val) (int)(len_prec_zone - len_prec_val + len_val)
 # define PORT_ZONE_SIZE     10
 # define SERV_ZONE_SIZE     30
-# define RES_ZONE_SIZE      25
-# define CONCL_ZONE_SIZE    35
+# define RES_ZONE_SIZE      33
+# define CONCL_ZONE_SIZE    15
 
 void	display_config(t_nmap_setting *settings)
 {
@@ -132,11 +132,11 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
                     str_flag_conclusion(conclusion, flag_concl);
                     service = getservbyport(root->nd[i].client.port, NULL);
                     port_len = 1;
-                    if (root->nd[i].client.port > 10)
+                    if (root->nd[i].client.port >= 10)
                         ++port_len;
-                    if (root->nd[i].client.port > 100)
+                    if (root->nd[i].client.port >= 100)
                         ++port_len;
-                    if (root->nd[i].client.port > 1000)
+                    if (root->nd[i].client.port >= 1000)
                         ++port_len;
                     printf(PORT_REPORT_FORMAT,
                         root->nd[i].client.port,

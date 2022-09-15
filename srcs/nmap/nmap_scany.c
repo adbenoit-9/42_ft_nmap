@@ -6,32 +6,17 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:23:46 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/08/25 18:39:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:37:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nmap.h"
 
-int	scany(t_nmap_setting *settings, t_root *root)
+void	*scany(void *root)
 {
-	int32_t		r = 0;
-	//int			thread_r;
-	//pthread_t	ph[settings->speedup];
-
-	(void)(settings);
-	blky_init(root->map);
-	/* Pcap handler init */
-	//if (set_pcap_init(&root->client) != 0)
-	//	return (-1);
-	//pthread_create(&root->client.thread, NULL, run_pcap, (void*)root);
-
-	//for (int i = 0; i < settings->speedup; i++) {
-	//	pthread_create(&ph[i], NULL, run_mapy, (void *)root);
-	//}
+	int64_t		r = 0;
+	
+	blky_init(((t_root *)root)->map);
 	r = mapy(root);
-	//for (int i = 0; i < settings->speedup; i++) {
-	//	pthread_join(ph[i], NULL);
-	//}
-	//pthread_join(root->client.thread, (void**)&thread_r);
-    return (r);
+    return ((void *)r);
 }

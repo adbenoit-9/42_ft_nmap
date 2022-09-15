@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 13:19:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:47:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	default_settings(t_nmap_setting *settings)
 	
 	if (settings->scan_nb == 0) {
 		memcpy(settings->scans, default_scans, SCAN_LIMIT);
-		settings->scan_nb = 5;
+		settings->scan_nb = SCAN_LIMIT;
 	}
 	if (settings->port_nb == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);

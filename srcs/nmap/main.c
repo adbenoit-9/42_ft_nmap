@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 14:12:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:40:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ static	double elapse_time(struct timeval *begin, struct timeval *end)
 	return (end_sec - begin_sec);
 }
 
+static	int	multi_thread(int n, t_root *root)
+{
+	pthread_t		th[n];
+	
+	for(int i = 0; i < n; i++) {
+		pthread_create(th, NULL, scany, root);
+	}
+	for(int i = 0; i < n; i++) {
+		pthread_join(th[i], NULL);
+	}
+	return (0);
+}
+
+
 int main(int ac, char **av)
 {
 	int32_t 		r		= 0;
@@ -30,7 +44,6 @@ int main(int ac, char **av)
 	t_root			*root;
 	t_nmap_setting	*settings;
 	struct timeval	begin, end;
-	
 	
 	buf = (uint8_t*)malloc(SIZE);
 	bzero(buf, SIZE);
@@ -61,7 +74,10 @@ int main(int ac, char **av)
 			display_config(settings);
 			alarm(1);
 			gettimeofday(&begin, NULL);
-			scany(settings, root);
+			if (settings->speedup) {
+				multi_thread(settings->speedup, root);
+			}
+			scany(root);
 			gettimeofday(&end, NULL);
 			display_report(root, elapse_time(&begin, &end));
 		}
