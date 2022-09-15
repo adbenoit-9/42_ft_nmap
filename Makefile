@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/15 13:31:09 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/15 20:32:49 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -217,11 +217,7 @@ norm:
 re: fclean all
 
 debug: CFLAGS += -DDEBUG -fsanitize=thread -g3
-debug: lib_debug $(OBJ) $(PREP) 
-	@printf "$(CL_LINE)"
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_NAMES) -o $(NAME) -lpthread -lpcap
-	@echo "[1 / 1] - $(B_MAGENTA)$(NAME)"
-	@echo "$(B_GREEN)(debug) Compilation done !$(NONE)"
+debug: re
 
 $(BUILD):
 	@mkdir $@ $(DIRS)

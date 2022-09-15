@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 20:11:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:33:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <pthread.h>
-
-#define DEBUG
-#define DEBUG
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0

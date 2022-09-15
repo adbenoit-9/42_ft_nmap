@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 19:09:32 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:31:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 	}
 	else if (ret == BUILDY_OK) {
 #ifdef DEBUG
-		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->tcpflag);
+		fprintf(stderr, "%s:%d scantype=%02x\n", __func__, __LINE__, conf_exec->packet_flag);
 #endif /* DEBUG */
 		buf = &buf[sizeof(t_nmap_blkhdr)];
 		bzero(buf, MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
