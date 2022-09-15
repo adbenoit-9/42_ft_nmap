@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 18:27:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:59:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,22 @@ static void str_flag_conclusion(char *dest, uint8_t flag_concl)
         ft_strcpy(dest, "Filtered");
 }
 
+static int  last_line_result_len(char *result)
+{
+    int i = 0;
+    int len = 0;
+    
+    while (result[i]) {
+        ++i;
+        ++len;
+        if (result[i] == '\n') {
+            i += PORT_ZONE_SIZE + SERV_ZONE_SIZE + 1;
+            len = 0;
+        }
+    }
+    return (len);
+}
+
 static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 {
     int flag_index = ip_index;
@@ -128,7 +144,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
                         service ? service->s_name : "Unassigned",
                         PRECISION(ft_strlen(service ? service->s_name : "Unassigned"), SERV_ZONE_SIZE, result),
                         result,
-                        PRECISION(ft_strlen(result), RES_ZONE_SIZE, conclusion),
+                        PRECISION(last_line_result_len(result), RES_ZONE_SIZE, conclusion),
                         conclusion);
                 }
             }
