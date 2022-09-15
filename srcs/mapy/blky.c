@@ -7,6 +7,7 @@
 #include "export_setupy.h"
 #include "export_analysy.h"
 #include "nmap_mapy_data.h"
+#include <pthread.h>
 
 int			blky_branch_task_hooks(t_blk *blk)
 {
@@ -43,11 +44,14 @@ int			blky_init(uint8_t *blks)
 {
 	size_t		i = 0;
 	t_blk		*tmp;
+	t_nmap_blkhdr	*hdr;
 
 	while (i < (sizeof(t_blk) * BLCK_NB))
 	{
 		tmp = (t_blk*)&blks[i];
 		tmp->flag = BLK_IDLE;
+		hdr = (t_nmap_blkhdr *)tmp->map;
+		pthread_mutex_init(&hdr->mutex, NULL);
 		i += sizeof(t_blk);
 	}
 	return (0);

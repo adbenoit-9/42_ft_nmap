@@ -32,7 +32,7 @@
 **				r = (*f)
 **						((T_CLIENT_ROOT*)&root->st[i].client,
 **						(T_EXE*)&root->rd[k].exe,
-**						index >= BLCK_NB ? NULL : (T_BLK*)&root->map[index * sizeof(t_blk)]);
+**						index >= BLCK_NB ? NULL : (*)&root->map[index * sizeof(t_blk)]);
 **			}
 **		}
 **	}

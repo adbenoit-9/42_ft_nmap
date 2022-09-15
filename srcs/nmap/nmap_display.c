@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 19:43:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:28:43 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,28 @@ static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 	static char	scan_value[] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN,
 				FLAG_S_XMAS, FLAG_S_UDP};
     int         nspaces, scan_index;
+    char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20];
+    char        status[20];
     
     for (scan_index = 0; scan_index < 6; scan_index++) {
         if (flag_scan == scan_value[scan_index]) {
             break ;
         }
     }
+    status[0] = 0;
     for (int i = 0; i < 4; i++) {
-        char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 1];
         if (flag_result & status_value[i]) {
-            nspaces = ft_strlen(result) > RES_ZONE_SIZE - 11 ? \
-                PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
-            sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES,
-                scan_str[scan_index], status_str[i]);
-            ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
+            if (status[0]) {
+                ft_strcat(status, "|");
+            }
+            ft_strcat(status, status_str[i]);
         }
     }
+    nspaces = ft_strlen(result) > RES_ZONE_SIZE - 11 ? \
+        PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
+    sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES,
+        scan_str[scan_index], status);
+    ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
     
 }
 

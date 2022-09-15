@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setupy_ipv6_udp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leon <lmariott@student.42.fr>              +#+  +:+       +#+        */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/08/18 21:26:36 by leon             ###   ########.fr       */
+/*   Updated: 2022/09/15 20:14:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int 				setup_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		memset(blkhdr, 0, sizeof(*blkhdr));
-        	blkhdr->socklen = sizeof(struct sockaddr_in6);
-        	blkhdr->socket = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
+		memset(&blkhdr[sizeof(pthread_mutex_t)], 0, sizeof(*blkhdr) - sizeof(pthread_mutex_t));
+		blkhdr->socklen = sizeof(struct sockaddr_in6);
+		blkhdr->socket = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
 		if (((t_nmap_link*)conf_st)->socket < 0)
 		{
 			perror("socket");

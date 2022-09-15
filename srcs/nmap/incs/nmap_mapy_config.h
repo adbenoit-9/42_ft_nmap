@@ -3,7 +3,7 @@
 
 #define THREAD_NB	 					250
 #define BLCK_NB							THREAD_NB
-#define MAP_BLCK_SIZE					256
+#define MAP_BLCK_SIZE					296
 // First 4 bytes are used to identify block owner
 #define MAX_CONFIG_SIZE					23726232
 #define SIZE							((sizeof(t_blk) * BLCK_NB) + MAX_CONFIG_SIZE)

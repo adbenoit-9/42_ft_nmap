@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 17:23:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:18:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #define IP_LIMIT			32
 
 typedef struct		s_nmap_blkhdr {
+	pthread_mutex_t				mutex;
 	int							socket;
 	pcap_t						*pcap_handler;
 	socklen_t					socklen;
@@ -33,7 +34,7 @@ typedef struct		s_nmap_blkhdr {
 typedef struct		s_nmap_setting {
 	uint16_t					ports[PORT_LIMIT];
 	uint8_t						scans[SCAN_LIMIT];
-	int8_t						speedup;
+	uint8_t						speedup;
 	char						*ips[IP_LIMIT];
 	int							ip_nb;
 	int							port_nb;

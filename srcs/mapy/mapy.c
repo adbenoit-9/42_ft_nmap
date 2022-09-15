@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 18:29:17 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:11:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			mapy(t_root *root)
 											&& k < root->rd_nb; k++, count++) {
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
+					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 					if (root->blk_flag[count] == BLK_TODO) {
 						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
@@ -74,6 +75,8 @@ int			mapy(t_root *root)
 					else {
 						r = EXEY_IDLE;
 					}
+					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
+
 				}
 			}
 		}
