@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 18:59:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:14:44 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
     int         nspaces, scan_index;
     
     for (scan_index = 0; scan_index < 6; scan_index++) {
-        if (flag_scan & scan_value[scan_index]) {
+        if (flag_scan == scan_value[scan_index]) {
             break ;
         }
     }
@@ -157,7 +157,7 @@ void    display_report(t_root *root, double scan_time)
 {
     printf("\nScan took %f secs\n", scan_time);
     for (int i = 0; i < root->st_nb; i++) {
-        printf("IP address: %s\n", "x.x.x.x");
+        printf("IP address: %s\n", root->client.ips[i]);
         
         printf(HEADER_FORMAT, "Open ports:",
             "Port",
