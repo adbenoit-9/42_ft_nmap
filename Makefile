@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/16 11:06:56 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/16 12:09:15 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			:= ft_nmap
 # COMPILATION
 
 CC		= gcc-10
-CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
+CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=address -g3
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 	 	 
@@ -56,7 +56,7 @@ BUILD 			:= .build
 
 INC_SUB_DIR		:= buildy\
 					cleany\
-					libft/inc\
+					libft/inc \
 					mapy\
 					nmap/incs\
 					parsy\
@@ -93,17 +93,17 @@ SUB_SRC			:= main.c \
 					nmap_scany.c \
 					nmap_signal.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
-SUB_SRC			:= analysy_synscan.c\
-					analysy_udpscan.c\
-					analysy_ackscan.c\
-					analysy_fnxscan.c\
+SUB_SRC			:= analysy_synscan.c \
+					analysy_udpscan.c \
+					analysy_ackscan.c \
+					analysy_fnxscan.c \
 					analysy_utils.c
 SRC				+= $(addprefix analysy/, $(SUB_SRC))
-SUB_SRC			:= buildy_ipv4_tcp.c\
-					buildy_utils.c\
-					buildy_ipv4_udp.c\
-					buildy_ipv6_tcp.c\
-					buildy_ipv6_udp.c\
+SUB_SRC			:= buildy_ipv4_tcp.c \
+					buildy_utils.c \
+					buildy_ipv4_udp.c \
+					buildy_ipv6_tcp.c \
+					buildy_ipv6_udp.c \
 					buildy_checksum.c
 SRC				+= $(addprefix buildy/, $(SUB_SRC))
 SUB_SRC			:= cleany.c
@@ -113,22 +113,23 @@ SUB_SRC			:= parsy.c \
 					parsy_scan.c \
 					parsy_ports.c \
 					parsy_speedup.c \
-					ft_isnumber.c \
-					parsy_error.c
+					parsy_error.c \
+					parsy_clean.c \
+					ft_isnumber.c
 SRC				+= $(addprefix parsy/, $(SUB_SRC))
 SUB_SRC			:= recy_ipv4.c \
 					recy_ipv6.c \
 					recy_utils.c
 SRC				+= $(addprefix recy/, $(SUB_SRC))
-SUB_SRC			:= reporty_config.c\
+SUB_SRC			:= reporty_config.c \
 					reporty_final.c
 SRC				+= $(addprefix reporty/, $(SUB_SRC))
-SUB_SRC			:= sendy_tcp.c\
+SUB_SRC			:= sendy_tcp.c \
 					sendy_udp.c
 SRC				+= $(addprefix sendy/, $(SUB_SRC))
 SUB_SRC			:= setupy_ipv4_tcp.c \
-					setupy_ipv4_udp.c\
-					setupy_ipv6_tcp.c\
+					setupy_ipv4_udp.c \
+					setupy_ipv6_tcp.c \
 					setupy_ipv6_udp.c
 SRC				+= $(addprefix setupy/, $(SUB_SRC))
 SUB_SRC			:= mapy.c \

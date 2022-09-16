@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:14:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int    set_ip_from_arg(t_nmap_setting *settings, char *host)
 		ret = print_error(E_NOARG, "--ip");
 	}
 	else {
-		set_ip(host, settings);
+		set_ip(ft_strdup(host), settings);
 	}
 	return (ret);
 }
