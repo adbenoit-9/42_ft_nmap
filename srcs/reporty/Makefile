@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/14 13:29:53 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/16 10:31:24 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,15 @@ endif
 
 MODULES	:= ../mapy\
 			../nmap/incs\
-			../proty
+			../proty\
+			../parsy\
+			../libft/inc\
+			../analysy
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC			:= reporty.c
+SRC			:= reporty_config.c\
+				reporty_final.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 13:49:31 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:17:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # include "mapy.h"
 
 /* Exported function */
-int report(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
-
-# define SELECT_HOOK_REPORTY(sockaddr, nd, hook) do { \
-		hook = 0; \
-} while (0)
+void	report_config(t_nmap_setting *settings);
+void    report_final(t_root *root, double scan_time);
 
 #endif

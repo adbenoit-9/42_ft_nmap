@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 18:26:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:35:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "data_cleany.h"
 #include "data_recy.h"
 #include "data_setupy.h"
-#include "data_reporty.h"
 #include "data_analysy.h"
 
 t_func_mapy *_exec[EXEC_MAX_CMD] = {

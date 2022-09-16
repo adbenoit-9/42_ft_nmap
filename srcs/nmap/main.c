@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 19:40:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:34:36 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/time.h>
 #include "nmap.h"
 #include "nmap_mapy_config.h"
+#include "export_reporty.h"
 
 static	double elapse_time(struct timeval *begin, struct timeval *end)
 {
@@ -71,7 +72,7 @@ int main(int ac, char **av)
 			if (set_iter_rd(root, iter_set_tcpflag))
 				return (-1);
 			signal(SIGALRM, handle_signal);
-			display_config(settings);
+			report_config(settings);
 			alarm(1);
 			gettimeofday(&begin, NULL);
 			if (settings->speedup) {
@@ -79,7 +80,7 @@ int main(int ac, char **av)
 			}
 			scany(root);
 			gettimeofday(&end, NULL);
-			display_report(root, elapse_time(&begin, &end));
+			report_final(root, elapse_time(&begin, &end));
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;

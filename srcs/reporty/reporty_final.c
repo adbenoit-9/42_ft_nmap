@@ -1,59 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap_display.c                                     :+:      :+:    :+:   */
+/*   reporty_final.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 20:28:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:19:10 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nmap.h"
-#include "nmap_mapy_config.h"
-
-# define HEADER_FORMAT "%s\n%s%*s%*s%*s\n%.*s\n"
-# define PORT_REPORT_FORMAT "%d%*s%*s%*s\n"
-# define BORDER "-------------------------------------------------------------\
-------------------------------------------------------------------------------"
-# define SPACES "                                                             "
-# define PRECISION(len_prec_val, len_prec_zone, val) (int)(len_prec_zone - len_prec_val + ft_strlen(val))
-# define HDR_PRECISION(len_prec_val, len_prec_zone, len_val) (int)(len_prec_zone - len_prec_val + len_val)
-# define PORT_ZONE_SIZE     10
-# define SERV_ZONE_SIZE     30
-# define RES_ZONE_SIZE      33
-# define CONCL_ZONE_SIZE    15
-
-void	display_config(t_nmap_setting *settings)
-{
-	char	ip_list[settings->ip_nb * INET6_ADDRSTRLEN + settings->ip_nb];
-	char	scan_list[settings->scan_nb * 4 + settings->scan_nb];
-	char	*scan_str[] = {"NULL", "SYN", "ACK", "FIN", "XMAS", "UDP"};
-	char	scan_value[] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN,
-				FLAG_S_XMAS, FLAG_S_UDP};
-
-	ip_list[0] = 0;
-	scan_list[0] = 0;
-	for (int i = 0; i < settings->ip_nb; i++) {
-		strcat(ip_list, settings->ips[i]);
-		strcat(ip_list, " ");
-	}
-	for (int i = 0; i < settings->scan_nb; i++) {
-		for (int j = 0; j < 6; j++) {
-			if (settings->scans[i] == scan_value[j]) {
-				strcat(scan_list, scan_str[j]);
-				break ;
-			}
-		}
-		strcat(scan_list, " ");
-	}
-	printf("Scan Configurations\nTarget Ip-Address : %s\n\
-No of Ports to scan : %d\n\
-Scans to be performed : %s\n\
-No of threads : %d\nScanning..\n",
-		ip_list, settings->port_nb, scan_list, settings->speedup);
-}
+#include "reporty.h"
 
 static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan)
 {
@@ -121,16 +78,16 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 {
     int flag_index = ip_index;
     struct servent *service;
-    int             ret = 0;
+    int             ret = REPORTY_OK;
     int             port_len;
     u_int8_t        flag_concl;
     char            result[4096];
     char            conclusion[CONCL_ZONE_SIZE + 1];
 
-    for (int i = 0; ret == 0 && i < root->nd_nb; i++) {
+    for (int i = 0; ret == REPORTY_OK && i < root->nd_nb; i++) {
         flag_concl = 0;
         ft_bzero(result, 4096);
-        for (int j = 0; ret == 0 && j < root->rd_nb; j++, flag_index++) {
+        for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
             if (root->blk_flag[flag_index] & status) {
                 flag_concl |= root->blk_flag[flag_index];
                 str_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
@@ -159,7 +116,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
     return (ret);
 }
 
-void    display_report(t_root *root, double scan_time)
+void    report_final(t_root *root, double scan_time)
 {
     printf("\nScan took %f secs\n", scan_time);
     for (int i = 0; i < root->st_nb; i++) {

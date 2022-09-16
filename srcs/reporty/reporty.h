@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 13:51:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:30:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,21 @@
 #include <unistd.h>
 
 /* Project Header */
-#include "nmap_structs.h"
+#include "mapy.h"
+#include "analysy.h"
+#include "ft_nmap_parsing.h"
+
+# define HEADER_FORMAT "%s\n%s%*s%*s%*s\n%.*s\n"
+# define PORT_REPORT_FORMAT "%d%*s%*s%*s\n"
+# define BORDER "-------------------------------------------------------------\
+------------------------------------------------------------------------------"
+# define SPACES "                                                             "
+# define PRECISION(len_prec_val, len_prec_zone, val) (int)(len_prec_zone - len_prec_val + ft_strlen(val))
+# define HDR_PRECISION(len_prec_val, len_prec_zone, len_val) (int)(len_prec_zone - len_prec_val + len_val)
+# define PORT_ZONE_SIZE     10
+# define SERV_ZONE_SIZE     30
+# define RES_ZONE_SIZE      33
+# define CONCL_ZONE_SIZE    15
 
 #define REPORTY_OK      0
 #define REPORTY_ERROR   -1
