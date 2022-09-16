@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 12:48:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:03:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void    report_final(t_root *root, double scan_time)
     for (int i = 0; i < root->st_nb; i++) {
         printf("IP address: %s\n", root->client.ips[i]);
         
-        printf(HEADER_FORMAT, "Open ports:",
+        printf(HEADER_FORMAT,
+            "Open ports:",
             "Port",
             HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
             "Service Name (if applicable)",
@@ -132,10 +133,11 @@ void    report_final(t_root *root, double scan_time)
             HDR_PRECISION(7, RES_ZONE_SIZE, 10),
             "Conclusion",
             PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-            BORDER);
+            BORDER1);
         print_ports_report(root, i, PORT_S_OPEN);
         
-        printf(HEADER_FORMAT, "Closed/Filtered/Unfiltered ports:",
+        printf(HEADER_FORMAT,
+            "\nClosed/Filtered/Unfiltered ports:",
             "Port",
             HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
             "Service Name (if applicable)",
@@ -144,7 +146,7 @@ void    report_final(t_root *root, double scan_time)
             HDR_PRECISION(7, RES_ZONE_SIZE, 10),
             "Conclusion",
             PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-            BORDER);
+            BORDER1);
         print_ports_report(root, i, ~PORT_S_OPEN);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 11:14:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:02:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 
 # define HEADER_FORMAT "%s\n%s%*s%*s%*s\n%.*s\n"
 # define PORT_REPORT_FORMAT "%d%*s%*s%*s\n"
-# define BORDER "-------------------------------------------------------------\
+# define BORDER1 "-------------------------------------------------------------\
 ------------------------------------------------------------------------------"
+# define BORDER2 ".............................................................\
+.............................................................................."
 # define SPACES "                                                             "
 # define PRECISION(len_prec_val, len_prec_zone, val) (int)(len_prec_zone - len_prec_val + ft_strlen(val))
 # define HDR_PRECISION(len_prec_val, len_prec_zone, len_val) (int)(len_prec_zone - len_prec_val + len_val)

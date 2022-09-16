@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 12:31:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 13:08:34 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	struct	bpf_program		bpf 			= {0};
 	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
-	fd_set				rd;
-	struct timeval		tv;
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
@@ -39,34 +37,24 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	}
 	else
 	{
-		FD_SET(((t_nmap_link*)conf_st)->socket, &rd);
-		tv.tv_sec = 1;
-		tv.tv_usec = 0;
-		int ret = select(((t_nmap_link*)conf_st)->socket + 1, &rd, NULL, NULL, &tv);
-		printf("ret = %d\n", ret);
-		if (ret > 0) {
-			snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
-				inet_ntoa(((struct sockaddr_in*)&((t_nmap_link*)conf_st)->src_sock)->sin_addr),
-				((t_nmap_app*)conf_nd)->port,
-				pre_built_filter_icmp,
-				((t_nmap_app*)conf_nd)->port);
-			if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
-			{
+		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
+			inet_ntoa(((struct sockaddr_in*)&((t_nmap_link*)conf_st)->src_sock)->sin_addr),
+			((t_nmap_app*)conf_nd)->port,
+			pre_built_filter_icmp,
+			((t_nmap_app*)conf_nd)->port);
+		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
+		{
+			r = RECY_ERROR;
+		}
+		if (r == RECY_OK) {
+			if (pcap_setfilter(blkhdr->pcap_handler, &bpf) == PCAP_ERROR) {
 				r = RECY_ERROR;
 			}
-			if (r == RECY_OK) {
-				if (pcap_setfilter(blkhdr->pcap_handler, &bpf) == PCAP_ERROR) {
-					r = RECY_ERROR;
-				}
-			}
-			bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
-			pcap_loop(blkhdr->pcap_handler, 1,
-						nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
-			pcap_freecode(&bpf);
 		}
-		else if (ret == -1) {
-			perror("select");
-		}
+		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		pcap_loop(blkhdr->pcap_handler, 1,
+					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
+		pcap_freecode(&bpf);
 	}
 	return (r);
 }
