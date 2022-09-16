@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 15:41:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:18:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 # include "nmap_hooks.h"
 # include "parsy_export.h"
 # include "analysy.h"
+
+# define NMAP_RUN 1
+# define NMAP_STOP 0
+
+typedef struct s_nmap_controller
+{
+	pthread_mutex_t	mutex;
+	uint8_t			status;
+	t_root			*root;	
+}				t_nmap_controller;
 
 void	*scany(void *root);
 void	display_config(t_nmap_setting *settings);

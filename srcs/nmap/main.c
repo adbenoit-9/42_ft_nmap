@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 15:41:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:20:21 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static	int	multi_thread(int n, t_root *root)
 
 int main(int ac, char **av)
 {
-	int32_t 		r		= 0;
-	uint8_t			*buf;
-	t_root			*root;
-	t_nmap_setting	*settings;
-	struct timeval	begin, end;
-	pthread_t		th;
+	int32_t 			r		= 0;
+	uint8_t				*buf;
+	t_nmap_controller	controller;
+	t_nmap_setting		*settings;
+	struct timeval		begin, end;
+	pthread_t			th;
 	
 	buf = (uint8_t*)malloc(SIZE);
 	bzero(buf, SIZE);
@@ -53,9 +53,11 @@ int main(int ac, char **av)
 		r = -1;
 	}
 	if (r == 0) {
-		root = (t_root*)buf;
-		root->map = &buf[sizeof(t_root)];
-		settings = &root->client;
+		controller.status = NMAP_RUN;
+		pthread_mutex_init(&controller.mutex, NULL);
+		controller.root = (t_root*)buf;
+		controller.root->map = &buf[sizeof(t_root)];
+		settings = &controller.root->client;
 		/* Parsing */
 		r = parser(ac, av, settings);
 		if (r == PARSY_OK) {
@@ -64,27 +66,30 @@ int main(int ac, char **av)
 			((t_root*)buf)->nd_nb = settings->port_nb;
 			((t_root*)buf)->rd_nb = settings->scan_nb;
 			/* Fill parameters in tree */
-			if (set_iter_st(root, set_sockaddr))
+			if (set_iter_st(controller.root, set_sockaddr))
 				return (-1);
-			if (set_iter_st(root, set_src_sockaddr))
+			if (set_iter_st(controller.root, set_src_sockaddr))
 				return (-1);
-			if (set_iter_nd(root, iter_set_port))
+			if (set_iter_nd(controller.root, iter_set_port))
 				return (-1);
-			if (set_iter_rd(root, iter_set_tcpflag))
+			if (set_iter_rd(controller.root, iter_set_tcpflag))
 				return (-1);
 			signal(SIGALRM, handle_signal);
 			report_config(settings);
-			blky_init(((t_root *)root)->map);
-			pthread_create(&th, NULL, handle_timeout, root);
-			// alarm(1);
+			blky_init(((t_root *)controller.root)->map);
+			pthread_create(&th, NULL, handle_timeout, &controller);
+			alarm(1);
 			gettimeofday(&begin, NULL);
 			if (settings->speedup) {
-				multi_thread(settings->speedup, root);
+				multi_thread(settings->speedup, controller.root);
 			}
-			scany(root);
-			pthread_cancel(th);
+			scany(controller.root);
+			pthread_mutex_lock(&controller.mutex);
+			controller.status = NMAP_STOP;
+			pthread_mutex_unlock(&controller.mutex);
+			pthread_join(th, NULL);
 			gettimeofday(&end, NULL);
-			report_final(root, elapse_time(&begin, &end));
+			report_final(controller.root, elapse_time(&begin, &end));
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;

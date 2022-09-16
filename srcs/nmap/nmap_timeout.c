@@ -6,30 +6,40 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 15:04:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 15:48:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:19:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nmap.h"
 #include <pthread.h>
 
+static int  get_status(t_nmap_controller *controller)
+{
+    int status;
+
+    pthread_mutex_lock(&controller->mutex);
+    status = controller->status;
+    pthread_mutex_unlock(&controller->mutex);
+    return (status);
+}
+
 void    *handle_timeout(void *attr)
 {
-    t_root          *root = (t_root *)attr;
-	uint64_t		count;
-	uint64_t		index;
-	t_blk			*blk;
-	t_nmap_blkhdr	*hdr;
-    struct timeval  tv;
+    t_nmap_controller   *controller = (t_nmap_controller *)attr;
+	uint64_t		    count;
+	uint64_t		    index;
+	t_blk			    *blk;
+	t_nmap_blkhdr	    *hdr;
+    struct timeval      tv;
 	
-    while (root)
+    while (get_status(controller) == NMAP_RUN)
     {
         count = 0;
-        for (int i = 0; i < root->st_nb; i++) {
-            for (int j = 0; j < root->nd_nb; j++) {
-                for (int k = 0; k < root->rd_nb; k++, count++) {
+        for (int i = 0; i < controller->root->st_nb; i++) {
+            for (int j = 0; j < controller->root->nd_nb; j++) {
+                for (int k = 0; k < controller->root->rd_nb; k++, count++) {
                     index = (count % BLCK_NB) * sizeof(t_blk);
-                    blk = (t_blk*)&root->map[index];
+                    blk = (t_blk*)&controller->root->map[index];
                     hdr = (t_nmap_blkhdr *)(blk->map);
                     gettimeofday(&tv, NULL);
                     pthread_mutex_lock(&hdr->time_mutex);
