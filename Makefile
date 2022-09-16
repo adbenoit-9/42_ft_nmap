@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/16 12:42:55 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/16 15:32:22 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,8 @@ SUB_SRC			:= main.c \
 					nmap_exey_hooks.c \
 					nmap_iter_hooks.c \
 					nmap_scany.c \
-					nmap_signal.c
+					nmap_signal.c \
+					nmap_timeout.c
 SRC				+= $(addprefix nmap/, $(SUB_SRC))
 SUB_SRC			:= analysy_synscan.c \
 					analysy_udpscan.c \

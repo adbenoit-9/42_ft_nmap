@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/15 20:18:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:31:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 typedef struct		s_nmap_blkhdr {
 	pthread_mutex_t				mutex;
+	pthread_mutex_t				time_mutex;
+	struct timeval				pcap_time;
 	int							socket;
 	pcap_t						*pcap_handler;
 	socklen_t					socklen;
@@ -39,10 +41,7 @@ typedef struct		s_nmap_setting {
 	int							ip_nb;
 	int							port_nb;
 	int							scan_nb;
-	pcap_t						*pcap_handler;
 	pthread_t					thread;
-	//struct sockaddr_storage				ip4_src;
-	//struct sockaddr_storage				ip6_src;
 }					t_nmap_setting;
 
 typedef struct		s_nmap_link {
@@ -54,7 +53,6 @@ typedef struct		s_nmap_link {
 }					t_nmap_link;
 
 typedef struct		s_nmap_app {
-	//int									socket;
 	uint16_t					port;
 }					t_nmap_app;
 

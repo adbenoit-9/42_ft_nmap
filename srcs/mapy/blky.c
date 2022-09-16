@@ -52,6 +52,7 @@ int			blky_init(uint8_t *blks)
 		tmp->flag = BLK_IDLE;
 		hdr = (t_nmap_blkhdr *)tmp->map;
 		pthread_mutex_init(&hdr->mutex, NULL);
+		pthread_mutex_init(&hdr->time_mutex, NULL);
 		i += sizeof(t_blk);
 	}
 	return (0);

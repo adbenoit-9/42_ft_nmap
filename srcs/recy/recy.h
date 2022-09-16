@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:26:38 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 17:24:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:44:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <netinet/ip6.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pthread.h>
 
 #include "proty_tcp.h"
 #include "nmap_structs.h"
