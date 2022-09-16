@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recy_ipv4_tcp.c                                    :+:      :+:    :+:   */
+/*   recy_ipv6.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 17:50:50 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:50:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			}
 		}
 		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+		gettimeofday((struct timeval *)&buf[sizeof(pthread_mutex_t) * 2], NULL);
+		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
 		pcap_freecode(&bpf);
