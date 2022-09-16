@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 18:35:46 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:46:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int ac, char **av)
 {
 	int32_t 			r		= 0;
 	uint8_t				*buf;
-	t_nmap_controller	*controller;
+	t_nmap_controller	controller;
 	t_nmap_setting		*settings;
 	
 	buf = (uint8_t*)malloc(SIZE);
@@ -44,17 +44,16 @@ int main(int ac, char **av)
 		r = -1;
 	}
 	if (r == 0) {
-		controller = (t_nmap_controller *)malloc(sizeof(t_nmap_controller));
-		controller->status = NMAP_RUN;
-		pthread_mutex_init(&controller->mutex, NULL);
-		controller->root = (t_root*)buf;
-		controller->root->map = &buf[sizeof(t_root)];
-		settings = &controller->root->client;
+		controller.status = NMAP_RUN;
+		pthread_mutex_init(&controller.mutex, NULL);
+		controller.root = (t_root*)buf;
+		controller.root->map = &buf[sizeof(t_root)];
+		settings = &controller.root->client;
 		/* Parsing */
 		r = parser(ac, av, settings);
 		if (r == PARSY_OK) {
-			r = setup_root(controller->root, settings);
-			ft_nmap(controller);
+			r = setup_root(controller.root, settings);
+			ft_nmap(&controller);
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;
