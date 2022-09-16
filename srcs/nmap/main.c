@@ -6,37 +6,30 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 16:20:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:42:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <sys/time.h>
 #include "nmap.h"
-#include "nmap_mapy_config.h"
-#include "export_reporty.h"
 
-double	elapse_time(struct timeval *begin, struct timeval *end)
+static int	setup_root(t_root *root, t_nmap_setting *settings)
 {
-	double begin_sec = begin->tv_sec + (double)begin->tv_usec / 1000000;
-	double end_sec = end->tv_sec + (double)end->tv_usec / 1000000;
-
-	return (end_sec - begin_sec);
+	int	r = 0;
+	/* Update size of tree params */
+	root->st_nb = settings->ip_nb;
+	root->nd_nb = settings->port_nb;
+	root->rd_nb = settings->scan_nb;
+	/* Fill parameters in tree */
+	if (set_iter_st(root, set_sockaddr))
+		r = -1;
+	if (set_iter_st(root, set_src_sockaddr))
+		r = -1;
+	if (set_iter_nd(root, iter_set_port))
+		r = -1;
+	if (set_iter_rd(root, iter_set_tcpflag))
+		r = -1;
+	return (r);
 }
-
-static	int	multi_thread(int n, t_root *root)
-{
-	pthread_t		th[n];
-	
-	for(int i = 0; i < n; i++) {
-		pthread_create(&th[i], NULL, scany, root);
-	}
-	for(int i = 0; i < n; i++) {
-		pthread_join(th[i], NULL);
-	}
-	return (0);
-}
-
 
 int main(int ac, char **av)
 {
@@ -44,8 +37,6 @@ int main(int ac, char **av)
 	uint8_t				*buf;
 	t_nmap_controller	controller;
 	t_nmap_setting		*settings;
-	struct timeval		begin, end;
-	pthread_t			th;
 	
 	buf = (uint8_t*)malloc(SIZE);
 	bzero(buf, SIZE);
@@ -61,35 +52,8 @@ int main(int ac, char **av)
 		/* Parsing */
 		r = parser(ac, av, settings);
 		if (r == PARSY_OK) {
-			/* Update size of tree params */
-			((t_root*)buf)->st_nb = settings->ip_nb;
-			((t_root*)buf)->nd_nb = settings->port_nb;
-			((t_root*)buf)->rd_nb = settings->scan_nb;
-			/* Fill parameters in tree */
-			if (set_iter_st(controller.root, set_sockaddr))
-				return (-1);
-			if (set_iter_st(controller.root, set_src_sockaddr))
-				return (-1);
-			if (set_iter_nd(controller.root, iter_set_port))
-				return (-1);
-			if (set_iter_rd(controller.root, iter_set_tcpflag))
-				return (-1);
-			signal(SIGALRM, handle_signal);
-			report_config(settings);
-			blky_init(((t_root *)controller.root)->map);
-			pthread_create(&th, NULL, handle_timeout, &controller);
-			alarm(1);
-			gettimeofday(&begin, NULL);
-			if (settings->speedup) {
-				multi_thread(settings->speedup, controller.root);
-			}
-			scany(controller.root);
-			pthread_mutex_lock(&controller.mutex);
-			controller.status = NMAP_STOP;
-			pthread_mutex_unlock(&controller.mutex);
-			pthread_join(th, NULL);
-			gettimeofday(&end, NULL);
-			report_final(controller.root, elapse_time(&begin, &end));
+			r = setup_root(controller.root, settings);
+			ft_nmap(&controller);
 		}
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;
