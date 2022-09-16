@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:19:10 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:48:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
         flag_concl = 0;
         ft_bzero(result, 4096);
         for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
-            if (root->blk_flag[flag_index] & status) {
+            if (root->blk_flag[flag_index] & status &&
+                    (status == PORT_S_OPEN || !(root->blk_flag[flag_index] & ~status))) {
                 flag_concl |= root->blk_flag[flag_index];
                 str_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
                 if (j == root->rd_nb - 1) {

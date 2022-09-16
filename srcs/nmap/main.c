@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 12:11:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:32:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int main(int ac, char **av)
 				return (-1);
 			signal(SIGALRM, handle_signal);
 			report_config(settings);
-			alarm(1);
+			// alarm(1);
 			gettimeofday(&begin, NULL);
 			if (settings->speedup) {
 				multi_thread(settings->speedup, root);
