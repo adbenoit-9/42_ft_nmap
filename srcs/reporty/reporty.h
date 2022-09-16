@@ -6,21 +6,23 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:14:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REPORTY_H
 # define REPORTY_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <unistd.h>
+# include <stdint.h>
+# include <stdio.h>
+# include <unistd.h>
 
 /* Project Header */
-#include "mapy.h"
-#include "analysy.h"
-#include "parsy.h"
+# include "mapy.h"
+# include "analysy.h"
+# include "proty_tcp.h"
+# include "proty_udp.h"
+# include "libft.h"
 
 # define HEADER_FORMAT "%s\n%s%*s%*s%*s\n%.*s\n"
 # define PORT_REPORT_FORMAT "%d%*s%*s%*s\n"
