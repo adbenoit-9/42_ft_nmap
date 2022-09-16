@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/15 20:31:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:40:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 			++tcpoff;
 			SET_TCP_DATA(&buf[i], syn_mss, 4);
 		}
-		conf_exec->packet_length = length + sizeof(struct ip6_hdr);
 		SET_TCP_FLAGS(&buf[i], conf_exec->packet_flag); // TODO 
 		SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_TCP_OFF(&buf[i], tcpoff);

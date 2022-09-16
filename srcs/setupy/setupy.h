@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 23:43:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/13 17:24:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:10:52 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <string.h>
+#include <pthread.h>
 
 /* Project header */
 #include "nmap_structs.h"

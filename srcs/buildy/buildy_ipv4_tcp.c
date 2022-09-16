@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/15 20:31:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:40:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 #include <arpa/inet.h>
 
 #include "nmap_structs.h"
-
-//static const	uint8_t		template_ipv4[20] = {
-//	0x45, 0x0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-//	0x00, 0x00, 0x00, 0x00 };
-//
-//static const	uint8_t		template_tcp[20] = {
-//	0x45, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-//	0x00, 0x00, 0x00, 0x00 };
 
 int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 					T_CLIENT_RD *conf_exec)
@@ -60,7 +52,6 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_TCP_FLAGS(&buf[i], conf_exec->packet_flag);
 		SET_TCP_DPORT(&buf[i], htons(conf_nd->port));
 		SET_TCP_OFF(&buf[i], tcpoff);
-		conf_exec->packet_length = length;
 
 		/* setup IP header */
 		dip = ((struct sockaddr_in *)&conf_st->sock)->sin_addr.s_addr;
@@ -76,7 +67,7 @@ int	build_ipv4_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		random[2] &= 0x3F;
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
 		SET_IP4_TOT_LEN(buf, htons(length));
-		
+
 		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
 		SET_TCP_SUM(&buf[i], ipv4_checksum(buf, length - sizeof(struct iphdr)));
 	}

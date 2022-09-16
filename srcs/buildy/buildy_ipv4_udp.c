@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/15 20:41:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:39:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 {
 	int				ret			= BUILDY_OK;
 	uint8_t			random[16]	= {0};
-	uint32_t		i, dip;
+	uint32_t		i, dip, length;
 	
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {
 		ret = BUILDY_ERROR;
@@ -33,7 +33,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		buf = &buf[sizeof(t_nmap_blkhdr)];
 		bzero(buf, MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		ret = get_urandom(random, 16);
-		conf_exec->packet_length = sizeof(struct iphdr) + sizeof(struct udphdr);
+		length = sizeof(struct iphdr) + sizeof(struct udphdr);
 		i = sizeof(struct iphdr);
 
 		/* setup IP header */
@@ -49,7 +49,7 @@ int	build_ipv4_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		random[2] |= (1 << 5);
 		random[2] &= 0x3F;
 		SET_IP4_TTL(buf, (uint8_t)(*(&random[2])));
-		SET_IP4_TOT_LEN(buf, htons(conf_exec->packet_length));
+		SET_IP4_TOT_LEN(buf, htons(length));
 		SET_IP4_CHECK(buf, checksum((uint16_t*)buf, sizeof(struct iphdr)));
 
 		/* setup UDP header */

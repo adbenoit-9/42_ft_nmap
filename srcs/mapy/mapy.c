@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 15:29:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:46:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int			mapy(t_root *root)
 	uint64_t		count;
 	uint64_t		index;
 	t_blk			*blk;
-	
-	memset(root->blk_flag, 0, sizeof(root->blk_flag));
+
 	if (!root) {
 		r = MAPY_ERR;
 	}

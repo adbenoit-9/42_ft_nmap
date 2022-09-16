@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 16:40:47 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:40:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	ft_nmap(t_nmap_controller *controller)
 	signal(SIGALRM, handle_signal);
 	report_config(&controller->root->client);
 	blky_init(((t_root *)controller->root)->map);
-	pthread_create(&th_timeout, NULL, handle_timeout, &controller);
 	alarm(1);
+	pthread_create(&th_timeout, NULL, handle_timeout, &controller);
 	gettimeofday(&begin, NULL);
 	if (controller->root->client.speedup) {
 		multi_thread(controller->root->client.speedup, controller->root);

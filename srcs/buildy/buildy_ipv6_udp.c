@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 02:04:56 by leon              #+#    #+#             */
-/*   Updated: 2022/09/15 20:31:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:40:47 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		buf = &buf[sizeof(t_nmap_blkhdr)];
 		bzero(buf, MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		ret = get_urandom(random, 16);
-		conf_exec->packet_length = sizeof(struct ip6_hdr) + sizeof(struct udphdr);
 		i = sizeof(struct ip6_hdr);
 
 		/* setup IP6 header */

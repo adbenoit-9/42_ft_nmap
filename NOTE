@@ -1,14 +1,4 @@
-
-
-
-TCP header calculation probleme :
-We need the fucking ip source adresse
-
-Avec les fonctions les seuls moyerns que je vois sont de look toute les interfaces avec getifaddrs et de choisir la premiere interface
-(non lo) avec une ip valid et up.
-Mais si la table de routage du system et complexe et qu'il a plusieurs interfaces ca ne fonctionnera pas. La solution du bind UDP avec
-getsockname serait meilleur mais on a pas le droit.
-
-
--> do a resolvy module
--> do a routing module (routy) (ip src dynamic en fonction de l'ip dst)
+data race:
+- st (t_nmap_link):
+- nd (t_nmap_app):
+- rd (t_nmap_scan):

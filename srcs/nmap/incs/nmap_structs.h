@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 15:56:12 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:41:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct		s_nmap_app {
 }					t_nmap_app;
 
 typedef struct		s_nmap_scan {
-	int							packet_length;
 	uint8_t						packet_flag;
 	int							result;
 }					t_nmap_scan;

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 15:50:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 18:19:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			((t_nmap_app*)conf_nd)->port,
 			pre_built_filter_icmp6,
 			((t_nmap_app*)conf_nd)->port);
+		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
 			perror("pcap compile");
@@ -58,7 +59,6 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 				r = RECY_ERROR;
 			}
 		}
-		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		gettimeofday((struct timeval *)&buf[sizeof(pthread_mutex_t) * 2], NULL);
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);

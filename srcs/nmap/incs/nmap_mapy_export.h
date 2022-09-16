@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:07:46 by leon              #+#    #+#             */
-/*   Updated: 2022/08/23 23:52:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:44:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 #include "export_cleany.h"
 #include "export_recy.h"
 
-int					print_all(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
-int					print_report(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
+int print_report(uint8_t *buf, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
 
 #endif
 
