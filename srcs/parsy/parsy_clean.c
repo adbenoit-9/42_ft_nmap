@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsy_export.h                                     :+:      :+:    :+:   */
+/*   parsy_clean.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 11:05:00 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 11:23:05 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/09/16 11:20:09 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/16 11:22:47 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSY_EXPORT_H
-# define PARSY_EXPORT_H
+#include "parsy.h"
 
-# include "nmap_structs.h"
-
-# define PARSY_OK   0
-# define PARSY_KO   -1
-# define PARSY_STOP	1
-
-int		parser(int ac, char **av, t_nmap_setting *settings);
-void    clean_settings(t_nmap_setting *settings);
-
-#endif
+void    clean_settings(t_nmap_setting *settings)
+{
+    for (int i = 0; i < settings->ip_nb; i++) {
+        free(settings->ips[i]);
+    }
+}

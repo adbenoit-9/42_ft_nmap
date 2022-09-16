@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:34:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:23:56 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ int main(int ac, char **av)
 		else if (r == PARSY_STOP)
 			r = PARSY_KO;
 	}
+	clean_settings(settings);
+	free(buf);
 	return (r);
 }
