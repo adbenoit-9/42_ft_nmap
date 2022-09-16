@@ -6,11 +6,11 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 19:47:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:09:21 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap_parsing.h"
+#include "parsy.h"
 
 static void    init_nmap_settings(t_nmap_setting *settings)
 {
@@ -63,7 +63,7 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 				break ;
 			}
 		}
-		if (j == NFLAG) {
+		if (j == SCAN_LIMIT) {
 			if (av[i][0] == '-') {
 				ret = print_error(E_BADOPT, av[i]);
 			}

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:33:28 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:07:46 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <pthread.h>
 # include "mapy.h"
 # include "nmap_hooks.h"
-# include "ft_nmap_parsing.h"
+# include "parsy_export.h"
 # include "analysy.h"
 
 void	*scany(void *root);

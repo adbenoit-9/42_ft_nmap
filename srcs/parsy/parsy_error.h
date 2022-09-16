@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nmap_error.h                                    :+:      :+:    :+:   */
+/*   parsy_error.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 11:01:41 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:42:12 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NMAP_ERROR_H
-# define FT_NMAP_ERROR_H
+#ifndef PARSY_ERROR_H
+# define PARSY_ERROR_H
 
 # define E_NOHOST 1
 # define E_BADHOST 2

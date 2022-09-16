@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_ip.c                                         :+:      :+:    :+:   */
+/*   parsy_ip.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 10:16:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nmap_parsing.h"
+#include "parsy.h"
 
 static void	set_ip(char *host, t_nmap_setting *settings)
 {

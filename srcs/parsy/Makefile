@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:00:42 by leon             ###   ########.fr        #
+#    Updated: 2022/09/16 11:06:56 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,12 @@ MODULES	:= ../nmap/incs\
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC			:= parsy.c \
-				parse_ip.c \
-				parse_scan.c \
-				parse_ports.c \
-				parse_speedup.c \
+				parsy_ip.c \
+				parsy_scan.c \
+				parsy_ports.c \
+				parsy_speedup.c \
 				ft_isnumber.c \
-				error.c
+				parsy_error.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

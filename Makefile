@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/16 10:34:52 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/16 11:06:56 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,12 +109,12 @@ SRC				+= $(addprefix buildy/, $(SUB_SRC))
 SUB_SRC			:= cleany.c
 SRC				+= $(addprefix cleany/, $(SUB_SRC))
 SUB_SRC			:= parsy.c \
-					parse_ip.c \
-					parse_scan.c \
-					parse_ports.c \
-					parse_speedup.c \
+					parsy_ip.c \
+					parsy_scan.c \
+					parsy_ports.c \
+					parsy_speedup.c \
 					ft_isnumber.c \
-					error.c
+					parsy_error.c
 SRC				+= $(addprefix parsy/, $(SUB_SRC))
 SUB_SRC			:= recy_ipv4.c \
 					recy_ipv6.c \

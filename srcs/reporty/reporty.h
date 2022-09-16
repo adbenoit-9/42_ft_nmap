@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:30:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /* Project Header */
 #include "mapy.h"
 #include "analysy.h"
-#include "ft_nmap_parsing.h"
+#include "parsy.h"
 
 # define HEADER_FORMAT "%s\n%s%*s%*s%*s\n%.*s\n"
 # define PORT_REPORT_FORMAT "%d%*s%*s%*s\n"

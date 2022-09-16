@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_speedup.c                                    :+:      :+:    :+:   */
+/*   parsy_speedup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:18 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/14 10:35:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_nmap_parsing.h"
-#include "ft_nmap_error.h"
+#include "parsy.h"
+#include "parsy_error.h"
 
 int    set_speedup(t_nmap_setting *settings, char *value)
 {

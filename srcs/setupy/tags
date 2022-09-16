@@ -50,30 +50,30 @@ DEPFLAGS	Makefile	/^DEPFLAGS = -MP -MD$/;"	m
 DEPS	Makefile	/^DEPS = $(SRCS:.c=.d)$/;"	m
 DIRS	sendy/Makefile	/^DIRS			:= $(OBJ_DIR) $(addprefix $(OBJ_DIR)\/, $(SUB_DIR))$/;"	m
 ERROR	libft/Makefile	/^ERROR= `cat $(FILE) | grep -B 1 "Error"`$/;"	m
-E_BADARG	parsing/ft_nmap_error.h	23;"	d
-E_BADFILE	parsing/ft_nmap_error.h	18;"	d
-E_BADHOST	parsing/ft_nmap_error.h	17;"	d
-E_BADOPT	parsing/ft_nmap_error.h	25;"	d
-E_BADPORT	parsing/ft_nmap_error.h	19;"	d
-E_BADRANGE	parsing/ft_nmap_error.h	20;"	d
-E_BADSCAN	parsing/ft_nmap_error.h	21;"	d
-E_BADSPEEDUP	parsing/ft_nmap_error.h	22;"	d
-E_LIMIT_EXCEED	parsing/ft_nmap_error.h	26;"	d
-E_NOARG	parsing/ft_nmap_error.h	24;"	d
-E_NOHOST	parsing/ft_nmap_error.h	16;"	d
+E_BADARG	parsing/parsy_error.h	23;"	d
+E_BADFILE	parsing/parsy_error.h	18;"	d
+E_BADHOST	parsing/parsy_error.h	17;"	d
+E_BADOPT	parsing/parsy_error.h	25;"	d
+E_BADPORT	parsing/parsy_error.h	19;"	d
+E_BADRANGE	parsing/parsy_error.h	20;"	d
+E_BADSCAN	parsing/parsy_error.h	21;"	d
+E_BADSPEEDUP	parsing/parsy_error.h	22;"	d
+E_LIMIT_EXCEED	parsing/parsy_error.h	26;"	d
+E_NOARG	parsing/parsy_error.h	24;"	d
+E_NOHOST	parsing/parsy_error.h	16;"	d
 FILE	libft/Makefile	/^FILE=norme_error.txt$/;"	m
 FLAG_S_ACK	proty/proty_tcp.h	51;"	d
 FLAG_S_FIN	proty/proty_tcp.h	52;"	d
 FLAG_S_NULL	proty/proty_tcp.h	50;"	d
 FLAG_S_SYN	proty/proty_tcp.h	49;"	d
 FLAG_S_XMAS	proty/proty_tcp.h	53;"	d
-FT_NMAP_ERROR_H	parsing/ft_nmap_error.h	14;"	d
+FT_NMAP_ERROR_H	parsing/parsy_error.h	14;"	d
 FT_NMAP_H	runny/runny.h	14;"	d
 FT_NMAP_IP_H	proty/proty_ip.h	14;"	d
 FT_NMAP_MAPPY	mappy/mappy_exec.h	15;"	d
 FT_NMAP_MAPPY	runny/runny_data.h	14;"	d
 FT_NMAP_MAPPY_H	mappy/mappy.h	13;"	d
-FT_NMAP_PARSING_H	parsing/ft_nmap_parsing.h	14;"	d
+parsy.h_H	parsing/parsy.h	14;"	d
 FT_NMAP_SENDY_H	sendy/sendy.h	13;"	d
 FT_NMAP_STRUCTS_H	nmap/ft_nmap_structs.h	15;"	d
 FT_NMAP_TCP_H	proty/proty_tcp.h	14;"	d
@@ -117,10 +117,10 @@ MAP_CMD_INDEX7	mappy/mappy_exec.h	25;"	d
 MAX_EXECUTION_CMD	mappy/mappy.h	112;"	d
 MAX_EXECUTION_HOOK	mappy/mappy.h	113;"	d
 MAX_EXECUTION_LIST	mappy/mappy.h	123;"	d
-MAX_HL	parsing/ft_nmap_parsing.h	87;"	d
-MAX_LL	parsing/ft_nmap_parsing.h	86;"	d
-MAX_PACKET_SIZE	parsing/ft_nmap_parsing.h	88;"	d
-MAX_SCAN_TYPE	parsing/ft_nmap_parsing.h	89;"	d
+MAX_HL	parsing/parsy.h	87;"	d
+MAX_LL	parsing/parsy.h	86;"	d
+MAX_PACKET_SIZE	parsing/parsy.h	88;"	d
+MAX_SCAN_TYPE	parsing/parsy.h	89;"	d
 MEM	libft/Makefile	/^MEM			=	ft_memset.c			ft_bzero.c			ft_memcpy.c \\$/;"	m
 MEM_PATH	libft/Makefile	/^MEM_PATH	=	$(SRC_PATH)mem\/$/;"	m
 MODULES	Makefile	/^MODULES = .\/buildy\\$/;"	m
@@ -128,8 +128,8 @@ NAME	libft/Makefile	/^NAME		=	libft.a$/;"	m
 NAME	sendy/Makefile	/^NAME			:= ft_nmap$/;"	m
 NBR	libft/Makefile	/^NBR			=	ft_atoi.c			ft_itoa.c			ft_putnbr_fd.c		$/;"	m
 NBR_PATH	libft/Makefile	/^NBR_PATH	=	$(SRC_PATH)nbr\/$/;"	m
-NFLAG	parsing/ft_nmap_parsing.h	24;"	d
-NONE	parsing/ft_nmap_parsing.h	28;"	d
+SCAN_LIMIT	parsing/parsy.h	24;"	d
+NONE	parsing/parsy.h	28;"	d
 NONE	prompty/prompty.c	32;"	d	file:
 NONE	sendy/Makefile	/^NONE			= \\033[0m$/;"	m
 OBJ	libft/Makefile	/^OBJ			=	$(addprefix $(OBJ_PATH),$(OBJ_NAME))$/;"	m
@@ -139,20 +139,20 @@ OBJ_DIR	sendy/Makefile	/^OBJ_DIR 		:= $(BUILD)\/obj$/;"	m
 OBJ_NAME	libft/Makefile	/^OBJ_NAME	=	$(CHAR:.c=.o)$/;"	m
 OBJ_PATH	libft/Makefile	/^OBJ_PATH	=	obj\/$/;"	m
 OPTFLAGS	Makefile	/^OPTFLAGS = -O2 $/;"	m
-PORTS_SCAN_LIMIT	parsing/ft_nmap_parsing.h	25;"	d
-PORT_MAX	parsing/ft_nmap_parsing.h	26;"	d
-PRINT_EBADARG	parsing/ft_nmap_error.h	42;"	d
-PRINT_EBADFILE	parsing/ft_nmap_error.h	32;"	d
-PRINT_EBADHOST	parsing/ft_nmap_error.h	30;"	d
-PRINT_EBADOPT	parsing/ft_nmap_error.h	48;"	d
-PRINT_EBADPORT	parsing/ft_nmap_error.h	34;"	d
-PRINT_EBADRANGE	parsing/ft_nmap_error.h	36;"	d
-PRINT_EBADSCAN	parsing/ft_nmap_error.h	38;"	d
-PRINT_EBADSPEEDUP	parsing/ft_nmap_error.h	40;"	d
-PRINT_ELIMEXC	parsing/ft_nmap_error.h	50;"	d
-PRINT_ENOARG	parsing/ft_nmap_error.h	44;"	d
-PRINT_ENOHOST	parsing/ft_nmap_error.h	28;"	d
-PRINT_EPERM	parsing/ft_nmap_error.h	46;"	d
+PORTS_SCAN_LIMIT	parsing/parsy.h	25;"	d
+PORT_MAX	parsing/parsy.h	26;"	d
+PRINT_EBADARG	parsing/parsy_error.h	42;"	d
+PRINT_EBADFILE	parsing/parsy_error.h	32;"	d
+PRINT_EBADHOST	parsing/parsy_error.h	30;"	d
+PRINT_EBADOPT	parsing/parsy_error.h	48;"	d
+PRINT_EBADPORT	parsing/parsy_error.h	34;"	d
+PRINT_EBADRANGE	parsing/parsy_error.h	36;"	d
+PRINT_EBADSCAN	parsing/parsy_error.h	38;"	d
+PRINT_EBADSPEEDUP	parsing/parsy_error.h	40;"	d
+PRINT_ELIMEXC	parsing/parsy_error.h	50;"	d
+PRINT_ENOARG	parsing/parsy_error.h	44;"	d
+PRINT_ENOHOST	parsing/parsy_error.h	28;"	d
+PRINT_EPERM	parsing/parsy_error.h	46;"	d
 RECVY_H	recy/recy.h	14;"	d
 RECY_CMD_INDEX	recy/export_recy.h	19;"	d
 RECY_ERROR	recy/recy.h	26;"	d
@@ -234,18 +234,18 @@ SRCS	Makefile	/^SRCS = .\/setupy\/setupy.c \\$/;"	m
 SRC_DIR	sendy/Makefile	/^SRC_DIR 		:= srcs$/;"	m
 SRC_PATH	libft/Makefile	/^SRC_PATH	=	src\/$/;"	m
 STR	libft/Makefile	/^STR			=	ft_strlen.c			ft_strchr.c			ft_strrchr.c \\$/;"	m
-STR_ENOMEM	parsing/ft_nmap_error.h	54;"	d
+STR_ENOMEM	parsing/parsy_error.h	54;"	d
 STR_PATH	libft/Makefile	/^STR_PATH	=	$(SRC_PATH)str\/$/;"	m
 SUB_DIR	sendy/Makefile	/^SUB_DIR			:= parsing$/;"	m
 SUB_SRC	sendy/Makefile	/^SUB_SRC			:= $/;"	m
 SUB_SRC	sendy/Makefile	/^SUB_SRC			:= parser.c \\$/;"	m
-S_ACK	parsing/ft_nmap_parsing.h	31;"	d
-S_ANYTCP	parsing/ft_nmap_parsing.h	36;"	d
-S_FIN	parsing/ft_nmap_parsing.h	32;"	d
-S_NULL	parsing/ft_nmap_parsing.h	30;"	d
-S_SYN	parsing/ft_nmap_parsing.h	29;"	d
-S_UDP	parsing/ft_nmap_parsing.h	34;"	d
-S_XMAS	parsing/ft_nmap_parsing.h	33;"	d
+S_ACK	parsing/parsy.h	31;"	d
+S_ANYTCP	parsing/parsy.h	36;"	d
+S_FIN	parsing/parsy.h	32;"	d
+S_NULL	parsing/parsy.h	30;"	d
+S_SYN	parsing/parsy.h	29;"	d
+S_UDP	parsing/parsy.h	34;"	d
+S_XMAS	parsing/parsy.h	33;"	d
 TAB	libft/Makefile	/^TAB			=	ft_puttab_fd.c		ft_realloc_tab.c	ft_tabdup.c \\$/;"	m
 TAB_PATH	libft/Makefile	/^TAB_PATH	=	$(SRC_PATH)tab\/$/;"	m
 TASK_EXECUTION_TODO_MSK	mappy/mappy.h	122;"	d
@@ -270,7 +270,7 @@ check	proty/proty_ip.h	/^	uint16_t	check;$/;"	m	struct:iphdr
 check_ports	parsing/parse_ports.c	/^static void	check_ports(char *value, int32_t begin, int32_t end,$/;"	f	file:
 clean_net	cleany/cleany.c	/^int 				clean_net(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)$/;"	f
 clean_net	cleany/cleany.s	/^clean_net:$/;"	l
-clear_ip	error.c	/^void	clear_ip(void *ip)$/;"	f
+clear_ip	parsy_error.c	/^void	clear_ip(void *ip)$/;"	f
 content	libft/inc/libft.h	/^	void			*content;$/;"	m	struct:s_list
 copy_new_range	parsing/parse_ports.c	/^int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)$/;"	f
 copy_new_range	parsing/parse_ports.s	/^copy_new_range:$/;"	l
@@ -287,7 +287,7 @@ execution_task_list	mappy/mappy.h	/^	uint8_t						execution_task_list[MAPPY_MAX_
 execution_task_list	sety/sety.h	/^	uint8_t						execution_task_list[SETY_MAX_EXECUTION_LIST];$/;"	m	struct:s_set_proto
 exit_help	parsing/parser.c	/^static void    exit_help(t_opt *opt, char *value)$/;"	f	file:
 exit_help	parsing/parser.s	/^exit_help:$/;"	l
-print_error	error.c	/^void    print_error(int16_t error, char *arg, t_opt *opt)$/;"	f
+print_error	parsy_error.c	/^void    print_error(int16_t error, char *arg, t_opt *opt)$/;"	f
 fd	libft/inc/get_next_line.h	/^	int		fd;$/;"	m	struct:s_gnl
 frag_off	proty/proty_ip.h	/^	uint16_t	frag_off;$/;"	m	struct:iphdr
 ft_atoi	libft/src/nbr/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
@@ -363,7 +363,7 @@ index	sety/sety.h	/^	uint32_t					index; \/\/ index of element in param buffer$/
 init_opt	parsing/parser.c	/^static void    init_opt(t_opt *opt)$/;"	f	file:
 init_port_by_ip	parsing/parser.c	/^static void init_port_by_ip(t_opt *opt)$/;"	f	file:
 init_scan_by_port	parsing/parser.c	/^static void init_scan_by_port(t_opt *opt, t_link *ip)$/;"	f	file:
-ip_lst	parsing/ft_nmap_parsing.h	/^	t_list		*ip_lst;$/;"	m	struct:s_opt
+ip_lst	parsing/parsy.h	/^	t_list		*ip_lst;$/;"	m	struct:s_opt
 iphdr	proty/proty_ip.h	/^struct iphdr {$/;"	s
 ipv4_checksum	buildy/buildy_utils.c	/^uint16_t			ipv4_checksum(uint16_t *addr, int len)$/;"	f
 len	libft/inc/get_next_line.h	/^	size_t	len;$/;"	m	struct:s_gnl
@@ -382,8 +382,8 @@ next	libft/inc/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struc
 parser	parsing/parser.c	/^t_opt parser(int ac, char **av)$/;"	f
 parser	parsing/parser.s	/^parser:$/;"	l
 ports	nmap/ft_nmap_structs.h	/^	uint16_t					ports[PORTS_SCAN_LIMIT]; \/\/ Great nd config$/;"	m	struct:s_nmap_app
-ports	parsing/ft_nmap_parsing.h	/^	uint16_t	ports[PORTS_SCAN_LIMIT];$/;"	m	struct:s_opt
-print_option	error.c	/^static void print_option(t_opt opt)$/;"	f	file:
+ports	parsing/parsy.h	/^	uint16_t	ports[PORTS_SCAN_LIMIT];$/;"	m	struct:s_opt
+print_option	parsy_error.c	/^static void print_option(t_opt opt)$/;"	f	file:
 print_usage	parsing/parser.c	/^static void    print_usage(void)$/;"	f	file:
 print_usage	parsing/parser.s	/^print_usage:$/;"	l
 protocol	proty/proty_ip.h	/^	uint8_t		protocol;$/;"	m	struct:iphdr
@@ -398,11 +398,11 @@ s_nmap_app	nmap/ft_nmap_structs.h	/^typedef struct		s_nmap_app {$/;"	s
 s_nmap_app	nmap/ft_nmap_structs.h	/^}					s_nmap_app;$/;"	t	typeref:struct:s_nmap_app
 s_nmap_link	nmap/ft_nmap_structs.h	/^typedef struct		s_nmap_link {$/;"	s
 s_nmap_scan	nmap/ft_nmap_structs.h	/^typedef struct		s_nmap_scan {$/;"	s
-s_opt	parsing/ft_nmap_parsing.h	/^typedef struct		s_opt$/;"	s
+s_opt	parsing/parsy.h	/^typedef struct		s_opt$/;"	s
 s_set_proto	sety/sety.h	/^typedef struct			s_set_proto {$/;"	s
 saddr	proty/proty_ip.h	/^	uint32_t	saddr;$/;"	m	struct:iphdr
 scans	nmap/ft_nmap_structs.h	/^	uint8_t						scans; \/\/ rd config$/;"	m	struct:s_nmap_scan
-scans	parsing/ft_nmap_parsing.h	/^	uint8_t		scans;$/;"	m	struct:s_opt
+scans	parsing/parsy.h	/^	uint8_t		scans;$/;"	m	struct:s_opt
 send_ipv4_tcp	sendy/sendy.c	/^int 				send_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd,$/;"	f
 send_ipv4_tcp	sendy/sendy.s	/^send_ipv4_tcp:$/;"	l
 set_ip	parsing/parse_ip.c	/^static void	set_ip(char *host, t_opt *opt) {$/;"	f	file:
@@ -422,7 +422,7 @@ sety	sety/sety.c	/^int				sety(uint8_t *buf, t_list *lst_st)$/;"	f
 sety_exec	sety/sety.c	/^int				sety_exec(uint8_t *buf, void *st, void *nd)$/;"	f
 sety_st	sety/sety.c	/^int				sety_st(uint8_t *buf, void *st)$/;"	f
 socks	nmap/ft_nmap_structs.h	/^	struct sockaddr_strorage	socks[MAX_ST_SIZE];$/;"	m	struct:s_nmap_link	typeref:struct:s_nmap_link::sockaddr_strorage
-speedup	parsing/ft_nmap_parsing.h	/^	int8_t		speedup;$/;"	m	struct:s_opt
+speedup	parsing/parsy.h	/^	int8_t		speedup;$/;"	m	struct:s_opt
 st	mappy/mappy.h	/^	t_list						*st;$/;"	m	struct:s_mappy_proto
 st_flag	nmap/ft_nmap_structs.h	/^	uint8_t 					st_flag;$/;"	m	struct:s_nmap_link
 status	mappy/mappy.h	/^	uint32_t						status;$/;"	m	struct:s_exec_proto
@@ -438,7 +438,7 @@ t_list	libft/inc/libft.h	/^}				t_list;$/;"	t	typeref:struct:s_list
 t_mappy_proto	mappy/mappy.h	/^}									t_mappy_proto;$/;"	t	typeref:struct:s_mappy_proto
 t_nmap_link	nmap/ft_nmap_structs.h	/^}									t_nmap_link;$/;"	t	typeref:struct:s_nmap_link
 t_nmap_scan	nmap/ft_nmap_structs.h	/^}					t_nmap_scan;$/;"	t	typeref:struct:s_nmap_scan
-t_opt	parsing/ft_nmap_parsing.h	/^}               	t_opt;$/;"	t	typeref:struct:s_opt
+t_opt	parsing/parsy.h	/^}               	t_opt;$/;"	t	typeref:struct:s_opt
 t_set_proto	sety/sety.h	/^}						t_set_proto;$/;"	t	typeref:struct:s_set_proto
 ipv4_checksum	buildy/buildy_utils.c	/^uint16_t			ipv4_checksum(uint8_t *ip, uint16_t tcplen)$/;"	f
 tos	proty/proty_ip.h	/^	uint8_t		tos;$/;"	m	struct:iphdr

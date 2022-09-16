@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/07 16:34:31 by leon              #+#    #+#              #
-#    Updated: 2022/08/21 19:35:09 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 # include <netinet/in.h>
 # include <pthread.h>
 # include "../libft/inc/libft.h"
-# include "ft_nmap_parsing.h"
+# include "parsy.h"
 
 /*
  * t_list ips containing t_ip containing t_list ports containing t_port

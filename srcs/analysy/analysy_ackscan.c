@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/15 15:19:54 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:52:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int analyse_ackscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
     }
     else if (ip->protocol == IPPROTO_TCP) {
         ((t_nmap_blkhdr *)buf)->result |= analyse_ackscan_tcp(
-            (struct tcphdr *)(&buf[sizeof(t_nmap_blkhdr) +  sizeof(struct iphdr)]));
+            (struct tcphdr *)(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct iphdr)]));
     }
     else if (ip->protocol == IPPROTO_ICMP) {
         ((t_nmap_blkhdr *)buf)->result |= analyse_scan_icmp(
-            (struct icmphdr *)(&buf[sizeof(t_nmap_blkhdr) +  sizeof(struct iphdr)]));
+            (struct icmphdr *)(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct iphdr)]));
     }
     return (ret);
 }
