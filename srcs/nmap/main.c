@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 18:46:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:00:17 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main(int ac, char **av)
 	int32_t 			r		= 0;
 	uint8_t				*buf;
 	t_nmap_controller	controller;
-	t_nmap_setting		*settings;
+	t_nmap_setting		*settings = NULL;
 	
 	buf = (uint8_t*)malloc(SIZE);
 	bzero(buf, SIZE);

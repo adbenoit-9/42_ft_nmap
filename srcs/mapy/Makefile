@@ -6,11 +6,11 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/08/26 11:02:06 by leon             ###   ########.fr        #
+#    Updated: 2022/09/18 22:03:02 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc-10
 CFLAGS = -Wall -Wextra -Werror
 OPTFLAGS = -O2
 DEPFLAGS = -MP -MD
