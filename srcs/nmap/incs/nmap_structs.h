@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 10:20:43 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:55:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_nmap_setting {
 	int							ip_nb;
 	int							port_nb;
 	int							scan_nb;
+	uint8_t						options;
 	pthread_t					thread;
 }					t_nmap_setting;
 

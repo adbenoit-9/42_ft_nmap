@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 18:19:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 14:59:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	char				ipstr[32]		= {0};
 	struct		timeval		tv			= {0};
 
+#ifdef DEBUG
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+#endif
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
 		r = RECY_ERROR;

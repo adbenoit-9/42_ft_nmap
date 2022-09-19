@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nmap_mapy_data.h                                   :+:      :+:    :+:   */
+/*   reporty_blk.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 14:23:27 by adbenoit         ###   ########.fr       */
+/*   Created: 2022/09/19 14:21:56 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/19 14:59:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPY_DATA_H
-# define MAPY_DATA_H
+#include "reporty.h"
 
-//#include "mapy.h"
-#include "data_buildy.h"
-#include "data_sendy.h"
-#include "data_cleany.h"
-#include "data_recy.h"
-#include "data_setupy.h"
-#include "data_analysy.h"
-#include "data_reporty.h"
+int report_blk(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec)
+{
+    int r = REPORTY_OK;
 
-t_func_mapy *_exec[EXEC_MAX_CMD] = {
-	_buildy_exec,
-	_reporty_exec,
-	_setupy_exec,
-	_sendy_exec,
-	_recy_exec,
-	_cleany_exec,
-	_analysy_exec
-};
-
-
+#ifdef DEBUG
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif
+    if (!buf || !conf_st || !conf_nd || !conf_exec) {
+        r = REPORTY_ERROR;
+    }
+    return(r);
+}

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 15:45:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 16:13:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	char				filter[FILTER_SIZE]	= {0};
 	struct		timeval		tv			= {0};
 
+#ifdef DEBUG
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+#endif
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
-		fprintf(stderr, "%s:%d", __func__, __LINE__);
 		r = RECY_ERROR;
 	}
 	else
@@ -55,7 +57,7 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 				r = RECY_ERROR;
 			}
 		}
-		//bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		gettimeofday(&tv, NULL);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = tv.tv_sec;

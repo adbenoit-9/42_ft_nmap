@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 11:14:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 14:02:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void    init_nmap_settings(t_nmap_setting *settings)
 	settings->ip_nb = 0;
 	settings->port_nb = 0;
 	settings->scan_nb = 0;
+	settings->options = 0;
 }
 
 static void    print_usage(void)
@@ -49,9 +50,9 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 {
 	int			(*flags_handler[])(t_nmap_setting *, char *) = {
 						set_ip_from_file, exit_help, set_ip_from_arg,
-						set_ports, set_scan, set_speedup};
+						set_ports, set_scan, set_speedup, set_verbose};
 	char			*flag_lst[] = {"--file", "--help", "--ip", "--ports",
-						"--scan", "--speedup", NULL};
+						"--scan", "--speedup", "--verbose", NULL};
 	int64_t i, j;
 	int	ret = PARSY_OK;
 	
@@ -59,11 +60,12 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
 				ret = flags_handler[j](settings, av[i + 1]);
-				i++;
+				if (j < 6) 
+					i++;
 				break ;
 			}
 		}
-		if (j == SCAN_LIMIT) {
+		if (j == NB_OPT) {
 			if (av[i][0] == '-') {
 				ret = print_error(E_BADOPT, av[i]);
 			}
