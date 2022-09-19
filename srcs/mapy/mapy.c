@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 10:12:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 12:27:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int			mapy(t_root *root)
 	int			r = EXEY_RUN;
 	uint64_t		count;
 	uint64_t		index;
-	uint8_t			blk_flag;
-	uint8_t			blk_status;
 	t_blk			*blk;
 	
 	if (!root) {
@@ -46,15 +44,11 @@ int			mapy(t_root *root)
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
 					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
-					blk_flag = blk->flag;
-					blk_status = root->blk_flag[count];
-					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
-					if (blk_status == BLK_TODO) {
-						if (blk_flag == BLK_BUSY) {
+					if (root->blk_flag[count] == BLK_TODO) {
+						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
 						}
 						else {
-							pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							blk->flag = BLK_BUSY;
 							pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							blk->root = &root->client;
@@ -73,15 +67,13 @@ int			mapy(t_root *root)
 								r = EXEY_ERR;
 							}
 							blk->flag = BLK_IDLE;
-							pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 						}
 					}
 					else {
 						r = EXEY_IDLE;
 					}
-					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
-					count++;
 					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
+					count++;
 
 				}
 			}

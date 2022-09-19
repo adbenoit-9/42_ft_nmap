@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 18:10:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:05:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int 				setup_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		memset(&blkhdr[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - sizeof(pthread_mutex_t) * 2);
+		memset(&((char *)blkhdr)[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - sizeof(pthread_mutex_t) * 2);
 		blkhdr->socklen = sizeof(struct sockaddr);
 		blkhdr->socket = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
 		if (((t_nmap_link*)conf_st)->socket < 0)
