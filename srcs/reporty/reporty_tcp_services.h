@@ -1,218 +1,454 @@
-tcpmux		1/tcp				# TCP port service multiplexer
-echo		7/tcp
-discard		9/tcp		sink null
-systat		11/tcp		users
-daytime		13/tcp
-netstat		15/tcp
-qotd		17/tcp		quote
-chargen		19/tcp		ttytst source
-ftp-data	20/tcp
-ftp		21/tcp
-ssh		22/tcp				# SSH Remote Login Protocol
-telnet		23/tcp
-smtp		25/tcp		mail
-time		37/tcp		timserver
-whois		43/tcp		nicname
-tacacs		49/tcp				# Login Host Protocol (TACACS)
-domain		53/tcp				# Domain Name Server
-gopher		70/tcp				# Internet Gopher
-finger		79/tcp
-http		80/tcp		www		# WorldWideWeb HTTP
-kerberos	88/tcp		kerberos5 krb5 kerberos-sec	# Kerberos v5
-iso-tsap	102/tcp		tsap		# part of ISODE
-acr-nema	104/tcp		dicom		# Digital Imag. & Comm. 300
-pop3		110/tcp		pop-3		# POP version 3
-sunrpc		111/tcp		portmapper	# RPC 4.0 portmapper
-auth		113/tcp		authentication tap ident
-nntp		119/tcp		readnews untp	# USENET News Transfer Protocol
-epmap		135/tcp		loc-srv		# DCE endpoint resolution
-netbios-ssn	139/tcp				# NETBIOS session service
-imap2		143/tcp		imap		# Interim Mail Access P 2 and 4
-snmp		161/tcp				# Simple Net Mgmt Protocol
-snmp-trap	162/tcp		snmptrap	# Traps for SNMP
-cmip-man	163/tcp				# ISO mgmt over IP (CMOT)
-cmip-agent	164/tcp
-mailq		174/tcp			# Mailer transport queue for Zmailer
-bgp		179/tcp				# Border Gateway Protocol
-smux		199/tcp				# SNMP Unix Multiplexer
-qmtp		209/tcp				# Quick Mail Transfer Protocol
-z3950		210/tcp		wais		# NISO Z39.50 database
-pawserv		345/tcp				# Perf Analysis Workbench
-zserv		346/tcp				# Zebra server
-rpc2portmap	369/tcp
-codaauth2	370/tcp
-ldap		389/tcp			# Lightweight Directory Access Protocol
-svrloc		427/tcp				# Server Location
-https		443/tcp				# http protocol over TLS/SSL
-snpp		444/tcp				# Simple Network Paging Protocol
-microsoft-ds	445/tcp				# Microsoft Naked CIFS
-kpasswd		464/tcp
-submissions	465/tcp		ssmtp smtps urd # Submission over TLS [RFC8314]
-saft		487/tcp			# Simple Asynchronous File Transfer
-rtsp		554/tcp			# Real Time Stream Control Protocol
-nqs		607/tcp				# Network Queuing system
-qmqp		628/tcp
-ipp		631/tcp				# Internet Printing Protocol
-ldp		646/tcp				# Label Distribution Protocol
-exec		512/tcp
-login		513/tcp
-shell		514/tcp		cmd syslog	# no passwords used
-printer		515/tcp		spooler		# line printer spooler
-gdomap		538/tcp				# GNUstep distributed objects
-uucp		540/tcp		uucpd		# uucp daemon
-klogin		543/tcp				# Kerberized `rlogin' (v5)
-kshell		544/tcp		krcmd		# Kerberized `rsh' (v5)
-afpovertcp	548/tcp				# AFP over TCP
-nntps		563/tcp		snntp		# NNTP over SSL
-submission	587/tcp				# Submission [RFC4409]
-ldaps		636/tcp				# LDAP over SSL
-tinc		655/tcp				# tinc control port
-silc		706/tcp
-kerberos-adm	749/tcp				# Kerberos `kadmin' (v5)
-domain-s	853/tcp				# DNS over TLS [RFC7858]
-rsync		873/tcp
-ftps-data	989/tcp				# FTP over SSL (data)
-ftps		990/tcp
-telnets		992/tcp				# Telnet over SSL
-imaps		993/tcp				# IMAP over SSL
-pop3s		995/tcp				# POP-3 over SSL
-socks		1080/tcp			# socks proxy server
-proofd		1093/tcp
-rootd		1094/tcp
-openvpn		1194/tcp
-rmiregistry	1099/tcp			# Java RMI Registry
-lotusnote	1352/tcp	lotusnotes	# Lotus Note
-ms-sql-s	1433/tcp			# Microsoft SQL Server
-ingreslock	1524/tcp
-datametrics	1645/tcp	old-radius
-sa-msg-port	1646/tcp	old-radacct
-kermit		1649/tcp
-groupwise	1677/tcp
-radius		1812/tcp
-radius-acct	1813/tcp	radacct		# Radius Accounting
-cisco-sccp	2000/tcp			# Cisco SCCP
-nfs		2049/tcp			# Network File System
-gnunet		2086/tcp
-rtcm-sc104	2101/tcp			# RTCM SC-104 IANA 1/29/99
-gsigatekeeper	2119/tcp
-gris		2135/tcp		# Grid Resource Information Server
-cvspserver	2401/tcp			# CVS client/server operations
-venus		2430/tcp			# codacon port
-venus-se	2431/tcp			# tcp side effects
-codasrv		2432/tcp			# not used
-codasrv-se	2433/tcp			# tcp side effects
-mon		2583/tcp			# MON traps
-dict		2628/tcp			# Dictionary server
-f5-globalsite	2792/tcp
-gsiftp		2811/tcp
-gpsd		2947/tcp
-gds-db		3050/tcp	gds_db		# InterBase server
-isns		3205/tcp			# iSNS Server Port
-iscsi-target	3260/tcp
-mysql		3306/tcp
-ms-wbt-server	3389/tcp
-nut		3493/tcp			# Network UPS Tools
-distcc		3632/tcp			# distributed compiler
-daap		3689/tcp			# Digital Audio Access Protocol
-svn		3690/tcp	subversion	# Subversion protocol
-suucp		4031/tcp			# UUCP over SSL
-sysrqd		4094/tcp			# sysrq daemon
-sieve		4190/tcp			# ManageSieve Protocol
-epmd		4369/tcp			# Erlang Port Mapper Daemon
-remctl		4373/tcp		# Remote Authenticated Command Service
-f5-iquery	4353/tcp			# F5 iQuery
-ntske		4460/tcp	# Network Time Security Key Establishment
-mtn		4691/tcp			# monotone Netsync Protocol
-radmin-port	4899/tcp			# RAdmin Port
-sip		5060/tcp			# Session Initiation Protocol
-sip-tls		5061/tcp
-xmpp-client	5222/tcp	jabber-client	# Jabber Client Connection
-xmpp-server	5269/tcp	jabber-server	# Jabber Server Connection
-cfengine	5308/tcp
-postgresql	5432/tcp	postgres	# PostgreSQL Database
-freeciv		5556/tcp	rptp		# Freeciv gameplay
-amqps		5671/tcp			# AMQP protocol over TLS/SSL
-amqp		5672/tcp
-x11		6000/tcp	x11-0		# X Window System
-x11-1		6001/tcp
-x11-2		6002/tcp
-x11-3		6003/tcp
-x11-4		6004/tcp
-x11-5		6005/tcp
-x11-6		6006/tcp
-x11-7		6007/tcp
-gnutella-svc	6346/tcp			# gnutella
-gnutella-rtr	6347/tcp			# gnutella
-redis		6379/tcp
-sge-qmaster	6444/tcp	sge_qmaster	# Grid Engine Qmaster Service
-sge-execd	6445/tcp	sge_execd	# Grid Engine Execution Service
-mysql-proxy	6446/tcp			# MySQL Proxy
-ircs-u		6697/tcp		# Internet Relay Chat via TLS/SSL
-bbs		7000/tcp
-font-service	7100/tcp	xfs		# X Font Service
-http-alt	8080/tcp	webcache	# WWW caching service
-puppet		8140/tcp			# The Puppet master service
-bacula-dir	9101/tcp			# Bacula Director
-bacula-fd	9102/tcp			# Bacula File Daemon
-bacula-sd	9103/tcp			# Bacula Storage Daemon
-xmms2		9667/tcp	# Cross-platform Music Multiplexing System
-nbd		10809/tcp			# Linux Network Block Device
-zabbix-agent	10050/tcp			# Zabbix Agent
-zabbix-trapper	10051/tcp			# Zabbix Trapper
-amanda		10080/tcp			# amanda backup services
-dicom		11112/tcp
-hkp		11371/tcp			# OpenPGP HTTP Keyserver
-db-lsp		17500/tcp			# Dropbox LanSync Protocol
-dcap		22125/tcp			# dCache Access Protocol
-gsidcap		22128/tcp			# GSI dCache Access Protocol
-wnn6		22273/tcp			# wnn6
-kerberos4	750/tcp		kerberos-iv kdc
-kerberos-master	751/tcp
-krb-prop	754/tcp		krb_prop krb5_prop hprop # Kerberos slave propagation
-iprop		2121/tcp			# incremental propagation
-supfilesrv	871/tcp			# Software Upgrade Protocol server
-supfiledbg	1127/tcp		# Software Upgrade Protocol debugging
-poppassd	106/tcp				# Eudora
-moira-db	775/tcp		moira_db	# Moira database
-moira-update	777/tcp		moira_update	# Moira update protocol
-spamd		783/tcp				# spamassassin daemon
-skkserv		1178/tcp			# skk jisho server port
-rmtcfg		1236/tcp			# Gracilis Packeten remote config server
-xtel		1313/tcp			# french minitel
-xtelw		1314/tcp			# french minitel
-zebrasrv	2600/tcp			# zebra service
-zebra		2601/tcp			# zebra vty
-ripd		2602/tcp			# ripd vty (zebra)
-ripngd		2603/tcp			# ripngd vty (zebra)
-ospfd		2604/tcp			# ospfd vty (zebra)
-bgpd		2605/tcp			# bgpd vty (zebra)
-ospf6d		2606/tcp			# ospf6d vty (zebra)
-ospfapi		2607/tcp			# OSPF-API
-isisd		2608/tcp			# ISISd vty (zebra)
-fax		4557/tcp			# FAX transmission service (old)
-hylafax		4559/tcp			# HylaFAX client-server protocol (new)
-munin		4949/tcp	lrrd		# Munin
-nrpe		5666/tcp			# Nagios Remote Plugin Executor
-nsca		5667/tcp			# Nagios Agent - NSCA
-canna		5680/tcp			# cannaserver
-syslog-tls	6514/tcp			# Syslog over TLS [RFC5425]
-sane-port	6566/tcp	sane saned	# SANE network scanner daemon
-ircd		6667/tcp			# Internet Relay Chat
-zope-ftp	8021/tcp			# zope management by ftp
-tproxy		8081/tcp			# Transparent Proxy
-omniorb		8088/tcp			# OmniORB
-clc-build-daemon 8990/tcp			# Common lisp build daemon
-xinetd		9098/tcp
-git		9418/tcp			# Git Version Control System
-zope		9673/tcp			# zope server
-webmin		10000/tcp
-kamanda		10081/tcp			# amanda backup services (Kerberos)
-amandaidx	10082/tcp			# amanda backup services
-amidxtape	10083/tcp			# amanda backup services
-sgi-cad		17004/tcp			# Cluster Admin daemon
-binkp		24554/tcp			# binkp fidonet protocol
-asp		27374/tcp			# Address Search Protocol
-csync2		30865/tcp			# cluster synchronization tool
-dircproxy	57000/tcp			# Detachable IRC Proxy
-tfido		60177/tcp			# fidonet EMSI over telnet
-fido		60179/tcp			# fidonet EMSI over TCP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reporty_tcp_services.h                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 19:02:42 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/19 19:03:22 by adbenoit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef REPORTY_TCP_SERVICES
+# define REPORTY_TCP_SERVICES
+
+# define TCP_SERVICE {"tcpmux",
+    "echo",
+    "discard",
+    "systat",
+    "daytime",
+    "netstat",
+    "qotd",
+    "chargen",
+    "ftp-data",
+    "ftp",
+    "ssh",
+    "telnet",
+    "smtp",
+    "time",
+    "whois",
+    "tacacs",
+    "domain",
+    "gopher",
+    "finger",
+    "http",
+    "kerberos",
+    "iso-tsap",
+    "acr-nema",
+    "pop3",
+    "sunrpc",
+    "auth",
+    "nntp",
+    "epmap",
+    "netbios-ssn",
+    "imap2",
+    "snmp",
+    "snmp-trap",
+    "cmip-man",
+    "cmip-agent",
+    "mailq",
+    "bgp",
+    "smux",
+    "qmtp",
+    "z3950",
+    "pawserv",
+    "zserv",
+    "rpc2portmap",
+    "codaauth2",
+    "ldap",
+    "svrloc",
+    "https",
+    "snpp",
+    "microsoft-ds",
+    "kpasswd",
+    "submissions",
+    "saft",
+    "rtsp",
+    "nqs",
+    "qmqp",
+    "ipp",
+    "ldp",
+    "exec",
+    "login",
+    "shell",
+    "printer",
+    "gdomap",
+    "uucp",
+    "klogin",
+    "kshell",
+    "afpovertcp",
+    "nntps",
+    "submission",
+    "ldaps",
+    "tinc",
+    "silc",
+    "kerberos-adm",
+    "domain-s",
+    "rsync",
+    "ftps-data",
+    "ftps",
+    "telnets",
+    "imaps",
+    "pop3s",
+    "socks",
+    "proofd",
+    "rootd",
+    "openvpn",
+    "rmiregistry",
+    "lotusnote",
+    "ms-sql-s",
+    "ingreslock",
+    "datametrics",
+    "sa-msg-port",
+    "kermit",
+    "groupwise",
+    "radius",
+    "radius-acct",
+    "cisco-sccp",
+    "nfs",
+    "gnunet",
+    "rtcm-sc104",
+    "gsigatekeeper",
+    "gris",
+    "cvspserver",
+    "venus",
+    "venus-se",
+    "codasrv",
+    "codasrv-se",
+    "mon",
+    "dict",
+    "f5-globalsite",
+    "gsiftp",
+    "gpsd",
+    "gds-db",
+    "isns",
+    "iscsi-target",
+    "mysql",
+    "ms-wbt-server",
+    "nut",
+    "distcc",
+    "daap",
+    "svn",
+    "suucp",
+    "sysrqd",
+    "sieve",
+    "epmd",
+    "remctl",
+    "f5-iquery",
+    "ntske",
+    "mtn",
+    "radmin-port",
+    "sip",
+    "sip-tls",
+    "xmpp-client",
+    "xmpp-server",
+    "cfengine",
+    "postgresql",
+    "freeciv",
+    "amqps",
+    "amqp",
+    "x11",
+    "x11-1",
+    "x11-2",
+    "x11-3",
+    "x11-4",
+    "x11-5",
+    "x11-6",
+    "x11-7",
+    "gnutella-svc",
+    "gnutella-rtr",
+    "redis",
+    "sge-qmaster",
+    "sge-execd",
+    "mysql-proxy",
+    "ircs-u",
+    "bbs",
+    "font-service",
+    "http-alt",
+    "puppet",
+    "bacula-dir",
+    "bacula-fd",
+    "bacula-sd",
+    "xmms2",
+    "nbd",
+    "zabbix-agent",
+    "zabbix-trapper",
+    "amanda",
+    "dicom",
+    "hkp",
+    "db-lsp",
+    "dcap",
+    "gsidcap",
+    "wnn6",
+    "kerberos4",
+    "kerberos-master",
+    "krb-prop",
+    "iprop",
+    "supfilesrv",
+    "supfiledbg",
+    "poppassd",
+    "moira-db",
+    "moira-update",
+    "spamd",
+    "skkserv",
+    "rmtcfg",
+    "xtel",
+    "xtelw",
+    "zebrasrv",
+    "zebra",
+    "ripd",
+    "ripngd",
+    "ospfd",
+    "bgpd",
+    "ospf6d",
+    "ospfapi",
+    "isisd",
+    "fax",
+    "hylafax",
+    "munin",
+    "nrpe",
+    "nsca",
+    "canna",
+    "syslog-tls",
+    "sane-port",
+    "ircd",
+    "zope-ftp",
+    "tproxy",
+    "omniorb",
+    "clc-build-daemon",
+    "xinetd",
+    "git",
+    "zope",
+    "webmin",
+    "kamanda",
+    "amandaidx",
+    "amidxtape",
+    "sgi-cad",
+    "binkp",
+    "asp",
+    "csync2",
+    "dircproxy",
+    "tfido",
+    "fido"}
+
+# define TCP_PORTS {1,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    37,
+    43,
+    49,
+    53,
+    70,
+    79,
+    80,
+    88,
+    102,
+    104,
+    110,
+    111,
+    113,
+    119,
+    135,
+    139,
+    143,
+    161,
+    162,
+    163,
+    164,
+    174,
+    179,
+    199,
+    209,
+    210,
+    345,
+    346,
+    369,
+    370,
+    389,
+    427,
+    443,
+    444,
+    445,
+    464,
+    465,
+    487,
+    554,
+    607,
+    628,
+    631,
+    646,
+    512,
+    513,
+    514,
+    515,
+    538,
+    540,
+    543,
+    544,
+    548,
+    563,
+    587,
+    636,
+    655,
+    706,
+    749,
+    853,
+    873,
+    989,
+    990,
+    992,
+    993,
+    995,
+    1080,
+    1093,
+    1094,
+    1194,
+    1099,
+    1352,
+    1433,
+    1524,
+    1645,
+    1646,
+    1649,
+    1677,
+    1812,
+    1813,
+    2000,
+    2049,
+    2086,
+    2101,
+    2119,
+    2135,
+    2401,
+    2430,
+    2431,
+    2432,
+    2433,
+    2583,
+    2628,
+    2792,
+    2811,
+    2947,
+    3050,
+    3205,
+    3260,
+    3306,
+    3389,
+    3493,
+    3632,
+    3689,
+    3690,
+    4031,
+    4094,
+    4190,
+    4369,
+    4373,
+    4353,
+    4460,
+    4691,
+    4899,
+    5060,
+    5061,
+    5222,
+    5269,
+    5308,
+    5432,
+    5556,
+    5671,
+    5672,
+    6000,
+    6001,
+    6002,
+    6003,
+    6004,
+    6005,
+    6006,
+    6007,
+    6346,
+    6347,
+    6379,
+    6444,
+    6445,
+    6446,
+    6697,
+    7000,
+    7100,
+    8080,
+    8140,
+    9101,
+    9102,
+    9103,
+    9667,
+    10809,
+    10050,
+    10051,
+    10080,
+    11112,
+    11371,
+    17500,
+    22125,
+    22128,
+    22273,
+    750,
+    751,
+    754,
+    2121,
+    871,
+    1127,
+    106,
+    775,
+    777,
+    783,
+    1178,
+    1236,
+    1313,
+    1314,
+    2600,
+    2601,
+    2602,
+    2603,
+    2604,
+    2605,
+    2606,
+    2607,
+    2608,
+    4557,
+    4559,
+    4949,
+    5666,
+    5667,
+    5680,
+    6514,
+    6566,
+    6667,
+    8021,
+    8081,
+    8088,
+    8990,
+    9098,
+    9418,
+    9673,
+    10000,
+    10081,
+    10082,
+    10083,
+    17004,
+    24554,
+    27374,
+    30865,
+    57000,
+    60177,
+    60179}
+
+#endif
