@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 15:45:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 15:02:00 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
 
+#ifdef DEBUG
+	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+#endif
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
-		fprintf(stderr, "%s:%d", __func__, __LINE__);
 		r = RECY_ERROR;
 	}
 	else

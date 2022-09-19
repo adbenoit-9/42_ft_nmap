@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 18:30:23 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 14:29:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 15:04:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 #define BLKY_ERROR 		-1
 
 #define BUILDY_INDEX	0
-#define SETUPY_INDEX	1
-#define SENDY_INDEX		2
-#define RECY_INDEX		3
-#define CLEANY_INDEX	4
-#define ANALYSY_INDEX	5
-#define REPORTY_INDEX	6
+#define REPORTY_INDEX	1
+#define SETUPY_INDEX	2
+#define SENDY_INDEX		3
+#define RECY_INDEX		4
+#define CLEANY_INDEX	5
+#define ANALYSY_INDEX	6
 
 
 #define MAPY_ERR	-1
