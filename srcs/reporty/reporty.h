@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 17:10:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:54:30 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@
 # define CONCL_ZONE_SIZE    15
 
 /* report blk */
-# define BLK_HDR_FORMAT "%s%*s%*s\n"
+# define BLK_HDR_FORMAT     "%s%*s%*s%*s\n"
+# define BLK_REPORT_FORMAT  "%.*f%*s%*d%*s\n\n"
+# define TIME_ZONE_SIZE  15
 # define IP_ZONE_SIZE     30
 # define SCAN_ZONE_SIZE   10
 

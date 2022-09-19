@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 01:52:24 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 17:08:55 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:17:24 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 /* Exported function */
 void	report_config(t_nmap_setting *settings);
 void    report_final(t_root *root, double scan_time);
-int     report_blk(t_blk *);
+int     report_blk(t_blk *, char *);
 
 # define SELECT_HOOK_REPORTY(sockaddr, nd, hook) do { \
 	hook = 0; \

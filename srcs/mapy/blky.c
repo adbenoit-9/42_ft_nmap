@@ -6,7 +6,6 @@
 #include "export_recy.h"
 #include "export_setupy.h"
 #include "export_analysy.h"
-#include "export_reporty.h"
 #include "nmap_mapy_data.h"
 #include <pthread.h>
 
@@ -65,7 +64,6 @@ int			blky(t_blk *blk)
 	int		r = BLKY_OK;
 	int		i = 0;
 
-	report_blk(blk);
 	while (r == BLKY_OK && i < EXEC_LST_SIZE)
 	{
 //		fprintf(stderr, "i=%d socket=%u\n",i, ((t_nmap_blkhdr*)blk->map)->socket);

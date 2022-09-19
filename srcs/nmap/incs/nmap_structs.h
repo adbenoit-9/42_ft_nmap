@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 16:55:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:45:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_nmap_setting {
 	int							scan_nb;
 	uint8_t						options;
 	pthread_mutex_t				display_mutex;
+	struct timeval				time;
 }					t_nmap_setting;
 
 typedef struct		s_nmap_link {
