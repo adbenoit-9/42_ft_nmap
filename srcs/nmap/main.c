@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/18 22:00:17 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:15:45 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,22 @@ int main(int ac, char **av)
 	}
 	if (r == 0) {
 		controller.status = NMAP_RUN;
-		pthread_mutex_init(&controller.mutex, NULL);
-		controller.root = (t_root*)buf;
-		controller.root->map = &buf[sizeof(t_root)];
-		settings = &controller.root->client;
-		/* Parsing */
-		r = parser(ac, av, settings);
-		if (r == PARSY_OK) {
-			r = setup_root(controller.root, settings);
-			ft_nmap(&controller);
+		if (pthread_mutex_init(&controller.mutex, NULL) == -1) {
+			r = -1;
 		}
-		else if (r == PARSY_STOP)
-			r = PARSY_KO;
+		else {
+			controller.root = (t_root*)buf;
+			controller.root->map = &buf[sizeof(t_root)];
+			settings = &controller.root->client;
+			/* Parsing */
+			r = parser(ac, av, settings);
+			if (r == PARSY_OK) {
+				r = setup_root(controller.root, settings);
+				ft_nmap(&controller);
+			}
+			else if (r == PARSY_STOP)
+				r = PARSY_KO;
+		}
 	}
 	clean_settings(settings);
 	free(buf);

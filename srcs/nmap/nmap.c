@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 18:40:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:18:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ double	elapse_time(struct timeval *begin, struct timeval *end)
 	return (end_sec - begin_sec);
 }
 
-static	int	multi_thread(int n, t_root *root)
+static	int	launch_scans(int n, t_root *root)
 {
 	pthread_t		th[n];
 	
 	for(int i = 0; i < n; i++) {
 		pthread_create(&th[i], NULL, scany, root);
 	}
+	scany(root);
 	for(int i = 0; i < n; i++) {
 		pthread_join(th[i], NULL);
 	}
@@ -44,10 +45,7 @@ int	ft_nmap(t_nmap_controller *controller)
 	alarm(1);
 	pthread_create(&th_timeout, NULL, handle_timeout, &controller);
 	gettimeofday(&begin, NULL);
-	if (controller->root->client.speedup) {
-		multi_thread(controller->root->client.speedup, controller->root);
-	}
-	scany(controller->root);
+	launch_scans(controller->root->client.speedup, controller->root);
 	pthread_mutex_lock(&controller->mutex);
 	controller->status = NMAP_STOP;
 	pthread_mutex_unlock(&controller->mutex);
