@@ -26,8 +26,8 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	else {
 		buf = &buf[sizeof(t_nmap_blkhdr)];
 		if (((t_nmap_link*)conf_st)->sock.ss_family == AF_INET6) {
-			length = ntohs(((struct ip6_hdr *)buf)->ip6_plen +
-				sizeof(struct ip6_hdr));
+			length = ntohs(((struct ip6_hdr *)buf)->ip6_plen) +
+				sizeof(struct ip6_hdr);
 		}
 		else {
 			length = ntohs(((struct iphdr *)buf)->tot_len);

@@ -17,12 +17,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#define FILTER_SIZE	128
+#define FILTER_SIZE	256
 #define RECY_OK 0
 #define RECY_ERROR -1
 
 //static char pre_built_filter_icmp6[] = "icmp6type == icmp6-destinationrunreach";
-static char pre_built_filter_icmp6[] = "icmp6";
+static char pre_built_filter_icmp6[] = "icmp6[icmp6type] == icmp6-destinationunreach";
 
 int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
@@ -68,6 +68,7 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
+//		fprintf(stderr, "%s:%d port=%d\n", __func__, __LINE__, ((t_nmap_app*)conf_nd)->port);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = 0;
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
