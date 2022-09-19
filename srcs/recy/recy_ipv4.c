@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:06:41 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 16:13:16 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 16:38:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static char pre_built_filter_icmp[] = "icmp[icmptype] == icmp-unreach";
 
 int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
-	int				r 			= RECY_OK;
-	struct	bpf_program		bpf 			= {0};
-	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
+	int					r 					= RECY_OK;
+	struct	bpf_program	bpf 				= {0};
+	t_nmap_blkhdr		*blkhdr				= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
-	struct		timeval		tv			= {0};
+	struct		timeval	tv					= {0};
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);

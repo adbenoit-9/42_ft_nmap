@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 14:15:12 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:18:47 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <pthread.h>
+#include "export_reporty.h"
 
 #define EXEY_ERR	-1
 #define EXEY_OK		0
@@ -57,6 +58,7 @@ int			mapy(t_root *root)
 							blk->nd = &root->nd[j].client;
 							blk->rd = &root->rd[k].client;
 							blky_branch_task_hooks(blk);
+							report_blk(blk, blk->root->ips[i]);
 							r = blky(blk);
 							pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							if (r == BLKY_OK) {

@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:20:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 14:29:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:07:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define REPORTY_CMD_INDEX MAP_CMD_INDEX
 #endif
 
-t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
-		report_blk,
-};
+// t_func_mapy _reporty_exec[EXEC_MAX_HOOK] = {
+// 		report_blk,
+// };
 
 #endif

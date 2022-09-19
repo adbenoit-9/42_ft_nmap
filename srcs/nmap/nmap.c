@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 15:05:26 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:45:42 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_nmap(t_nmap_controller *controller)
 	alarm(1);
 	pthread_create(&th_timeout, NULL, handle_timeout, controller);
 	gettimeofday(&begin, NULL);
+	controller->root->client.time = begin;
 	launch_scans(controller->root->client.speedup, controller->root);
 	pthread_mutex_lock(&controller->mutex);
 	controller->status = NMAP_STOP;
