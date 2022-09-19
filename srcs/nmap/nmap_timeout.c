@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 15:04:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 18:42:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 09:54:00 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ static int  get_status(t_nmap_controller *controller)
 {
     int status;
 
-    pthread_mutex_lock(&controller->mutex);
+    // printf("%s\n", controller->mutex.__size);
+    // pthread_mutex_lock(&controller->mutex);
     status = controller->status;
-    pthread_mutex_unlock(&controller->mutex);
+    // pthread_mutex_unlock(&controller->mutex);
     return (status);
 }
 
