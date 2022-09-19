@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 13:03:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:25:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
                 if (j == root->rd_nb - 1) {
                     str_flag_conclusion(conclusion, flag_concl);
                     service = getservbyport(root->nd[i].client.port, NULL);
-                    port_len = 1;
-                    if (root->nd[i].client.port >= 10)
-                        ++port_len;
-                    if (root->nd[i].client.port >= 100)
-                        ++port_len;
-                    if (root->nd[i].client.port >= 1000)
-                        ++port_len;
+                    port_len = num_len(root->nd[i].client.port);
                     printf(PORT_REPORT_FORMAT,
                         root->nd[i].client.port,
                         PRECISION(port_len, PORT_ZONE_SIZE, service ? service->s_name : "Unassigned"),

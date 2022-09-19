@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 17:54:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:25:15 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@
 
 #define REPORTY_OK      0
 #define REPORTY_ERROR   -1
+
+int num_len(int num);
 
 #endif

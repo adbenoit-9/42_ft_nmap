@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 11:54:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 18:20:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:23:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int analyse_ackscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
 
 int analyse_ackscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
-    int ret = ANALYSY_OK;
-    struct ip6_hdr *ip = (struct ip6_hdr *)(&buf[sizeof(t_nmap_blkhdr)]);
+    int ret             = ANALYSY_OK;
+    struct ip6_hdr *ip  = (struct ip6_hdr *)(&buf[sizeof(t_nmap_blkhdr)]);
 
     ((t_nmap_blkhdr *)buf)->result = 0;
 	if (!buf || !conf_st || !conf_nd || !conf_exec) {

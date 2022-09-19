@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:21:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 18:17:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:24:42 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 double	elapse_time(struct timeval *begin, struct timeval *end);
 
-static int num_len(int num)
+int num_len(int num)
 {
     int len = 1;
 
