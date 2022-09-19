@@ -6,21 +6,34 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:21:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 14:59:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:06:36 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reporty.h"
+#include "parsy_export.h"
+#include <pthread.h>
 
-int report_blk(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd, T_CLIENT_RD *conf_exec)
+int report_blk(t_blk *blk)
 {
-    int r = REPORTY_OK;
+    int             r = REPORTY_OK;
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 #endif
-    if (!buf || !conf_st || !conf_nd || !conf_exec) {
+    if (!blk) {
         r = REPORTY_ERROR;
+    }
+    else {
+        if (blk->root->options & OPT_VERBOSE) {
+            pthread_mutex_lock(&blk->root->display_mutex);
+            printf(BLK_HDR_FORMAT, "ip",
+            HDR_PRECISION(2, IP_ZONE_SIZE, 4),
+            "port",
+            HDR_PRECISION(4, PORT_ZONE_SIZE, 4),
+            "scan");
+            pthread_mutex_unlock(&blk->root->display_mutex);
+        }
     }
     return(r);
 }

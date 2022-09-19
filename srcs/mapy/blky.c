@@ -21,9 +21,6 @@ int			blky_branch_task_hooks(t_blk *blk)
 			case BUILDY_INDEX:
 				SELECT_HOOK_BUILDY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
 				break ;
-			case REPORTY_INDEX:
-				SELECT_HOOK_REPORTY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
-				break ;
 			case SETUPY_INDEX:
 				SELECT_HOOK_SETUPY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
 				break ;
@@ -68,6 +65,7 @@ int			blky(t_blk *blk)
 	int		r = BLKY_OK;
 	int		i = 0;
 
+	report_blk(blk);
 	while (r == BLKY_OK && i < EXEC_LST_SIZE)
 	{
 //		fprintf(stderr, "i=%d socket=%u\n",i, ((t_nmap_blkhdr*)blk->map)->socket);
