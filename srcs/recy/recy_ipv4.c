@@ -52,7 +52,7 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 				r = RECY_ERROR;
 			}
 		}
-		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		//bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		gettimeofday(&tv, NULL);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = tv.tv_sec;
