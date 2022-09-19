@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 13:06:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:16:17 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int 				setup_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		memset(&((char *)blkhdr)[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - sizeof(pthread_mutex_t) * 2);
+		memset(&((char *)blkhdr)[sizeof(pthread_mutex_t) * 2], 0,
+			sizeof(*blkhdr) - sizeof(pthread_mutex_t) * 2);
 		blkhdr->socklen = sizeof(struct sockaddr_in6);
 		blkhdr->socket = socket(AF_INET6, SOCK_RAW, IPPROTO_UDP);
 		if (((t_nmap_link*)conf_st)->socket < 0)
@@ -46,7 +47,8 @@ int 				setup_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 			if (r == 0)
 			{
 				pthread_mutex_lock(&blkhdr->time_mutex);
-				blkhdr->pcap_handler = pcap_open_live(((t_nmap_link*)conf_st)->dev_name, BUFSIZ, 1, PCAP_BUFFER_TIMEOUT, NULL);
+				blkhdr->pcap_handler = pcap_open_live(((t_nmap_link*)conf_st)->dev_name,
+					BUFSIZ, 1, PCAP_BUFFER_TIMEOUT, NULL);
 				if (blkhdr->pcap_handler == NULL)
 				{
 					perror("pcap_open_live");
