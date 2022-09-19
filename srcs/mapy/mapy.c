@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 17:46:59 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:12:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int			mapy(t_root *root)
 	int			r = EXEY_RUN;
 	uint64_t		count;
 	uint64_t		index;
+	uint8_t			blk_flag;
+	uint8_t			blk_status;
 	t_blk			*blk;
-
+	
 	if (!root) {
 		r = MAPY_ERR;
 	}
@@ -40,22 +42,28 @@ int			mapy(t_root *root)
 		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
 			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE) && j < root->nd_nb; j++) {
 				for (int k = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE)
-											&& k < root->rd_nb; k++, count++) {
+											&& k < root->rd_nb; k++) {
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
 					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
-					if (root->blk_flag[count] == BLK_TODO) {
-						if (blk->flag == BLK_BUSY) {
+					blk_flag = blk->flag;
+					blk_status = root->blk_flag[count];
+					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
+					if (blk_status == BLK_TODO) {
+						if (blk_flag == BLK_BUSY) {
 							r = EXEY_BUSY;
 						}
 						else {
+							pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							blk->flag = BLK_BUSY;
+							pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							blk->root = &root->client;
 							blk->st = &root->st[i].client;
 							blk->nd = &root->nd[j].client;
 							blk->rd = &root->rd[k].client;
 							blky_branch_task_hooks(blk);
 							r = blky(blk);
+							pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 							if (r == BLKY_OK) {
 								root->blk_flag[count] = ((t_nmap_blkhdr *)blk->map)->result;
 								r = EXEY_RUN;
@@ -65,11 +73,14 @@ int			mapy(t_root *root)
 								r = EXEY_ERR;
 							}
 							blk->flag = BLK_IDLE;
+							pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 						}
 					}
 					else {
 						r = EXEY_IDLE;
 					}
+					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
+					count++;
 					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 
 				}
