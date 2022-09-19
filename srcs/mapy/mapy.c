@@ -52,6 +52,7 @@ int			mapy(t_root *root)
 					if (blk_status == BLK_TODO) {
 						if (blk_flag == BLK_BUSY) {
 							r = EXEY_BUSY;
+//							fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 						}
 						else {
 							pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
