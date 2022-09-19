@@ -29,6 +29,7 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	struct	bpf_program		bpf 			= {0};
 	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
+	struct		timeval		tv			= {0};
 
 	if (!buf || !conf_st || !conf_nd || !conf_exec)
 	{
@@ -52,8 +53,9 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			}
 		}
 		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+		gettimeofday(&tv, NULL);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
-		gettimeofday((struct timeval *)&buf[sizeof(pthread_mutex_t) * 2], NULL);
+		blkhdr->send_time = tv.tv_sec;
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);

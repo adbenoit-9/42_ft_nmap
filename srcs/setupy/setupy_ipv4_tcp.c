@@ -24,9 +24,10 @@ int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		memset(&blkhdr[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - sizeof(pthread_mutex_t) * 2);
-		blkhdr->socklen = sizeof(struct sockaddr);
+		//memset(&((uint8_t*)blkhdr)[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - (sizeof(pthread_mutex_t) * 2));
+		blkhdr->socklen = sizeof(struct sockaddr_in);
 		blkhdr->socket = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+		blkhdr->result = 0;
 		if (((t_nmap_link*)conf_st)->socket < 0)
 		{
 			perror("socket");
@@ -46,6 +47,7 @@ int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 			if (r == 0)
 			{
 				pthread_mutex_lock(&blkhdr->time_mutex);
+				//fprintf(stderr, "((t_nmap_link*)conf_st)->dev_name=%s\n", ((t_nmap_link*)conf_st)->dev_name);
 				blkhdr->pcap_handler = pcap_open_live(((t_nmap_link*)conf_st)->dev_name, BUFSIZ, 1, PCAP_BUFFER_TIMEOUT, NULL);
 				if (blkhdr->pcap_handler == NULL)
 				{
