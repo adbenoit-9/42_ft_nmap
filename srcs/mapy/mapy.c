@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 12:27:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 14:15:12 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 int			mapy(t_root *root)
 {
-	int			r = EXEY_RUN;
+	int				r = EXEY_RUN;
 	uint64_t		count;
 	uint64_t		index;
 	t_blk			*blk;

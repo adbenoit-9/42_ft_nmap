@@ -30,9 +30,9 @@
 // Execution control
 #define EXEC_TODO_MSK						0x80000000
 #define EXEC_INPROG_MSK						0x40000000
-#define EXEC_MAX_LIST 						6
-#define EXEC_LST_SIZE						6
-#define EXEC_MAX_CMD						6
+#define EXEC_MAX_LIST 						7
+#define EXEC_LST_SIZE						7
+#define EXEC_MAX_CMD						7
 #define EXEC_MAX_HOOK						8
 
 #define SETY_EXEC_MAX_CMD					8

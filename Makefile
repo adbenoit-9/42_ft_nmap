@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/19 13:12:01 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/19 14:31:40 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			:= ft_nmap
 # COMPILATION
 
 CC		= gcc-10
-CFLAGS 	= -Wall -Wextra -Werror #-g3 -fsanitize=thread
+CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=address
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 	 	 
@@ -115,6 +115,7 @@ SUB_SRC			:= parsy.c \
 					parsy_scan.c \
 					parsy_ports.c \
 					parsy_speedup.c \
+					parsy_verbose.c \
 					parsy_error.c \
 					parsy_clean.c \
 					ft_isnumber.c
@@ -124,7 +125,8 @@ SUB_SRC			:= recy_ipv4.c \
 					recy_utils.c
 SRC				+= $(addprefix recy/, $(SUB_SRC))
 SUB_SRC			:= reporty_config.c \
-					reporty_final.c
+					reporty_final.c \
+					reporty_blk.c
 SRC				+= $(addprefix reporty/, $(SUB_SRC))
 SUB_SRC			:= sendy_tcp.c \
 					sendy_udp.c

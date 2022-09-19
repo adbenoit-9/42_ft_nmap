@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/18 22:03:02 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/19 14:24:52 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,9 @@ MODULES	:= ../mapy\
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC			:= reporty_config.c\
-				reporty_final.c
+SRC			:= reporty_config.c \
+				reporty_final.c \
+				reporty_blk.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
