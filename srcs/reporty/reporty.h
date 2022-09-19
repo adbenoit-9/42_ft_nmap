@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 18:25:15 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:38:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "proty_tcp.h"
 # include "proty_udp.h"
 # include "libft.h"
+# include "reporty_tcp_services.h"
+# include "reporty_udp_services.h"
 
 # define BORDER1 "-------------------------------------------------------------\
 ------------------------------------------------------------------------------"
