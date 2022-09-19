@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 16:41:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/19 16:18:18 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define NMAP_RUN 1
 # define NMAP_STOP 0
+# define TIMEOUT 1
 
 typedef struct s_nmap_controller
 {
