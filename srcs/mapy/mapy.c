@@ -47,6 +47,7 @@ int			mapy(t_root *root)
 					if (root->blk_flag[count] == BLK_TODO) {
 						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
+//							fprintf(stderr, "%s:%d\n", __func__, __LINE__);
 						}
 						else {
 							blk->flag = BLK_BUSY;

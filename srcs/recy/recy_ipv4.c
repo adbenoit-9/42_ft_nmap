@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define FILTER_SIZE	128
+#define FILTER_SIZE	256
 #define RECY_OK 0
 #define RECY_ERROR -1
 
@@ -40,10 +40,13 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	}
 	else
 	{
-		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
+		//snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
+		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or (%s and ip[51] = %d and ip[50] = %d) or udp src port %d)",
 			inet_ntoa(((struct sockaddr_in*)&((t_nmap_link*)conf_st)->src_sock)->sin_addr),
 			((t_nmap_app*)conf_nd)->port,
 			pre_built_filter_icmp,
+			((t_nmap_app*)conf_nd)->port & 0xFF,
+			((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF,
 			((t_nmap_app*)conf_nd)->port);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
@@ -63,6 +66,7 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = 0;
+		//fprintf(stderr, "%s:%d port=%d\n", __func__, __LINE__, ((t_nmap_app*)conf_nd)->port);
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		pcap_freecode(&bpf);
 	}
