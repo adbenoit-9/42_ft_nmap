@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cleany.h"
+#include <pthread.h>
 
 int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 {
@@ -29,7 +30,11 @@ int 				clean_net(uint8_t *map, void *root, void *link, void *app)
 #endif /* DEBUG */
 		/* Close a socket */
 		close(blkhdr->socket);
+		blkhdr->socket = 0;
+		
+		pthread_mutex_lock(&blkhdr->time_mutex);
 		pcap_close(blkhdr->pcap_handler);
+		pthread_mutex_unlock(&blkhdr->time_mutex);
 	}
 	return (r);
 }

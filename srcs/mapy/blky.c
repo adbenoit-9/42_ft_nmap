@@ -70,6 +70,7 @@ int			blky(t_blk *blk)
 
 	while (r == BLKY_OK && i < EXEC_LST_SIZE)
 	{
+//		fprintf(stderr, "i=%d socket=%u\n",i, ((t_nmap_blkhdr*)blk->map)->socket);
 		r = (*_exec[blk->exe.tasks[i]]
 				[blk->exe.hook[i]])
 				(blk->map, blk->st,

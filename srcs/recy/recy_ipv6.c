@@ -31,6 +31,7 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
 	char				ipstr[32]		= {0};
+	struct		timeval		tv			= {0};
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
@@ -62,8 +63,9 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 				r = RECY_ERROR;
 			}
 		}
+		gettimeofday(&tv, NULL);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
-		gettimeofday((struct timeval *)&buf[sizeof(pthread_mutex_t) * 2], NULL);
+		blkhdr->send_time = tv.tv_sec;
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);

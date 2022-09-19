@@ -15,7 +15,7 @@ NAME			:= ft_nmap
 # COMPILATION
 
 CC		= gcc-10
-CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS 	= -Wall -Wextra -Werror -g3 #-fsanitize=thread
 OPTFLAGS = -O2  
 DEPFLAGS = -MP -MD
 	 	 
