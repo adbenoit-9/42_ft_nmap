@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 16:18:18 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:51:36 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	    ft_nmap(t_nmap_controller *controller);
 void	*scany(void *root);
 void	display_config(t_nmap_setting *settings);
 void    display_report(t_root *root, double scan_time);
-void    handle_signal(int sig);
+void    handle_sigaction(int signum, siginfo_t *siginfo, void *param);
 void    *handle_timeout(void *attr);
 double  elapse_time(struct timeval *begin, struct timeval *end);
 

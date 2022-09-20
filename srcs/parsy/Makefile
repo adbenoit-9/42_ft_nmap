@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/19 13:59:26 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 12:01:15 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC			:= parsy.c \
 				ft_isnumber.c \
 				parsy_error.c \
 				parsy_clean.c \
-				parsy_verbose.c
+				parsy_verbose.c \
+				parsy_filter.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

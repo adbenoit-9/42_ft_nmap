@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 14:02:37 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 14:05:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ static void    print_usage(void)
 	printf("--help                      Print this help summary page\n");
 	printf("--ip <host>                 Ip addresses to scan\n");
 	printf("--file <name>               File name containing IP addresses to scan,\n");
+	printf("--filter <state>            Filter the output by the state of the port (open, closed, filtered, unfiltered)\n");
 	printf("--ports <number/range>      Ports to be scanned (default 1 to 1024)\n");
 	printf("--scan <type>               Type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
-	printf("--speedup <number>          Number of parallel threads to use (default 0, max 250).\n");
+	printf("--speedup <number>          Number of parallel threads to use (default 0, max 250)\n");
+	printf("--verbose                   verbose output.\n");
 	
 }
 
@@ -50,9 +52,9 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 {
 	int			(*flags_handler[])(t_nmap_setting *, char *) = {
 						set_ip_from_file, exit_help, set_ip_from_arg,
-						set_ports, set_scan, set_speedup, set_verbose};
+						set_ports, set_scan, set_speedup, set_filter, set_verbose};
 	char			*flag_lst[] = {"--file", "--help", "--ip", "--ports",
-						"--scan", "--speedup", "--verbose", NULL};
+						"--scan", "--speedup", "--filter", "--verbose", NULL};
 	int64_t i, j;
 	int	ret = PARSY_OK;
 	
@@ -60,7 +62,7 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
 				ret = flags_handler[j](settings, av[i + 1]);
-				if (j < 6) 
+				if (j < NB_OPT - 1) 
 					i++;
 				break ;
 			}
@@ -89,6 +91,9 @@ static void	default_settings(t_nmap_setting *settings)
 	if (settings->port_nb == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
 		settings->port_nb = PORT_LIMIT;
+	}
+	if (!(settings->options & OPT_FILTER)) {
+		settings->options |= OPT_FILTER;
 	}
 }
 
