@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 11:35:02 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:42:23 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 /* Project Header */
 # include "mapy.h"
 # include "analysy.h"
+# include "parsy_export.h"
 # include "proty_tcp.h"
 # include "proty_udp.h"
 # include "libft.h"

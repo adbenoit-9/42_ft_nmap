@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:42:12 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:29:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define E_BADOPT 10
 # define E_LIMIT_EXCEED 11
 # define E_NOPERM 12
+# define E_BADFILTER 13
 
 # define PRINT_ENOHOST do {dprintf(STDERR_FILENO,\
             "usage error: IP address required\n");}  while(0)
@@ -53,6 +54,9 @@
             } while(0)
 # define PRINT_ENOPERM do {dprintf(STDERR_FILENO,\
             "You requested a scan type which requires root privileges.\nQUITTING!\n");\
+            } while(0)
+# define PRINT_EBADFILTER(str) do {dprintf(STDERR_FILENO,\
+            "invalid filter: '%s'\n", str);\
             } while(0)
 # define STR_ENOMEM "Out of memory"
 

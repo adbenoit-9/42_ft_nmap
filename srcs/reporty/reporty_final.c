@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 11:26:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:58:16 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 					(status == PORT_S_OPEN || !(root->blk_flag[flag_index] & ~status))) {
 				flag_concl |= root->blk_flag[flag_index];
 				str_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
-				if (j == root->rd_nb - 1) {
+				if (j == root->rd_nb - 1 && (!(root->client.options & OPT_FILTER) || flag_concl & root->client.options)) {
 					str_flag_conclusion(conclusion, flag_concl);
 					service = ft_getservbyport(root->nd[i].client.port, NULL);
 					port_len = num_len(root->nd[i].client.port);
@@ -150,31 +150,35 @@ void    report_final(t_root *root, double scan_time)
 		dns_resolution(&root->st->client.sock, root->client.ips[i], host_name);
 		dns(&root->st->client.sock, root->client.ips[i], ipaddr);
 		printf("IP address: %s (%s)\n", host_name, ipaddr);
+		if (!(root->client.options & OPT_FILTER) || root->client.options & PORT_S_OPEN) {
+			printf(HEADER_FORMAT,
+				"Open ports:",
+				"Port",
+				HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
+				"Service Name (if applicable)",
+				HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
+				"Results",
+				HDR_PRECISION(7, RES_ZONE_SIZE, 10),
+				"Conclusion",
+				PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
+				BORDER1);
+			print_ports_report(root, i, PORT_S_OPEN);
+		}
 		
-		printf(HEADER_FORMAT,
-			"Open ports:",
-			"Port",
-			HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
-			"Service Name (if applicable)",
-			HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
-			"Results",
-			HDR_PRECISION(7, RES_ZONE_SIZE, 10),
-			"Conclusion",
-			PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-			BORDER1);
-		print_ports_report(root, i, PORT_S_OPEN);
-		
-		printf(HEADER_FORMAT,
-			"\nClosed/Filtered/Unfiltered ports:",
-			"Port",
-			HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
-			"Service Name (if applicable)",
-			HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
-			"Results",
-			HDR_PRECISION(7, RES_ZONE_SIZE, 10),
-			"Conclusion",
-			PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-			BORDER1);
-		print_ports_report(root, i, ~PORT_S_OPEN);
+		if (!(root->client.options & OPT_FILTER) ||
+				root->client.options & OPT_FILTER & ~PORT_S_OPEN) {
+			printf(HEADER_FORMAT,
+				"\nClosed/Filtered/Unfiltered ports:",
+				"Port",
+				HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
+				"Service Name (if applicable)",
+				HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
+				"Results",
+				HDR_PRECISION(7, RES_ZONE_SIZE, 10),
+				"Conclusion",
+				PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
+				BORDER1);
+			print_ports_report(root, i, ~PORT_S_OPEN);
+		}
 	}
 }
