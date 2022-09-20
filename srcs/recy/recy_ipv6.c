@@ -17,21 +17,21 @@
 #include <stdio.h>
 #include <string.h>
 
-#define FILTER_SIZE	256
+#define FILTER_SIZE	1024
 #define RECY_OK 0
 #define RECY_ERROR -1
 
 //static char pre_built_filter_icmp6[] = "icmp6type == icmp6-destinationrunreach";
-static char pre_built_filter_icmp6[] = "icmp6[icmp6type] == icmp6-destinationunreach";
+//static char pre_built_filter_icmp6[] = "icmp6 and ip6[40] == icmp6-destinationrunreach";
 
 int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
-	int				r 			= RECY_OK;
-	struct	bpf_program		bpf 			= {0};
-	t_nmap_blkhdr			*blkhdr			= (t_nmap_blkhdr*)buf;
-	char				filter[FILTER_SIZE]	= {0};
-	char				ipstr[32]		= {0};
-	struct		timeval		tv			= {0};
+	int				r 				= RECY_OK;
+	struct	bpf_program		bpf 				= {0};
+	t_nmap_blkhdr			*blkhdr				= (t_nmap_blkhdr*)buf;
+	char				filter[FILTER_SIZE]		= {0};
+	char				ipstr[INET6_ADDRSTRLEN]		= {0};
+	struct		timeval		tv				= {0};
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
@@ -42,19 +42,20 @@ int 				recv_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 	}
 	else
 	{
-		if (!inet_ntop(AF_INET6, &((struct sockaddr_in6*)&((t_nmap_link*)conf_st)->src_sock)->sin6_addr, ipstr, sizeof(struct sockaddr_in6)))
+		if (!inet_ntop(AF_INET6, &((struct sockaddr_in6*)&((t_nmap_link*)conf_st)->sock)->sin6_addr, ipstr, INET6_ADDRSTRLEN))
 		{
 			perror("inet_ntop");
 			return (RECY_ERROR);
 		}
-		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or %s or udp src port %d)",
+		//snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or (%s) or udp src port %d)",
+		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or udp src port %d)",
 			ipstr,
 			((t_nmap_app*)conf_nd)->port,
-			pre_built_filter_icmp6,
+			//pre_built_filter_icmp6,
 			((t_nmap_app*)conf_nd)->port);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
-			perror("pcap compile");
+			pcap_perror(blkhdr->pcap_handler, "pcap compile");
 			r = RECY_ERROR;
 		}
 		if (r == RECY_OK) {
