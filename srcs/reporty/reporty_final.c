@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 22:53:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 09:27:51 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ static char *ft_getservbyport(int port, char *protocol)
 	static int  udp_port[] = UDP_PORTS;
 	static char *tcp_serv[] = TCP_SERVICES;
 	static char *udp_serv[] = UDP_SERVICES;
-	static char *service = NULL;
+	char *service = NULL;
 
 	if (!protocol || ft_strcmp(protocol, "TCP")) {
 		for (int i = 0; tcp_serv[i]; i++) {
 			if (tcp_port[i] == port) {
 				service = tcp_serv[i];
+				break ;
 			}
 		}
 	}
@@ -31,6 +32,7 @@ static char *ft_getservbyport(int port, char *protocol)
 		for (int i = 0; tcp_serv[i]; i++) {
 			if (udp_port[i] == port) {
 				service = udp_serv[i];
+				break ;
 			}
 		}
 	}
