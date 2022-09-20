@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/18 22:03:02 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 11:49:06 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC			:= analysy_synscan.c\
 				analysy_udpscan.c\
 				analysy_ackscan.c\
 				analysy_fnxscan.c\
-				analysy_utils.c
+				analysy_icmp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

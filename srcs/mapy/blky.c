@@ -6,7 +6,6 @@
 #include "export_recy.h"
 #include "export_setupy.h"
 #include "export_analysy.h"
-#include "export_reporty.h"
 #include "nmap_mapy_data.h"
 #include <pthread.h>
 
@@ -20,9 +19,6 @@ int			blky_branch_task_hooks(t_blk *blk)
 		switch (i) {
 			case BUILDY_INDEX:
 				SELECT_HOOK_BUILDY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
-				break ;
-			case REPORTY_INDEX:
-				SELECT_HOOK_REPORTY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
 				break ;
 			case SETUPY_INDEX:
 				SELECT_HOOK_SETUPY(&blk->st->sock, blk->rd->packet_flag, blk->exe.hook[i]);
