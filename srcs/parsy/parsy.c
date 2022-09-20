@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 12:52:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 14:05:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ static void	default_settings(t_nmap_setting *settings)
 	if (settings->port_nb == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
 		settings->port_nb = PORT_LIMIT;
+	}
+	if (!(settings->options & OPT_FILTER)) {
+		settings->options |= OPT_FILTER;
 	}
 }
 
