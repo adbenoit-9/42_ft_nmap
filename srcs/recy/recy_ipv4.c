@@ -16,6 +16,7 @@
 #include "nmap_mapy_config.h"
 #include <stdio.h>
 #include <string.h>
+#include "export_sendy.h"
 
 #define FILTER_SIZE	256
 #define RECY_OK 0
@@ -49,7 +50,6 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 			((t_nmap_app*)conf_nd)->port & 0xFF,
 			((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF,
 			((t_nmap_app*)conf_nd)->port);
-		fprintf(stderr, "%s:%d port[51]=%02x port[50]=%02x\n", __func__, __LINE__, ((t_nmap_app*)conf_nd)->port & 0xFF, ((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
 			r = RECY_ERROR;
@@ -59,17 +59,40 @@ int 				recv_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 				r = RECY_ERROR;
 			}
 		}
-		bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		gettimeofday(&tv, NULL);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = tv.tv_sec;
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
-		pcap_loop(blkhdr->pcap_handler, 1,
+		r = pcap_loop(blkhdr->pcap_handler, 1,
 					nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
 		pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 		blkhdr->send_time = 0;
-		//fprintf(stderr, "%s:%d port=%d\n", __func__, __LINE__, ((t_nmap_app*)conf_nd)->port);
 		pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+		if (r == PCAP_ERROR_BREAK)
+		{
+			if (((t_nmap_scan*)conf_exec)->packet_flag == FLAG_S_UDP) {
+				r = send_udp(buf, conf_st, conf_nd, conf_exec);
+			}
+			else {
+				r = send_tcp(buf, conf_st, conf_nd, conf_exec);
+			}
+			if (r == RECY_OK)
+			{
+				gettimeofday(&tv, NULL);
+				pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+				blkhdr->send_time = tv.tv_sec;
+				pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+				r = pcap_loop(blkhdr->pcap_handler, 1,
+						nmap_pcap_handler, &buf[sizeof(t_nmap_blkhdr)]);
+				if (r == PCAP_ERROR_BREAK) {
+					bzero(&buf[sizeof(t_nmap_blkhdr)], MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
+				}
+				pthread_mutex_lock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+				blkhdr->send_time = 0;
+				pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
+				r = RECY_OK;
+			}
+		}
 		pcap_freecode(&bpf);
 	}
 	return (r);

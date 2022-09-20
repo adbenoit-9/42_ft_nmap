@@ -34,11 +34,17 @@ int build_ipv6_udp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		buf = &buf[sizeof(t_nmap_blkhdr)];
 		bzero(buf, MAP_BLCK_SIZE - sizeof(t_nmap_blkhdr));
 		ret = get_urandom(random, 16);
+		if (ret != 0)
+		{
+			fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+			return (-1);
+		}
 		i = sizeof(struct ip6_hdr);
 
 		/* setup IP6 header */
+		dip = ((struct sockaddr_in6 *)&conf_st->src_sock)->sin6_addr;
+		SET_IP6_SRC(buf, dip);
 		dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
-		SET_IP6_SRC(buf, get_src_ipv6(dip));
 		SET_IP6_DST(buf, dip);
 		SET_IP6_FLOW(buf, 0);
 		SET_IP6_NXT(buf, IPPROTO_UDP);

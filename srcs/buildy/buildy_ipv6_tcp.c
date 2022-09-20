@@ -52,8 +52,9 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_TCP_OFF(&buf[i], tcpoff);
 
 		/* setup IP6 header */
+		dip = ((struct sockaddr_in6 *)&conf_st->src_sock)->sin6_addr;
+		SET_IP6_SRC(buf, dip);
 		dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
-		SET_IP6_SRC(buf, get_src_ipv6(dip));
 		SET_IP6_DST(buf, dip);
 		SET_IP6_FLOW(buf, 0);
 		SET_IP6_NXT(buf, IPPROTO_TCP);

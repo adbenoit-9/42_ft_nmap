@@ -20,14 +20,18 @@ static int	setup_root(t_root *root, t_nmap_setting *settings)
 	root->nd_nb = settings->port_nb;
 	root->rd_nb = settings->scan_nb;
 	/* Fill parameters in tree */
-	if (set_iter_st(root, set_sockaddr))
+	if (r == 0 && set_iter_st(root, set_sockaddr)) {
 		r = -1;
-	if (set_iter_st(root, set_src_sockaddr))
+	}
+	if (r == 0 && set_iter_st(root, set_src_sockaddr)) {
 		r = -1;
-	if (set_iter_nd(root, iter_set_port))
+	}
+	if (r == 0 && set_iter_nd(root, iter_set_port)) {
 		r = -1;
-	if (set_iter_rd(root, iter_set_tcpflag))
+	}
+	if (r == 0 && set_iter_rd(root, iter_set_tcpflag)) {
 		r = -1;
+	}
 	return (r);
 }
 
@@ -60,10 +64,12 @@ int main(int ac, char **av)
 			}
 			if (r == PARSY_OK) {
 				r = setup_root(controller.root, settings);
-				ft_nmap(&controller);
 			}
 			else if (r == PARSY_STOP)
 				r = PARSY_KO;
+			if (r == PARSY_OK) {
+				ft_nmap(&controller);
+			}
 		}
 	}
 	clean_settings(settings);
