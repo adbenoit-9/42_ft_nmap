@@ -22,6 +22,7 @@ int 				recv_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 	char				filter[FILTER_SIZE]		= {0};
 	char				ipstr[INET6_ADDRSTRLEN]		= {0};
 	struct		timeval		tv				= {0};
+	uint16_t			src_port			= 0;
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
@@ -32,18 +33,24 @@ int 				recv_ipv6_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 	}
 	else
 	{
-		
+		GET_TCP_SPORT(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct ip6_hdr)], src_port);
+		//fprintf(stderr, "src_port=%hd\n", src_port);
 		if (!inet_ntop(AF_INET6, &((struct sockaddr_in6*)&((t_nmap_link*)conf_st)->sock)->sin6_addr, ipstr, INET6_ADDRSTRLEN)) {
 			perror("inet_ntop");
 			return (RECY_ERROR);
 		}
 		// TODO LMA filter tcp flag ?
-		snprintf(filter, FILTER_SIZE, "src host %s and (tcp src port %d or ((%s) and ip6[91] = %d and ip6[90] = %d))",
+		snprintf(filter, FILTER_SIZE, "src host %s and ((tcp src port %d and tcp dst port %d) or\
+ ((%s) and ip6[91] = %d and ip6[90] = %d and ip6[92] = %d and ip6[93] = %d))",
 			ipstr,
 			((t_nmap_app*)conf_nd)->port,
+			ntohs(src_port),
 			icmp6_port_unreach,
 			((t_nmap_app*)conf_nd)->port & 0xFF,
-			((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF);
+			((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF,
+			(src_port >> 8) & 0xFF,
+			src_port & 0xFF
+			);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
 			pcap_perror(blkhdr->pcap_handler, "pcap compile");

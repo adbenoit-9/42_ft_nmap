@@ -17,6 +17,9 @@
 
 #define SET_TCP_SPORT(tcp, value) do {((struct tcphdr*)tcp)->th_sport =\
 					(uint16_t)value;} while (0)
+
+#define GET_TCP_SPORT(tcp, value) do {value = (uint16_t)(((struct tcphdr*)tcp)->th_sport);} while (0)
+
 #define SET_TCP_DPORT(tcp, value) do {((struct tcphdr*)tcp)->th_dport =\
 					(uint16_t)value;} while (0)
 #define SET_TCP_SEQ(tcp, value) do {((struct tcphdr*)tcp)->th_seq =\

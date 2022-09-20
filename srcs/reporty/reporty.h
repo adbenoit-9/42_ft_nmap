@@ -41,7 +41,7 @@
 # define PORT_ZONE_SIZE		10
 # define SERV_ZONE_SIZE		30
 # define RES_ZONE_SIZE		35
-# define CONCL_ZONE_SIZE	15
+# define CONCL_ZONE_SIZE	32
 
 /* report blk */
 # define BLK_HDR_FORMAT		"%s%*s%*s%*s\n"
