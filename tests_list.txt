@@ -1,0 +1,5 @@
+sudo ./ft_nmap --ip localhost --speedup 100  --ports 80 --ports 631 --ports 5353 --scan UDP
+(output: 80 closed, others Open|Filtered)
+sudo ./ft_nmap --ip ::1 --speedup 100  --ports 80 --ports 631 --ports 5353 --scan UDP
+(output: 53553 open|filtered, others Closed)
+
