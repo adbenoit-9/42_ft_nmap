@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 09:50:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:48:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define PORT_S_FILTERED 0x08
 # define PORT_S_UNFILTERED 0x10
 
-uint8_t  analyse_scan_icmp(struct icmphdr *icmp);
+uint8_t  analyse_tcpscan_icmp(struct icmphdr *icmp);
+uint8_t  analyse_udpscan_icmp(struct icmphdr *icmp);
 
 #endif

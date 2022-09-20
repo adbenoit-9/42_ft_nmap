@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:53:30 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 11:40:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:51:32 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,18 @@ int	dns(void *sockaddr, char *ipstr, char *dest)
 	int	ret = REPORTY_OK;
 	
 	if (sf == AF_INET6) {
-		ret = inet_ntop(sf, &((struct sockaddr_in6 *)sockaddr)->sin6_addr,
-			dest, INET6_ADDRSTRLEN);
+		if (!inet_ntop(sf, &((struct sockaddr_in6 *)sockaddr)->sin6_addr,
+				dest, INET6_ADDRSTRLEN)) {
+			ret = REPORTY_ERROR;		
+		}
 	}
-	else {
-		ret = inet_ntop(sf, &((struct sockaddr_in *)sockaddr)->sin_addr,
-			dest, INET_ADDRSTRLEN);
+	else if (!inet_ntop(sf, &((struct sockaddr_in *)sockaddr)->sin_addr,
+			dest, INET_ADDRSTRLEN)) {
+		ret = REPORTY_ERROR;		
 	}
 	if (ret != REPORTY_OK) {
 		ft_strcpy(dest, ipstr);
 		perror("inet_ntop");
-		ret = REPORTY_ERROR;
 	}
 	return (ret);
 }
