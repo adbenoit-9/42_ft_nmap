@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 10:12:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 14:40:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:32:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	report_config(t_nmap_setting *settings)
 No of Ports to scan : %d\n\
 Scans to be performed : %s\n\
 No of threads : %d\n\
-Filter : %s\n\
+Filter on port status : %s\n\
 Scanning..\n",
 		ip_list, settings->port_nb, scan_list, settings->speedup, filter);
 }
