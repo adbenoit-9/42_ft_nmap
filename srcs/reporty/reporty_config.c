@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 10:12:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 15:32:01 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 18:16:37 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,24 @@ void	report_config(t_nmap_setting *settings)
 			ft_strcat(scan_list, " ");
 		scan_to_str(scan_list, settings->scans[i]);
 	}
-	status_to_str(filter, settings->options, " ");
-	printf("Scan Configurations\nTarget Ip-Address : %s\n\
+	if ((settings->options & OPT_ALL_FILTER) == OPT_ALL_FILTER) {
+		printf("Scan Configurations\n\
+Target Ip-Address : %s\n\
+No of Ports to scan : %d\n\
+Scans to be performed : %s\n\
+No of threads : %d\n\
+Scanning..\n",
+			ip_list, settings->port_nb, scan_list, settings->speedup);
+	}
+	else {
+		status_to_str(filter, settings->options, " ");
+		printf("Scan Configurations\n\
+Target Ip-Address : %s\n\
 No of Ports to scan : %d\n\
 Scans to be performed : %s\n\
 No of threads : %d\n\
 Filter on port status : %s\n\
 Scanning..\n",
-		ip_list, settings->port_nb, scan_list, settings->speedup, filter);
+			ip_list, settings->port_nb, scan_list, settings->speedup, filter);
+	}
 }
