@@ -6,84 +6,42 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 14:05:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:27:57 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reporty.h"
-
-static char *ft_getservbyport(int port, char *protocol)
+					
+static void add_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan)
 {
-	static int  tcp_port[] = TCP_PORTS;
-	static int  udp_port[] = UDP_PORTS;
-	static char *tcp_serv[] = TCP_SERVICES;
-	static char *udp_serv[] = UDP_SERVICES;
-	char *service = NULL;
-
-	if (!protocol || ft_strcmp(protocol, "TCP")) {
-		for (int i = 0; tcp_serv[i]; i++) {
-			if (tcp_port[i] == port) {
-				service = tcp_serv[i];
-				break ;
-			}
-		}
-	}
-	if (!service && (!protocol || ft_strcmp(protocol, "UDP"))) {
-		for (int i = 0; tcp_serv[i]; i++) {
-			if (udp_port[i] == port) {
-				service = udp_serv[i];
-				break ;
-			}
-		}
-	}
-	return (service);
-}
-
-static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan)
-{
-	static char	*status_str[] = {"Open", "Closed", "Filtered", "Unfiltered"};
-	static char	status_value[] = {PORT_S_OPEN, PORT_S_CLOSED, \
-									PORT_S_FILTERED, PORT_S_UNFILTERED};
-	static char	*scan_str[] = {"NULL", "SYN", "ACK", "FIN", "XMAS", "UDP", NULL};
-	static char	scan_value[] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN,
-				FLAG_S_XMAS, FLAG_S_UDP};
-	int         nspaces, scan_index, len;
+	int         nspaces, len;
 	char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20];
 	char        status[20];
-	
-	for (scan_index = 0; scan_index < 6; scan_index++) {
-		if (flag_scan == scan_value[scan_index]) {
-			break ;
-		}
-	}
-	status[0] = 0;
-	for (int i = 0; i < 4; i++) {
-		if (flag_result & status_value[i]) {
-			if (status[0]) {
-				ft_strcat(status, "|");
-			}
-			ft_strcat(status, status_str[i]);
-		}
-	}
+	char        scan[5];
+
+	scan[0] = 0;
+	scan_to_str(scan, flag_scan);
+	status_to_str(status, flag_result, "|");
 	len = ft_strlen(result);
 	nspaces = len > RES_ZONE_SIZE - len ? \
 		PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
-	sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES,
-		scan_str[scan_index], status);
+	sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES, scan, status);
 	ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
-	
 }
 
-static void str_flag_conclusion(char *dest, uint8_t flag_concl)
+static uint8_t get_conclusion(uint8_t flag_concl)
 {
+	uint8_t	concl = 0;
+	
 	if (flag_concl & PORT_S_CLOSED)
-		ft_strcpy(dest, "Closed");
+		concl = PORT_S_CLOSED;
 	else if (flag_concl & PORT_S_OPEN)
-		ft_strcpy(dest, "Open");
+		concl = PORT_S_OPEN;
 	else if (flag_concl & PORT_S_UNFILTERED)
-		ft_strcpy(dest, "Unfiltered");
+		concl = PORT_S_UNFILTERED;
 	else if (flag_concl & PORT_S_FILTERED)
-		ft_strcpy(dest, "Filtered");
+		concl = PORT_S_FILTERED;
+	return (concl);
 }
 
 static int  last_line_result_len(char *result)
@@ -116,34 +74,49 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 		flag_concl = 0;
 		ft_bzero(result, 4096);
 		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
-			if (root->blk_flag[flag_index] & status &&
-					(status == PORT_S_OPEN || !(root->blk_flag[flag_index] & ~status))) {
-				flag_concl |= root->blk_flag[flag_index];
-				str_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
-				if (j == root->rd_nb - 1 && flag_concl & root->client.options) {
-					str_flag_conclusion(conclusion, flag_concl);
-					service = ft_getservbyport(root->nd[i].client.port, NULL);
-					port_len = num_len(root->nd[i].client.port);
-					printf(PORT_REPORT_FORMAT,
-						root->nd[i].client.port,
-						PRECISION(port_len, PORT_ZONE_SIZE, service ? service : "Unassigned"),
-						service ? service : "Unassigned",
-						PRECISION(ft_strlen(service ? service : "Unassigned"), SERV_ZONE_SIZE, result),
-						result,
-						PRECISION(last_line_result_len(result), RES_ZONE_SIZE, conclusion),
-						conclusion);
-				}
+			flag_concl |= root->blk_flag[flag_index];
+			add_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
+		}
+		if (flag_concl & root->client.options) {
+			flag_concl = get_conclusion(flag_concl);
+			status_to_str(conclusion, flag_concl, 0);
+			if (flag_concl & status) {
+				service = ft_getservbyport(root->nd[i].client.port, NULL);
+				port_len = num_len(root->nd[i].client.port);
+				printf(PORT_REPORT_FORMAT,
+					root->nd[i].client.port,
+					PRECISION(port_len, PORT_ZONE_SIZE, service ? service : "Unassigned"),
+					service ? service : "Unassigned",
+					PRECISION(ft_strlen(service ? service : "Unassigned"), SERV_ZONE_SIZE, result),
+					result,
+					PRECISION(last_line_result_len(result), RES_ZONE_SIZE, conclusion),
+					conclusion);
 			}
 		}
 	}
 	return (ret);
 }
 
+static void	print_header(char *status)
+{
+	printf(HEADER_FORMAT,
+		status,
+		"Port",
+		HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
+		"Service Name (if applicable)",
+		HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
+		"Results",
+		HDR_PRECISION(7, RES_ZONE_SIZE, 10),
+		"Conclusion",
+		PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
+		BORDER1);
+}
+
 void    report_final(t_root *root, double scan_time)
 {
 	char	ipaddr[INET6_ADDRSTRLEN];
 	char	host_name[100];
-	
+	char	status[29];
 	
 	printf("\nScan took %f secs\n", scan_time);
 	for (int i = 0; i < root->st_nb; i++) {
@@ -151,32 +124,13 @@ void    report_final(t_root *root, double scan_time)
 		dns(&root->st->client.sock, root->client.ips[i], ipaddr);
 		printf("IP address: %s (%s)\n", host_name, ipaddr);
 		if (root->client.options & PORT_S_OPEN) {
-			printf(HEADER_FORMAT,
-				"Open ports:",
-				"Port",
-				HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
-				"Service Name (if applicable)",
-				HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
-				"Results",
-				HDR_PRECISION(7, RES_ZONE_SIZE, 10),
-				"Conclusion",
-				PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-				BORDER1);
+			print_header("Open");
 			print_ports_report(root, i, PORT_S_OPEN);
 		}
-		
-		if (root->client.options & OPT_FILTER & ~PORT_S_OPEN) {
-			printf(HEADER_FORMAT,
-				"\nClosed/Filtered/Unfiltered ports:",
-				"Port",
-				HDR_PRECISION(4, PORT_ZONE_SIZE, 28),
-				"Service Name (if applicable)",
-				HDR_PRECISION(28, SERV_ZONE_SIZE, 7),
-				"Results",
-				HDR_PRECISION(7, RES_ZONE_SIZE, 10),
-				"Conclusion",
-				PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + CONCL_ZONE_SIZE,
-				BORDER1);
+		if (root->client.options & (PORT_S_CLOSED | PORT_S_FILTERED | PORT_S_UNFILTERED)) {
+			status[0] = '\n';
+			status_to_str(&status[1], root->client.options & ~PORT_S_OPEN, "/");
+			print_header(status);
 			print_ports_report(root, i, ~PORT_S_OPEN);
 		}
 	}
