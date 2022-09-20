@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 19:47:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:25:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,14 +175,15 @@ static void	print_not_shown(t_root *root, int ip_index)
 void    report_final(t_root *root, double scan_time)
 {
 	char	ipaddr[INET6_ADDRSTRLEN];
-	char	host_name[100];
+	char	rdns[100];
 	char	status[29];
 	
 	printf("\nScan took %f secs\n", scan_time);
 	for (int i = 0; i < root->st_nb; i++) {
-		dns_resolution(&root->st->client.sock, root->client.ips[i], host_name);
 		dns(&root->st->client.sock, root->client.ips[i], ipaddr);
-		printf("IP address: %s (%s)\n", host_name, ipaddr);
+		dns_resolution(&root->st->client.sock, ipaddr, rdns);
+		printf("IP address: %s (%s)\n", root->client.ips[i], ipaddr);
+		printf("rDNS record for %s: %s\n", ipaddr, rdns);
 		if (root->client.options & PORT_S_OPEN) {
 			print_header("Open");
 			print_ports_report(root, i, PORT_S_OPEN);
