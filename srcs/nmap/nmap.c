@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 11:32:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:54:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int	ft_nmap(t_nmap_controller *controller)
 {
 	struct timeval		begin, end;
 	pthread_t			th_timeout;
+	struct sigaction	act;
 
-	signal(SIGALRM, handle_signal);
+	act.sa_sigaction = &handle_sigaction;
+	act.sa_flags = SA_SIGINFO;
+	sigaction(SIGALRM, &act, NULL);
 	report_config(&controller->root->client);
 	blky_init(((t_root *)controller->root)->map);
 	if (!(controller->root->client.options & OPT_VERBOSE)) {
