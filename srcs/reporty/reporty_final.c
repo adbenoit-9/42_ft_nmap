@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 19:01:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 19:47:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static uint8_t set_conclusion(uint8_t old_flag, uint8_t new_flag)
 	if (old_flag == 0) {
 		concl = new_flag;
 	}
-	else if (new_flag == PORT_S_CLOSED || old_flag == PORT_S_CLOSED) {
-		concl = PORT_S_CLOSED;
-	}
 	else if (new_flag == PORT_S_OPEN || old_flag == PORT_S_OPEN) {
 		concl = PORT_S_OPEN;
+	}
+	else if (new_flag == PORT_S_CLOSED || old_flag == PORT_S_CLOSED) {
+		concl = PORT_S_CLOSED;
 	}
 	else {
 		concl = new_flag | old_flag;
