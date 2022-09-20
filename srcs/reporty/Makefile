@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/19 22:49:16 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 10:13:24 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
 SRC			:= reporty_config.c \
 				reporty_final.c \
-				reporty_blk.c
+				reporty_blk.c \
+				reporty_utils.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj

@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/19 16:34:33 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 10:13:39 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,7 +126,8 @@ SUB_SRC			:= recy_ipv4.c \
 SRC				+= $(addprefix recy/, $(SUB_SRC))
 SUB_SRC			:= reporty_config.c \
 					reporty_final.c \
-					reporty_blk.c
+					reporty_blk.c \
+					reporty_utils.c
 SRC				+= $(addprefix reporty/, $(SUB_SRC))
 SUB_SRC			:= sendy_tcp.c \
 					sendy_udp.c

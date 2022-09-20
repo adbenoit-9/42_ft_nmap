@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 17:45:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:32:40 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	ft_nmap(t_nmap_controller *controller)
 	signal(SIGALRM, handle_signal);
 	report_config(&controller->root->client);
 	blky_init(((t_root *)controller->root)->map);
-	alarm(1);
+	if (!(controller->root->client.options & OPT_VERBOSE)) {
+		alarm(1);
+	}
 	pthread_create(&th_timeout, NULL, handle_timeout, controller);
 	gettimeofday(&begin, NULL);
 	controller->root->client.time = begin;
@@ -51,6 +53,7 @@ int	ft_nmap(t_nmap_controller *controller)
 	controller->status = NMAP_STOP;
 	pthread_mutex_unlock(&controller->mutex);
 	pthread_join(th_timeout, NULL);
+	alarm(0);
 	gettimeofday(&end, NULL);
 	report_final(controller->root, elapse_time(&begin, &end));
 	return (0);

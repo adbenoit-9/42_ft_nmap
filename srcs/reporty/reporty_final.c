@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 09:27:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:26:01 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 	static char	*scan_str[] = {"NULL", "SYN", "ACK", "FIN", "XMAS", "UDP", NULL};
 	static char	scan_value[] = {FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN,
 				FLAG_S_XMAS, FLAG_S_UDP};
-	int         nspaces, scan_index;
+	int         nspaces, scan_index, len;
 	char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20];
 	char        status[20];
 	
@@ -65,7 +65,8 @@ static void str_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 			ft_strcat(status, status_str[i]);
 		}
 	}
-	nspaces = ft_strlen(result) > RES_ZONE_SIZE - 11 ? \
+	len = ft_strlen(result);
+	nspaces = len > RES_ZONE_SIZE - len ? \
 		PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
 	sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES,
 		scan_str[scan_index], status);
@@ -140,9 +141,15 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 
 void    report_final(t_root *root, double scan_time)
 {
+	char	ipaddr[INET6_ADDRSTRLEN];
+	char	host_name[100];
+	
+	
 	printf("\nScan took %f secs\n", scan_time);
 	for (int i = 0; i < root->st_nb; i++) {
-		printf("IP address: %s\n", root->client.ips[i]);
+		dns_resolution(&root->st->client.sock, root->client.ips[i], host_name);
+		dns(&root->st->client.sock, root->client.ips[i], ipaddr);
+		printf("IP address: %s (%s)\n", host_name, ipaddr);
 		
 		printf(HEADER_FORMAT,
 			"Open ports:",

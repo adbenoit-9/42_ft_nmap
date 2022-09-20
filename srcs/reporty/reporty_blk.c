@@ -6,26 +6,13 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:21:56 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 18:24:42 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:29:27 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reporty.h"
 #include "parsy_export.h"
 #include <pthread.h>
-
-double	elapse_time(struct timeval *begin, struct timeval *end);
-
-int num_len(int num)
-{
-    int len = 1;
-
-    while (num > 10) {
-        num /= 10;
-        ++len;
-    }
-    return len;
-}
 
 int report_blk(t_blk *blk, char *ip)
 {
@@ -36,6 +23,7 @@ int report_blk(t_blk *blk, char *ip)
 				FLAG_S_XMAS, FLAG_S_UDP};
     struct timeval  tv;
     double          time_elapsed;
+    char            ipaddr[INET6_ADDRSTRLEN];
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
@@ -54,6 +42,7 @@ int report_blk(t_blk *blk, char *ip)
             gettimeofday(&tv, NULL);
             time_elapsed = elapse_time(&blk->root->time, &tv);
             time_len = num_len((int)time_elapsed);
+            dns(&blk->st->sock, ip, ipaddr);
             pthread_mutex_lock(&blk->root->display_mutex);
             printf(BLK_HDR_FORMAT,
                 "TIME ELAPSED",
@@ -66,9 +55,9 @@ int report_blk(t_blk *blk, char *ip)
             printf(BLK_REPORT_FORMAT,
                 5,
                 time_elapsed,
-                PRECISION((time_len + 6), TIME_ZONE_SIZE, ip),
-                ip,
-                HDR_PRECISION(ft_strlen(ip), IP_ZONE_SIZE, port_len),
+                PRECISION((time_len + 6), TIME_ZONE_SIZE, ipaddr),
+                ipaddr,
+                HDR_PRECISION(ft_strlen(ipaddr), IP_ZONE_SIZE, port_len),
                 blk->nd->port,
                 PRECISION(port_len, PORT_ZONE_SIZE, scan_str[scan_index]),
                 scan_str[scan_index]);
