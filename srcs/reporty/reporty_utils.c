@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:53:30 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 14:44:30 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 20:28:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,16 @@ int	dns(void *sockaddr, char *ipstr, char *dest)
 void    dns_resolution(void *sockaddr, char *ipstr, char *dest)
 {
 	struct hostent	*host;
-	int				len = INET_ADDRSTRLEN;
 	int				sf = ((struct sockaddr_storage *)sockaddr)->ss_family;
 
 	if (sf == AF_INET6) {
-		len = INET6_ADDRSTRLEN;
+		host = gethostbyaddr(&((struct sockaddr_in6 *)sockaddr)->sin6_addr,
+			INET6_ADDRSTRLEN, sf);
 	}
-	host = gethostbyaddr(sockaddr, len, sf);
+	else {
+		host = gethostbyaddr(&((struct sockaddr_in *)sockaddr)->sin_addr,
+			INET_ADDRSTRLEN, sf);
+	}
 	if (host && host->h_name) {
 		ft_strcpy(dest, host->h_name);
 	}
