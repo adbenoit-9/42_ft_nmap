@@ -56,7 +56,8 @@ int	build_ipv6_tcp(uint8_t *buf, T_CLIENT_ST *conf_st, T_CLIENT_ND *conf_nd,
 		SET_IP6_SRC(buf, dip);
 		dip = ((struct sockaddr_in6 *)&conf_st->sock)->sin6_addr;
 		SET_IP6_DST(buf, dip);
-		SET_IP6_FLOW(buf, 0);
+		SET_IP6_FLOW(buf, 0x42424242);
+		//SET_IP6_FLOW(buf, (*(uint32_t*)random));
 		SET_IP6_NXT(buf, IPPROTO_TCP);
 		SET_IP6_HLIM(buf, (uint8_t)255);
 		SET_IP6_VFC(buf, IPV6_VERSION, 0x0);

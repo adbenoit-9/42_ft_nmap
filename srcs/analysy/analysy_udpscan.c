@@ -54,7 +54,7 @@ int analyse_udpscan_ipv6(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
             (struct icmphdr *)(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct ip6_hdr)]));
     }
     else {
-	    fprintf(stderr, "%s:%d:%d\n", __func__, __LINE__, ip->ip6_nxt);
+	    fprintf(stderr, "%s:%d nxt=%d\n", __func__, __LINE__, ip->ip6_nxt);
     }
     return (ret);
 }

@@ -17,6 +17,7 @@
 void    handle_sigaction(int signum, siginfo_t *siginfo, void *param)
 {
     (void)param;
+(void)siginfo;
     if (signum == SIGALRM) {
 #ifndef DEBUG
         write(STDOUT_FILENO, ".", 1);

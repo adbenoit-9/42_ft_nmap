@@ -121,8 +121,10 @@ SUB_SRC			:= parsy.c \
 					parsy_filter.c \
 					ft_isnumber.c
 SRC				+= $(addprefix parsy/, $(SUB_SRC))
-SUB_SRC			:= recy_ipv4.c \
-					recy_ipv6.c \
+SUB_SRC			:= recy_ipv4_tcp.c \
+					recy_ipv4_udp.c \
+					recy_ipv6_tcp.c \
+					recy_ipv6_udp.c \
 					recy_utils.c
 SRC				+= $(addprefix recy/, $(SUB_SRC))
 SUB_SRC			:= reporty_config.c \
