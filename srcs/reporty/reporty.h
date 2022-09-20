@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 14:33:21 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 19:05:29 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define PORT_ZONE_SIZE		10
 # define SERV_ZONE_SIZE		30
 # define RES_ZONE_SIZE		35
-# define CONCL_ZONE_SIZE	15
+# define CONCL_ZONE_SIZE	16
 
 /* report blk */
 # define BLK_HDR_FORMAT		"%s%*s%*s%*s\n"
