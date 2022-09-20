@@ -209,8 +209,10 @@ lib_clean:
 	@make -C $(REPORT_DIR) clean
 	@make -C $(ANAL_DIR) clean
 	
-all: $(NAME)
+all: baneer $(NAME) 
 
+baneer:
+	@cat asciiart.txt || true
 clean:
 	@rm -Rf $(BUILD)
 	@echo "$(B_GREY)$(BUILD)$(NONE): $(B_YELLOW)Delete$(NONE)"

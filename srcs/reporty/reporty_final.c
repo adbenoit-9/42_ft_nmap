@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 18:08:05 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 19:47:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ static void add_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 	ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
 }
 
+static uint8_t get_conclusion(uint8_t concl_flag)
+{
+	uint8_t	concl = concl_flag;
+
+	if (concl_flag & PORT_S_UNFILTERED & PORT_S_FILTERED) {
+		concl = concl_flag & ~PORT_S_UNFILTERED;
+	}
+	if (concl_flag & PORT_S_CLOSED & PORT_S_OPEN) {
+		concl = concl_flag & ~PORT_S_OPEN;
+	}
+	return (concl);
+}
+
 static uint8_t set_conclusion(uint8_t old_flag, uint8_t new_flag)
 {
 	uint8_t	concl = 0;
@@ -36,12 +49,11 @@ static uint8_t set_conclusion(uint8_t old_flag, uint8_t new_flag)
 	if (old_flag == 0) {
 		concl = new_flag;
 	}
+	else if (new_flag == PORT_S_OPEN || old_flag == PORT_S_OPEN) {
+		concl = PORT_S_OPEN;
+	}
 	else if (new_flag == PORT_S_CLOSED || old_flag == PORT_S_CLOSED) {
 		concl = PORT_S_CLOSED;
-	}
-	else if ((new_flag == PORT_S_OPEN || old_flag == PORT_S_OPEN)
-			&& old_flag != PORT_S_CLOSED) {
-		concl = PORT_S_OPEN;
 	}
 	else {
 		concl = new_flag | old_flag;
@@ -83,6 +95,7 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 			add_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
 		}
 		if (flag_concl & root->client.options) {
+			flag_concl = get_conclusion(flag_concl);
 			status_to_str(conclusion, flag_concl, "|");
 			if (flag_concl & status) {
 				service = ft_getservbyport(root->nd[i].client.port, NULL);
@@ -135,6 +148,7 @@ static void	print_not_shown(t_root *root, int ip_index)
 		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
 			flag_concl = set_conclusion(flag_concl, root->blk_flag[flag_index]);
 		}
+		flag_concl = get_conclusion(flag_concl);
 		if (!(flag_concl & root->client.options)) {
 			++nb_res[flag_concl / 2 - 1];
 		}

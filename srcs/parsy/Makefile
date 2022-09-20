@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/20 12:01:15 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 19:41:36 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ endif
 
 MODULES	:= ../nmap/incs\
 			../libft/inc \
-			../proty
+			../proty \
+			../analysy
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 

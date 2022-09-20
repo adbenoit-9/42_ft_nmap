@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/21 18:17:27 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/18 22:03:02 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/20 19:41:12 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,16 +23,16 @@ endif
 MODULES	:= ../nmap/incs\
 			../proty \
 			../libft/inc \
-			../mapy
+			../mapy \
+			../sendy
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 
-SRC = recy_ipv4.c \
-		recy_ipv6.c \
+SRC = recy_ipv4_tcp.c \
+		recy_ipv4_udp.c \
+		recy_ipv6_tcp.c \
+		recy_ipv6_udp.c \
 		recy_utils.c
-# recy_ipv4_udp.c\
-# recy_ipv6_tcp.c\
-# recy_ipv6_udp.c
 
 BUILD 		:= .build
 OBJ_DIR 	:= $(BUILD)/obj
