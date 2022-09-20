@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:28:36 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 15:56:27 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/20 16:06:54 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void    handle_sigaction(int signum, siginfo_t *siginfo, void *param)
 {
     (void)param;
-(void)siginfo;
+    (void)siginfo;
     if (signum == SIGALRM) {
 #ifndef DEBUG
         write(STDOUT_FILENO, ".", 1);
