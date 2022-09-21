@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/21 11:06:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:43:26 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 #ifndef FT_NMAP_STRUCTS_H
 # define FT_NMAP_STRUCTS_H
 
-#include <stdint.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <pcap/pcap.h>
+# include <stdint.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <pcap/pcap.h>
 
-#define SCAN_LIMIT			6
-#define PORT_LIMIT			1024
-#define IP_LIMIT			250
+# define SCAN_LIMIT			6
+# define PORT_LIMIT			1024
+# define IP_LIMIT			250
+
+# define NMAP_OK			0
+# define NMAP_ERROR			-1
+
+# ifndef EAI_ADDRFAMILY
+#  define EAI_ADDRFAMILY	-9
+# endif
 
 typedef struct		s_nmap_blkhdr {
 	pthread_mutex_t				mutex;
@@ -41,6 +48,7 @@ typedef struct		s_nmap_setting {
 	int							ip_nb;
 	int							port_nb;
 	int							scan_nb;
+	int							addr_family;
 	uint8_t						options;
 	pthread_mutex_t				display_mutex;
 	struct timeval				time;

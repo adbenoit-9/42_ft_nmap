@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 11:04:58 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:50:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void    init_nmap_settings(t_nmap_setting *settings)
 	settings->port_nb = 0;
 	settings->scan_nb = 0;
 	settings->options = 0;
+	settings->addr_family = AF_UNSPEC;
 }
 
 static void    print_usage(void)
@@ -52,9 +53,11 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 {
 	int			(*flags_handler[])(t_nmap_setting *, char *) = {
 						set_ip_from_file, exit_help, set_ip_from_arg,
-						set_ports, set_scan, set_speedup, set_filter, set_verbose};
+						set_ports, set_scan, set_speedup, set_filter,
+						set_verbose, set_af_inet, set_af_inet6};
 	char			*flag_lst[] = {"--file", "--help", "--ip", "--ports",
-						"--scan", "--speedup", "--filter", "--verbose", NULL};
+						"--scan", "--speedup", "--filter", "--verbose",
+						"-4", "-6", NULL};
 	int64_t i, j;
 	int	ret = PARSY_OK;
 	
@@ -62,7 +65,7 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
 				ret = flags_handler[j](settings, av[i + 1]);
-				if (j < NB_OPT - 1) 
+				if (j < NB_OPT - 3) 
 					i++;
 				break ;
 			}
