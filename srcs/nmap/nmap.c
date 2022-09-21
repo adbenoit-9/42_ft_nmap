@@ -42,7 +42,9 @@ int	ft_nmap(t_nmap_controller *controller)
 
 	act.sa_sigaction = &handle_sigaction;
 	act.sa_flags = SA_SIGINFO;
-	sigaction(SIGALRM, &act, NULL);
+	if (sigaction(SIGALRM, &act, NULL) < 0) {
+		return (-1);
+	}
 	report_config(&controller->root->client);
 	blky_init(((t_root *)controller->root)->map);
 	if (!(controller->root->client.options & OPT_VERBOSE)) {

@@ -15,7 +15,7 @@
 void	*scany(void *root)
 {
 	int64_t		r = 0;
-	
+
 	r = mapy(root);
-    return ((void *)r);
+	return ((void *)r);
 }
