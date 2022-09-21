@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:37:26 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 15:51:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:44:04 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "analysy.h"
 # include "nmap_mapy_config.h"
 # include "export_reporty.h"
+# include "libft.h"
 
 # define NMAP_RUN 1
 # define NMAP_STOP 0
