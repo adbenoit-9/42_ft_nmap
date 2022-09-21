@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 14:13:55 by leon              #+#    #+#             */
-/*   Updated: 2022/09/14 19:49:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:44:12 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-
 #include <net/if.h>
 #include <ifaddrs.h>
-
-#define NMAP_OK			0
-#define NMAP_ERROR		-1
 
 /* ST : t_func_sety_st */
 int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
@@ -74,33 +70,26 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 	int						r 			= NMAP_OK;
 	struct 		addrinfo	hints		= {0};
 	struct 		addrinfo	*res		= NULL;
-//	char					host[32];
-//	char					*host;
 
-//	host = root->ips[index];
-	if (!root || !link)
-	{
+	if (!root || !link) {
 		r = NMAP_ERROR;
 	}
-	else
-	{
+	else {
 		memset(&hints, 0, sizeof(hints));
-		hints.ai_family = AF_UNSPEC;
+		hints.ai_family = root->addr_family;
 		hints.ai_flags = 0;
 		r = getaddrinfo(root->ips[index], NULL, &hints, &res);
-		if (r != 0)
-		{
-			dprintf(2, "%s: Name or service not known\n", root->ips[index]);
+		if (r == EAI_ADDRFAMILY) {
+			dprintf(2, "ft_nmap: %s: address family not supported\n", root->ips[index]);
 			r = NMAP_ERROR;
 		}
-		if (r == NMAP_OK)
-		{
-	//		bzero(link->host, 32);
-	//		memcpy(link->host, host, strlen(host));
-
-	//		bzero(host, 32);
-	//		memcpy(host, host, strlen(host));
-			memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
+		else if (r != 0) {
+			dprintf(2, "ft_nmap: %s: name or service not known\n", root->ips[index]);
+			r = NMAP_ERROR;
+		}
+		if (r == NMAP_OK) {
+			memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ?\
+				sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 			freeaddrinfo(res);
 		}
 	}

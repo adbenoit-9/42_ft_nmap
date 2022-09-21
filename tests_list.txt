@@ -1,5 +1,6 @@
 sudo ./ft_nmap --ip localhost --speedup 100  --ports 80 --ports 631 --ports 5353 --scan UDP
-(output: 80 closed, others Open|Filtered)
+    output: 80 closed, others Open|Filtered
+
 sudo ./ft_nmap --ip ::1 --speedup 100  --ports 80 --ports 631 --ports 5353 --scan UDP
 (output: 53553 open|filtered, others Closed)
  sudo ./ft_nmap --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
@@ -75,3 +76,21 @@ Port      Service Name (if applicable)  Results                            Concl
                                         UDP(Closed)                        Closed
 
 )
+sudo ./ft_nmap --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
+    output: NULL(closed), SYN(Filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+
+sudo ./ft_nmap --speedup 100  --ports 80 --ports 443 --ports 631 --ports 5353 --ip google.com
+    output: NULL(closed), SYN(80/443 open & other filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+
+sudo ./ft_nmap --ip google.com --speedup 100 --ports 443 --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
+    output:
+        google.com: NULL(closed), SYN(80/443 open & other filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+        kittypong.fr: NULL(closed), SYN(Filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+
+sudo ./ft_nmap --ip google.com --speedup 100 --ports 443 --ports 80 --ports 631 --ports 5353 --ip kittypong.fr --ip ::1
+    output:
+        google.com: NULL(closed), SYN(80/443 open & other filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+        kittypong.fr: NULL(closed), SYN(Filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
+        ::1: NULL(631 open|filtered & others closed), SYN(631 open & others closed), ACK(unfiltered),
+            FIN(631 open|filtered & others closed), XMAS(631 open|filtered & others closed),
+            UDP(5353 open|filtered & others closed)

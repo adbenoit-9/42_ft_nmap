@@ -40,7 +40,6 @@ int send_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 		ret = sendto(blkhdr->socket, buf, length, 0,
 			(const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, blkhdr->socklen);
 		if (ret < 0)  {
-			perror("sendto");
 			ret = SENDY_ERROR;
 		}
 		else {

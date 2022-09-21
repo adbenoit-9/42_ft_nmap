@@ -6,7 +6,7 @@
 #    By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/28 16:29:13 by adbenoit          #+#    #+#              #
-#    Updated: 2022/09/20 12:01:26 by adbenoit         ###   ########.fr        #
+#    Updated: 2022/09/21 12:17:32 by adbenoit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,6 +116,7 @@ SUB_SRC			:= parsy.c \
 					parsy_error.c \
 					parsy_clean.c \
 					parsy_filter.c \
+					parsy_addr_family.c \
 					ft_isnumber.c
 SRC				+= $(addprefix parsy/, $(SUB_SRC))
 SUB_SRC			:= recy_ipv4_tcp.c \
