@@ -15,12 +15,13 @@ static char icmp_port_unreach[] = "icmp[icmptype] == icmp-unreach";
 
 int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 {
-	int					r 					= RECY_OK;
+	int					r 		= RECY_OK;
 	struct	bpf_program	bpf 				= {0};
 	t_nmap_blkhdr		*blkhdr				= (t_nmap_blkhdr*)buf;
 	char				filter[FILTER_SIZE]	= {0};
 	struct		timeval	tv				= {0};
-	uint16_t			src_port			= 0;
+	uint16_t			src_port		= 0;
+	uint32_t			seq			= 0;
 
 #ifdef DEBUG
 	fprintf(stderr, "%s:%d\n", __func__, __LINE__);
@@ -32,20 +33,26 @@ int 				recv_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 	else
 	{
 		GET_TCP_SPORT(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct iphdr)], src_port);
-		snprintf(filter, FILTER_SIZE, "src host %s and ((tcp src port %d and tcp dst port %d) or \
-(%s and ip[51] = %d and ip[50] = %d and ip[52] = %d and ip[53] = %d))",
+		GET_TCP_SEQ(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct iphdr)], seq);
+		seq = htonl(seq) + 1;
+//		snprintf(filter, FILTER_SIZE, "src host %s and ((tcp src port %d and tcp dst port %d and tcp[8:4] = %d) or 
+//(%s and ip[51] = %d and ip[50] = %d and ip[52] = %d and ip[53] = %d))",
+		snprintf(filter, FILTER_SIZE, "src host %s and ((tcp src port %d and tcp dst port %d and tcp[8:4] = %d) or \
+(%s and ip[51] = %d and ip[50] = %d and ip[52] = %d and ip[53] = %d and ip[58:4] = %d))",
 			inet_ntoa(((struct sockaddr_in*)&((t_nmap_link*)conf_st)->sock)->sin_addr),
 			((t_nmap_app*)conf_nd)->port,
-			ntohs(src_port),
+			htons(src_port),
+			seq,
 			icmp_port_unreach,
 			((t_nmap_app*)conf_nd)->port & 0xFF,
 			((((t_nmap_app*)conf_nd)->port) >> 8) & 0xFF,
 			(src_port >> 8) & 0xFF,
-			src_port & 0xFF);
+			src_port & 0xFF,
+			seq);
 		if (pcap_compile(blkhdr->pcap_handler, &bpf, filter, 0, PCAP_NETMASK_UNKNOWN) < 0)
 		{
 			r = RECY_ERROR;
-			pcap_perror(blkhdr->pcap_handler, "pcap_setfilter");
+			pcap_perror(blkhdr->pcap_handler, "pcap_compile");
 		}
 		if (r == RECY_OK) {
 			if (pcap_setfilter(blkhdr->pcap_handler, &bpf) == PCAP_ERROR) {

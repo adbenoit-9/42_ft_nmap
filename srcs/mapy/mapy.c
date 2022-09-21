@@ -30,24 +30,26 @@ int			mapy(t_root *root)
 	uint64_t		count;
 	uint64_t		index;
 	t_blk			*blk;
+	bool			run	= 1;
 	
 	if (!root) {
 		r = MAPY_ERR;
 	}
-	while (r == EXEY_RUN  || r == EXEY_BUSY)
+	while (run && r != EXEY_ERR)
 	{
+		run = 0;
 		count = 0;
 		r = EXEY_RUN;
-		for (int i = 0; (r == EXEY_RUN  || r == EXEY_BUSY) && i < root->st_nb; i++) {
-			for (int j = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE) && j < root->nd_nb; j++) {
-				for (int k = 0; (r == EXEY_RUN  || r == EXEY_BUSY || r == EXEY_IDLE)
-											&& k < root->rd_nb; k++) {
+		for (int i = 0; r != EXEY_ERR && i < root->st_nb; i++) {
+			for (int j = 0; r != EXEY_ERR && j < root->nd_nb; j++) {
+				for (int k = 0; r != EXEY_ERR && k < root->rd_nb; k++) {
 					index = (count % BLCK_NB) * sizeof(t_blk);
 					blk = (t_blk*)&root->map[index];
 					pthread_mutex_lock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 					if (root->blk_flag[count] == BLK_TODO) {
 						if (blk->flag == BLK_BUSY) {
 							r = EXEY_BUSY;
+							run = 1;
 						}
 						else {
 							blk->flag = BLK_BUSY;
@@ -70,9 +72,6 @@ int			mapy(t_root *root)
 							}
 							blk->flag = BLK_IDLE;
 						}
-					}
-					else {
-						r = EXEY_IDLE;
 					}
 					pthread_mutex_unlock(&((t_nmap_blkhdr *)(blk->map))->mutex);
 					++count;

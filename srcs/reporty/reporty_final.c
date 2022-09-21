@@ -25,7 +25,8 @@ static void add_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 	len = ft_strlen(result);
 	nspaces = len > RES_ZONE_SIZE - len ? \
 		PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
-	sprintf(str, "\n%.*s%s(%s) ", nspaces, SPACES, scan, status);
+	snprintf(str, PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20,
+		"\n%.*s%s(%s) ", nspaces, SPACES, scan, status);
 	ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
 }
 

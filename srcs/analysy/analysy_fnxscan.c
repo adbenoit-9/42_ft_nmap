@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "analysy.h"
+#include "mapy.h"
 
 static uint8_t  analyse_fnxscan_tcp(struct tcphdr *tcp)
 {
@@ -41,6 +42,18 @@ int analyse_fnxscan_ipv4(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_
         ((t_nmap_blkhdr *)buf)->result = analyse_tcpscan_icmp_ipv4(
             (struct icmphdr *)(&buf[sizeof(t_nmap_blkhdr) + sizeof(struct iphdr)]));
     }
+	else
+	{
+		int i = sizeof(t_nmap_blkhdr);
+		fprintf(stderr, "%s:%d\n", __func__, __LINE__);
+		while (i  < MAP_BLCK_SIZE)
+		{
+			fprintf(stderr, "%02x", buf[i++]);
+			if (i % 32 == 0)
+				fprintf(stderr, "\n");
+		}
+		fprintf(stderr, "\n");
+	}
     return (ret);
 }
 

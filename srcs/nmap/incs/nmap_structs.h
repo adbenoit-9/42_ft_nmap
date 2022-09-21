@@ -21,7 +21,7 @@
 
 # define SCAN_LIMIT			6
 # define PORT_LIMIT			1024
-# define IP_LIMIT			250
+# define IP_LIMIT			2
 
 # define NMAP_OK			0
 # define NMAP_ERROR			-1
