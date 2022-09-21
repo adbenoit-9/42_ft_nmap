@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 16:17:06 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 16:48:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void add_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan
 	len = ft_strlen(result);
 	nspaces = len > RES_ZONE_SIZE - len ? \
 		PORT_ZONE_SIZE + SERV_ZONE_SIZE : 0;
-	snprintf(str, PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20,
+	snprintf(str, PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 32,
 		"\n%.*s%s(%s) ", nspaces, SPACES, scan, status);
 	ft_strcat(result, &str[nspaces > 0 ? 0 : 1]);
 }
