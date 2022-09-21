@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 12:42:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:54:49 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 			"invalid filter: '%s'\n", str);\
 			} while(0)
 # define PRINT_EBOTHAF do {dprintf(STDERR_FILENO,\
-			"Cannot use both -4 and -6 in one scan.");\
+			"Cannot use both -4 and -6 in one scan.\n");\
 			} while(0)
 # define STR_ENOMEM "Out of memory"
 

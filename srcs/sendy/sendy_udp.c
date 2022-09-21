@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 20:11:57 by leon              #+#    #+#             */
-/*   Updated: 2022/09/16 17:39:04 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:07:33 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int send_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exec)
 		ret = sendto(blkhdr->socket, buf, length, 0,
 			(const struct sockaddr*)&((t_nmap_link*)conf_st)->sock, blkhdr->socklen);
 		if (ret < 0)  {
-			perror("sendto");
 			ret = SENDY_ERROR;
 		}
 		else {
