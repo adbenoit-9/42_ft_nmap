@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 18:14:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:04:58 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,10 @@ static void	default_settings(t_nmap_setting *settings)
 	if (settings->scan_nb == 0) {
 		memcpy(settings->scans, default_scans, SCAN_LIMIT);
 		settings->scan_nb = SCAN_LIMIT;
+	}
+	if (settings->ip_nb > IP_LIMIT) {
+		settings->ip_nb = IP_LIMIT;
+		dprintf(STDERR_FILENO, "Warning: only the first %d addresses will be scanned\n", IP_LIMIT);
 	}
 	if (settings->port_nb == 0) {
 		copy_new_range(settings->ports, 0, 1, PORT_LIMIT);
