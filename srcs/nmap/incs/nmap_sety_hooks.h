@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sety_hooks.h                                       :+:      :+:    :+:   */
+/*   nmap_sety_hooks.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:58:35 by leon              #+#    #+#             */
+/*   Updated: 2022/09/21 17:33:05 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +17,6 @@
 
 #include "mapy.h"
 #include "export_cleany.h"
-// #include "export_setupy.h"
-
-/* ST : t_func_sety_st */
-//int					set_socket(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app, t_nmap_scan *scan);
-/* RD : t_func_sety_rd */
 
 int					dump_config_nd(t_nmap_setting *root, t_nmap_link *link, t_nmap_app *app,
 			t_nmap_scan *scan);

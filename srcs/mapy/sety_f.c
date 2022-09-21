@@ -1,9 +1,18 @@
-
-//#define DEBUG
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sety_f.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/21 17:31:45 by adbenoit          #+#    #+#             */
+/*   Updated: 2022/09/21 17:31:52 by adbenoit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "mapy.h"
 #ifdef DEBUG
-#include "stdio.h"
+# include "stdio.h"
 #endif
 
 #define SETY_OK		0
@@ -15,7 +24,6 @@ int				sety_f(t_root *root, t_func_sety f)
 	int			j;
 	int			k;
 
-	//fprintf(stderr, "%s:%d %s\n",__func__, __LINE__, __FILE__);
 	i = 0;
 	while (r == SETY_OK && i < root->st_nb)
 	{

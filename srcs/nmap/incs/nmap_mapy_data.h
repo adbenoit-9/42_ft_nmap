@@ -6,14 +6,14 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 13:16:18 by leon              #+#    #+#             */
-/*   Updated: 2022/09/19 17:07:33 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 17:32:38 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPY_DATA_H
 # define MAPY_DATA_H
 
-//#include "mapy.h"
+#include "mapy.h"
 #include "data_buildy.h"
 #include "data_sendy.h"
 #include "data_cleany.h"
