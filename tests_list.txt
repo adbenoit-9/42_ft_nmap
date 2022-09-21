@@ -2,10 +2,7 @@ sudo ./ft_nmap --ip localhost --speedup 100  --ports 80 --ports 631 --ports 5353
     output: 80 closed, others Open|Filtered
 
 sudo ./ft_nmap --ip ::1 --speedup 100  --ports 80 --ports 631 --ports 5353 --scan UDP
-(output: 53553 open|filtered, others Closed)
- sudo ./ft_nmap --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
-(output: SYN(Filtered), NULL(closed), ACK(unfiltered), FIN(closed), UDP(open|filtered))
-sudo ./ft_nmap --ip google.com --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
+(output: 5353 open|filtered, others Closed)
 
 # Test with vm deb2 : port 23 is REJECT (udp and tcp) , port 24 is DROP (tcp and udp)
 sudo ./ft_nmap --ip 10.0.2.4 --ip localhost --ports 22-24 --speedup 250
@@ -76,6 +73,7 @@ Port      Service Name (if applicable)  Results                            Concl
                                         UDP(Closed)                        Closed
 
 )
+
 sudo ./ft_nmap --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
     output: NULL(closed), SYN(Filtered), ACK(unfiltered), FIN(closed), XMAS(closed), UDP(open|filtered)
 
