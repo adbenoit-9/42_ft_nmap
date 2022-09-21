@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 13:25:36 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:42:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,27 @@ static int	setup_root(t_root *root, t_nmap_setting *settings)
 
 int main(int ac, char **av)
 {
-	int32_t 			r		= 0;
+	int32_t 			r		= NMAP_OK;
 	uint8_t				*buf;
 	t_nmap_controller	controller;
 	t_nmap_setting		*settings = NULL;
-	
+
 	buf = (uint8_t*)malloc(SIZE);
-	bzero(buf, SIZE);
 	if (buf == NULL) {
-		r = -1;
+		r = NMAP_ERROR;
 	}
-	if (r == 0) {
+	if (r == NMAP_OK) {
+		bzero(buf, SIZE);
 		controller.status = NMAP_RUN;
-		if (pthread_mutex_init(&controller.mutex, NULL) == -1) {
-			r = -1;
+		if (pthread_mutex_init(&controller.mutex, NULL) < 0) {
+			r = NMAP_ERROR;
 		}
 		else {
 			controller.root = (t_root*)buf;
 			controller.root->map = &buf[sizeof(t_root)];
 			settings = &controller.root->client;
-			if (pthread_mutex_init(&settings->display_mutex, NULL) == -1) {
-				r = -1;
+			if (pthread_mutex_init(&settings->display_mutex, NULL) < 0) {
+				r = NMAP_ERROR;
 			}
 			else {
 				r = parser(ac, av, settings);
