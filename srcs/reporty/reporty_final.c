@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 11:38:08 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 16:17:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void add_flag_result(char *result, uint8_t flag_result, uint8_t flag_scan)
 {
 	int         nspaces, len;
-	char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 20];
-	char        status[20];
+	char        str[PORT_ZONE_SIZE + SERV_ZONE_SIZE + RES_ZONE_SIZE + 32];
+	char        status[32];
 	char        scan[5];
 
 	scan[0] = 0;
@@ -38,7 +38,7 @@ static uint8_t get_conclusion(uint8_t concl_flag)
 		concl = concl_flag & ~PORT_S_UNFILTERED;
 	}
 	if (concl_flag & PORT_S_CLOSED & PORT_S_OPEN) {
-		concl = concl_flag & ~PORT_S_OPEN;
+		concl = concl_flag & ~PORT_S_CLOSED;
 	}
 	return (concl);
 }
@@ -196,7 +196,7 @@ static void	print_address_info(void *sock, char *ip)
 void    report_final(t_root *root, double scan_time)
 {
 	char	status[29];
-	
+
 	printf("\nScan took %f secs\n", scan_time);
 	for (int i = 0; i < root->st_nb; i++) {
 		ft_bzero(status, 29);
