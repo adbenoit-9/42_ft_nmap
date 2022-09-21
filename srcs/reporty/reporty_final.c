@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 10:49:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:38:08 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,22 +170,36 @@ static void	print_not_shown(t_root *root, int index)
 	}
 }
 
-void    report_final(t_root *root, double scan_time)
+static void	print_address_info(void *sock, char *ip)
 {
 	char	ipaddr[INET6_ADDRSTRLEN];
 	char	rdns[100];
+	
+	ft_bzero(ipaddr, INET6_ADDRSTRLEN);
+	ft_bzero(rdns, 100);
+	dns(sock, ip, ipaddr);
+	if (ft_strcmp(ip, "127.0.0.1") == 0) {
+		printf("\nIP address: %s (%s)\n", "localhost", ipaddr);
+	}
+	else if (ft_strcmp(ip, "::1") == 0) {
+		printf("\nIP address: %s (%s)\n", "ip6-localhost", ipaddr);
+	}
+	else {
+		printf("\nIP address: %s (%s)\n", ip, ipaddr);
+	}
+	if (dns_resolution(sock, rdns)) {
+		printf("rDNS record for %s: %s\n", ipaddr, rdns);
+	}
+}
+
+void    report_final(t_root *root, double scan_time)
+{
 	char	status[29];
 	
 	printf("\nScan took %f secs\n", scan_time);
 	for (int i = 0; i < root->st_nb; i++) {
 		ft_bzero(status, 29);
-		ft_bzero(ipaddr, INET6_ADDRSTRLEN);
-		ft_bzero(rdns, 100);
-		dns(&root->st[i].client.sock, root->client.ips[i], ipaddr);
-		printf("\nIP address: %s (%s)\n", root->client.ips[i], ipaddr);
-		if (dns_resolution(&root->st[i].client.sock, rdns)) {
-			printf("rDNS record for %s: %s\n", ipaddr, rdns);
-		}
+		print_address_info(&root->st[i].client.sock, root->client.ips[i]);
 		if (root->client.options & PORT_S_OPEN) {
 			print_header("Open");
 			print_ports_report(root, i * root->nd_nb * root->rd_nb, PORT_S_OPEN);
