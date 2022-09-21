@@ -1,7 +1,0 @@
-
-
-
-
-getopt will be a sety_root, so we can have a default execution list starting with it
-make menuconfig for all compilation option (including linux header options if any)
-

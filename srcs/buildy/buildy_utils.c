@@ -22,7 +22,7 @@ int				get_urandom(uint8_t *buf, int length)
 {
 	int			randomfd;
 	int			r = 0;
-	uint8_t		tmp[512];
+	uint8_t			tmp[512];
 	int			offset = 0;
 
 	if (!buf)

@@ -74,12 +74,10 @@ int 				recv_ipv4_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 				r = RECY_OK;
 			}
 		}
-		else if (r == 0) {
-			pcap_freecode(&bpf);
-		}
-		else {
+		else if (r != 0) {
 			r = RECY_ERROR;
 		}
+		pcap_freecode(&bpf);
 	}
 	return (r);
 }

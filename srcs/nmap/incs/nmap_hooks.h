@@ -15,7 +15,6 @@
 
 #include "nmap_mapy_export.h"
 #include "nmap_sety_hooks.h"
-#include "nmap_exey_hooks.h"
 #include "nmap_iter_hooks.h"
 
 

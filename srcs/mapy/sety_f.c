@@ -26,11 +26,11 @@ int				sety_f(t_root *root, t_func_sety f)
 			while (r == SETY_OK && k < root->rd_nb)
 			{
 #ifdef DEBUG
-				// fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
-				// 			(void *)&root->client,
-				// 			(void *)&root->st[i].client,
-				// 			(void *)&root->nd[j].client,
-				// 			(void *)&root->rd[k].client, i, j, k);
+		fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
+				(void *)&root->client,
+				(void *)&root->st[i].client,
+				(void *)&root->nd[j].client,
+				(void *)&root->rd[k].client, i, j, k);
 #endif
 				r = (*f)((T_CLIENT_ROOT *)&root->client,
 							(T_CLIENT_ST *)&root->st[i].client,
@@ -92,7 +92,6 @@ int				set_iter_rd(t_root *root, t_func_iter_rd f)
 	int			j;
 	int			k;
 
-	//fprintf(stderr, "%s:%d %s\n",__func__, __LINE__, __FILE__);
 	i = 0;
 	while (r == SETY_OK && i < root->st_nb)
 	{
@@ -103,11 +102,11 @@ int				set_iter_rd(t_root *root, t_func_iter_rd f)
 			while (r == SETY_OK && k < root->rd_nb)
 			{
 #ifdef DEBUG
-				// fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
-				// 			(void *)&root->client,
-				// 			(void *)&root->st[i].client,
-				// 			(void *)&root->st[i].nd[j].client,
-				// 			(void *)&root->st[i].nd[j].rd[k].client, i, j, k);
+		fprintf(stderr, "%s:%8d %s root=%p st=%p nd=%p rd=%p i=%3d j=%3d k=%3d\n",__func__, __LINE__, __FILE__,
+					(void *)&root->client,
+					(void *)&root->st[i].client,
+					(void *)&root->st[i].nd[j].client,
+					(void *)&root->st[i].nd[j].rd[k].client, i, j, k);
 #endif
 				r = (*f)((T_CLIENT_ROOT *)&root->client,
 							(T_CLIENT_RD *)&root->rd[k].client, k);

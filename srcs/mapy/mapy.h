@@ -48,9 +48,9 @@ typedef struct					s_exe {
 /* Header block structure : can be use for controlling access to blocks */
 typedef	struct						s_blk {
 	t_exe			exe;
-	T_CLIENT_ROOT	*root;
-    T_CLIENT_ST		*st;
-    T_CLIENT_ND		*nd;
+	T_CLIENT_ROOT		*root;
+	T_CLIENT_ST		*st;
+	T_CLIENT_ND		*nd;
 	T_CLIENT_RD		*rd;
 	uint32_t		flag;
 	uint8_t			map[MAP_BLCK_SIZE];
@@ -73,14 +73,13 @@ typedef struct					s_root {
 	t_rd			rd[RD_MAX];
 	t_nd			nd[ND_MAX];
 	t_st			st[ST_MAX];
-	T_CLIENT_ROOT	client;
+	T_CLIENT_ROOT		client;
 	uint8_t			blk_flag[RD_MAX * ND_MAX * ST_MAX];
-	int				st_nb;
-	int				nd_nb;
-	int				rd_nb;
+	int			st_nb;
+	int			nd_nb;
+	int			rd_nb;
 	uint8_t			*map;
 }						t_root;
-
 
 /* Mappy hook access to the map with all client config struct */
 typedef int (*t_func_mapy)(uint8_t *, T_CLIENT_ST *, T_CLIENT_ND *, T_CLIENT_RD *);
@@ -93,14 +92,6 @@ typedef int (*t_func_iter_rd)(T_CLIENT_ROOT *, T_CLIENT_RD *, uint32_t index);
 typedef int (*t_func_iter_nd)(T_CLIENT_ROOT *, T_CLIENT_ND *, uint32_t index);
 typedef int (*t_func_iter_st)(T_CLIENT_ROOT *, T_CLIENT_ST *, uint32_t index);
 
-/* Iter hook is made for access a client config with its index in his lvl of the tree */
-typedef int (*t_func_iter_rd)(T_CLIENT_ROOT *, T_CLIENT_RD *, uint32_t index);
-typedef int (*t_func_iter_nd)(T_CLIENT_ROOT *, T_CLIENT_ND *, uint32_t index);
-typedef int (*t_func_iter_st)(T_CLIENT_ROOT *, T_CLIENT_ST *, uint32_t index);
-
-/* exey access to exe and blk control structure in third lvl of tree */
-typedef int (*t_func_exey)(T_CLIENT_ROOT *, T_EXE *, T_BLK *);
-
 /* Exported functions */
 int								mapy(t_root *root);
 int								mapy_f(t_root *root, t_func_mapy f);
@@ -109,17 +100,13 @@ int								set_rd(t_root *root, t_func_sety f);
 int								set_nd(t_root *root, t_func_sety f);
 int								set_st(t_root *root, t_func_sety f);
 
-int								exey(t_root *root, t_func_exey f);
-int								exey_rd(t_root *root, t_func_exey f);
-int								exey_ctrl(t_root *root, t_func_exey f);
-
 int								set_iter_st(t_root *root, t_func_iter_st f);
 int								set_iter_nd(t_root *root, t_func_iter_nd f);
 int								set_iter_rd(t_root *root, t_func_iter_rd f);
 
-int			blky_branch_task_hooks(t_blk *blk);
-int			blky(t_blk *blk);
-int			blky_init(uint8_t *buf);
+int								blky(t_blk *blk);
+int								blky_branch_task_hooks(t_blk *blk);
+int								blky_init(uint8_t *buf);
 
 
 #endif

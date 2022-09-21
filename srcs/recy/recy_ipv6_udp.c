@@ -81,10 +81,7 @@ int 				recv_ipv6_udp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_exe
 				pthread_mutex_unlock((pthread_mutex_t *)&buf[sizeof(pthread_mutex_t)]);
 			}
 		}
-		else if (r == 0) {
-			pcap_freecode(&bpf);
-		}
-		else {
+		else if (r != 0) {
 			r = RECY_ERROR;
 		}
 		pcap_freecode(&bpf);

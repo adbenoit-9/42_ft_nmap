@@ -5,3 +5,73 @@ sudo ./ft_nmap --ip ::1 --speedup 100  --ports 80 --ports 631 --ports 5353 --sca
  sudo ./ft_nmap --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
 (output: SYN(Filtered), NULL(closed), ACK(unfiltered), FIN(closed), UDP(open|filtered))
 sudo ./ft_nmap --ip google.com --speedup 100  --ports 80 --ports 631 --ports 5353 --ip kittypong.fr
+
+# Test with vm deb2 : port 23 is REJECT (udp and tcp) , port 24 is DROP (tcp and udp)
+sudo ./ft_nmap --ip 10.0.2.4 --ip localhost --ports 22-24 --speedup 250
+( output:
+Scan Configurations
+Target Ip-Address : 10.0.2.4 localhost 
+No of Ports to scan : 3
+Scans to be performed : NULL SYN ACK FIN XMAS UDP
+No of threads : 250
+Scanning..
+...
+Scan took 3.935255 secs
+
+IP address: 10.0.2.4 (10.0.2.4)
+Open ports:
+Port      Service Name (if applicable)  Results                            Conclusion
+-------------------------------------------------------------------------------------------
+22        ssh                           NULL(Open|Filtered) 
+                                        SYN(Open) 
+                                        ACK(Unfiltered) 
+                                        FIN(Open|Filtered) 
+                                        XMAS(Open|Filtered) 
+                                        UDP(Closed)                        Open
+24        Unassigned                    NULL(Open|Filtered) 
+                                        SYN(Filtered) 
+                                        ACK(Filtered) 
+                                        FIN(Open|Filtered) 
+                                        XMAS(Open|Filtered) 
+                                        UDP(Open|Filtered)                 Open|Filtered
+Closed/Filtered/Unfiltered ports:
+Port      Service Name (if applicable)  Results                            Conclusion
+-------------------------------------------------------------------------------------------
+23        telnet                        NULL(Open|Filtered) 
+                                        SYN(Filtered) 
+                                        ACK(Filtered) 
+                                        FIN(Open|Filtered) 
+                                        XMAS(Open|Filtered) 
+                                        UDP(Closed)                        Closed
+24        Unassigned                    NULL(Open|Filtered) 
+                                        SYN(Filtered) 
+                                        ACK(Filtered) 
+                                        FIN(Open|Filtered) 
+                                        XMAS(Open|Filtered) 
+                                        UDP(Open|Filtered)                 Open|Filtered
+
+IP address: localhost (::1)
+Open ports:
+Port      Service Name (if applicable)  Results                            Conclusion
+-------------------------------------------------------------------------------------------
+22        ssh                           NULL(Open|Filtered) 
+                                        SYN(Open) 
+                                        ACK(Unfiltered) 
+                                        FIN(Open|Filtered) 
+                                        XMAS(Open|Filtered) 
+                                        UDP(Closed)                        Open
+Closed/Filtered/Unfiltered ports:
+Port      Service Name (if applicable)  Results                            Conclusion
+-------------------------------------------------------------------------------------------
+23        telnet                        NULL(Closed) SYN(Closed) 
+                                        ACK(Unfiltered) 
+                                        FIN(Closed) 
+                                        XMAS(Closed) 
+                                        UDP(Closed)                        Closed
+24        Unassigned                    NULL(Closed) SYN(Closed) 
+                                        ACK(Unfiltered) 
+                                        FIN(Closed) 
+                                        XMAS(Closed) 
+                                        UDP(Closed)                        Closed
+
+)

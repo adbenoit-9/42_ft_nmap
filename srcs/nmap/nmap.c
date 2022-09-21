@@ -38,7 +38,7 @@ int	ft_nmap(t_nmap_controller *controller)
 {
 	struct timeval		begin, end;
 	pthread_t			th_timeout;
-	struct sigaction	act;
+	struct sigaction	act = {0};
 
 	act.sa_sigaction = &handle_sigaction;
 	act.sa_flags = SA_SIGINFO;

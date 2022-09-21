@@ -60,7 +60,6 @@ INC_SUB_DIR		:= buildy\
 					mapy\
 					nmap/incs\
 					parsy\
-					prompty\
 					proty\
 					recy\
 					sendy\
@@ -75,7 +74,6 @@ SUB_DIR			:= buildy\
 					mapy\
 					nmap\
 					parsy\
-					prompty\
 					recy\
 					reporty\
 					sendy\
@@ -88,7 +86,6 @@ SRC				:=
 SUB_SRC			:= main.c \
 					nmap_sety_hooks.c \
 					nmap_print.c \
-					nmap_exey_hooks.c \
 					nmap_iter_hooks.c \
 					nmap_scany.c \
 					nmap_signal.c \
@@ -142,11 +139,8 @@ SUB_SRC			:= setupy_ipv4_tcp.c \
 SRC				+= $(addprefix setupy/, $(SUB_SRC))
 SUB_SRC			:= mapy.c \
 					sety_f.c \
-					exey_f.c \
 					blky.c
 SRC				+= $(addprefix mapy/, $(SUB_SRC))
-SUB_SRC			:= prompty.c
-SRC				+= $(addprefix prompty/, $(SUB_SRC))
 
 OBJ				:= $(SRC:%.c=$(BUILD)/%.o)
 PREP			:= $(SRC:%.c=$(BUILD)/%.i)
