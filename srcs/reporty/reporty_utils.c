@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:53:30 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 09:47:51 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:33:47 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char    *dns_resolution(void *sockaddr, char *dest)
 void	status_to_str(char *dest, uint8_t status, char *delim)
 {
 	static char	*status_str[] = {"Open", "Closed", "Filtered", "Unfiltered"};
-	static char	status_value[] = {PORT_S_OPEN, PORT_S_CLOSED, \
+	static char	status_value[] = {PORT_S_OPEN, PORT_S_CLOSED,
 									PORT_S_FILTERED, PORT_S_UNFILTERED};
 									
 	dest[0] = 0;
