@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 23:43:19 by leon              #+#    #+#             */
-/*   Updated: 2022/09/21 10:59:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:06:25 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define SCAN_LIMIT			6
 #define PORT_LIMIT			1024
-#define IP_LIMIT			2
+#define IP_LIMIT			250
 
 typedef struct		s_nmap_blkhdr {
 	pthread_mutex_t				mutex;
