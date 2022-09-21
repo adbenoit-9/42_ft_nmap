@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 12:25:53 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:50:59 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	parse_options(char **av, t_nmap_setting *settings)
 		for (j = 0; flag_lst[j]; j++) {
 			if (ft_strcmp(av[i], flag_lst[j]) == 0) {
 				ret = flags_handler[j](settings, av[i + 1]);
-				if (j < NB_OPT - 1) 
+				if (j < NB_OPT - 3) 
 					i++;
 				break ;
 			}
