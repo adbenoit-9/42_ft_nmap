@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:18:27 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 09:58:40 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 10:49:51 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ static int  last_line_result_len(char *result)
 	return (len);
 }
 
-static int print_ports_report(t_root *root, int ip_index, uint8_t status)
+static int print_ports_report(t_root *root, int index, uint8_t status)
 {
-	int			flag_index = ip_index;
 	char		*service;
 	int			ret = REPORTY_OK;
 	int			port_len, not_shown;
@@ -90,9 +89,9 @@ static int print_ports_report(t_root *root, int ip_index, uint8_t status)
 	for (int i = 0; ret == REPORTY_OK && i < root->nd_nb; i++) {
 		flag_concl = 0;
 		ft_bzero(result, 4096);
-		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
-			flag_concl = set_conclusion(flag_concl, root->blk_flag[flag_index]);
-			add_flag_result(result, root->blk_flag[flag_index], root->rd[j].client.packet_flag);
+		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, index++) {
+			flag_concl = set_conclusion(flag_concl, root->blk_flag[index]);
+			add_flag_result(result, root->blk_flag[index], root->rd[j].client.packet_flag);
 		}
 		if (flag_concl & root->client.options) {
 			flag_concl = get_conclusion(flag_concl);
@@ -132,21 +131,20 @@ static void	print_header(char *status)
 		BORDER1);
 }
 
-static void	print_not_shown(t_root *root, int ip_index)
+static void	print_not_shown(t_root *root, int index)
 {
 	u_int8_t	flag_concl;
 	char		result[400];
 	char		status_info[96];
 	char		status[16];
 	int			ret = REPORTY_OK;
-	int			flag_index = ip_index;
 	int			nb_res[SCAN_LIMIT] = {0};
 
 	ft_bzero(result, 400);
 	for (int i = 0; ret == REPORTY_OK && i < root->nd_nb; i++) {
 		flag_concl = 0;
-		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, flag_index++) {
-			flag_concl = set_conclusion(flag_concl, root->blk_flag[flag_index]);
+		for (int j = 0; ret == REPORTY_OK && j < root->rd_nb; j++, index++) {
+			flag_concl = set_conclusion(flag_concl, root->blk_flag[index]);
 		}
 		flag_concl = get_conclusion(flag_concl);
 		if (!(flag_concl & root->client.options)) {
@@ -190,14 +188,14 @@ void    report_final(t_root *root, double scan_time)
 		}
 		if (root->client.options & PORT_S_OPEN) {
 			print_header("Open");
-			print_ports_report(root, i, PORT_S_OPEN);
+			print_ports_report(root, i * root->nd_nb * root->rd_nb, PORT_S_OPEN);
 		}
 		if (root->client.options & (PORT_S_CLOSED | PORT_S_FILTERED | PORT_S_UNFILTERED)) {
 			status[0] = '\n';
 			status_to_str(&status[0], root->client.options & ~PORT_S_OPEN, "/");
 			print_header(status);
-			print_ports_report(root, i, ~PORT_S_OPEN);
+			print_ports_report(root, i * root->nd_nb * root->rd_nb, ~PORT_S_OPEN);
 		}
-		print_not_shown(root, i);
+		print_not_shown(root, i * root->nd_nb * root->rd_nb);
 	}
 }
