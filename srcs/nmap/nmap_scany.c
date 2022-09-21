@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:23:46 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 15:34:44 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:20:35 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*scany(void *root)
 {
-	int64_t		r = 0;
+	int64_t	r = MAPY_OK;
 	
 	r = mapy(root);
     return ((void *)r);

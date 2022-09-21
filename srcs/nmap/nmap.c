@@ -6,11 +6,12 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 15:54:22 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:27:03 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nmap.h"
+#include <errno.h>
 
 double	elapse_time(struct timeval *begin, struct timeval *end)
 {
@@ -23,19 +24,25 @@ double	elapse_time(struct timeval *begin, struct timeval *end)
 static	int	launch_scans(int n, t_root *root)
 {
 	pthread_t		th[n];
+	int64_t			ret = NMAP_OK;
+	void			*tmp = NULL;
 	
 	for(int i = 0; i < n; i++) {
 		pthread_create(&th[i], NULL, scany, root);
 	}
 	scany(root);
 	for(int i = 0; i < n; i++) {
-		pthread_join(th[i], NULL);
+		pthread_join(th[i], &tmp);
+		if ((int64_t)tmp != NMAP_OK) {
+			ret = (int64_t)tmp;
+		}
 	}
-	return (0);
+	return ((int)ret);
 }
 
 int	ft_nmap(t_nmap_controller *controller)
 {
+	int					ret = NMAP_OK;
 	struct timeval		begin, end;
 	pthread_t			th_timeout;
 	struct sigaction	act;
@@ -50,14 +57,21 @@ int	ft_nmap(t_nmap_controller *controller)
 	}
 	pthread_create(&th_timeout, NULL, handle_timeout, controller);
 	gettimeofday(&begin, NULL);
+	errno = 0;
 	controller->root->client.time = begin;
-	launch_scans(controller->root->client.speedup, controller->root);
+	ret = launch_scans(controller->root->client.speedup, controller->root);
 	pthread_mutex_lock(&controller->mutex);
 	controller->status = NMAP_STOP;
 	pthread_mutex_unlock(&controller->mutex);
 	pthread_join(th_timeout, NULL);
 	alarm(0);
-	gettimeofday(&end, NULL);
-	report_final(controller->root, elapse_time(&begin, &end));
-	return (0);
+	if ((int64_t)ret != NMAP_OK) {
+		dprintf(STDERR_FILENO, "\n");
+		perror(NULL);
+	}
+	else {
+		gettimeofday(&end, NULL);
+		report_final(controller->root, elapse_time(&begin, &end));
+	}
+	return (ret);
 }
