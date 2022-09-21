@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 18:38:11 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 14:42:31 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:43:14 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int ac, char **av)
 		r = NMAP_ERROR;
 	}
 	if (r == NMAP_OK) {
-		bzero(buf, SIZE);
+		ft_bzero(buf, SIZE);
 		controller.status = NMAP_RUN;
 		if (pthread_mutex_init(&controller.mutex, NULL) < 0) {
 			r = NMAP_ERROR;
