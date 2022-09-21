@@ -18,10 +18,13 @@
 #include "proty_tcp.h"
 #include "nmap_structs.h"
 
+#include "libft.h"
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <net/if.h>
 #include <ifaddrs.h>
+
 
 /* ST : t_func_sety_st */
 int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
@@ -45,17 +48,17 @@ int					set_src_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index
 			if ((htonl(((struct sockaddr_in*)&link->sock)->sin_addr.s_addr) ==
 			INADDR_LOOPBACK ||
 			IN6_IS_ADDR_LOOPBACK(((struct sockaddr_in6*)&link->sock)->sin6_addr.s6_addr)) && (saddr->ifa_flags & IFF_LOOPBACK) != 0) {
-				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr,
+				ft_memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr,
 				(((struct sockaddr_storage *)saddr->ifa_addr)->ss_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 				bzero(link->dev_name, 32);
-				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
+				ft_memcpy(link->dev_name, saddr->ifa_name, ft_strlen(saddr->ifa_name));
 				b = 1;
 			}
 			else if ((saddr->ifa_flags & IFF_LOOPBACK) == 0) {
-				memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, 
+				ft_memcpy(&link->src_sock, (struct sockaddr_storage *)saddr->ifa_addr, 
 				(((struct sockaddr_storage *)saddr->ifa_addr)->ss_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 				bzero(link->dev_name, 32);
-				memcpy(link->dev_name, saddr->ifa_name, strlen(saddr->ifa_name));
+				ft_memcpy(link->dev_name, saddr->ifa_name, ft_strlen(saddr->ifa_name));
 				b = 1;
 			}
 		}
@@ -75,7 +78,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 		r = NMAP_ERROR;
 	}
 	else {
-		memset(&hints, 0, sizeof(hints));
+		ft_bzero(&hints, sizeof(hints));
 		hints.ai_family = root->addr_family;
 		hints.ai_flags = 0;
 		r = getaddrinfo(root->ips[index], NULL, &hints, &res);
@@ -88,7 +91,7 @@ int					set_sockaddr(t_nmap_setting *root, t_nmap_link *link, uint32_t index)
 			r = NMAP_ERROR;
 		}
 		if (r == NMAP_OK) {
-			memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ?\
+			ft_memcpy(&link->sock, res->ai_addr, (res->ai_family == AF_INET ?\
 				sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6)));
 			freeaddrinfo(res);
 		}

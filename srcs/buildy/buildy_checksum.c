@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "nmap_structs.h"
 #include "proty_ip.h"
+#include "libft.h"
 
 uint16_t			checksum(uint16_t *addr, int len)
 {
@@ -48,17 +49,17 @@ uint16_t			ipv4_checksum(uint8_t *ip, uint16_t len)
 	int							offset = 0;
 	uint16_t					tmp;
 
-	memcpy(&hdr[offset], &ip[12], 4); // saddr
+	ft_memcpy(&hdr[offset], &ip[12], 4); // saddr
 	offset += 4;
-	memcpy(&hdr[offset], &ip[16], 4); // daddr
+	ft_memcpy(&hdr[offset], &ip[16], 4); // daddr
 	offset += 4;
 	offset += 1; // zero
-	memcpy(&hdr[offset], &ip[9], 1); // protocol
+	ft_memcpy(&hdr[offset], &ip[9], 1); // protocol
 	offset += 1;
 	tmp = htons(len);
-	memcpy(&hdr[offset], &tmp, 2);
+	ft_memcpy(&hdr[offset], &tmp, 2);
 	offset += 2;
-	memcpy(&hdr[offset], &ip[sizeof(struct iphdr)], len);
+	ft_memcpy(&hdr[offset], &ip[sizeof(struct iphdr)], len);
 	offset += len;
 
 	return (checksum((uint16_t*)hdr, offset));
@@ -70,17 +71,17 @@ uint16_t	ipv6_checksum(uint8_t *ip, uint16_t len, uint8_t nxt_hdr)
 	int			offset = 0;
 	uint32_t	tmp;
 
-	memcpy(&hdr[offset], &ip[8], 16); // saddr
+	ft_memcpy(&hdr[offset], &ip[8], 16); // saddr
 	offset += 16;
-	memcpy(&hdr[offset], &ip[24], 16); // daddr
+	ft_memcpy(&hdr[offset], &ip[24], 16); // daddr
 	offset += 16;
 	tmp = htonl(len);
-	memcpy(&hdr[offset], &tmp, 4);
+	ft_memcpy(&hdr[offset], &tmp, 4);
 	offset += 4;
 	offset += 3; // zero
- 	memcpy(&hdr[offset], &nxt_hdr, 1);
+ 	ft_memcpy(&hdr[offset], &nxt_hdr, 1);
 	offset += 1;
-	memcpy(&hdr[offset], &ip[sizeof(struct ip6_hdr)], len);
+	ft_memcpy(&hdr[offset], &ip[sizeof(struct ip6_hdr)], len);
 	offset += len;
 	return (checksum((uint16_t*)hdr, offset));
 }

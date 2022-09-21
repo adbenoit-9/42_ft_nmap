@@ -24,7 +24,6 @@ int 				setup_ipv4_tcp(uint8_t *buf, void *conf_st, void *conf_nd, void *conf_ex
 	}
 	else
 	{
-		//memset(&((uint8_t*)blkhdr)[sizeof(pthread_mutex_t) * 2], 0, sizeof(*blkhdr) - (sizeof(pthread_mutex_t) * 2));
 		blkhdr->socklen = sizeof(struct sockaddr_in);
 		blkhdr->socket = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 		blkhdr->result = 0;

@@ -7,7 +7,7 @@
 // First 4 bytes are used to identify block owner
 #define MAX_CONFIG_SIZE					23726232
 #define SIZE							((sizeof(t_blk) * BLCK_NB) + MAX_CONFIG_SIZE)
-#define ST_MAX							2
+#define ST_MAX							64
 #define ND_MAX							1024
 #define RD_MAX							6
 

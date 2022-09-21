@@ -83,7 +83,7 @@ static void	default_settings(t_nmap_setting *settings)
 		FLAG_S_NULL, FLAG_S_SYN, FLAG_S_ACK, FLAG_S_FIN, FLAG_S_XMAS, FLAG_S_UDP};
 	
 	if (settings->scan_nb == 0) {
-		memcpy(settings->scans, default_scans, SCAN_LIMIT);
+		ft_memcpy(settings->scans, default_scans, SCAN_LIMIT);
 		settings->scan_nb = SCAN_LIMIT;
 	}
 	if (settings->ip_nb > IP_LIMIT) {

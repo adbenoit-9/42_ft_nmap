@@ -23,7 +23,8 @@ endif
 
 MODULES	:= ../mapy\
 			../nmap/incs\
-			../proty
+			../proty \
+			../libft/inc
 
 IFLAGS = $(foreach D,$(MODULES), -I$(D))
 

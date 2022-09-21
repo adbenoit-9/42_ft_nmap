@@ -17,6 +17,7 @@
 #include <ifaddrs.h>
 #include <stdio.h>
 #include "proty_ip.h"
+#include "libft.h"
 
 int				get_urandom(uint8_t *buf, int length)
 {
@@ -46,11 +47,11 @@ int				get_urandom(uint8_t *buf, int length)
 				}
 				if (offset + 512 > length)
 				{
-					memcpy(&buf[offset], tmp, length % 512);
+					ft_memcpy(&buf[offset], tmp, length % 512);
 				}
 				else
 				{
-					memcpy(&buf[offset], tmp, 512);
+					ft_memcpy(&buf[offset], tmp, 512);
 				}
 				offset += 512;
 			}
