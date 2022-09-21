@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:11:37 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 12:29:48 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:24:11 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int    print_error(int16_t error, char *arg)
 		break;
 	case E_BADFILTER:
 		PRINT_EBADFILTER(arg);
+		break;
+	case E_BOTHAF:
+		PRINT_EBOTHAF;
 		break;
 	default:
 		dprintf(STDERR_FILENO, "%s\n", arg);
