@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 14:57:21 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 10:44:25 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:48:06 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ int			mapy(t_root *root)
 				}
 			}
 		}
+	}
+	if (r != EXEY_ERR) {
+		r = MAPY_OK;
 	}
 	return (r);
 }

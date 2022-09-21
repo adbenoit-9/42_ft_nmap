@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 13:27:03 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 13:47:07 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ static	int	launch_scans(int n, t_root *root)
 	pthread_t		th[n];
 	int64_t			ret = NMAP_OK;
 	void			*tmp = NULL;
-	
-	for(int i = 0; i < n; i++) {
-		pthread_create(&th[i], NULL, scany, root);
+	int				i;
+
+	for(i = 0; ret == NMAP_OK && i < n; i++) {
+		ret = pthread_create(&th[i], NULL, scany, root);
 	}
+	n = i;
 	scany(root);
-	for(int i = 0; i < n; i++) {
+	ret = NMAP_OK;
+	for(i = 0; i < n; i++) {
 		pthread_join(th[i], &tmp);
 		if ((int64_t)tmp != NMAP_OK) {
 			ret = (int64_t)tmp;
@@ -44,7 +47,7 @@ int	ft_nmap(t_nmap_controller *controller)
 {
 	int					ret = NMAP_OK;
 	struct timeval		begin, end;
-	pthread_t			th_timeout;
+	pthread_t			th_timeout = {0};
 	struct sigaction	act;
 
 	act.sa_sigaction = &handle_sigaction;
@@ -55,17 +58,23 @@ int	ft_nmap(t_nmap_controller *controller)
 	if (!(controller->root->client.options & OPT_VERBOSE)) {
 		alarm(1);
 	}
-	pthread_create(&th_timeout, NULL, handle_timeout, controller);
-	gettimeofday(&begin, NULL);
-	errno = 0;
-	controller->root->client.time = begin;
-	ret = launch_scans(controller->root->client.speedup, controller->root);
-	pthread_mutex_lock(&controller->mutex);
-	controller->status = NMAP_STOP;
-	pthread_mutex_unlock(&controller->mutex);
-	pthread_join(th_timeout, NULL);
-	alarm(0);
-	if ((int64_t)ret != NMAP_OK) {
+	ret = pthread_create(&th_timeout, NULL, handle_timeout, controller);
+	if (gettimeofday(&begin, NULL) < 0) {
+		ret = NMAP_ERROR;
+	}
+	if (ret == NMAP_OK) {
+		errno = 0;
+		controller->root->client.time = begin;
+		ret = launch_scans(controller->root->client.speedup, controller->root);
+		pthread_mutex_lock(&controller->mutex);
+		controller->status = NMAP_STOP;
+		pthread_mutex_unlock(&controller->mutex);
+		if ((char *)th_timeout) {
+			pthread_join(th_timeout, NULL);
+		}
+		alarm(0);
+	}
+	if (ret != NMAP_OK) {
 		dprintf(STDERR_FILENO, "\n");
 		perror(NULL);
 	}
