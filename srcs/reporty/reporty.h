@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 13:27:55 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/20 19:05:29 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 09:44:20 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 #define REPORTY_ERROR   -1
 
 int     num_len(int num);
-void    dns_resolution(void *sockaddr, char *ipstr, char *dest);
+char    *dns_resolution(void *sockaddr, char *dest);
 int     dns(void *sockaddr, char *ipstr, char *dest);
 double	elapse_time(struct timeval *begin, struct timeval *end);
 void    status_to_str(char *dest, uint8_t status, char *delim);
