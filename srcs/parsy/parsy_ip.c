@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:57:13 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 12:14:07 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:04:51 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ static void	set_ip(char *host, t_nmap_setting *settings)
 {
 	if (settings->ip_nb < IP_LIMIT) {
 		settings->ips[settings->ip_nb] = host;
-		++settings->ip_nb;
 	}
-	else {
-		dprintf(STDERR_FILENO, "Warning: maximum limit of the number of hosts is %d\n", IP_LIMIT);
-	}
+	++settings->ip_nb;
 }
 
 int    set_ip_from_file(t_nmap_setting *settings, char *file)
