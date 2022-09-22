@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 15:04:44 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/19 16:18:23 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 10:40:48 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    *handle_timeout(void *attr)
 			gettimeofday(&tv, NULL);
 			pthread_mutex_lock(&hdr->time_mutex);
 			if (hdr->pcap_handler && hdr->send_time &&
-					tv.tv_sec - hdr->send_time > TIMEOUT) {
+					tv.tv_sec - hdr->send_time >= TIMEOUT) {
 				pcap_breakloop(hdr->pcap_handler);
 			}
 			pthread_mutex_unlock(&hdr->time_mutex);
