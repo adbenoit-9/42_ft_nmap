@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:08:14 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/22 11:56:35 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:37:22 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static void    print_usage(void)
 	printf("\nOptions:\n");
 	printf("--help                      Print this help summary page\n");
 	printf("--ip <host>                 Ip addresses to scan\n");
-	printf("--file <name>               File name containing IP addresses to scan,\n");
+	printf("--file <name>               File name containing IP addresses to scan\n");
 	printf("--filter <state>            Filter the output by the state of the port (open, closed, filtered, unfiltered)\n");
 	printf("--ports <number/range>      Ports to be scanned (default 1 to 1024)\n");
 	printf("--scan <type>               Type of scan to run (SYN, NULL, ACK, FIN, XMAS, UDP)\n");
 	printf("--speedup <number>          Number of parallel threads to use (default 0, max 250)\n");
-	printf("--verbose                   verbose output.\n");
+	printf("--verbose                   Verbose output\n");
 	printf("-4                          Use IPv4\n");
-	printf("-6                          Use IPv6\n");
+	printf("-6                          Use IPv6.\n");
 	
 }
 
