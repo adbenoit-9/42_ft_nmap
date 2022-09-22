@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:45:24 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 12:54:49 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:44:50 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define PRINT_EBADFILE(str) do {dprintf(STDERR_FILENO,\
 			"%s: No such file or directory\n", str);} while(0)
 # define PRINT_EBADPORT(str) do {dprintf(STDERR_FILENO,\
-			"invalid port: '%s': 1 <= value <= 65536\n", str);} while(0)
+			"invalid port: '%s': 1 <= value <= 65535\n", str);} while(0)
 # define PRINT_EBADRANGE(str) do {dprintf(STDERR_FILENO,\
 			"invalid ports range: '%s'\n", str);} while(0)
 # define PRINT_EBADSCAN(str) do {dprintf(STDERR_FILENO,\

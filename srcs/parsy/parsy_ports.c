@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:53:39 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/16 10:43:11 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:44:09 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	check_ports(char *value, int32_t begin, int32_t end, bool isrange)
 
 static int32_t	copy_ports_inf(uint16_t *dest, uint16_t *src, uint16_t max)
 {
-	int32_t i;
+	int32_t i = 0;
 	
 	for (i = 0; src[i] < max && src[i] != 0 && i < PORT_LIMIT; i++) {
 		dest[i] = src[i];
@@ -62,7 +62,7 @@ static int32_t	copy_ports_sup(uint16_t *dest, uint16_t *src, uint16_t min, int32
 	return (n);
 }
 
-int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
+int32_t	copy_new_range(uint16_t *dest, int32_t i, int32_t begin, int32_t end)
 {
 	int	ret = PARSY_OK;
 	
@@ -71,7 +71,7 @@ int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end)
 			ret = PARSY_KO;
 		}
 		else {
-			dest[i] = begin;
+			dest[i] = (uint16_t)begin;
 		}
 	}
 	if (ret != PARSY_KO) {

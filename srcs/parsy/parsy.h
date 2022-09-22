@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 17:25:07 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 12:27:38 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:44:31 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "proty_udp.h"
 # include "parsy_export.h"
 
-# define PORT_MAX   65536
+# define PORT_MAX   65535
 # define NB_OPT     10
 
 int		set_ip_from_file(t_nmap_setting *settings, char *file);
@@ -40,7 +40,7 @@ int     set_af_inet(t_nmap_setting *settings, char *value);
 int     set_af_inet6(t_nmap_setting *settings, char *value);
 
 bool	ft_isnumber(char *str);
-int32_t	copy_new_range(uint16_t *dest, int32_t i, uint16_t begin, uint16_t end);
+int32_t	copy_new_range(uint16_t *dest, int32_t i, int32_t begin, int32_t end);
 
 #endif
 

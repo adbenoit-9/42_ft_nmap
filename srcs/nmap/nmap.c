@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/21 13:49:14 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:28:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static	int	launch_scans(int n, t_root *root)
 		ret = pthread_create(&th[i], NULL, scany, root);
 	}
 	n = i;
-	scany(root);
 	ret = NMAP_OK;
+	tmp = scany(root);
 	for(i = 0; i < n; i++) {
 		pthread_join(th[i], &tmp);
 		if ((int64_t)tmp != NMAP_OK) {
