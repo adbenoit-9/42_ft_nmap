@@ -1,4 +1,0 @@
-data race:
-- st (t_nmap_link):
-- nd (t_nmap_app):
-- rd (t_nmap_scan):
