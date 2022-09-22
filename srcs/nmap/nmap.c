@@ -6,7 +6,7 @@
 /*   By: adbenoit <adbenoit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:38:40 by adbenoit          #+#    #+#             */
-/*   Updated: 2022/09/22 11:28:13 by adbenoit         ###   ########.fr       */
+/*   Updated: 2022/09/22 14:03:13 by adbenoit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ static	int	launch_scans(int n, t_root *root)
 		if ((int64_t)tmp != NMAP_OK) {
 			ret = (int64_t)tmp;
 		}
+	}
+	if ((int64_t)tmp != NMAP_OK) {
+		ret = (int64_t)tmp;
 	}
 	return ((int)ret);
 }
